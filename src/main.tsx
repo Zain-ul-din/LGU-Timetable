@@ -1,7 +1,13 @@
 import ReactDOM from 'react-dom/client'
-import App from './App'
+import { AppStyleProvider, appTheme } from './style/Style'
+import App from './components/App'
 
 const rootRef: Element | null  = document.querySelector ('#root')
 const root: ReactDOM.Root = ReactDOM.createRoot (rootRef as Element)
 
-root.render (<> <App/> </>)
+root.render (
+  <AppStyleProvider theme= {appTheme} >
+    <App />
+  </AppStyleProvider>
+)
+

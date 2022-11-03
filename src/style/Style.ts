@@ -13,4 +13,19 @@ const colors =
 
 export const appTheme: Record <string,any> = extendTheme({ colors })
 
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } from '@chakra-ui/react'
+
+export const TableStyle =
+{
+    Table,
+    Thead,
+    Tbody,
+    Tfoot,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    TableContainer,
+}
+
 // credit: https://chakra-ui.com/

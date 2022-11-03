@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { AppStyleProvider, appTheme } from './style/Style'
+import './style/index.css'
 import App from './components/App'
 
 const rootRef: Element | null  = document.querySelector ('#root')

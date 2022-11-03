@@ -3,11 +3,13 @@ import { TableStyle } from '../style/Style'
 
 interface ITimeTableProps
 {
-    headTitles: Array <string>
+    headTitles: Array <string>,
+    data : any
 }
 
 export default function TimeTable (
-    { headTitles } : ITimeTableProps
+    { headTitles, data } : ITimeTableProps
+
 ): JSX.Element
 {
     return (
@@ -18,6 +20,9 @@ export default function TimeTable (
 
                     <TableStyle.Tbody>
                         <TimeTableHead titiles={headTitles}/>
+                        {Object.entries (data).map ((val: [string, any], idx: number): JSX.Element => {
+                            return <TimeTableCell key = {idx} day = {val[0]} metaData = {val [1]}/>
+                        })}
                     </TableStyle.Tbody>
 
                 </TableStyle.Table>
@@ -36,6 +41,31 @@ function TimeTableHead ( {titiles} : {titiles : Array <string>} ): JSX.Element
                     <TableStyle.Th key = {idx}>{title}</TableStyle.Th> 
                 )}
             </TableStyle.Thead>
+        </>
+    )
+}
+
+
+function TimeTableCell ({day, metaData}: {day:string, metaData:any}): JSX.Element
+{
+    
+    console.log (metaData)
+    
+    return ( 
+        <>
+            <TableStyle.Tr>
+                <TableStyle.Th>{day}</TableStyle.Th>
+                {metaData && metaData.map ((val:any, idx: number): JSX.Element => {
+                    return (
+                        <TableStyle.Th key = {idx} textAlign = {'center'}>
+                            <>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</>
+                            <>{val.subject}</>
+                            <>{val.roomNo}</>
+                            <>{val.teacher}</>
+                        </TableStyle.Th>
+                    )
+                })}
+            </TableStyle.Tr>
         </>
     )
 }

@@ -49,8 +49,6 @@ function TimeTableHead ( {titiles} : {titiles : Array <string>} ): JSX.Element
 function TimeTableCell ({day, metaData}: {day:string, metaData:any}): JSX.Element
 {
     
-    console.log (metaData)
-    
     return ( 
         <>
             <TableStyle.Tr>

@@ -17,3 +17,10 @@ export const tableHeadTiles: Array <string> = [
     `3:00  - 3:30`,
     `3:30  - 4:00`
 ] 
+
+export const GITHUB_URLS = 
+{
+    frontend: 'https://github.com/Zain-ul-din/LGU-BetterTimeTable',
+    backend:  'https://github.com/IIvexII/LGU-TimetableAPI',
+    organizationURL: 'https://lgu.edu.pk/'
+}

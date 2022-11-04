@@ -28,7 +28,7 @@
 ### Quick Start: 
 ```command
   # run these commands to quickly setup this project on your machine
-  >> git clone <url>
+  >> git clone https://github.com/Zain-ul-din/LGU-BetterTimeTable.git
   >> cd LGU-BetterTimeTable
   >> npx yarn 
   >> yarn dev

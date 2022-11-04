@@ -1,3 +1,6 @@
+
+<!-- INTRO -->
+
 <h1 align="center">LGU-TimeTable V2 
 
 <h5 align="center">
@@ -7,6 +10,7 @@
     <a href = 'https://github.com/IIvexII/LGU-TimetableAPI'>LGU-TimetableAPI</a>
 <h5/>
 
+<!-- TECH STACK -->
 
 <p align="center">
    <img src = 'https://camo.githubusercontent.com/67a01fa7cf337616274f39c070a11638f2e65720e414ef55b8dd3f9c2a803b2a/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d526561637426636f6c6f723d323232323232266c6f676f3d5265616374266c6f676f436f6c6f723d363144414642266c6162656c3d' 
@@ -18,3 +22,14 @@
     <img src = 'https://camo.githubusercontent.com/0456715c6d0d037b19e6c0dc17370ad1ca16690f00985645e6f862cdcfe5d019/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d507265747469657226636f6c6f723d323232323232266c6f676f3d5072657474696572266c6f676f436f6c6f723d463742393345266c6162656c3d'/>
 
 <p/>
+
+<!-- DOCS -->
+
+### Quick Start: 
+```command
+  # run these commands to quickly setup this project on your machine
+  >> git clone <url>
+  >> cd LGU-BetterTimeTable
+  >> npx yarn 
+  >> yarn dev
+```

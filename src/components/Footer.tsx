@@ -1,4 +1,4 @@
-import { Box, Button, Container, Flex, Stack, Text, Textarea,useColorModeValue, Image } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, Stack, Text, Textarea,useColorModeValue, Image, Tooltip } from '@chakra-ui/react';
 
 import SocialButton from './internals/SocialButton';
 import { FaUniversity } from 'react-icons/fa'
@@ -48,13 +48,23 @@ export default function Footer(): JSX.Element {
 
           <Stack direction={'row'} spacing={4}>
             	<SocialButton label={'GitHub Front-End'} href={GITHUB_URLS.frontend}>
-            	  <Image src = {GitHubStarIcon} />
+				 <Tooltip label = {'Front-End Repository'}><Image src = {GitHubStarIcon} /></Tooltip>
             	</SocialButton>
+				
             	<SocialButton label={'GitHub Back-End'} href={GITHUB_URLS.backend}>
-            	  <BsGithub/> 
+					<Tooltip label = 'Back-End Repository' mt = {2}>
+						<Flex>
+							<BsGithub/>
+						</Flex>
+					</Tooltip>
             	</SocialButton>
+				
             	<SocialButton label={'Unitversity'} href={GITHUB_URLS.organizationURL}>
-            	  <FaUniversity />
+					<Tooltip label = 'University-Site' mt = {2}>
+						<Flex>
+							<FaUniversity />
+						</Flex>
+					</Tooltip>
             	</SocialButton>
           </Stack>
 

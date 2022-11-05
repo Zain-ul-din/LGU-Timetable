@@ -89,7 +89,7 @@ function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number 
                 <TableStyle.Th>{day}</TableStyle.Th>
                 
                 {   !metaData ? 
-                    <TableStyle.Th colSpan= {colCount - 1}>
+                    <TableStyle.Th colSpan= {colCount}>
                         <Flex justifyContent={'center'} py = {2}>
                             All Slots are free
                         </Flex>

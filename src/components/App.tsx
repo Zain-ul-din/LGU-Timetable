@@ -21,8 +21,8 @@ export default function App(): JSX.Element
     <>  
       <NavBar/>
       <Selection />
-      <DirtyTables />
-      {/* <TimeTable data = {apiData} headTitles= {tableHeadTiles}/> */}
+      {/* <DirtyTables /> */}
+      <TimeTable data = {apiData} headTitles= {tableHeadTiles}/>
       <Footer/>
     </>
   )

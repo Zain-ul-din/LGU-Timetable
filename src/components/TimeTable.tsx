@@ -1,30 +1,34 @@
-import React from 'react'
+import { Flex, Text } from '@chakra-ui/react'
 import { TableStyle } from '../style/Style'
+
+import type { LectureTime } from '../constants/Constants'
 
 interface ITimeTableProps
 {
-    headTitles: Array <string>,
+    headTitles: Array <LectureTime>,
     data : any
 }
 
+
+/**
+ * Renders Times table
+ * @param   {ITimeTableProps} 
+ * @returns  JSX.Element 
+*/
 export default function TimeTable (
     { headTitles, data } : ITimeTableProps
-
 ): JSX.Element
 {
     return (
         <>
-            <TableStyle.TableContainer whiteSpace = {'nowrap'}>
-                <TableStyle.Table  colorScheme = {'whiteAlpha'} variant = {'striped'} size = {'sm'} align = {'center'}>
-                    <TableStyle.TableCaption>LGU STUDENT TIME TABLE</TableStyle.TableCaption>
+            <TableStyle.TableContainer my = {5}>
+                <TableStyle.Table variant= {'striped'} size={'sm'} p = {1}>
+                    
+                    {/* Head */}
+                    <TimeTableHead titiles={headTitles}/>
 
-                    <TableStyle.Tbody>
-                        <TimeTableHead titiles={headTitles}/>
-                        {Object.entries (data).map ((val: [string, any], idx: number): JSX.Element => {
-                            return <TimeTableCell key = {idx} day = {val[0]} metaData = {val [1]}/>
-                        })}
-                    </TableStyle.Tbody>
-
+                    {/* Content */}
+                    
                 </TableStyle.Table>
             </TableStyle.TableContainer>
         </>
@@ -32,14 +36,30 @@ export default function TimeTable (
 }
 
 
-function TimeTableHead ( {titiles} : {titiles : Array <string>} ): JSX.Element
+/**
+ * Times table head
+ * @param {titiles: Array<LectureTime>} 
+ * @returns JSX.Element
+ */
+function TimeTableHead ( {titiles} : {titiles : Array <LectureTime>} ): JSX.Element
 {
     return (
         <>
             <TableStyle.Thead>
-                {titiles.map ((title: string, idx: number): JSX.Element => 
-                    <TableStyle.Th key = {idx}>{title}</TableStyle.Th> 
-                )}
+                <TableStyle.Tr>
+                    <TableStyle.Th>TIME</TableStyle.Th>
+                    {titiles.map ((lectureTime: LectureTime, idx: number): JSX.Element => {
+                        return (
+                            <TableStyle.Th key = {idx}>
+                                <Flex textAlign={'center'} flexDirection = {'column'}>
+                                    <Text>{lectureTime.startTime}</Text>
+                                    <Text>{'-'}</Text>
+                                    <Text>{lectureTime.endTime}</Text>
+                                </Flex>
+                            </TableStyle.Th>
+                        )
+                    })}
+                </TableStyle.Tr>
             </TableStyle.Thead>
         </>
     )

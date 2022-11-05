@@ -166,3 +166,9 @@ export const apiData =
         }
     ]
 }
+
+
+export function ApisResponse ()
+{
+    return ''
+}

@@ -1,21 +1,25 @@
+export type LectureTime = { startTime: string, endTime: string } 
+export type DaysName = string [7]
 
-export const tableHeadTiles: Array <string> = [
-    `TIME`,
-    `8:00  - 8:30`,
-    `8:30  - 9:30`,
-    `9:00  - 9:30`,
-    `9:30  - 10:00`,
-    `10:00 - 10:30`,
-    `11:00 - 11:30`,
-    `11:30 - 12:00`,
-    `12:00 - 12:30`,
-    `12:30 - 1:00`,
-    `1:00  - 1:30`,
-    `1:30  - 2:00`,
-    `2:00  - 2:30`,
-    `2:30  - 3:00`,
-    `3:00  - 3:30`,
-    `3:30  - 4:00`
+export const DaysName = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+export const tableHeadTiles: Array <LectureTime> = [
+    { startTime: '8:00',  endTime: '8:30' },
+    { startTime: '8:30',  endTime: '9:00' },
+    { startTime: '9:00',  endTime: '9:30' },
+    { startTime: '9:30',  endTime: '10:00' },
+    { startTime: '10:00', endTime: '10:30' },
+    { startTime: '10:30', endTime: '11:00' },
+    { startTime: '11:00', endTime: '11:30' },
+    { startTime: '11:30', endTime: '12:00' },
+    { startTime: '12:00', endTime: '12:30' },
+    { startTime: '12:30', endTime: '1:00' },
+    { startTime: '1:00',  endTime: '1:30' },
+    { startTime: '1:30',  endTime: '2:00' },
+    { startTime: '2:00',  endTime: '2:30' },
+    { startTime: '2:30',  endTime: '3:00' },
+    { startTime: '3:00',  endTime: '3:30' },
+    { startTime: '3:30',  endTime: '4:00' },
 ] 
 
 export const GITHUB_URLS = 

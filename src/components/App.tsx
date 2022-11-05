@@ -6,7 +6,7 @@ import Footer from './Footer'
 
 
 import { tableHeadTiles } from '../constants/Constants'
-import { apiData } from '../temp/DummyData'
+import { ApiData } from '../temp/DummyData'
 
 /*
   TEMO IMPORTS
@@ -22,7 +22,7 @@ export default function App(): JSX.Element
       <NavBar/>
       <Selection />
       {/* <DirtyTables /> */}
-      <TimeTable data = {apiData} headTitles= {tableHeadTiles}/>
+      <TimeTable data = {ApiData ()} headTitles = {tableHeadTiles}/>
       <Footer/>
     </>
   )

@@ -1,5 +1,6 @@
+import type { IApisResponse } from "../types/typedef"
 
-export const apiData =
+export const apiData: IApisResponse =
 {
     "Monday": [
         {
@@ -168,7 +169,16 @@ export const apiData =
 }
 
 
-export function ApisResponse ()
+
+export function ApiData (): IApisResponse
 {
-    return ''
+	return {
+		Monday:    apiData ['Monday'],
+		Tuesday:   apiData ['Tuesday'],
+		Wednesday: apiData ['Wednesday'],
+		Thursday:  apiData ['Thursday'],
+		Friday:    apiData ['Friday'],
+		Saturday:  apiData ['Saturday'],
+		Sunday:    apiData ['Sunday'],
+	}
 }

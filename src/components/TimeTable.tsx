@@ -2,11 +2,12 @@ import { Flex, Text } from '@chakra-ui/react'
 import { TableStyle } from '../style/Style'
 
 import type { LectureTime } from '../constants/Constants'
+import { IApisResponse } from '../types/typedef'
 
 interface ITimeTableProps
 {
     headTitles: Array <LectureTime>,
-    data : any
+    data : IApisResponse,
 }
 
 
@@ -19,6 +20,7 @@ export default function TimeTable (
     { headTitles, data } : ITimeTableProps
 ): JSX.Element
 {
+
     return (
         <>
             <TableStyle.TableContainer my = {5}>
@@ -28,7 +30,12 @@ export default function TimeTable (
                     <TimeTableHead titiles={headTitles}/>
 
                     {/* Content */}
-                    
+                    <TableStyle.Tbody>
+                        {Object.entries (data).map ((val: [string, any[] | null], idx: number): JSX.Element => 
+                            <TimeTableCell key = {idx} day = {val [0]} metaData = {val [1]} />
+                        )}
+                    </TableStyle.Tbody>
+
                 </TableStyle.Table>
             </TableStyle.TableContainer>
         </>
@@ -66,9 +73,13 @@ function TimeTableHead ( {titiles} : {titiles : Array <LectureTime>} ): JSX.Elem
 }
 
 
+/**
+ * Renders Time-table cells
+ * @param {day, metaData} 
+ * @returns JSX.Element
+ */
 function TimeTableCell ({day, metaData}: {day:string, metaData:any}): JSX.Element
 {
-    
     return ( 
         <>
             <TableStyle.Tr>

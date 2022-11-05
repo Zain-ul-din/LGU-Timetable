@@ -1,7 +1,13 @@
-export type LectureTime = { startTime: string, endTime: string } 
-export type DaysName = string [7]
 
-export const DaysName = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+/*
+  @types exports
+*/
+
+export type LectureTime = { startTime: string, endTime: string } 
+
+/*
+  @const def
+*/
 
 export const tableHeadTiles: Array <LectureTime> = [
     { startTime: '8:00',  endTime: '8:30' },

@@ -11,7 +11,6 @@ interface ITimeTableProps
     data : IApisResponse,
 }
 
-
 /**
  * Renders Times table
  * @param   {ITimeTableProps} 
@@ -48,7 +47,6 @@ export default function TimeTable (
     )
 }
 
-
 /**
  * Times table head
  * @param {titiles: Array<LectureTime>} 
@@ -77,7 +75,6 @@ function TimeTableHead ( {titiles} : {titiles : Array <LectureTime>} ): JSX.Elem
         </>
     )
 }
-
 
 /**
  * Renders Time-table cells
@@ -117,3 +114,4 @@ function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number 
         </>
     )
 }
+

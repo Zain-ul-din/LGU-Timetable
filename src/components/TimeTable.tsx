@@ -86,11 +86,13 @@ function TimeTableCell ({day, metaData}: {day:string, metaData:any}): JSX.Elemen
                 <TableStyle.Th>{day}</TableStyle.Th>
                 {metaData && metaData.map ((val:any, idx: number): JSX.Element => {
                     return (
-                        <TableStyle.Th key = {idx} textAlign = {'center'}>
-                            <>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</>
-                            <>{val.subject}</>
-                            <>{val.roomNo}</>
-                            <>{val.teacher}</>
+                        <TableStyle.Th key = {idx} colSpan = {3}>
+                            <Flex flexDirection={'column'} alignItems = {'center'}>
+                                <Text>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</Text>
+                                <Text>{val.subject}</Text>
+                                <Text>{val.roomNo}</Text>
+                                <Text>{val.teacher}</Text>
+                            </Flex>
                         </TableStyle.Th>
                     )
                 })}

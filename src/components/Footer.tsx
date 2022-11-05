@@ -52,7 +52,7 @@ export default function Footer(): JSX.Element {
             	</SocialButton>
 				
             	<SocialButton label={'GitHub Back-End'} href={GITHUB_URLS.backend}>
-					<Tooltip label = 'Back-End Repository' mt = {2}>
+					<Tooltip label = 'Back-End Repository' mt = {2} mb = {2}>
 						<Flex>
 							<BsGithub/>
 						</Flex>
@@ -60,7 +60,7 @@ export default function Footer(): JSX.Element {
             	</SocialButton>
 				
             	<SocialButton label={'Unitversity'} href={GITHUB_URLS.organizationURL}>
-					<Tooltip label = 'University-Site' mt = {2}>
+					<Tooltip label = 'University-Site' mt = {2} mb = {2}>
 						<Flex>
 							<FaUniversity />
 						</Flex>

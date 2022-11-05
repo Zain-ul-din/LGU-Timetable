@@ -6,7 +6,7 @@ import { BsGithub } from 'react-icons/bs'
 import { BsSuitHeartFill } from 'react-icons/bs'
 import React, { useState } from 'react'
 
-import GitHubStarIcon from '../assets/githubstar_icon.png'
+import GitHubStarIcon from '../assets/githubstar.png'
 import { GITHUB_URLS } from '../constants/Constants'
 
 export default function Footer(): JSX.Element {

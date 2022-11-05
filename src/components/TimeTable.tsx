@@ -1,7 +1,8 @@
 import { Flex, Text } from '@chakra-ui/react'
 import { TableStyle } from '../style/Style'
+import { getColSpan } from '../helper/util'
 
-import type { LectureTime } from '../constants/Constants'
+import type { LectureTime } from '../types/typedef'
 import { IApisResponse } from '../types/typedef'
 
 interface ITimeTableProps
@@ -85,8 +86,9 @@ function TimeTableCell ({day, metaData}: {day:string, metaData:any}): JSX.Elemen
             <TableStyle.Tr>
                 <TableStyle.Th>{day}</TableStyle.Th>
                 {metaData && metaData.map ((val:any, idx: number): JSX.Element => {
+                    const colSpan: number = getColSpan ({hour: parseInt (val.startTime.hours) , min: parseInt (val.startTime.minutes) }, {hour: parseInt (val.endTime.hours) , min: parseInt (val.endTime.minutes) })
                     return (
-                        <TableStyle.Th key = {idx} colSpan = {3}>
+                        <TableStyle.Th key = {idx} colSpan = {colSpan}>
                             <Flex flexDirection={'column'} alignItems = {'center'}>
                                 <Text>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</Text>
                                 <Text>{val.subject}</Text>

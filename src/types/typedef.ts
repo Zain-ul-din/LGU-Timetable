@@ -1,3 +1,16 @@
+/*
+  @types exports
+*/
+
+/** 
+ * @type lecture time
+*/
+export type LectureTime = { startTime: string, endTime: string } 
+
+/**
+ * @type time type 
+*/
+export type TimeType = { hour: number, min: number}
 
 /**
  * @type Api Response  
@@ -11,6 +24,3 @@ export type IApisResponse = {
     Saturday?:  Array <any>  | null ,
     Sunday?:    Array <any>  | null  
 }
-
-
-

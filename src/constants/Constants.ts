@@ -1,9 +1,4 @@
-
-/*
-  @types exports
-*/
-
-export type LectureTime = { startTime: string, endTime: string } 
+import { LectureTime } from "../types/typedef"
 
 /*
   @const def

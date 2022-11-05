@@ -24,7 +24,7 @@ export default function TimeTable (
 
     return (
         <>
-            <TableStyle.TableContainer my = {5}>
+            <TableStyle.TableContainer my = {5} p = {2}>
                 <TableStyle.Table variant= {'striped'} size={'sm'} p = {1}>
                     
                     {/* Head */}
@@ -33,7 +33,12 @@ export default function TimeTable (
                     {/* Content */}
                     <TableStyle.Tbody>
                         {Object.entries (data).map ((val: [string, any[] | null], idx: number): JSX.Element => 
-                            <TimeTableCell key = {idx} day = {val [0]} metaData = {val [1]} />
+                            <TimeTableCell 
+                                key = {idx}
+                                colCount = {headTitles.length}
+                                day = {val [0]}
+                                metaData = {val [1]} 
+                            />
                         )}
                     </TableStyle.Tbody>
 
@@ -79,21 +84,31 @@ function TimeTableHead ( {titiles} : {titiles : Array <LectureTime>} ): JSX.Elem
  * @param {day, metaData} 
  * @returns JSX.Element
  */
-function TimeTableCell ({day, metaData}: {day:string, metaData:any}): JSX.Element
+function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number , metaData:any}): JSX.Element
 {
     return ( 
         <>
-            <TableStyle.Tr>
+            <TableStyle.Tr >
                 <TableStyle.Th>{day}</TableStyle.Th>
+                
+                {   !metaData ? 
+                    <TableStyle.Th colSpan= {colCount - 1}>
+                        <Flex justifyContent={'center'} py = {2}>
+                            All Slots are free
+                        </Flex>
+                    </TableStyle.Th> 
+                    : <></>
+                }
+                
                 {metaData && metaData.map ((val:any, idx: number): JSX.Element => {
                     const colSpan: number = getColSpan ({hour: parseInt (val.startTime.hours) , min: parseInt (val.startTime.minutes) }, {hour: parseInt (val.endTime.hours) , min: parseInt (val.endTime.minutes) })
                     return (
-                        <TableStyle.Th key = {idx} colSpan = {colSpan}>
+                        <TableStyle.Th key = {idx} colSpan = {colSpan} p = {1}>
                             <Flex flexDirection={'column'} alignItems = {'center'}>
-                                <Text>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</Text>
-                                <Text>{val.subject}</Text>
-                                <Text>{val.roomNo}</Text>
-                                <Text>{val.teacher}</Text>
+                                <Text fontSize={'x-small'}>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</Text>
+                                <Text fontSize={'x-small'}>{val.subject}</Text>
+                                <Text fontSize={'x-small'}>{val.roomNo}</Text>
+                                <Text fontSize={'x-small'}>{val.teacher}</Text>
                             </Flex>
                         </TableStyle.Th>
                     )

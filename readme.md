@@ -8,7 +8,7 @@
     <a href = 'https://lgu.edu.pk/'>LGU</a>
     timetable instantaneously. Build on the top of
     <a href = 'https://github.com/IIvexII/LGU-TimetableAPI'>LGU-TimetableAPI</a>
-<h5/>
+</h5>
 
 <!-- TECH STACK -->
 
@@ -21,15 +21,16 @@
     <img src = 'https://camo.githubusercontent.com/9be161579f0737f301d45929820470e22ad2af41a92524b150dca40fce3c765d/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d4368616b72612b554926636f6c6f723d333139373935266c6f676f3d4368616b72612b5549266c6f676f436f6c6f723d464646464646266c6162656c3d'/>
     <img src = 'https://camo.githubusercontent.com/0456715c6d0d037b19e6c0dc17370ad1ca16690f00985645e6f862cdcfe5d019/68747470733a2f2f696d672e736869656c64732e696f2f7374617469632f76313f7374796c653d666f722d7468652d6261646765266d6573736167653d507265747469657226636f6c6f723d323232323232266c6f676f3d5072657474696572266c6f676f436f6c6f723d463742393345266c6162656c3d'/>
 
-<p/>
+</p>
 
 <!-- DOCS -->
 
 ### Quick Start: 
 ```command
-  # run these commands to quickly setup this project on your machine
+  # run these commands to setup this project on your machine
   >> git clone https://github.com/Zain-ul-din/LGU-BetterTimeTable.git
   >> cd LGU-BetterTimeTable
   >> npx yarn 
   >> yarn dev
 ```
+

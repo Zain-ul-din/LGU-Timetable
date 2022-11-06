@@ -42,15 +42,7 @@ export const MenuStyle =
     MenuDivider,
 }
 
-export function zoomOutOnMob(): void {
-    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    
-    if (width <= 500)
-    {
-        //@ts-ignore
-        document.body.style.zoom = "100%";
-    }
-}
+
 
 // credit: https://chakra-ui.com/
 

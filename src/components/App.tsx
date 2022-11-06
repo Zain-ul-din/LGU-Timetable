@@ -7,7 +7,6 @@ import Footer from './Footer'
 
 import { tableHeadTiles } from '../constants/Constants'
 import { ApiData } from '../temp/DummyData'
-import { zoomOutOnMob } from '../style/Style'
 
 /*
   TEMO IMPORTS
@@ -18,11 +17,6 @@ import DirtyTables from '../temp/DirtyTables'
 
 export default function App(): JSX.Element
 {
-  
-  useEffect (()=> { zoomOutOnMob () })
-
-  
-  
 
   return (
     <>  

@@ -23,7 +23,7 @@ export default function TimeTable (
 
     return (
         <>
-            <TableStyle.TableContainer my = {5} p = {2}>
+            <TableStyle.TableContainer my = {5} p = {2} overflowX = {'scroll'} >
                 <TableStyle.Table variant= {'striped'} size={'sm'} p = {1}>
                     
                     {/* Head */}

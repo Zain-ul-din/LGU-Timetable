@@ -17,7 +17,6 @@ import DirtyTables from '../temp/DirtyTables'
 
 export default function App(): JSX.Element
 {
-
   return (
     <>  
       <NavBar/>

@@ -18,8 +18,8 @@ import DirtyTables from '../temp/DirtyTables'
 export default function App(): JSX.Element
 {
   
-  useEffect (()=> { zoomOutOnMob () }, [])
-  
+  useEffect (()=> { zoomOutOnMob () })
+
   return (
     <>  
       <NavBar/>

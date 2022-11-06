@@ -1,22 +1,23 @@
 body 
 {
-  /* min-width: 500px !important; */
+  min-width: 500px !important;
 }
 
 @media (max-width: 500px)
 {
-    html 
-    {
-      height: -webkit-fill-available;
-    }
     
+    html {
+      height: -webkit-fill-available;
+      width: 500px;
+      overflow: auto;
+    }
 
     body 
     {
       height: -webkit-fill-available;
       max-width: 500px !important;
       min-width: 500px !important;
-      width: 100% !important;
-      height: 100% !important;
+      width: auto !important;
+      width: 500px;
     }
 }

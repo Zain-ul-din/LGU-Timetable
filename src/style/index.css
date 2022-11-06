@@ -16,7 +16,7 @@ body
       height: -webkit-fill-available;
       max-width: 500px !important;
       min-width: 500px !important;
-      width: 500px !important;
-      overflow-x: scroll;
+      width: 100% !important;
+      height: 100% !important;
     }
 }

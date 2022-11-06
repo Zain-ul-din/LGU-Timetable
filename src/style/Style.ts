@@ -42,4 +42,19 @@ export const MenuStyle =
     MenuDivider,
 }
 
+export function zoomOutOnMob(): void {
+    var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    console.log (width);
+    if (width <= 500)
+    {
+        const viewport:any = document.querySelector('meta[name="viewport"]');
+
+        if (viewport) {
+          viewport.content = 'initial-scale=1';
+          viewport.content = 'width=500';
+        }
+    }
+}
+
 // credit: https://chakra-ui.com/
+

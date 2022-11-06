@@ -20,10 +20,10 @@ export default function App(): JSX.Element
   return (
     <>  
       <NavBar/>
-      <Selection />
+      {/* <Selection /> */}
       {/* <DirtyTables /> */}
-      <TimeTable data = {ApiData ()} headTitles = {tableHeadTiles}/>
-      <Footer/>
+      {/* <TimeTable data = {ApiData ()} headTitles = {tableHeadTiles}/> */}
+      {/* <Footer/> */}
     </>
   )
 }

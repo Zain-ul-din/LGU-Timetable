@@ -15,10 +15,14 @@ import { zoomOutOnMob } from '../style/Style'
 
 import DirtyTables from '../temp/DirtyTables'
 
+
 export default function App(): JSX.Element
 {
   
   useEffect (()=> { zoomOutOnMob () })
+
+  
+  
 
   return (
     <>  

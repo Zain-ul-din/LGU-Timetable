@@ -16,6 +16,6 @@ body
       max-width: 500px !important;
       min-width: 500px !important;
       width: 500px !important;
-      zoom: 100% !important;
+      position: fixed !important;
     }
 }

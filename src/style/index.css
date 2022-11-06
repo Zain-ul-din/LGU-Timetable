@@ -1,6 +1,6 @@
 body 
 {
-    min-width: 500px !important;
+  /* min-width: 500px !important; */
 }
 
 @media (max-width: 500px)
@@ -11,7 +11,7 @@ body
     }
     
     /* Testing */
-    
+
     /* body 
     {
       height: -webkit-fill-available;

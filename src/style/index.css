@@ -1,8 +1,8 @@
-body 
+/* body 
 {
-  min-width: 500px !important;
-}
-
+  /* min-width: 500px !important; */
+/*}*/
+/*
 @media (max-width: 500px)
 {
     
@@ -20,4 +20,4 @@ body
       width: auto !important;
       width: 500px;
     }
-}
+} */

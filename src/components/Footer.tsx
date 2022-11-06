@@ -17,6 +17,7 @@ export default function Footer(): JSX.Element {
     	<Box
       		bg={useColorModeValue('gray.50', 'gray.900')}
       		color={useColorModeValue('gray.700', 'gray.200')}
+			p = {5}
 		>
 
       		<Flex pl = {5} py = {5} flexDirection = {'row'}>

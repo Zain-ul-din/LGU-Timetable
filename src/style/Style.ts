@@ -15,7 +15,10 @@ export const appTheme: Record <string,any> = extendTheme({ colors })
 import { 
     Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer, 
     Menu,MenuButton,MenuList,MenuItem,MenuItemOption,MenuGroup,MenuOptionGroup,MenuDivider, 
+    Tabs, TabList, TabPanels, Tab, TabPanel , Fade, ScaleFade, Slide, SlideFade
 } from '@chakra-ui/react'
+
+
 
 export const TableStyle =
 {
@@ -42,7 +45,22 @@ export const MenuStyle =
     MenuDivider,
 }
 
+export const TabStyle = 
+{
+    Tabs,
+    TabList,
+    TabPanels,
+    Tab,
+    TabPanel
+}
 
+export const Transitions =
+{
+    Fade,
+    ScaleFade,
+    Slide,
+    SlideFade
+}
 
 // credit: https://chakra-ui.com/
 

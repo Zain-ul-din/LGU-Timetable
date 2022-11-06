@@ -24,3 +24,17 @@ export type IApisResponse = {
     Saturday?:  Array <any>  | null ,
     Sunday?:    Array <any>  | null  
 }
+
+/**
+ * @type Timetable input type
+*/
+export type TimetableInput = 
+{
+  fall: string | null,
+  semester: string | null,
+  section: string | null 
+}
+
+interface LGUMetaData {
+  fall : Array <{semester: Array <{section: Array <string>}>}>
+}

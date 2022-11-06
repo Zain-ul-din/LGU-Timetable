@@ -10,18 +10,13 @@ body
       height: -webkit-fill-available;
     }
     
-    /* Testing */
+
     body 
-    {
-      width: 500px !important;
-    }
-    
-    /* body 
     {
       height: -webkit-fill-available;
       max-width: 500px !important;
       min-width: 500px !important;
       width: 500px !important;
       overflow-x: scroll;
-    }*/
+    }
 }

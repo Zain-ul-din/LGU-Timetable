@@ -1,3 +1,6 @@
+[![Open Source Love](https://firstcontributions.github.io/open-source-badges/badges/open-source-v1/open-source.svg)](https://github.com/firstcontributions/open-source-badges)
+[<img align="right" width="150" src="https://firstcontributions.github.io/assets/Readme/join-slack-team.png">](https://join.slack.com/t/firstcontributors/shared_invite/zt-1hg51qkgm-Xc7HxhsiPYNN3ofX2_I8FA)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 <!-- INTRO -->
 
@@ -35,7 +38,7 @@
 ```
 
 
-## Contributors 
+## Contributors ✨
 
 <a href="https://github.com/Zain-ul-din/LGU-BetterTimeTable/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Zain-ul-din/LGU-BetterTimeTable" />

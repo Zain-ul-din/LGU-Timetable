@@ -1,17 +1,16 @@
-import { useContext, useEffect, useReducer, useState } from 'react'
+import { useContext, useState } from 'react'
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import { Center, Flex, Text, Button, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Text, Button, useColorModeValue } from '@chakra-ui/react'
 import { MenuStyle, TabStyle, Transitions } from '../style/Style'
 
-// temp imports
-import { metaData } from '../temp/DummyData'
+
 
 const tabTitles = [
     'Fall', 'Program', 'Section'
 ]
 
-export default function Selection (): JSX.Element
+export default function Selection ({ metaData }: { metaData:any }): JSX.Element
 {
     const userInput = useContext (TimeTableInputContext)
     const [currTabIdx, setCurrTabIdx] = useState <number> (0)
@@ -85,7 +84,7 @@ export default function Selection (): JSX.Element
                         <Transitions.SlideFade in = {currTabIdx == 2}>
                             {userInput?.timeTableInput.fall != null && userInput?.timeTableInput.semester  != null &&
                             <DropDown 
-                                defautlSelectedItem = {'choose semester'}
+                                defautlSelectedItem = {'choose section'}
                                 menuItems = {metaData [userInput?.timeTableInput.fall] [userInput.timeTableInput.semester]} 
                                 onClick = {(selectedItem:string, setSelectedItem:React.Dispatch<React.SetStateAction<string>>)=>{
                                     userInput?.setTimeTableInput (Object.assign (userInput.timeTableInput, {sectiion: selectedItem}))
@@ -106,7 +105,6 @@ export default function Selection (): JSX.Element
 
 type onClickCallBack = (selectedItem:string, setSelectedItem:React.Dispatch<React.SetStateAction<string>>) => void
 
-
 function DropDown (
     {defautlSelectedItem ,menuItems, onClick}
     :
@@ -115,9 +113,7 @@ function DropDown (
 {
     const [selectedItem, setSelectedItem]: 
         [string, React.Dispatch<React.SetStateAction<string>>] = useState <string> (defautlSelectedItem)
-
-    useEffect (()=> {console.log ('render!!')}, [])
-
+    
     return (
         <MenuStyle.Menu>
             <MenuStyle.MenuButton as = {Button} rightIcon = {<ChevronDownIcon/>}>
@@ -133,4 +129,5 @@ function DropDown (
         </MenuStyle.Menu>
     )
 }
+
 

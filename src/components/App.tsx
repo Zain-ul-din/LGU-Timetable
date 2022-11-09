@@ -10,15 +10,12 @@ import { ApiData } from '../temp/DummyData'
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
 import { useTalkToServer } from '../Hooks/hooks'
 
-
 import type { TimetableInput } from '../types/typedef'
 
 /*
 TEMO IMPORTS
 */
 import { Text } from '@chakra-ui/react'
-
-
 
 export default function App(): JSX.Element
 {
@@ -38,22 +35,21 @@ export default function App(): JSX.Element
         setMetaData(val)
       })
   }, [])
-   
-  console.log (metaData)
-
+  
   return (
     <>  
      <TimeTableInputContext.Provider value={{timeTableInput, setTimeTableInput}}>
         <NavBar/>
         {metaData == null ? <Loader isLoading = {true}/> : <Selection metaData={metaData}/>}
-        <Text color={'red.400'} textAlign = {'center'}>{`Under Construction`.toLocaleUpperCase ()}</Text>
         
+        <Text color={'red.400'} textAlign = {'center'}>{`Under Construction`.toLocaleUpperCase ()}</Text>
         <TimeTable data = {ApiData ()} headTitles = {tableHeadTiles}/>
         <Footer/>
       </TimeTableInputContext.Provider>
     </>
   )
 }
+
 
 
 

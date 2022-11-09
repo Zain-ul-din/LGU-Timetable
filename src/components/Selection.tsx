@@ -17,6 +17,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
 
     return (
         <>
+        <Transitions.SlideFade in = {true}>
         <Flex 
             outline={1} 
             justifyContent = {'center'} 
@@ -97,7 +98,8 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
 
                 </TabStyle.TabPanels>
             </TabStyle.Tabs>
-        </Flex>    
+        </Flex>   
+        </Transitions.SlideFade> 
         </>
     )
 }

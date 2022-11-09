@@ -102,7 +102,9 @@ function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number 
                     return (
                         <TableStyle.Th key = {idx} colSpan = {colSpan} p = {1}>
                             <Flex flexDirection={'column'} alignItems = {'center'}>
-                                <Text fontSize={'x-small'}>{val.startTime.hours + ':' + val.startTime.minutes} TO {val.endTime.hours + ':' + val.endTime.minutes}</Text>
+                                <Text fontSize={'x-small'}>
+                                    { `${val.startTime.hours}`.padEnd (2,'0') + ':' + `${val.startTime.minutes}`.padEnd (2,'0')} TO {`${val.endTime.hours}`.padEnd (2,'0') + ':' + `${val.endTime.minutes}`.padEnd (2,'0')}
+                                </Text>
                                 <Text fontSize={'x-small'}>{val.subject}</Text>
                                 <Text fontSize={'x-small'}>{val.roomNo}</Text>
                                 <Text fontSize={'x-small'}>{val.teacher}</Text>

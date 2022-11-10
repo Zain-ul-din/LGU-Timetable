@@ -117,6 +117,7 @@ function DropDown (
         [string, React.Dispatch<React.SetStateAction<string>>] = useState <string> (defautlSelectedItem)
     
     return (
+        <Transitions.SlideFade in = {true}>
         <MenuStyle.Menu>
             <MenuStyle.MenuButton as = {Button} rightIcon = {<ChevronDownIcon/>}>
                {selectedItem}
@@ -129,6 +130,7 @@ function DropDown (
                 )}
             </MenuStyle.MenuList>
         </MenuStyle.Menu>
+        </Transitions.SlideFade>
     )
 }
 

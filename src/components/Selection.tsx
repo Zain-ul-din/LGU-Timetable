@@ -95,7 +95,6 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                                     userInput?.setTimeTableInput (Object.assign (userInput.timeTableInput, {section: selectedItem}))
                                     setSelectedItem (selectedItem)
                                     // send web request
-                                    //https://lgu-timetable-api.deta.dev/timetable?semester=3&degree=BSCS&section=A
                                     let input = userInput.timeTableInput
                                     console.log ('loading...')
                                     timeTableHook?.setTimeTableData (Object.create ({data: null, loadingState: true}))

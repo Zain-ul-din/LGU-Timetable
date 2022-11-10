@@ -2,172 +2,171 @@ import type { IApisResponse } from "../types/typedef"
 
 export const apiData: IApisResponse =
 {
-    "Monday": [
-        {
-          "startTime": {
-            "hours": 9,
-            "minutes": 30
-          },
-          "endTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "subject": "Multivariate Calculus",
-          "roomNo": "Room 18 NB ",
-          "teacher": "Rubina Shuaib "
-        },
-        {
-          "startTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "endTime": {
-            "hours": 12,
-            "minutes": 30
-          },
-          "subject": "Technical and Business Writing",
-          "roomNo": "Room 05 NB ",
-          "teacher": "Naseer Ahmed "
-        },
-        {
-          "startTime": {
-            "hours": 12,
-            "minutes": 30
-          },
-          "endTime": {
-            "hours": 14,
-            "minutes": 0
-          },
-          "subject": "Compiler Construction",
-          "roomNo": "Lab 18 OB ",
-          "teacher": "Muhammad Basit Ali Gillani "
-        }
-      ],
-      "Tuesday": [
-        {
-          "startTime": {
-            "hours": 9,
-            "minutes": 30
-          },
-          "endTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "subject": "Multivariate Calculus",
-          "roomNo": "Room 10 NB ",
-          "teacher": "Rubina Shuaib "
-        },
-        {
-          "startTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "endTime": {
-            "hours": 12,
-            "minutes": 30
-          },
-          "subject": "Technical and Business Writing",
-          "roomNo": "Room 05 NB ",
-          "teacher": "Naseer Ahmed "
-        },
-        {
-          "startTime": {
-            "hours": 12,
-            "minutes": 30
-          },
-          "endTime": {
-            "hours": 14,
-            "minutes": 0
-          },
-          "subject": "Compiler Construction",
-          "roomNo": "Lab 52 OB ",
-          "teacher": "Muhammad Basit Ali Gillani "
-        }
-      ],
-      "Wednesday": [
-        {
-          "startTime": {
-            "hours": 8,
-            "minutes": 0
-          },
-          "endTime": {
-            "hours": 9,
-            "minutes": 30
-          },
-          "subject": "Operating Systems",
-          "roomNo": "Lab 18 OB ",
-          "teacher": "Sundus Munir "
-        },
-        {
-          "startTime": {
-            "hours": 9,
-            "minutes": 30
-          },
-          "endTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "subject": "Software Engineering",
-          "roomNo": "Lab 58 OB ",
-          "teacher": "Addul rehman "
-        },
-        {
-          "startTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "endTime": {
-            "hours": 12,
-            "minutes": 30
-          },
-          "subject": "Operating Systems Lab",
-          "roomNo": "Lab 79 OB ",
-          "teacher": "Muhammad Mugees Asif "
-        }
-      ],
-      "Thursday": [
-        {
-          "startTime": {
-            "hours": 8,
-            "minutes": 0
-          },
-          "endTime": {
-            "hours": 9,
-            "minutes": 30
-          },
-          "subject": "Operating Systems",
-          "roomNo": "Lab 55 OB ",
-          "teacher": "Sundus Munir "
-        },
-        {
-          "startTime": {
-            "hours": 9,
-            "minutes": 30
-          },
-          "endTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "subject": "Software Engineering",
-          "roomNo": "Lab 21 OB ",
-          "teacher": "Addul rehman "
-        },
-        {
-          "startTime": {
-            "hours": 11,
-            "minutes": 0
-          },
-          "endTime": {
-            "hours": 12,
-            "minutes": 30
-          },
-          "subject": "Operating Systems Lab",
-          "roomNo": "Lab 79 OB ",
-          "teacher": "Muhammad Mugees Asif "
-        }
-    ]
+  "Monday": [
+    {
+      "startTime": {
+        "hours": 8,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 9,
+        "minutes": 30
+      },
+      "subject": "Operating Systems",
+      "roomNo": "Lab 22 OB ",
+      "teacher": "Sadia Kousar "
+    },
+    {
+      "startTime": {
+        "hours": 9,
+        "minutes": 30
+      },
+      "endTime": {
+        "hours": 11,
+        "minutes": 0
+      },
+      "subject": "Software Engineering",
+      "roomNo": "Room 60 OB ",
+      "teacher": "Bisma "
+    },
+    {
+      "startTime": {
+        "hours": 11,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 12,
+        "minutes": 30
+      },
+      "subject": "Compiler Construction",
+      "roomNo": "Lab 21 OB ",
+      "teacher": "Tayyaba Sultana "
+    },
+    {
+      "startTime": {
+        "hours": 12,
+        "minutes": 30
+      },
+      "endTime": {
+        "hours": 14,
+        "minutes": 0
+      },
+      "subject": "Operating Systems Lab",
+      "roomNo": "Lab 79 OB ",
+      "teacher": "Muhammad Mugees Asif "
+    }
+  ],
+  "Tuesday": [
+    {
+      "startTime": {
+        "hours": 8,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 9,
+        "minutes": 30
+      },
+      "subject": "Operating Systems",
+      "roomNo": "Room 27 NB ",
+      "teacher": "Sadia Kousar "
+    },
+    {
+      "startTime": {
+        "hours": 11,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 12,
+        "minutes": 30
+      },
+      "subject": "Technical and Business Writing",
+      "roomNo": "Seminar Room 02 NB ",
+      "teacher": "Mah Jabeen "
+    }
+  ],
+  "Wednesday": [
+    {
+      "startTime": {
+        "hours": 9,
+        "minutes": 30
+      },
+      "endTime": {
+        "hours": 11,
+        "minutes": 0
+      },
+      "subject": "Software Engineering",
+      "roomNo": "Lab 52 OB ",
+      "teacher": "Bisma "
+    },
+    {
+      "startTime": {
+        "hours": 11,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 12,
+        "minutes": 30
+      },
+      "subject": "Compiler Construction",
+      "roomNo": "Lab 52 OB ",
+      "teacher": "Tayyaba Sultana "
+    },
+    {
+      "startTime": {
+        "hours": 14,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 15,
+        "minutes": 30
+      },
+      "subject": "Multivariate Calculus",
+      "roomNo": "Room 18 NB ",
+      "teacher": "Asma Riffat "
+    }
+  ],
+  "Thursday": [
+    {
+      "startTime": {
+        "hours": 11,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 12,
+        "minutes": 30
+      },
+      "subject": "Technical and Business Writing",
+      "roomNo": "Seminar Room 02 NB ",
+      "teacher": "Mah Jabeen "
+    },
+    {
+      "startTime": {
+        "hours": 12,
+        "minutes": 30
+      },
+      "endTime": {
+        "hours": 14,
+        "minutes": 0
+      },
+      "subject": "Operating Systems Lab",
+      "roomNo": "Lab 78 OB ",
+      "teacher": "Muhammad Mugees Asif "
+    },
+    {
+      "startTime": {
+        "hours": 14,
+        "minutes": 0
+      },
+      "endTime": {
+        "hours": 15,
+        "minutes": 30
+      },
+      "subject": "Multivariate Calculus",
+      "roomNo": "Room 18 NB ",
+      "teacher": "Asma Riffat "
+    }
+  ]
 }
-
 
 
 export function ApiData (): IApisResponse

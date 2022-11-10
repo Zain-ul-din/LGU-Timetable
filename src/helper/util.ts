@@ -13,7 +13,7 @@ export function getColSpan (startTime: TimeType, endTime: TimeType): number
     var endTimeToMin: number   = (endTime.hour * 60) + endTime.min
 
     // invalid time
-    if (startTimeToMin < endTimeToMin) 
+    if (startTimeToMin > endTimeToMin) 
     {
         return 3;
     }
@@ -31,3 +31,72 @@ export function getColSpan (startTime: TimeType, endTime: TimeType): number
 
     return colSpan;
 }
+
+
+function isSameTime (startTime: TimeType, endTime: TimeType): boolean
+{
+    return startTime.hour == endTime.hour && startTime.min == endTime.min
+}
+
+/**
+ * Creates Array that can fill all columns
+ * @param data 
+ * @returns column 
+ */
+export function fillColumn (data:Array<any>): Array<any>
+{
+    if (data == undefined)
+    {
+        return data
+    }
+    
+    let filterData: any[] = []
+    let startingTime: TimeType = { hour: 8,  min: 0 }
+    let endingTime: TimeType =   { hour: 16, min: 0 }
+
+    if (!isSameTime (startingTime, {hour: data[0].startTime.hours, min: data[0].startTime.minutes}))
+    {
+        filterData.push({
+            startTime: {hours: startingTime.hour, minutes: startingTime.min},
+            endTime: {hours: data [0].startTime.hours, minutes: data [0].startTime.minutes},
+            subject: null
+        })
+    }
+
+    for (let i = 0 ; i < data.length ; i += 1)
+    {
+        if (i > 0)
+        {
+            let acc = data [i-1].endTime
+            let curr = data [i].startTime
+            if (!isSameTime (
+                {hour: acc.hours, min: acc.minutes},
+                {hour: curr.hours, min: curr.minutes}
+            ))
+            {
+                console.log (`Acc: ${acc.hours} Min: ${acc.minutes} + Curr:  ${curr.hours} Min : ${curr.min}`)
+                filterData.push({
+                    startTime: {hours: data [i-1].endTime.hours, minutes: data [i-1].endTime.minutes},
+                    endTime: {hours: data [i].startTime.hours, minutes: data [i].startTime.minutes},
+                    subject: null
+                })
+            }
+        }  
+        
+        filterData.push (data [i])
+    }
+
+    
+    if (!isSameTime (endingTime, {hour: filterData [filterData.length - 1].endTime.hours, min: filterData [filterData.length - 1].endTime.minutes}))
+    {
+        filterData.push({
+            startTime: { hours: filterData [filterData.length - 1].endTime.hours, minutes: filterData [filterData.length - 1].endTime.minutes },
+            endTime:   { hours: endingTime.hour, minutes: endingTime.min },
+            subject: null
+        })   
+    }
+
+    
+    return filterData
+}
+

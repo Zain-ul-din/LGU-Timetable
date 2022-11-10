@@ -1,6 +1,7 @@
-import { Flex, Text } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
 import { TableStyle } from '../style/Style'
-import { getColSpan } from '../helper/util'
+import { getColSpan, fillColumn } from '../helper/util'
 
 import type { LectureTime } from '../types/typedef'
 import { IApisResponse } from '../types/typedef'
@@ -24,7 +25,7 @@ export default function TimeTable (
     return (
         <>
             <TableStyle.TableContainer my = {5} p = {2}>
-                <TableStyle.Table variant= {'striped'} size={'sm'} p = {1}>
+                <TableStyle.Table variant= {'simple'} size={'sm'} p = {1}>
                     
                     {/* Head */}
                     <TimeTableHead titiles={headTitles}/>
@@ -36,7 +37,7 @@ export default function TimeTable (
                                 key = {idx}
                                 colCount = {headTitles.length}
                                 day = {val [0]}
-                                metaData = {val [1]} 
+                                metaData = {fillColumn(val [1] as any [])} 
                             />
                         )}
                     </TableStyle.Tbody>
@@ -82,10 +83,11 @@ function TimeTableHead ( {titiles} : {titiles : Array <LectureTime>} ): JSX.Elem
  * @returns JSX.Element
  */
 function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number , metaData:any}): JSX.Element
-{
+{    
+
     return ( 
         <>
-            <TableStyle.Tr >
+            <TableStyle.Tr>
                 <TableStyle.Th>{day}</TableStyle.Th>
                 
                 {   !metaData ? 
@@ -98,16 +100,27 @@ function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number 
                 }
                 
                 {metaData && metaData.map ((val:any, idx: number): JSX.Element => {
+                    
                     const colSpan: number = getColSpan ({hour: parseInt (val.startTime.hours) , min: parseInt (val.startTime.minutes) }, {hour: parseInt (val.endTime.hours) , min: parseInt (val.endTime.minutes) })
+                    
                     return (
-                        <TableStyle.Th key = {idx} colSpan = {colSpan} p = {1}>
+                        <TableStyle.Th 
+                            key = {idx} 
+                            colSpan = {colSpan} 
+                            py = {2}
+                            border={'0.1px solid'}
+                            borderRadius = {'2xl'}
+                            borderColor={useColorModeValue('gray.900', 'gray.900')}
+                        >
                             <Flex flexDirection={'column'} alignItems = {'center'}>
+                               { val.subject ? <>
                                 <Text fontSize={'x-small'}>
                                     { `${val.startTime.hours}`.padEnd (2,'0') + ':' + `${val.startTime.minutes}`.padEnd (2,'0')} TO {`${val.endTime.hours}`.padEnd (2,'0') + ':' + `${val.endTime.minutes}`.padEnd (2,'0')}
                                 </Text>
                                 <Text fontSize={'x-small'}>{val.subject}</Text>
                                 <Text fontSize={'x-small'}>{val.roomNo}</Text>
                                 <Text fontSize={'x-small'}>{val.teacher}</Text>
+                                </> : <>X</>}
                             </Flex>
                         </TableStyle.Th>
                     )

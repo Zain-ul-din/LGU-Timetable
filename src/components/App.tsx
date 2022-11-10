@@ -5,17 +5,15 @@ import Selection from './Selection'
 import Footer from './Footer'
 import Loader from './internals/Loader'
 
-import { tableHeadTiles } from '../constants/Constants'
-import { ApiData } from '../temp/DummyData'
+
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
+import { TimeTableContext } from '../Hooks/TimeTableContext'
 import { useTalkToServer } from '../Hooks/hooks'
+import { serverURL } from '../constants/Constants'
 
-import type { TimetableInput } from '../types/typedef'
+import { tableHeadTiles } from '../constants/Constants'
+import type { TimetableInput, TimeTableData } from '../types/typedef'
 
-/*
-TEMO IMPORTS
-*/
-import { Text } from '@chakra-ui/react'
 
 export default function App(): JSX.Element
 {
@@ -26,25 +24,31 @@ export default function App(): JSX.Element
     section: null
   })
   
+  const [timeTableData, setTimeTableData] = useState <TimeTableData>({
+    data: null,
+    loadingState: false
+  })
+
   const [metaData, setMetaData]:[any, React.Dispatch<React.SetStateAction<any>>] 
               = useState <any>(null)
 
   useEffect (()=>{
-      useTalkToServer ('https://lgu-timetable-api.deta.dev' + "/metadata")
-      .then ((val: any)=> {
-        setMetaData(val)
-      })
+      useTalkToServer (serverURL + "/metadata").then ((val: any)=> setMetaData(val))
   }, [])
   
   return (
     <>  
      <TimeTableInputContext.Provider value={{timeTableInput, setTimeTableInput}}>
+       <TimeTableContext.Provider  value={{timeTableData, setTimeTableData}}>
         <NavBar/>
         {metaData == null ? <Loader isLoading = {true}/> : <Selection metaData={metaData}/>}
-        
-        <Text color={'red.400'} textAlign = {'center'}>{`Under Construction`.toLocaleUpperCase ()}</Text>
-        <TimeTable data = {ApiData ()} headTitles = {tableHeadTiles}/>
+        {timeTableData.loadingState ? 
+          <Loader isLoading = {true}/> : 
+          <>
+            {timeTableData.data && <TimeTable data = {timeTableData.data} headTitles = {tableHeadTiles}/>}
+        </>}
         <Footer/>
+       </TimeTableContext.Provider>
       </TimeTableInputContext.Provider>
     </>
   )

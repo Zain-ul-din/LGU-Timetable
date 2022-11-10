@@ -28,13 +28,20 @@ export type IApisResponse = {
 /**
  * @type Timetable input type
 */
-export type TimetableInput = 
-{
+export type TimetableInput = {
   fall: string | null,
   semester: string | null,
   section: string | null 
 }
 
-interface LGUMetaData {
-  fall : Array <{semester: Array <{section: Array <string>}>}>
+/*
+ * @type Timetable data signature
+*/
+export type TimeTableData = {
+  data : any,
+  loadingState: boolean 
 }
+
+
+
+

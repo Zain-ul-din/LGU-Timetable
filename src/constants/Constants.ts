@@ -29,3 +29,6 @@ export const GITHUB_URLS =
     backend:  'https://github.com/IIvexII/LGU-TimetableAPI',
     organizationURL: 'https://lgu.edu.pk/'
 }
+
+export const serverURL: string = "https://lgu-timetable-api.deta.dev"
+

@@ -1,18 +1,22 @@
 import { useContext, useState } from 'react'
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
+import { TimeTableContext } from '../Hooks/TimeTableContext'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import { Flex, Text, Button, useColorModeValue } from '@chakra-ui/react'
 import { MenuStyle, TabStyle, Transitions } from '../style/Style'
 
-
+import { serverURL } from '../constants/Constants'
+import { useTalkToServer } from '../Hooks/hooks'
 
 const tabTitles = [
     'Fall', 'Program', 'Section'
 ]
 
+
 export default function Selection ({ metaData }: { metaData:any }): JSX.Element
 {
     const userInput = useContext (TimeTableInputContext)
+    const timeTableHook = useContext(TimeTableContext)
     const [currTabIdx, setCurrTabIdx] = useState <number> (0)
 
     return (
@@ -77,7 +81,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                                     setSelectedItem (selectedItem)
                                     setCurrTabIdx (2)
                                 }}
-                            />}
+                            />} 
                         </Transitions.SlideFade>
                     </TabStyle.TabPanel>
 
@@ -88,9 +92,17 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                                 defautlSelectedItem = {'choose section'}
                                 menuItems = {metaData [userInput?.timeTableInput.fall] [userInput.timeTableInput.semester]} 
                                 onClick = {(selectedItem:string, setSelectedItem:React.Dispatch<React.SetStateAction<string>>)=>{
-                                    userInput?.setTimeTableInput (Object.assign (userInput.timeTableInput, {sectiion: selectedItem}))
+                                    userInput?.setTimeTableInput (Object.assign (userInput.timeTableInput, {section: selectedItem}))
                                     setSelectedItem (selectedItem)
                                     // send web request
+                                    //https://lgu-timetable-api.deta.dev/timetable?semester=3&degree=BSCS&section=A
+                                    let input = userInput.timeTableInput
+                                    console.log ('loading...')
+                                    timeTableHook?.setTimeTableData (Object.create ({data: null, loadingState: true}))
+                                    useTalkToServer (serverURL + `/timetable?semester=${input.fall?.at(0)}&degree=${input.semester}&section=${input.section}`).then ((data)=>{
+                                        console.log (data)
+                                        timeTableHook?.setTimeTableData (Object.create({data, loadingState: false}))
+                                    })
                                 }}
                             />}
                         </Transitions.SlideFade>

@@ -99,7 +99,6 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                                     console.log ('loading...')
                                     timeTableHook?.setTimeTableData (Object.create ({data: null, loadingState: true}))
                                     useTalkToServer (serverURL + `/timetable?semester=${input.fall?.at(0)}&degree=${input.semester}&section=${input.section}`).then ((data)=>{
-                                        console.log (data)
                                         timeTableHook?.setTimeTableData (Object.create({data, loadingState: false}))
                                     })
                                 }}

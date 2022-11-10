@@ -74,7 +74,6 @@ export function fillColumn (data:Array<any>): Array<any>
                 {hour: curr.hours, min: curr.minutes}
             ))
             {
-                console.log (`Acc: ${acc.hours} Min: ${acc.minutes} + Curr:  ${curr.hours} Min : ${curr.min}`)
                 filterData.push({
                     startTime: {hours: data [i-1].endTime.hours, minutes: data [i-1].endTime.minutes},
                     endTime: {hours: data [i].startTime.hours, minutes: data [i].startTime.minutes},

@@ -2,9 +2,24 @@
 
 <script>
 
+    const navBarOptions = ['TimeTable', 'Free Class Rooms', 'About Us']
+    let currIdx = 0
 </script>
 
-<div>
-    <h1>Header Component</h1>
+<div class="fixed top-0 left-0 h-screen w-56 m-0 flex flex-col bg-gray-900 text-white shadow-lg rounded-r-lg">
+    
+    <div class= "mt-3 p-5 text-sm text-style-bold self-start font-medium">LGU TIME TABLE</div>
+    <div>
+        {#each navBarOptions as option, i}
+            <li 
+                class={`${currIdx == i ? 'bg-slate-500' : ''} ml-2 rounded-l-lg mt-4 list-none p-3 pl-6 cursor-pointer transition-all duration-300 ease-linear`}
+                on:click={()=> currIdx = i}
+                on:keydown = {()=> currIdx = i}
+            >
+                {option}
+            </li>
+        {/each}
+    </div>
+
 </div>
 

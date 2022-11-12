@@ -1,7 +1,6 @@
 <!-- Header Component -->
 
 <script>
-
     const navBarOptions = ['TimeTable', 'Free Class Rooms', 'About Us']
     let currIdx = 0
 </script>

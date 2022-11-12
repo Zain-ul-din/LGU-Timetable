@@ -1,3 +1,12 @@
+# How to Start
+
+```git
+ >> git clone <this_repo>
+ >> cd <folder>
+ >> npx yarn
+ >> npx yarn dev 
+```
+
 # Svelte + Vite
 
 This template should help get you started developing with Svelte in Vite.

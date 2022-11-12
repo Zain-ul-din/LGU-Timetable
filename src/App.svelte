@@ -1,31 +1,35 @@
 <!-- Main App Component -->
 
 <script>
-  import { Router, Link, Route } from "svelte-routing"
 
   import Home from "./routes/Home.svelte"
   import AboutUs from "./routes/AboutUs.svelte"
   import TimeTable from "./routes/TimeTable.svelte"
 
-  export let url = ""
+  import Header from "./components/Header.svelte";
+
+  let url = '/'
+
+  console.log (url)
 </script>
 
 <!-- TODOS: Add class dark to enable dark mode -->
 
-<div>
-  <!-- App Routing -->
-  <Router url= {url}>
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="about">About</Link>
-      <Link to="timetable">Blog</Link>
-    </nav>
-    <div>
-      <Route path = "/" component = {Home} />
-      <Route path = "about" component = {AboutUs} />
-      <Route path = "timetable" component = {TimeTable} />
-    </div>
-  </Router>
+<div class = "light">
+ 
+  
+  <Header bind:url = {url}/>
+  
+  {#if url == '/'}
+    <Home/>
+  {:else if url == 'timetable'}
+    <TimeTable />
+  {:else if url == 'about'}
+    <AboutUs />
+  {:else}
+    <div>Page Not Found!!</div>
+  {/if}
+  
 </div>
 
 

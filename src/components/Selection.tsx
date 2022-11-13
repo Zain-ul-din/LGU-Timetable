@@ -127,11 +127,11 @@ function DropDown (
     
     return (
         <Transitions.SlideFade in = {true}>
-        <MenuStyle.Menu>
+        <MenuStyle.Menu preventOverflow = {true}>
             <MenuStyle.MenuButton as = {Button} rightIcon = {<ChevronDownIcon/>}>
                {selectedItem}
             </MenuStyle.MenuButton>
-            <MenuStyle.MenuList onChange={(e)=> {console.log (e.target)}}>
+            <MenuStyle.MenuList onChange={(e)=> {console.log (e.target)}} className = 'dropDown' overflowY = {'scroll'} maxH = {'80'}>
                 {menuItems && menuItems?.map ( (item: string, idx: number): JSX.Element => 
                     <MenuStyle.MenuItem onClick={(e)=> onClick (item, setSelectedItem) } key = {idx}>
                         {item}

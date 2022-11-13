@@ -24,7 +24,9 @@ export default function Footer(): JSX.Element {
       		  <Textarea height={'36'} maxHeight={'200px'} placeholder = {'Leave your reply...'} px = {2} value = {reply} onChange = {(e)=> setReply (e.target.value.length <= 250 ? e.target.value : reply)}/>
       		  <Flex maxHeight={'200px'} px = {'1%'} flexDirection = {'column'} alignItems = {'center'}>
       		    	<Image src = {`https://avatars.dicebear.com/api/adventurer-neutral/${ reply.replace(/[\W_]/g,"") == '' ? 'happy' : reply.replace(/[\W_]/g,"")  }.svg?mood=happy`} height = {'100px'} width = {'100px'} rounded = {'base'}/>
-      		    	<Button width={'100px'} mt = {'5%'}>Add reply</Button>
+      		    	<Tooltip label = 'login to add reply'>
+						<Button width={'100px'} mt = {'5%'} isDisabled>Add reply</Button>
+					</Tooltip>
       		  </Flex>
       		</Flex>
       

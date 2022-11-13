@@ -15,6 +15,7 @@ import {
   Center
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { GITHUB_URLS } from '../constants/Constants';
 
 /**
  * Renders Header
@@ -72,9 +73,13 @@ export default function NavBar (): JSX.Element {
           						</Center><br />
 								<MenuDivider />
 
-          						<MenuItem>About US</MenuItem>
-          						<MenuItem>Contribute</MenuItem>
-          						<MenuItem>Logout</MenuItem>
+          						<MenuItem>
+								 <a href = {`${GITHUB_URLS.frontend}`} target = "_blank">About US</a>
+								</MenuItem>
+          						<MenuItem>
+								  <a href = {`${GITHUB_URLS.frontend}`} target = "_blank">Contribute</a>
+								</MenuItem>
+          						<MenuItem>Login</MenuItem>
 
         					</MenuList>
         				</Menu>

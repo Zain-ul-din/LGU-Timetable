@@ -4,10 +4,12 @@ body
   scroll-behavior: smooth !important;
 }
 
-/* body 
+body 
 {
-  /* min-width: 500px !important; */
-/*}*/
+  min-width: 320px !important;
+}
+
+*/
 /*
 @media (max-width: 500px)
 {

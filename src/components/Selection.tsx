@@ -99,6 +99,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                                     timeTableHook?.setTimeTableData (Object.create ({data: null, loadingState: true}))
                                     useTalkToServer (serverURL + `/timetable?semester=${input.fall?.at(0)?.toLocaleLowerCase()}&degree=${input.semester}&section=${input.section}`).then ((data)=>{
                                         timeTableHook?.setTimeTableData (Object.create({data, loadingState: false}))
+                                        window.scrollTo (0, document.body.scrollHeight)
                                     })
                                 }}
                             />}
@@ -128,7 +129,7 @@ function DropDown (
     return (
         <Transitions.SlideFade in = {true}>
         <MenuStyle.Menu preventOverflow = {true}>
-            <MenuStyle.MenuButton as = {Button} rightIcon = {<ChevronDownIcon/>}>
+            <MenuStyle.MenuButton as = {Button} rightIcon = {<ChevronDownIcon/>} textOverflow = {'clip'} fontSize = {{base: 'xs', sm:'md',lg:'md',}}>
                {selectedItem}
             </MenuStyle.MenuButton>
             <MenuStyle.MenuList onChange={(e)=> {console.log (e.target)}} className = 'dropDown' overflowY = {'scroll'} maxH = {'80'}>

@@ -1,0 +1,48 @@
+import { setDoc, collection, getDoc, doc } from "firebase/firestore";
+import { firebase } from './Firebase'
+import axios from "axios";
+import { ipInfoUrl } from "../constants/Constants";
+import { User } from "firebase/auth";
+
+export function addUserAnonymously ()
+{
+    const colRef = collection (firebase.firebaseStore, 'users')
+    const docRef = doc (colRef,'users_credentials')
+
+    getDoc (docRef).then (res => {
+        const data = res.data
+        axios.get (ipInfoUrl).then (credentialRes => {
+            if (!credentialRes.data ) return;
+            const newData:any = {...data, [credentialRes.data.ip] : credentialRes.data} 
+            setDoc (docRef, newData).then (()=> {})
+        })
+    })
+}
+
+export function addLoggedInUser (user: User)
+{
+    if (!user) return
+    if (window.localStorage.getItem ("FIREBASE_ANALYSIS_CREDENTIAL") == user.email) return
+
+    const colRef = collection (firebase.firebaseStore, 'users')
+    const docRef = doc (colRef,'login_users_credentials')
+
+    getDoc (docRef).then (res => {
+        const data = res.data
+        
+        const newData: any = {...data, [user.email as string]: {
+            email: user.email ,
+            emailVerified: user.emailVerified,
+            displayName: user.displayName,
+            isAnonymous: user.isAnonymous,
+            phoneNumber: user.phoneNumber,
+            photoURL: user.photoURL,
+            providerId: user.providerId,
+            uid: user.uid
+        }}
+        setDoc (docRef, newData).then (()=> {
+            window.localStorage.setItem ("FIREBASE_ANALYSIS_CREDENTIAL", user.email as string)
+        })
+    })
+}
+

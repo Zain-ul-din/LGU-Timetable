@@ -43,7 +43,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
             <TabStyle.Tabs index={currTabIdx} onChange = {setCurrTabIdx}>
                 <TabStyle.TabList>
                     <TabStyle.Tab>
-                        Fall
+                        Semester
                     </TabStyle.Tab>
                     <TabStyle.Tab isDisabled = {userInput?.timeTableInput.fall == null}>
                         Program
@@ -58,7 +58,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                     
                     <TabStyle.TabPanel textAlign={'center'}>
                         <DropDown 
-                            defautlSelectedItem = {'choose fall'}
+                            defautlSelectedItem = {'choose semester'}
                             menuItems={Object.keys (metaData)} 
                             onClick = {(selectedItem:string, setSelectedItem:React.Dispatch<React.SetStateAction<string>>)=>{
                                 userInput?.setTimeTableInput (Object.assign (userInput.timeTableInput, {semester: null}))
@@ -68,7 +68,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                             }}
                         />
                     </TabStyle.TabPanel>
-
+                            
                     <TabStyle.TabPanel textAlign={'center'}>
                         <Transitions.SlideFade in = {currTabIdx == 1}>
                             { userInput?.timeTableInput.fall  != null &&

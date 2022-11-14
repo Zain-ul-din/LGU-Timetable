@@ -16,6 +16,7 @@ import { tableHeadTiles } from '../constants/Constants'
 import type { TimetableInput, TimeTableData } from '../types/typedef'
 
 
+
 export default function App(): JSX.Element
 {
 

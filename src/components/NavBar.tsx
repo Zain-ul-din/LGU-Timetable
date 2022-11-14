@@ -1,4 +1,8 @@
-
+import { firebase } from '../lib/Firebase'
+import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import type { UserCredential } from 'firebase/auth';
+import {useState} from 'react'
+ 
 import {
   Box,
   Flex,
@@ -14,8 +18,10 @@ import {
   useColorMode,
   Center
 } from '@chakra-ui/react';
+
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { GITHUB_URLS } from '../constants/Constants';
+import { dummyAvatar } from '../constants/Constants';
 
 /**
  * Renders Header
@@ -24,7 +30,8 @@ import { GITHUB_URLS } from '../constants/Constants';
 export default function NavBar (): JSX.Element {
 
    	const { colorMode, toggleColorMode } = useColorMode();
-	
+	const [user, setUser] = useState<UserCredential | null> (null)
+
   	return (
     	<>
       		<Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -53,7 +60,7 @@ export default function NavBar (): JSX.Element {
 							>
                 			  	<Avatar 
 							  		size={'sm'} 
-							  		src={'https://avatars.dicebear.com/api/male/username.svg'}
+							  		src={user ? user.user.photoURL ? user.user.photoURL : dummyAvatar :dummyAvatar}
                 			  	/>
 							</MenuButton>
 
@@ -64,12 +71,12 @@ export default function NavBar (): JSX.Element {
 								<Center>
                 					<Avatar
                 					  size={'2xl'}
-                					  src={'https://avatars.dicebear.com/api/male/username.svg'}
+                					  src={user ? user.user.photoURL ? user.user.photoURL : dummyAvatar :dummyAvatar}
                 					/>
                 				</Center><br />
 
 								<Center>
-            						<p>Anonymous</p>
+            						<p>{user ? user.user.displayName : 'Anonymous'}</p>
           						</Center><br />
 								<MenuDivider />
 
@@ -79,11 +86,22 @@ export default function NavBar (): JSX.Element {
           						<MenuItem>
 								  <a href = {`${GITHUB_URLS.frontend}`} target = "_blank">Contribute</a>
 								</MenuItem>
-          						<MenuItem>Login</MenuItem>
-
+          						<MenuItem 
+								    color= {user ? 'red.400': 'blue.400'}
+									onClick = {(e)=>{
+									if (user)
+									{
+										signOut (firebase.firebaseAuth)
+										setUser (null)
+									}
+									else 
+									{
+										signInWithPopup (firebase.firebaseAuth, new GoogleAuthProvider())
+										.then ((data:UserCredential)  => setUser (data))
+									}
+								}}>{user ? 'Logout': 'Login'}</MenuItem>
         					</MenuList>
         				</Menu>
-
         			</Stack>
     	    	</Flex>
     		</Flex>

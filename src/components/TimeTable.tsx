@@ -1,5 +1,4 @@
-import { useEffect } from 'react'
-import { Flex, Text, useColorModeValue } from '@chakra-ui/react'
+import { Flex, Text, useColorModeValue, Badge } from '@chakra-ui/react'
 import { TableStyle } from '../style/Style'
 import { getColSpan, fillColumn } from '../helper/util'
 
@@ -114,12 +113,12 @@ function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number 
                         >
                             <Flex flexDirection={'column'} alignItems = {'center'}>
                                { val.subject ? <>
-                                <Text fontSize={'x-small'}>
+                                <Text fontSize={'xs'} fontFamily = {'monospace'}>
                                     { `${val.startTime.hours}`.padEnd (2,'0') + ':' + `${val.startTime.minutes}`.padEnd (2,'0')} TO {`${val.endTime.hours}`.padEnd (2,'0') + ':' + `${val.endTime.minutes}`.padEnd (2,'0')}
                                 </Text>
-                                <Text fontSize={'x-small'}>{val.subject}</Text>
+                                <Badge fontSize={'x-small'}>{val.subject}</Badge>
                                 <Text fontSize={'x-small'}>{val.roomNo}</Text>
-                                <Text fontSize={'x-small'}>{val.teacher}</Text>
+                                <Text fontSize={'x-small'} color = { useColorModeValue('blackAlpha.900', 'whiteAlpha.800')}>{val.teacher}</Text>
                                 </> : <>X</>}
                             </Flex>
                         </TableStyle.Th>

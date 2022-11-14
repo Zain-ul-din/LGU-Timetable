@@ -30,5 +30,7 @@ export const GITHUB_URLS =
     organizationURL: 'https://lgu.edu.pk/'
 }
 
+export const dummyAvatar = 'https://avatars.dicebear.com/api/male/username.svg'
+
 export const serverURL: string = "https://lgu-timetable-api.deta.dev"
 

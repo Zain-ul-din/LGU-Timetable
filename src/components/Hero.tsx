@@ -29,7 +29,7 @@ export default function Hero() {
               Lahore Garrison University  <br />
               
               <Text
-                bgGradient='linear(to-l, #7928CA, #FF0080)'
+                bgGradient='linear(to-r, teal.500, green.500)'
                 bgClip='text'
                 fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
                 fontWeight='extrabold'
@@ -45,7 +45,7 @@ export default function Hero() {
               alignSelf={'center'}
               position={'relative'}>
               <Button variant={'link'} colorScheme={'blue'} size={'md'} onClick = {(e)=>{
-                window.scrollTo (0, document.body.scrollHeight); 
+                window.scrollTo (0, document.body.scrollHeight)
               }}>
                 View Timetable
               </Button>

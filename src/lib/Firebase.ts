@@ -27,7 +27,6 @@ interface InitializeFirebaseAppType
 
 function initializeFirebaseApp () : InitializeFirebaseAppType
 {
-    console.log (firebaseConfig)
     const firebaseApp: FirebaseApp = initializeApp (firebaseConfig)
     const firebaseAuth: Auth = getAuth (firebaseApp)
     const firebaseStore: Firestore = getFirestore (firebaseApp)

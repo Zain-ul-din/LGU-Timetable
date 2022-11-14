@@ -10,11 +10,16 @@ export function addUserAnonymously ()
     const docRef = doc (colRef,'users_credentials')
 
     getDoc (docRef).then (res => {
-        const data = res.data
+        const data:any = res.data()
         axios.get (ipInfoUrl).then (credentialRes => {
             if (!credentialRes.data ) return;
-            const newData:any = {...data, [credentialRes.data.ip] : credentialRes.data} 
-            setDoc (docRef, newData).then (()=> {})
+            if (data.users == null)
+            {
+                data.users = []
+            }
+
+            data.user.push (credentialRes.data)
+            setDoc (docRef, data).then (()=> {})
         })
     })
 }
@@ -28,9 +33,14 @@ export function addLoggedInUser (user: User)
     const docRef = doc (colRef,'login_users_credentials')
 
     getDoc (docRef).then (res => {
-        const data = res.data
-        
-        const newData: any = {...data, [user.email as string]: {
+        const data: any = res.data ()
+
+        if (data.users == null) 
+        {
+            data.users = []
+        } 
+
+        data.users.push ({
             email: user.email ,
             emailVerified: user.emailVerified,
             displayName: user.displayName,
@@ -39,8 +49,9 @@ export function addLoggedInUser (user: User)
             photoURL: user.photoURL,
             providerId: user.providerId,
             uid: user.uid
-        }}
-        setDoc (docRef, newData).then (()=> {
+        })
+
+        setDoc (docRef, data).then (()=> {
             window.localStorage.setItem ("FIREBASE_ANALYSIS_CREDENTIAL", user.email as string)
         })
     })

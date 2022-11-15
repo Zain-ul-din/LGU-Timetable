@@ -12,7 +12,7 @@ const tabTitles = [
     'Semester', 'Program', 'Section'
 ]
 
-
+ 
 export default function Selection ({ metaData }: { metaData:any }): JSX.Element
 {
     const userInput = useContext (TimeTableInputContext)

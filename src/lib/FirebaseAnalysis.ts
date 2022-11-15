@@ -18,7 +18,7 @@ export function addUserAnonymously ()
                 data.users = []
             }
 
-            data.user.push (credentialRes.data)
+            data.users.push (credentialRes.data)
             setDoc (docRef, data).then (()=> {})
         })
     })

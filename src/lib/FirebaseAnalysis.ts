@@ -13,10 +13,7 @@ export function addUserAnonymously ()
         const data:any = res.data()
         axios.get (ipInfoUrl).then (credentialRes => {
             if (!credentialRes.data ) return;
-            if (data.users == null)
-            {
-                data.users = []
-            }
+            if (data.users == null) data.users = []
 
             data.users.push (credentialRes.data)
             setDoc (docRef, data).then (()=> {})
@@ -35,10 +32,7 @@ export function addLoggedInUser (user: User)
     getDoc (docRef).then (res => {
         const data: any = res.data ()
 
-        if (data.users == null) 
-        {
-            data.users = []
-        } 
+        if (data.users == null) data.users = []
 
         data.users.push ({
             email: user.email ,

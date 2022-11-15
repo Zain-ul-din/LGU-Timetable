@@ -9,7 +9,7 @@ import { serverURL } from '../constants/Constants'
 import { useTalkToServer } from '../Hooks/hooks'
 
 const tabTitles = [
-    'Fall', 'Program', 'Section'
+    'Semester', 'Program', 'Section'
 ]
 
 

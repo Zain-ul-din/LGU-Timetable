@@ -11,7 +11,7 @@
 LGU-TimeTable V2 
 
 <h5 align="center">
-    A non-official blazingly 🔥 fast <a href = 'https://lgutimetable.vercel.app/'>website</a> to access the 
+    A non-official blazingly 🔥 fast <a href = 'https://www.lgutimetable.live/'>website</a> to access the 
     <a href = 'https://lgu.edu.pk/'>LGU</a>
     timetable instantaneously. Build on the top of
     <a href = 'https://github.com/IIvexII/LGU-TimetableAPI'>LGU-TimetableAPI</a>

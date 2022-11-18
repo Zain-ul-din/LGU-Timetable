@@ -14,7 +14,7 @@ import TimeTable from "../components/TimeTable"
 import { tableHeadTiles } from "../constants/Constants"
 
 
-export function Main ({ metaData }: { metaData: any }): JSX.Element
+export default function Main ({ metaData }: { metaData: any }): JSX.Element
 {
     const timeTableData = useContext (TimeTableContext)
 

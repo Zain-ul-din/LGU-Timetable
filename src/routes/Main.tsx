@@ -1,4 +1,6 @@
-import React from "react"
+/*
+    Main Page
+*/
 import { useContext } from "react"
 import { TimeTableContext } from "../Hooks/TimeTableContext"
 
@@ -11,27 +13,24 @@ import TimeTable from "../components/TimeTable"
 
 import { tableHeadTiles } from "../constants/Constants"
 
-interface MainPropsType
-{
-    showHeroComponent: boolean,
-    isLoading: boolean
-}
 
-export function Main (
-    {showHeroComponent, isLoading}: MainPropsType 
-): JSX.Element
+export function Main ({ metaData }: { metaData: any }): JSX.Element
 {
     const timeTableData = useContext (TimeTableContext)
 
     return (
         <>
             <NavBar />
-            {showHeroComponent && <Hero />}
+            {!timeTableData?.timeTableData.data && <Hero />}
+            
             {metaData == null ? <Loader isLoading = {true}/> : <Selection metaData={metaData}/>}
+            
+            {/* Timetable */}
             {timeTableData?.timeTableData.loadingState ? <Loader isLoading = {true}/> : 
             <>
                 {timeTableData?.timeTableData.data && <TimeTable data = {timeTableData.timeTableData.data} headTitles = {tableHeadTiles}/>}
             </>}
+
             <Footer />
         </>
     )

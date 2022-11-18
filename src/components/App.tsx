@@ -12,8 +12,11 @@ import type { TimetableInput, TimeTableData } from '../types/typedef'
 export default function App(): JSX.Element
 {
 
-  useGetCredentials (null)
+  useEffect (()=>{
+      useTalkToServer (serverURL + "/metadata").then ((val: any)=> setMetaData(val))
+  }, [])
 
+  
   const [timeTableInput, setTimeTableInput] = useState <TimetableInput> ({
     fall: null,
     semester: null,
@@ -24,20 +27,17 @@ export default function App(): JSX.Element
     data: null,
     loadingState: false
   })
-
-  const [metaData, setMetaData]:[any, React.Dispatch<React.SetStateAction<any>>] 
-              = useState <any>(null)
-
-  useEffect (()=>{
-      useTalkToServer (serverURL + "/metadata").then ((val: any)=> setMetaData(val))
-  }, [])
+  
+  const [metaData, setMetaData]:[any, React.Dispatch<React.SetStateAction<any>>] = useState <any>(null)
+  
+  useGetCredentials (null)
   
   return (
     <>  
-     <TimeTableInputContext.Provider value={{timeTableInput, setTimeTableInput}}>
-       <TimeTableContext.Provider  value={{timeTableData, setTimeTableData}}>
+      <TimeTableInputContext.Provider value={{timeTableInput, setTimeTableInput}}>
+        <TimeTableContext.Provider  value={{timeTableData, setTimeTableData}}>
           <Main metaData = {metaData} />
-       </TimeTableContext.Provider>
+        </TimeTableContext.Provider>
       </TimeTableInputContext.Provider>
     </>
   )

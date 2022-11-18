@@ -18,7 +18,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
     const userInput = useContext (TimeTableInputContext)
     const timeTableHook = useContext(TimeTableContext)
     const [currTabIdx, setCurrTabIdx] = useState <number> (0)
-
+    
     return (
         <>
         <Transitions.SlideFade in = {true}>

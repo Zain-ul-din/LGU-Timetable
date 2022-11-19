@@ -1,5 +1,5 @@
 /*
-    Main Page
+    Main Page 
 */
 import { useContext } from "react"
 import { TimeTableContext } from "../Hooks/TimeTableContext"
@@ -22,16 +22,18 @@ export default function Main ({ metaData }: { metaData: any }): JSX.Element
         <>
             <NavBar />
             {!timeTableData?.timeTableData.data && <Hero />}
+            {metaData == null ? 
+                <Loader isLoading = {true}/> : 
+                <Selection metaData={metaData}/>}
             
-            {metaData == null ? <Loader isLoading = {true}/> : <Selection metaData={metaData}/>}
-            
-            {/* Timetable */}
             {timeTableData?.timeTableData.loadingState ? <Loader isLoading = {true}/> : 
             <>
-                {timeTableData?.timeTableData.data && <TimeTable data = {timeTableData.timeTableData.data} headTitles = {tableHeadTiles}/>}
+                {timeTableData?.timeTableData.data &&
+                    <TimeTable data = {timeTableData.timeTableData.data} headTitles = {tableHeadTiles}/>}
             </>}
 
             <Footer />
         </>
     )
 }
+

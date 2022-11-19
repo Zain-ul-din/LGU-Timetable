@@ -1,21 +1,19 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+title: BUG
+labels: bug, documentation, good first issue, help wanted
+assignees: Zain-ul-din
 
 ---
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Note!**
+Discuss the issue with community members. Don't mention any issue without the permission of a trusted member.
+
+## How to mention issue :-
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

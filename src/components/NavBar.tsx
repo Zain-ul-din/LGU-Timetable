@@ -1,7 +1,7 @@
 import { firebase } from '../lib/Firebase'
 import { GoogleAuthProvider, signInWithPopup, signOut, UserCredential } from 'firebase/auth';
-import type { User } from 'firebase/auth';
-import {useState, useEffect} from 'react'
+import { useContext } from 'react'
+import { UserCredentialsContext } from '../Hooks/UserCredentialsContext';
 import { addLoggedInUser } from '../lib/FirebaseAnalysis';
 
 import {
@@ -24,7 +24,6 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { GITHUB_URLS } from '../constants/Constants';
 import { dummyAvatar } from '../constants/Constants';
 
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 /**
  * Renders Header
@@ -33,11 +32,8 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 export default function NavBar (): JSX.Element {
 
    	const { colorMode, toggleColorMode } = useColorMode();
-	const [user, setUser] = useState<User | null| undefined> (null)
-	const [loggedInUser,,] = useAuthState (firebase.firebaseAuth)
+	const userCredentials = useContext (UserCredentialsContext)
 
-	useEffect (()=> setUser (loggedInUser) ,[loggedInUser])
-	
   	return (
     	<>
       		<Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -66,7 +62,7 @@ export default function NavBar (): JSX.Element {
 							>
                 			  	<Avatar 
 							  		size={'sm'} 
-							  		src={user ? user.photoURL ? user.photoURL : dummyAvatar :dummyAvatar}
+							  		src={userCredentials?.user ? userCredentials.user.photoURL ? userCredentials?.user.photoURL : dummyAvatar :dummyAvatar}
                 			  	/>
 							</MenuButton>
 
@@ -77,12 +73,12 @@ export default function NavBar (): JSX.Element {
 								<Center>
                 					<Avatar
                 					  size={'2xl'}
-                					  src={user ? user.photoURL ? user.photoURL : dummyAvatar :dummyAvatar}
+                					  src={userCredentials?.user ? userCredentials?.user.photoURL ? userCredentials?.user.photoURL : dummyAvatar :dummyAvatar}
                 					/>
                 				</Center><br />
 
 								<Center>
-            						<p>{user ? user.displayName : 'Anonymous'}</p>
+            						<p>{userCredentials?.user ? userCredentials?.user.displayName : 'Anonymous'}</p>
           						</Center><br />
 								<MenuDivider />
 
@@ -93,19 +89,19 @@ export default function NavBar (): JSX.Element {
 								  <a href = {`${GITHUB_URLS.frontend}`} target = "_blank">Contribute</a>
 								</MenuItem>
           						<MenuItem 
-								    color= {user ? 'red.400': 'blue.400'}
+								    color= {userCredentials?.user ? 'red.400': 'blue.400'}
 									onClick = {(e)=>{
-										if (loggedInUser)
+										if (userCredentials?.user != null)
 										{
 											signOut (firebase.firebaseAuth)
-											setUser (null)
+											userCredentials?.setUser (null)
 										}
 										else 
 										{
 											signInWithPopup (firebase.firebaseAuth, new GoogleAuthProvider())
 											.then ((data: UserCredential)=> addLoggedInUser (data.user))
 										}
-								}}>{user ? 'Logout': 'Login'}</MenuItem>
+								}}>{userCredentials?.user ? 'Logout': 'Login'}</MenuItem>
         					</MenuList>
         				</Menu>
         			</Stack>

@@ -10,13 +10,14 @@ import Admin from '../routes/Admin'
 
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
 import { TimeTableContext } from '../Hooks/TimeTableContext'
-import { UserCredentialsContext } from '../Hooks/UserCredentialsContext';
+import { UserCredentialsContext } from '../Hooks/UserCredentialsContext'
+import { useUserCredentials } from '../Hooks/hooks'
 import { useTalkToServer } from '../Hooks/hooks'
 import { useGetCredentials } from '../Hooks/hooks'
 import { serverURL } from '../constants/Constants'
 
 import type { TimetableInput, TimeTableData } from '../types/typedef'
-import type { User } from 'firebase/auth'
+
 
 export default function App(): JSX.Element
 {
@@ -37,7 +38,7 @@ export default function App(): JSX.Element
   })
   
   const [metaData, setMetaData]:[any, React.Dispatch<React.SetStateAction<any>>] = useState <any>(null)
-  const [user, setUser] = useState <User | null> (null)
+  const [user, setUser] = useUserCredentials ()
   
   useGetCredentials (null)
   

@@ -1,11 +1,15 @@
 ---
 name: Feature request
 about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+title: Feature request
+labels: enhancement, good first issue, wontfix
+assignees: Zain-ul-din
 
 ---
+
+## Note!
+> if you have any questions ask in [discussion](https://github.com/Zain-ul-din/LGU-BetterTimeTable/discussions)
+##
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]

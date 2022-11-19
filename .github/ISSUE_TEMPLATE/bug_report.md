@@ -1,19 +1,18 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: BUG
+title: Title
 labels: bug, documentation, good first issue, help wanted
 assignees: Zain-ul-din
 
 ---
 
+## Note!
+> if you have any questions ask in [discussion](https://github.com/Zain-ul-din/LGU-BetterTimeTable/discussions)
+
+
 **Describe the bug**
 A clear and concise description of what the bug is.
-
-**Note!**
-Discuss the issue with community members. Don't mention any issue without the permission of a trusted member.
-
-## How to mention issue :-
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.

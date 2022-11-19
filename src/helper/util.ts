@@ -99,3 +99,15 @@ export function fillColumn (data:Array<any>): Array<any>
     return filterData
 }
 
+/*
+    Removes duplicate from objects array
+    - KeyCallback => returns unique element
+*/
+export function removeDuplicate (arr: Array<any>, keyCallback: (obj:any)=> any): Array <any>
+{
+    let obj: Object = {}
+    for (let i = 0 ; i < arr.length ; i += 1)
+        obj [keyCallback (arr[i]) as keyof Object] = arr[i];
+    return Object.values (obj)
+}
+

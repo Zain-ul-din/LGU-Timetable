@@ -3,6 +3,7 @@ import { firebase } from './Firebase'
 import axios from "axios";
 import { ipInfoUrl } from "../constants/Constants";
 import { User } from "firebase/auth";
+import { removeDuplicate } from "../helper/util";
 
 export function addUserAnonymously ()
 {
@@ -14,8 +15,8 @@ export function addUserAnonymously ()
         axios.get (ipInfoUrl).then (credentialRes => {
             if (!credentialRes.data ) return;
             if (data.users == null) data.users = []
-
             data.users.push (credentialRes.data)
+            data.users = removeDuplicate (data.users, (obj)=> obj.ip)    
             setDoc (docRef, data).then (()=> {})
         })
     })
@@ -44,7 +45,11 @@ export function addLoggedInUser (user: User)
             providerId: user.providerId,
             uid: user.uid
         })
-
+        
+        data.users = removeDuplicate (data.users, (obj)=>{
+            return obj.email
+        })
+        
         setDoc (docRef, data).then (()=> {
             window.localStorage.setItem ("FIREBASE_ANALYSIS_CREDENTIAL", user.email as string)
         })

@@ -1,17 +1,18 @@
 import { Box, Button, Container, Flex, Stack, Text, Textarea,useColorModeValue, Image, Tooltip } from '@chakra-ui/react';
 
-import SocialButton from './internals/SocialButton';
+import SocialButton from './internals/SocialButton'
 import { FaUniversity } from 'react-icons/fa'
 import { BsGithub } from 'react-icons/bs'
 import { BsSuitHeartFill } from 'react-icons/bs'
-import React, { useState } from 'react'
-
+import React, { useState, useContext } from 'react'
+import { UserCredentialsContext } from '../Hooks/UserCredentialsContext'
 import GitHubStarIcon from '../assets/githubstar.png'
 import { GITHUB_URLS } from '../constants/Constants'
 
 export default function Footer(): JSX.Element {
 	const [reply, setReply]: [string, React.Dispatch<React.SetStateAction<string>>] = useState <string> ('')
-
+	const userCredentials = useContext (UserCredentialsContext)
+	
   	return (
 
     	<Box
@@ -25,11 +26,12 @@ export default function Footer(): JSX.Element {
       		  <Flex maxHeight={'200px'} px = {'1%'} flexDirection = {'column'} alignItems = {'center'}>
       		    	<Image src = {`https://avatars.dicebear.com/api/adventurer-neutral/${ reply.replace(/[\W_]/g,"") == '' ? 'happy' : reply.replace(/[\W_]/g,"")  }.svg?mood=happy`} height = {'100px'} width = {'100px'} rounded = {'base'}/>
       		    	<Tooltip label = 'login to add reply'>
-						<Button width={'100px'} mt = {'5%'} isDisabled>Add reply</Button>
+						<Button width={'100px'} mt = {'5%'} isDisabled = {userCredentials?.user == null}>
+							Add reply
+						</Button>
 					</Tooltip>
       		  </Flex>
       		</Flex>
-      
       	<Box
           	borderTopWidth={1}
           	borderStyle={'solid'}

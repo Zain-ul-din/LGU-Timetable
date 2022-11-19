@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Main from '../routes/Main'
 import Admin from '../routes/Admin'
+import Page404 from '../routes/Page404'
 
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
 import { TimeTableContext } from '../Hooks/TimeTableContext'
@@ -53,6 +54,7 @@ export default function App(): JSX.Element
               <Routes>
                 <Route index element={<Main metaData={metaData}/>} />
                 <Route path='/admin' element = {<Admin/>} />
+                <Route path='*' element = {<Page404/>} />
               </Routes>
             </BrowserRouter>
 

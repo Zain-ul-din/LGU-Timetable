@@ -43,12 +43,11 @@ export function addLoggedInUser (user: User)
             phoneNumber: user.phoneNumber,
             photoURL: user.photoURL,
             providerId: user.providerId,
-            uid: user.uid
+            uid: user.uid,
+            comment: '' 
         })
         
-        data.users = removeDuplicate (data.users, (obj)=>{
-            return obj.email
-        })
+        data.users = removeDuplicate (data.users, (obj)=> obj.email)
         
         setDoc (docRef, data).then (()=> {
             window.localStorage.setItem ("FIREBASE_ANALYSIS_CREDENTIAL", user.email as string)

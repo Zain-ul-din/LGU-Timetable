@@ -37,7 +37,7 @@ export default function NavBar (): JSX.Element {
 	const [loggedInUser,,] = useAuthState (firebase.firebaseAuth)
 
 	useEffect (()=> setUser (loggedInUser) ,[loggedInUser])
-
+	
   	return (
     	<>
       		<Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>

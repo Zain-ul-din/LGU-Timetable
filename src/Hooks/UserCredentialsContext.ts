@@ -4,8 +4,8 @@ import type { User } from 'firebase/auth'
 
 interface UserCredentialsHook
 {
-    user: User,
-    setUser: React.Dispatch <React.SetStateAction<User>>
+    user: User | null,
+    setUser: React.Dispatch <React.SetStateAction<User | null>>
 }
 
-export const userCredentialsContext = createContext <UserCredentialsHook | null> (null)
+export const UserCredentialsContext = createContext <UserCredentialsHook | null> (null)

@@ -10,11 +10,13 @@ import Admin from '../routes/Admin'
 
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
 import { TimeTableContext } from '../Hooks/TimeTableContext'
+import { UserCredentialsContext } from '../Hooks/UserCredentialsContext';
 import { useTalkToServer } from '../Hooks/hooks'
 import { useGetCredentials } from '../Hooks/hooks'
 import { serverURL } from '../constants/Constants'
 
 import type { TimetableInput, TimeTableData } from '../types/typedef'
+import type { User } from 'firebase/auth'
 
 export default function App(): JSX.Element
 {
@@ -23,7 +25,6 @@ export default function App(): JSX.Element
       useTalkToServer (serverURL + "/metadata").then ((val: any)=> setMetaData(val))
   }, [])
 
-  
   const [timeTableInput, setTimeTableInput] = useState <TimetableInput> ({
     fall: null,
     semester: null,
@@ -36,6 +37,7 @@ export default function App(): JSX.Element
   })
   
   const [metaData, setMetaData]:[any, React.Dispatch<React.SetStateAction<any>>] = useState <any>(null)
+  const [user, setUser] = useState <User | null> (null)
   
   useGetCredentials (null)
   
@@ -43,16 +45,18 @@ export default function App(): JSX.Element
     <>  
       <TimeTableInputContext.Provider value={{timeTableInput, setTimeTableInput}}>
         <TimeTableContext.Provider  value={{timeTableData, setTimeTableData}}>
-          
-          {/* Router setup */}
-          <BrowserRouter>
-            <Routes>
-              <Route index element={<Main metaData={metaData}/>} />
-              <Route path='/admin' element = {<Admin/>} />
-            </Routes>
-          </BrowserRouter>
+          <UserCredentialsContext.Provider value={{user, setUser}}>
+            
+            {/* Router setup */}
+            <BrowserRouter>
+              <Routes>
+                <Route index element={<Main metaData={metaData}/>} />
+                <Route path='/admin' element = {<Admin/>} />
+              </Routes>
+            </BrowserRouter>
 
-          {/* <Main metaData = {metaData} /> */}
+            {/* <Main metaData = {metaData} /> */}
+          </UserCredentialsContext.Provider>
         </TimeTableContext.Provider>
       </TimeTableInputContext.Provider>
     </>

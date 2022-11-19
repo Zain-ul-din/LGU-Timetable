@@ -1,3 +1,7 @@
+/*
+  Entry point
+*/
+
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 

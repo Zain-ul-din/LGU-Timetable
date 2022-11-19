@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Main from '../routes/Main'
+import Admin from '../routes/Admin'
 
 import { TimeTableInputContext } from '../Hooks/TimeTableInputContext'
 import { TimeTableContext } from '../Hooks/TimeTableContext'
@@ -36,12 +39,23 @@ export default function App(): JSX.Element
     <>  
       <TimeTableInputContext.Provider value={{timeTableInput, setTimeTableInput}}>
         <TimeTableContext.Provider  value={{timeTableData, setTimeTableData}}>
-          <Main metaData = {metaData} />
+          
+          {/* Router setup */}
+          <BrowserRouter>
+            <Routes>
+              <Route index element={<Main metaData={metaData}/>} />
+              <Route path='/admin' element = {<Admin/>} />
+            </Routes>
+          </BrowserRouter>
+
+          {/* <Main metaData = {metaData} /> */}
         </TimeTableContext.Provider>
       </TimeTableInputContext.Provider>
     </>
   )
 }
+
+
 
 
 

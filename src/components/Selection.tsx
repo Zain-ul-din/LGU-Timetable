@@ -7,6 +7,7 @@ import { MenuStyle, TabStyle, Transitions } from '../style/Style'
 
 import { serverURL } from '../constants/Constants'
 import { useTalkToServer } from '../Hooks/hooks'
+import { fillMissingDays } from '../helper/util'
 
 const tabTitles = [
     'Semester', 'Program', 'Section'
@@ -97,8 +98,9 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
                                     // send web request
                                     let input = userInput.timeTableInput
                                     timeTableHook?.setTimeTableData (Object.create ({data: null, loadingState: true}))
-                                    useTalkToServer (serverURL + `/timetable?semester=${input.fall?.at(0)?.toLocaleLowerCase()}&degree=${input.semester}&section=${input.section}`).then ((data)=>{
-                                        timeTableHook?.setTimeTableData (Object.create({data, loadingState: false}))
+                                    useTalkToServer (serverURL + `/timetable?semester=${input.fall?.at(0)?.toLocaleLowerCase()}&degree=${input.semester}&section=${input.section}`).then ((data: any)=>{
+                                        const filterData:any = fillMissingDays (data)
+                                        timeTableHook?.setTimeTableData (Object.create({data: filterData, loadingState: false}))
                                         window.scrollTo (0, document.body.scrollHeight)
                                     })
                                 }}
@@ -132,7 +134,7 @@ function DropDown (
             <MenuStyle.MenuButton as = {Button} rightIcon = {<ChevronDownIcon/>} textOverflow = {'clip'} fontSize = {{base: 'xs', sm:'md',lg:'md',}}>
                {selectedItem}
             </MenuStyle.MenuButton>
-            <MenuStyle.MenuList onChange={(e)=> {console.log (e.target)}} className = 'dropDown' overflowY = {'scroll'} maxH = {'80'}>
+            <MenuStyle.MenuList className = 'dropDown' overflowY = {'scroll'} maxH = {'80'}>
                 {menuItems && menuItems?.map ( (item: string, idx: number): JSX.Element => 
                     <MenuStyle.MenuItem onClick={(e)=> onClick (item, setSelectedItem) } key = {idx}>
                         {item}

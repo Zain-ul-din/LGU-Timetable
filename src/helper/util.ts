@@ -1,4 +1,5 @@
 import { TimeType } from "../types/typedef";
+import { daysName } from "../constants/Constants"
 
 /**
  * Get Table ColSpan base on startTime - endTime diff
@@ -100,6 +101,20 @@ export function fillColumn (data:Array<any>): Array<any>
 }
 
 /*
+    Fills all days for free slot render
+*/
+export function fillMissingDays (data: any): any
+{
+    daysName.forEach ((day)=>{
+        if (data [day] == undefined) 
+        {
+            data [day] = null;
+        }
+    })
+    return data
+}
+
+/*
     Removes duplicate from objects array
     - KeyCallback => returns unique element
 */
@@ -110,4 +125,3 @@ export function removeDuplicate (arr: Array<any>, keyCallback: (obj:any)=> any):
         obj [keyCallback (arr[i]) as keyof Object] = arr[i];
     return Object.values (obj)
 }
-

@@ -20,7 +20,7 @@ export default function TimeTable (
     { headTitles, data } : ITimeTableProps
 ): JSX.Element
 {
-
+  
     return (
         <>
             <TableStyle.TableContainer my = {5} p = {2}>
@@ -83,7 +83,7 @@ function TimeTableHead ( {titiles} : {titiles : Array <LectureTime>} ): JSX.Elem
  */
 function TimeTableCell ({day, colCount, metaData}: {day:string, colCount:number , metaData:any}): JSX.Element
 {    
-
+    
     return ( 
         <>
             <TableStyle.Tr>

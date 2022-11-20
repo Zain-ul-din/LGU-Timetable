@@ -16,7 +16,6 @@ import { useUserCredentials } from '../Hooks/hooks'
 import { useTalkToServer } from '../Hooks/hooks'
 import { useGetCredentials } from '../Hooks/hooks'
 import { serverURL } from '../constants/Constants'
-
 import type { TimetableInput, TimeTableData } from '../types/typedef'
 
 
@@ -24,7 +23,7 @@ export default function App(): JSX.Element
 {
 
   useEffect (()=>{
-      useTalkToServer (serverURL + "/metadata").then ((val: any)=> setMetaData(val))
+    useTalkToServer (serverURL + "/metadata").then ((val: any)=> setMetaData(val))
   }, [])
 
   const [timeTableInput, setTimeTableInput] = useState <TimetableInput> ({
@@ -37,7 +36,7 @@ export default function App(): JSX.Element
     data: null,
     loadingState: false
   })
-  
+
   const [metaData, setMetaData]:[any, React.Dispatch<React.SetStateAction<any>>] = useState <any>(null)
   const [user, setUser] = useUserCredentials ()
   

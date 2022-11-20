@@ -34,3 +34,7 @@ export const dummyAvatar = 'https://avatars.dicebear.com/api/male/username.svg'
 export const serverURL: string = "https://lgu-timetable-api.deta.dev"
 export const ipInfoUrl: string = "https://ipinfo.io/?token=3110b89719b583"
 
+export const daysName =
+  ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+

@@ -10,12 +10,16 @@ import {
 } from '@chakra-ui/react';
 
 
-
+import WebGL from './internals/WebGL';
 
 export default function Hero() {
+    
     return (
       <>
-        <Container maxW={'4xl'}>
+        <WebGL />
+        <Container 
+          maxW={'4xl'} 
+          position = {{lg: 'absolute', md: 'absolute', sm: 'relative', base: 'relative'}} top = {'0%'} left = {'0%'} right = {'0%'} py = {'12%'}>
           <Stack
             as={Box}
             textAlign={'center'}
@@ -33,7 +37,14 @@ export default function Hero() {
                 bgClip='text'
                 fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
                 fontWeight='extrabold'
-              >Timetable</Text>
+              >Timetable</Text> <br />
+              <Text
+                bgGradient='linear(to-r, teal.500, green.500)'
+                bgClip='text'
+                fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
+                fontWeight='extrabold'
+              >#LGU STAND WITH CLIMATE CHANGE</Text>
+
             </Heading>
             <Text color ={useColorModeValue ('gray.900','gray.400')}>
                 A non-official blazingly 🔥 fast website to access the LGU timetable. Made with ❤️

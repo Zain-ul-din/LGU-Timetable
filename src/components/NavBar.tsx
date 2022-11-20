@@ -24,7 +24,6 @@ import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { GITHUB_URLS } from '../constants/Constants';
 import { dummyAvatar } from '../constants/Constants';
 
-import WebGL from './internals/WebGl';
 
 /**
  * Renders Header
@@ -109,9 +108,6 @@ export default function NavBar (): JSX.Element {
     	    	</Flex>
     		</Flex>
        </Box>
-	   
-	   {/* Web gl window */}
-	   <WebGL/>
     </>
   );
 }

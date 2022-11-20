@@ -7,12 +7,6 @@ body
 
 
 
-body 
-{
-  min-width: 320px !important;
-}
-
-
 html,body::-webkit-scrollbar {
   width: 1px !important;
 }

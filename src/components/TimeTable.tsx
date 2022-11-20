@@ -4,6 +4,8 @@ import { getColSpan, fillColumn } from '../helper/util'
 
 import type { LectureTime } from '../types/typedef'
 import { IApisResponse } from '../types/typedef'
+import { daysName } from '../constants/Constants'
+
 
 interface ITimeTableProps
 {
@@ -31,16 +33,18 @@ export default function TimeTable (
 
                     {/* Content */}
                     <TableStyle.Tbody>
-                        {Object.entries (data).map ((val: [string, any[] | null], idx: number): JSX.Element => 
-                            <TimeTableCell 
-                                key = {idx}
-                                colCount = {headTitles.length}
-                                day = {val [0]}
-                                metaData = {fillColumn(val [1] as any [])} 
-                            />
-                        )}
+                        {daysName.map ((day:string, idx: number): JSX.Element=>{
+                            const val: any = data [day as keyof Object]
+                            return (
+                                <TimeTableCell 
+                                    key = {idx}
+                                    colCount = {headTitles.length}
+                                    day = {day}
+                                    metaData = {fillColumn(val as any [])} 
+                                />
+                            )
+                        })}
                     </TableStyle.Tbody>
-
                 </TableStyle.Table>
             </TableStyle.TableContainer>
         </>

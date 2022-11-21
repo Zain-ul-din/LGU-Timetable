@@ -7,9 +7,10 @@ import {
   Stack,
   useColorModeValue,
   createIcon,
+  Flex,
 } from '@chakra-ui/react';
 
-
+import earthImage from '../assets/mob_earth.png'
 import WebGL from './internals/WebGL';
 
 export default function Hero() {
@@ -20,6 +21,14 @@ export default function Hero() {
         <Container 
           maxW={'4xl'} 
           position = {{lg: 'absolute', md: 'absolute', sm: 'relative', base: 'relative'}} top = {'0%'} left = {'0%'} right = {'0%'} py = {'12%'}>
+          
+          {/* Mob earth image */}
+          <Flex position = {'absolute'} zIndex = {'-10'} alignItems = {'center'} textAlign = {'center'}  top = {1} p = {10}
+            display = {{lg: 'none', md: 'none', sm: 'flex', base: 'flex'}}
+          >
+            <img className={ useColorModeValue ('mob_earth_img', 'mob_earth_img_dark')}  width={'100%'} height = {'100%'} src = {earthImage}/>
+          </Flex>
+
           <Stack
             as={Box}
             textAlign={'center'}
@@ -41,12 +50,12 @@ export default function Hero() {
               <Text
                 bgGradient='linear(to-r, teal.500, green.500)'
                 bgClip='text'
-                fontSize={{ base: '2xl', sm: '4xl', md: '6xl' }}
+                fontSize={{ base: '2xl', sm: '4xl', md: '5xl' }}
                 fontWeight='extrabold'
               >#LGU STAND WITH CLIMATE CHANGE</Text>
 
             </Heading>
-            <Text color ={useColorModeValue ('gray.900','gray.400')}>
+            <Text color ={useColorModeValue ('black','white')} >
                 A non-official blazingly 🔥 fast website to access the LGU timetable. Made with ❤️
             </Text>
             <Stack

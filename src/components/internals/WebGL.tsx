@@ -112,6 +112,3 @@ export default function WebGL (): JSX.Element
     return <Flex className="web_gl" ref = {mountRef} display = {{lg: 'flex', md: 'flex', sm: 'none', base: 'none'}}></Flex>
 }
 
-
-
-

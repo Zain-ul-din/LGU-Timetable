@@ -56,7 +56,7 @@ export default function Hero() {
               alignSelf={'center'}
               position={'relative'}>
               <Button variant={'link'} colorScheme={'blue'} size={'md'} onClick = {(e)=>{
-                window.scrollTo (0, document.body.scrollHeight)
+                window.scrollTo({ left: 0, top: document.body.scrollHeight, behavior: "smooth" });
               }}>
                 View Timetable
               </Button>

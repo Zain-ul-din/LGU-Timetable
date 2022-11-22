@@ -13,9 +13,9 @@ export default function FreeClassrooms (): JSX.Element
         let hours:string = `${currDate.getHours ()}`.padStart (2, '0')
         let min: string = currDate.getMinutes () >= 30 ? '30' : '00'
         useTalkToServer (`${serverURL}/freerooms/?day=${currDate.getDay ()}&time=${hours}:${min}` )
-        .then (data=> {
+        .then ((data: any)=> {
             setLoading (false)
-            console.log (data)
+            setData (data.data)
         })
     }, [])
 
@@ -25,7 +25,9 @@ export default function FreeClassrooms (): JSX.Element
             <>
                 Apis Response: 
                 {data && data.map ((ele: any, idx: number)=>{
-                    
+                        <h1 key = {idx}>
+                            ele.room
+                        </h1>
                 })}
             </>
         </>

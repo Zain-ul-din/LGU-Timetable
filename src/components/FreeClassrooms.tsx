@@ -11,16 +11,17 @@ export default function FreeClassrooms ()
         let currDate:Date = new Date ()
         let hours:string = `${currDate.getHours ()}`.padStart (2, '0')
         let min: string = currDate.getMinutes () >= 30 ? '30' : '00'
-
+        // `${serverURL}/freerooms/?day=${currDate.getDay ()}&time=${hours}:${min}`
         useTalkToServer (`${serverURL}/freerooms/?day=${currDate.getDay ()}&time=${hours}:${min}` )
-        .then (data=> console.log (data))
-
-        setLoading (false)
+        .then (data=> {
+            setLoading (false)
+            console.log (data)
+        })
     }, [])
 
     return (
         <>
-            {loading? <Loader isLoading = {true}/>  : <> </>}
+            {loading? <Loader isLoading = {true}/>  : <>comming soon...</>}
         </>
     )
 }

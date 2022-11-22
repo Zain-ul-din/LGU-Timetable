@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Main from '../routes/Main'
+import FreeClasses from '../routes/FreeClasses';
 import Admin from '../routes/Admin'
 import Page404 from '../routes/Page404'
 
@@ -52,6 +53,7 @@ export default function App(): JSX.Element
             <BrowserRouter>
               <Routes>
                 <Route index element={<Main metaData={metaData}/>} />
+                <Route path='/freeclassrooms' element={<FreeClasses/>} />
                 <Route path='/admin' element = {<Admin/>} />
                 <Route path='*' element = {<Page404/>} />
               </Routes>

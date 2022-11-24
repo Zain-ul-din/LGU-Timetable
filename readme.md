@@ -8,7 +8,7 @@
   <a href="https://timetable.lgu.edu.pk"><img src="https://user-images.githubusercontent.com/41378765/200201356-6ebba91a-dec8-4314-93ff-3b7268c4274c.png" alt="Lahore Garrison University" width="500"></a>
 <br>
 
-LGU-TimeTable V2 
+LGU-TimeTable
 
 <h5 align="center">
     A non-official blazingly 🔥 fast <a href = 'https://www.lgutimetable.live/'>website</a> to access the 

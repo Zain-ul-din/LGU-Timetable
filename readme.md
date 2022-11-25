@@ -37,10 +37,6 @@ LGU-TimeTable
   >> yarn dev
 ```
 
-# Docs
-
-<a href = 'https://github.com/Zain-ul-din/LGU-Timetable/blob/master/docs/FunctionalRequirements.md'>Functional requirements</a>
-</br>
 
 
 ## Contributors ✨
@@ -57,6 +53,15 @@ LGU-TimeTable
 <p> Show some ❤️ by starring this awesome repository! </p>
 </div>
 
+  ----------------------------------------------------------------------------------------------------------------------------------------------
+  
+<h3 align='left'> Docs </h3>
+
+- <a href = 'https://github.com/Zain-ul-din/LGU-Timetable/blob/master/docs/FunctionalRequirements.md'>Functional requirements</a>
+</br>
+
+------------------------------------------------------------------------------------------------------------------------------------------------- 
+  
 <!-- license -->
 ## License
 

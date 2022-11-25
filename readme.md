@@ -37,6 +37,12 @@ LGU-TimeTable
   >> yarn dev
 ```
 
+# Docs
+
+<a href = 'https://github.com/Zain-ul-din/LGU-Timetable/blob/master/docs/FunctionalRequirements.md'>Functional requirements</a>
+</br>
+
+
 ## Contributors ✨
 
 <a href="https://github.com/Zain-ul-din/LGU-BetterTimeTable/graphs/contributors">

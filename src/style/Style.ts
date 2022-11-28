@@ -3,10 +3,17 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 export const AppStyleProvider = ChakraProvider
 
 const colors = {
-    brand: {
-        900: '#1a365d',
-        800: '#153e75',
-        700: '#2a69ac',
+    gray: {
+        900: '#0f172a',
+        800: '#0f172a',
+        700: '#334155',
+        600: '#475569',
+        500: '#64748b',
+        400: '#94a3b8',
+        300: '#cbd5e1',
+        200: '#e2e8f0',
+        100: '#f1f5f9',
+        50:  '#f8fafc'
     }
 }
 

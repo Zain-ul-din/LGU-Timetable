@@ -61,6 +61,17 @@ LGU-TimeTable
 </br>
 
 ------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+<br>
+
+### About:-
+
+- The LGU Timetable website is a non-official, but incredibly fast and convenient way for students at Lahore Garrison University to access their class schedules.
+- Built using the LGU-TimetableAPI, the website offers instant access to accurate and up-to-date information, allowing students to plan their schedules with ease.
+- With a user-friendly interface and a range of customization options, the LGU Timetable website offers a seamless and efficient way for students to stay organized and on top of their classes.
+- Whether you prefer a light or dark theme, the LGU Timetable website offers a visually appealing and intuitive experience that makes accessing your class schedule a breeze.
+
+##
   
 <!-- license -->
 ## License

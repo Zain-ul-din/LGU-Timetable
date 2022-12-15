@@ -34,7 +34,49 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 
-| Column 1 | Column 2 |     | Column 1 | Column 2 |     | Column 1 | Column 2 |     | Column 1 | Column 2 |
-|----------|----------|     |----------|----------|     |----------|----------|     |----------|----------|      
-| Value 1  | Value 2  |     | Value 1  | Value 2  |     | Value 1  | Value 2  |     | Value 1  | Value 2  |      
-| Value 3  | Value 4  |     | Value 3  | Value 4  |     | Value 3  | Value 4  |     | Value 3  | Value 4  |      
+| Column 1 | Column 2 | 
+|----------|----------|       
+| Value 1  | Value 2  |       
+| Value 3  | Value 4  |       
+
+###
+
+<br>
+
+<table style="float: left;">
+  <tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+  </tr>
+  <tr>
+    <td>Lorem</td>
+    <td>Ipsum</td>
+  </tr>
+  <tr>
+    <td>Dolor</td>
+    <td>Sit</td>
+  </tr>
+  <tr>
+    <td>Amet</td>
+    <td>Consectetur</td>
+  </tr>
+</table>
+<table style="float: left;">
+  <tr>
+    <th>Column 1</th>
+    <th>Column 2</th>
+  </tr>
+  <tr>
+    <td>Lorem</td>
+    <td>Ipsum</td>
+  </tr>
+  <tr>
+    <td>Dolor</td>
+    <td>Sit</td>
+  </tr>
+  <tr>
+    <td>Amet</td>
+    <td>Consectetur</td>
+  </tr>
+</table>
+

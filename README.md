@@ -47,12 +47,19 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 
-| Column 1 | Column 2 | 
-|----------|----------|       
-| Value 1  | Value 2  |       
-| Value 3  | Value 4  |       
+##
 
-###
+<h3>AVAILABLE COMMANDS:- </h3>
+
+|   COMMAND   | DESCRIPTION | 
+|-------------|-------------|       
+| yarn dev    | run the development server.             |       
+| yarn format | fromat code in all working directories. |     
+| yarn build  | build to production.                    | 
+| yarn start  | runs development server on production.  |
+| yarn lint   | runs eslint rules                       |
+
+##
 
 <br>
 

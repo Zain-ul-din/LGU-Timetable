@@ -1,10 +1,10 @@
 # Contribution Guide
 I am very thrilled that you are intrested in contributing in my project. Even a **small contribution** can add value to this project.
 
-#### Convensions used in project
+#### Convensions used in project:
 * read  [```readme.md```](https://github.com/Zain-ul-din/LGU-Timetable#readme) to see naming conventions.
 
-#### For Adding New Feature
+#### For Adding New Feature:
 * Please open an issue before working on an issue so that your afforts don't get waseted. 
 * After the approval you can fork the project and start working on it in a new branch.
 
@@ -16,14 +16,14 @@ git checkout -b <your-branch>
 git push --set-upstream origin <feature-name>
 ```
 
-#### For a BUG
+#### For a BUG:
 * Open an issue, either by using issue template that is created for your ease or by using blank issue.
 
 ##
 
 ## Code of Conduct
 
-### Our Pledge
+### Our Pledge:
 
 In the interest of fostering an open and welcoming environment, we as
 contributors and maintainers pledge to making participation in our project and
@@ -32,7 +32,7 @@ size, disability, ethnicity, gender identity and expression, level of experience
 nationality, personal appearance, race, religion, or sexual identity and
 orientation.
 
-### Our Standards
+### Our Standards:
 
 Examples of behavior that contributes to creating a positive environment
 include:
@@ -54,7 +54,7 @@ advances
 * Other conduct which could reasonably be considered inappropriate in a
   professional setting
 
-### Our Responsibilities
+### Our Responsibilities:
 
 Project maintainers are responsible for clarifying the standards of acceptable
 behavior and are expected to take appropriate and fair corrective action in
@@ -66,7 +66,7 @@ that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
 
-### Scope
+### Scope:
 
 This Code of Conduct applies both within project spaces and in public spaces
 when an individual is representing the project or its community. Examples of
@@ -75,7 +75,7 @@ address, posting via an official social media account, or acting as an appointed
 representative at an online or offline event. Representation of a project may be
 further defined and clarified by project maintainers.
 
-### Enforcement
+### Enforcement:
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported by contacting the project team at [INSERT EMAIL ADDRESS]. All

@@ -29,7 +29,9 @@ run these commands to setup this project on your machine:
   ~ yarn dev
 ```
 
-##
+> read contribution guide-line [here.](https://github.com/Zain-ul-din/LGU-Timetable/blob/master/CONTRIBUTING.MD)
+
+## 
 
 <!-- naming conventions -->
 

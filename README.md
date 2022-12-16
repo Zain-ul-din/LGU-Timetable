@@ -17,7 +17,7 @@
 
 ### Getting Started:
 
-First, run the development server:
+run these commands to setup this project on your machine:
 
 ```bash
   ~ git clone https://github.com/Zain-ul-din/LGU-Timetable.git

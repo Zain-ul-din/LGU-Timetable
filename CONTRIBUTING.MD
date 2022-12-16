@@ -2,7 +2,7 @@
 I am very thrilled that you are intrested in contributing in my project. Even a **small contribution** can add value to this project.
 
 #### Convensions used in project
-read  ```readme.md``` to see naming conventions.
+* read  [```readme.md```](https://github.com/Zain-ul-din/LGU-Timetable#readme) to see naming conventions.
 
 #### For Adding New Feature
 * Please open an issue before working on an issue so that your afforts don't get waseted. 
@@ -91,5 +91,3 @@ members of the project's leadership.
 ##
 
 <div align='center'> <h2>Happy Coding ❤</h2> </div>
-
-##

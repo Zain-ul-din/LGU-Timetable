@@ -33,7 +33,7 @@ run these commands to setup this project on your machine:
 
 <!-- naming conventions -->
 
-### Naming Conventions
+### Naming Conventions:
 
 |      Style     | Category                                                                        | 
 |----------------|---------------------------------------------------------------------------------|       

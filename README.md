@@ -37,11 +37,11 @@ run these commands to setup this project on your machine:
 
 ### Naming Conventions:
 
-|      Style     | Category                                                                        | 
-|----------------|---------------------------------------------------------------------------------|       
-| UpperCamelCase | 	class / interface / type / enum / decorator / type parameters / enum values    |       
-| lowerCamelCase | variable / parameter / function / method / property / module alias / files name |     
-| CONSTANT_CASE  | global constant values                                                          | 
+|      Style     | Category                                                                                       | 
+|----------------|------------------------------------------------------------------------------------------------|       
+| UpperCamelCase | 	class / interface / type / enum / decorator / type parameters / enum values / Components File |       
+| lowerCamelCase | variable / parameter / function / method / property / module alias / files name                |     
+| CONSTANT_CASE  | global constant values                                                                         | 
 
 ##
 

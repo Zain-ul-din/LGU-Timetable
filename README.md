@@ -31,6 +31,18 @@ run these commands to setup this project on your machine:
 
 ##
 
+<!-- naming conventions -->
+
+### Naming Conventions
+
+|      Style     | Category                                                                        | 
+|----------------|---------------------------------------------------------------------------------|       
+| UpperCamelCase | 	class / interface / type / enum / decorator / type parameters / enum values    |       
+| lowerCamelCase | variable / parameter / function / method / property / module alias / files name |     
+| CONSTANT_CASE  | global constant values                                                          | 
+
+##
+
 <!-- commands description -->
 
 

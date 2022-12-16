@@ -7,8 +7,8 @@
 <div align='center'>
 <h3>TECHNOLOGY USED</h3>
 <img src = 'https://user-images.githubusercontent.com/78583049/208113209-bfd8c0a3-e692-4580-bdd7-b51226b2abd2.svg' width = '150px' height = '150px'/>
+<img src = 'https://user-images.githubusercontent.com/78583049/208157431-06f67a55-7365-4d49-b4b3-4164a8cb24f8.svg' width = '150px' height = '150px'/>
 <img src = 'https://user-images.githubusercontent.com/78583049/208114006-e5689598-cc0f-4a07-88c3-4add1c8094d7.svg' width = '150px' height = '150px'/>
-<img src = 'https://user-images.githubusercontent.com/78583049/208124689-586db7d1-f232-4add-ad78-f346261a7d47.svg' width = '150px' height = '150px'/>
 </div>
 
 ##

@@ -90,4 +90,8 @@ members of the project's leadership.
 
 ##
 
-<div align='center'> <h2>Happy Coding ❤</h2> </div>
+<div align='center'>
+    <h3>Happy Coding ❤ </h3>
+</div>
+
+##

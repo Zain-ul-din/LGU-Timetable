@@ -11,8 +11,6 @@
 <img src = 'https://user-images.githubusercontent.com/78583049/208114006-e5689598-cc0f-4a07-88c3-4add1c8094d7.svg' width = '150px' height = '150px'/>
 </div>
 
-##
-
 <!-- Get Started Guide -->
 
 ## Getting Started

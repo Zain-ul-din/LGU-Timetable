@@ -81,6 +81,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## License
 
+<div align='center'>
 MIT - ✔️ Commercial use ✔️ Modification ✔️ Distribution ✔️ Private use
+</div>
 
 ##

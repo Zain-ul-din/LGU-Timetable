@@ -34,7 +34,7 @@ First, run the development server:
 <!-- commands description -->
 
 
-<h3>AVAILABLE COMMANDS:- </h3>
+### Available Commands: 
 
 |   COMMAND   | DESCRIPTION | 
 |-------------|-------------|       

@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev":    "next dev",
+    "dev": "next dev",
     "format": "prettier --write ./pages",
-    "build":  "next build",
-    "start":  "next start",
-    "lint":   "next lint"
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.0",
     "@next/font": "13.0.7",
     "@types/node": "18.11.15",
     "@types/react": "18.0.26",

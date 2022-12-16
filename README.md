@@ -1,3 +1,16 @@
+
+##
+### 
+
+<div align='center'>
+<h3>TECHNOLOGY USED</h3>
+<img src = 'https://user-images.githubusercontent.com/78583049/208113209-bfd8c0a3-e692-4580-bdd7-b51226b2abd2.svg' width = '150px' height = '150px'/>
+<img src = 'https://user-images.githubusercontent.com/78583049/208115254-3b69803f-c8f0-4bf9-bb54-f57b2f817453.svg' width = '134px' height = '130px'/>
+<img src = 'https://user-images.githubusercontent.com/78583049/208114006-e5689598-cc0f-4a07-88c3-4add1c8094d7.svg' width = '150px' height = '150px'/>
+</div>
+
+##
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

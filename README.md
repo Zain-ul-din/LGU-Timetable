@@ -67,42 +67,20 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 
-<br>
 
-<table style="float: left;">
-  <tr>
-    <th>Column 1</th>
-    <th>Column 2</th>
-  </tr>
-  <tr>
-    <td>Lorem</td>
-    <td>Ipsum</td>
-  </tr>
-  <tr>
-    <td>Dolor</td>
-    <td>Sit</td>
-  </tr>
-  <tr>
-    <td>Amet</td>
-    <td>Consectetur</td>
-  </tr>
-</table>
-<table style="float: left;">
-  <tr>
-    <th>Column 1</th>
-    <th>Column 2</th>
-  </tr>
-  <tr>
-    <td>Lorem</td>
-    <td>Ipsum</td>
-  </tr>
-  <tr>
-    <td>Dolor</td>
-    <td>Sit</td>
-  </tr>
-  <tr>
-    <td>Amet</td>
-    <td>Consectetur</td>
-  </tr>
-</table>
+<!-- about -->
 
+##
+
+<div align="center">
+<h4 font-weight="bold">This repository is maintained by <a href="https://github.com/Zain-ul-din">Zain-Ul-Din</a></h4>
+<p> Show some ❤️ by starring this awesome repository! </p>
+</div>
+
+<!-- license -->
+
+## License
+
+MIT - ✔️ Commercial use ✔️ Modification ✔️ Distribution ✔️ Private use
+
+##

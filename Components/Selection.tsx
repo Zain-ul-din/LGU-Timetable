@@ -1,13 +1,13 @@
 import Style from '../styles/Home.module.css';
 import { motion } from 'framer-motion';
-/*Helper Functions */
 
+/*Helper Functions */
 function Card({ title }: { title: string }) {
     return (
         <>
             <motion.li
-                className={`bg-slate-300 shadow-xl rounded-lg cursor-pointer ${Style.selection}`}
-                whileHover={{ scale: 1.05 }}
+                className={`hover:bg-blue-500 hover:ring-blue-400 hover:shadow-xl shadow-lg ring-1 ring-slate-200 rounded-lg cursor-pointer ${Style.selection}`}
+                whileHover={{ scale: 1.02 }}
                 transition={{ type: 'tween' }}
             >
                 <div className={`h-48 flex justify-center align-middle p-4`}>
@@ -20,7 +20,7 @@ function Card({ title }: { title: string }) {
 
 export default function Selection() {
     return (
-        <div className={`lg:px-60 md:px-24 sm:px-16 lg:p-8 md:p-4 sm:p-2 base:p-2`}>
+        <div className={`bg-slate-50 lg:px-60 md:px-24 sm:px-16 lg:p-8 md:p-4 sm:p-2 base:p-2`}>
             <ul
                 className={`grid md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 base:grid-cols-1 gap-5`}
             >

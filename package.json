@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "format": "prettier --write ./pages",
+    "format": "prettier --write ./pages && prettier --write ./components",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

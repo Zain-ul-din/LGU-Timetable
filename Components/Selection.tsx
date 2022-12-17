@@ -6,7 +6,7 @@ function Card({ title }: { title: string }) {
     return (
         <>
             <motion.li
-                className={`hover:bg-blue-500 hover:ring-blue-400 hover:shadow-xl shadow-lg ring-1 ring-slate-200 rounded-lg cursor-pointer ${Style.selection}`}
+                className={`hover:bg-blue-300 hover:ring-blue-400 hover:shadow-xl shadow-lg ring-1 ring-slate-200 bg-white rounded-lg cursor-pointer ${Style.selection}`}
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: 'tween' }}
             >
@@ -20,9 +20,11 @@ function Card({ title }: { title: string }) {
 
 export default function Selection() {
     return (
-        <div className={`bg-slate-50 lg:px-60 md:px-24 sm:px-16 lg:p-8 md:p-4 sm:p-2 base:p-2`}>
+        <div
+            className={`lg:px-60 md:px-24 sm:px-16 lg:p-8 md:p-4 sm:p-2 base:p-2 rounded-xl`}
+        >
             <ul
-                className={`grid md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 base:grid-cols-1 gap-5`}
+                className={`grid md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 base:grid-cols-1 gap-5 p-2`}
             >
                 {['Time Table', 'Free Classrooms', 'About us', 'Hall of fame'].map(
                     (title: string, key: number) => (

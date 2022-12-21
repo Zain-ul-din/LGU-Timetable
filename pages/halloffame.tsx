@@ -1,5 +1,3 @@
-export default function HallOfFame () {
-    return (
-        <>Hall of fame</>
-    )
+export default function HallOfFame() {
+    return <>Hall of fame</>;
 }

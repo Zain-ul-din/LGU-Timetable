@@ -1,5 +1,3 @@
-export default function Timetable () {
-    return (
-        <>Time table</>
-    )
+export default function Timetable() {
+    return <>Time table</>;
 }

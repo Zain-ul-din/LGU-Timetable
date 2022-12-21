@@ -1,5 +1,3 @@
-export default function FreeClassRooms () {
-    return (
-        <>Free classrooms</>
-    )
+export default function FreeClassRooms() {
+    return <>Free classrooms</>;
 }

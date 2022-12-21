@@ -14,18 +14,39 @@ body {
     max-height: 100%;
     min-height: 100%;
     border-radius: 2rem;
-    background: inherit;
-    background-color: white;
+    /* background-color: rgba(255, 255, 255, 0.719); */
+    background-color: #bfdbfe;
+    /* background-image: url(/images/waves.svg); */
+    z-index: -99;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(50px);
+    filter: blur(50px);
+    z-index: -1;
 }
 
 @media (max-width:300px) {
     body {
-        padding: 2px;
+        padding: 0px;
     }
 }
 
 @media (max-width:600px) {
     body {
-        padding: 8px;
+        padding:6px;
     }
+}
+
+.main-content {
+    background-image: url(/images/waves.svg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

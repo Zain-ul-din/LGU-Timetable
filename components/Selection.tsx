@@ -22,8 +22,8 @@ const selectionMetaData: Array<SelectionProps> = [
     { title: 'About us', imgUrl: '/images/about_us_logo.png', brightNess: 1, href: '/aboutus' },
     {
         title: 'Hall of fame',
-        imgUrl: '/images/about_us_logo.png',
-        brightNess: 1,
+        imgUrl: '/images/hall_of_fame_logo.png',
+        brightNess: 1.1,
         href: '/halloffame'
     }
 ];

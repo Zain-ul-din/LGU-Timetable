@@ -1,8 +1,20 @@
 import Style from '../styles/Home.module.css';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+
+type SelectionProps = { title: string, imgUrl: string, brightNess: number, href: string };
+
+/* Meta Data */
+const selectionMetaData: Array <SelectionProps> = [
+    {title: 'Time Table', imgUrl: '/images/timetable_logo.png', brightNess: 1.2, href: '/timetable'},
+    {title: 'Free Classrooms', imgUrl: '/images/free_classrooms_logo.png', brightNess: 1, href: '/freeclassrooms'},
+    {title: 'About us', imgUrl: '/images/about_us_logo.png', brightNess: 1, href: '/aboutus'},
+    {title: 'Hall of fame', imgUrl: '/images/about_us_logo.png', brightNess: 1, href: '/halloffame'},
+]
 
 /*Helper Functions */
-function Card({ title }: { title: string }) {
+function Card(props:SelectionProps) {
     return (
         <>
             <motion.li
@@ -10,9 +22,14 @@ function Card({ title }: { title: string }) {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: 'tween' }}
             >
-                <div className={`h-48 flex justify-center align-middle p-4`}>
-                    <h1 className={`text-xl`}>{title}</h1>
-                </div>
+                <Link href={props.href}>
+                    <div className={`h-48 flex justify-center p-4 flex-col align-middle items-center`}>
+                        <div>
+                            <Image src = {props.imgUrl} width={400} alt = 'loading...' height={300} style={{ width: '10rem', filter: `brightness(${props.brightNess})` }} className = {''}/>
+                        </div>
+                        <h1 className={`text-xl`}>{props.title}</h1>
+                    </div>
+                </Link>
             </motion.li>
         </>
     );
@@ -26,9 +43,9 @@ export default function Selection() {
             <ul
                 className={`grid md:grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 base:grid-cols-1 gap-5 p-2`}
             >
-                {['Time Table', 'Free Classrooms', 'About us', 'Hall of fame'].map(
-                    (title: string, key: number) => (
-                        <Card key={key} title={title} />
+                {selectionMetaData.map(
+                    (prop: SelectionProps, key: number) => (
+                        <Card key={key} {...prop} />
                     )
                 )}
             </ul>

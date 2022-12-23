@@ -2,9 +2,12 @@
     note! if you getting `unknown rule at css` warning to fix this, 
     visit here: https://stackoverflow.com/questions/47607602/how-to-add-a-tailwind-css-rule-to-css-checker
 */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import 'bar-of-progress.css';
 
 body {
     position: relative;
@@ -15,7 +18,7 @@ body {
     min-height: 100%;
     border-radius: 2rem;
     /* background-color: rgba(255, 255, 255, 0.719); */
-    background-color: #bfdbfe;
+    background-color: #bfdbfe68;
     /* background-image: url(/images/waves.svg); */
     z-index: -99;
 }
@@ -50,3 +53,4 @@ body::before {
     background-repeat: no-repeat;
     background-size: cover;
 }
+

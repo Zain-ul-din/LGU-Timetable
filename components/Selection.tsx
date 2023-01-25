@@ -49,7 +49,11 @@ function Card(props: SelectionProps) {
                                 }}
                             />
                         </div>
-                        <h1 className={`text-xs outline-gray-800 outline-2 font-extralight text-white`}>{props.title.toLocaleUpperCase()}</h1>
+                        <h1
+                            className={`text-xs outline-gray-800 outline-2 font-extralight text-white`}
+                        >
+                            {props.title.toLocaleUpperCase()}
+                        </h1>
                     </div>
                 </Link>
             </li>

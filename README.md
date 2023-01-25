@@ -11,7 +11,3 @@
  >> yarn
  >> yarn dev
 ```
-
-
-### Happy Coding ...
-

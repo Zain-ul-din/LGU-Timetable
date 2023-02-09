@@ -17,23 +17,13 @@ export default function Hero() {
     
     return (
       <>
-        <WebGL />
         <Container 
-          maxW={'4xl'} 
-          position = {{lg: 'absolute', md: 'absolute', sm: 'relative', base: 'relative'}} top = {'0%'} left = {'0%'} right = {'0%'} py = {'12%'}>
-          
-          {/* Mob earth image */}
-          <Flex position = {'absolute'} zIndex = {'-10'} alignItems = {'center'} textAlign = {'center'}  top = {1} p = {10}
-            display = {{lg: 'none', md: 'none', sm: 'flex', base: 'flex'}}
-          >
-            <img className={ useColorModeValue ('mob_earth_img', 'mob_earth_img_dark')}  width={'100%'} height = {'100%'} src = {earthImage}/>
-          </Flex>
-
+          maxW={'4xl'}  py = {'10%'} marginTop={0}>
           <Stack
             as={Box}
             textAlign={'center'}
-            spacing={{ base: 4, md: 8 }}
-            py={{ base: 20, md: 36 }}>
+            spacing={{ base: 5, md: 5 }}
+            py={{ base: 5, md: 5 }}>
             <Heading
               color={'green.400'}  
               fontWeight={600}

@@ -30,7 +30,7 @@ export default function Selection ({ metaData }: { metaData:any }): JSX.Element
             p = {5} 
             border={'0.1px solid'}
             borderRadius = {'lg'}
-            m = {2}
+            mx = {2}
             shadow = {'inner'}
             borderWidth={"1px"}
             borderColor={useColorModeValue('gray.200', 'gray.500')}

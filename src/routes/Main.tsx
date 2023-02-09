@@ -10,6 +10,7 @@ import Hero from "../components/Hero"
 import Selection from "../components/Selection"
 import Loader from "../components/internals/Loader"
 import TimeTable from "../components/TimeTable"
+import PortalRedirect from "../components/PortalRedirect"
 
 import { tableHeadTiles } from "../constants/Constants"
 
@@ -17,9 +18,10 @@ import { tableHeadTiles } from "../constants/Constants"
 export default function Main ({ metaData }: { metaData: any }): JSX.Element
 {
     const timeTableData = useContext (TimeTableContext)
-
+    
     return (
         <>
+            <PortalRedirect />
             <NavBar />
             {!timeTableData?.timeTableData.data && <Hero />}
             {metaData == null ? 
@@ -36,4 +38,5 @@ export default function Main ({ metaData }: { metaData: any }): JSX.Element
         </>
     )
 }
+
 

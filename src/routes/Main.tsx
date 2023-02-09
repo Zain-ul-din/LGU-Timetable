@@ -21,7 +21,7 @@ export default function Main ({ metaData }: { metaData: any }): JSX.Element
     
     return (
         <>
-            <PortalRedirect />
+            {/* <PortalRedirect /> */}
             <NavBar />
             {!timeTableData?.timeTableData.data && <Hero />}
             {metaData == null ? 

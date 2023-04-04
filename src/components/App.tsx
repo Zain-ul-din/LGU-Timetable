@@ -19,6 +19,7 @@ import { useGetCredentials } from '../Hooks/hooks'
 import { serverURL } from '../constants/Constants'
 import type { TimetableInput, TimeTableData } from '../types/typedef'
 
+import banner from '../assets/banner.png'
 
 export default function App(): JSX.Element
 {
@@ -50,14 +51,17 @@ export default function App(): JSX.Element
           <UserCredentialsContext.Provider value={{user, setUser}}>
             
             {/* Router setup */}
-            <BrowserRouter>
+            {/*<BrowserRouter>
               <Routes>
                 <Route index element={<Main metaData={metaData}/>} />
                 <Route path='/freeclassrooms' element={<FreeClasses/>} />
                 <Route path='/admin' element = {<Admin/>} />
                 <Route path='*' element = {<Page404/>} />
               </Routes>
-            </BrowserRouter>
+            </BrowserRouter>*/}
+            
+            {/*wait for 9 april 2023*/}
+            <img src={banner} style={{marginLeft: 'auto', marginRight: 'auto', display: 'block' }}/>
             
             {/* <Main metaData = {metaData} /> */}
           </UserCredentialsContext.Provider>

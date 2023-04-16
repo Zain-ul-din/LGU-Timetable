@@ -31,16 +31,16 @@ export function addLoggedInUser(user: User) {
 
 export enum FIREBASE_ANALYTICS_EVENTS {
    // pages
-   home_page,
-   profile,
-   time_table,
-   free_classrooms,
-   developer,
-   contribute,
-   notifications,
+   home_page = "home_page",
+   profile = "profile",
+   time_table = "time_table",
+   free_classrooms = "free_classrooms",
+   developer = "developer",
+   contribute = "contribute",
+   notifications = "notifications",
    // click events
-   link_share_on_whatsapp,
-   print_time_table
+   link_share_on_whatsapp = "link_share_on_whatsapp",
+   print_time_table = "print_time_table"
 }
 
 import { logEvent } from 'firebase/analytics';

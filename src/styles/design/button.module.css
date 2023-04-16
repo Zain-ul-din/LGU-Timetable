@@ -1,0 +1,13 @@
+.btn {
+   display: flex;
+   background: var(--card-color-dark);
+   border-radius: 0.2rem;
+   border: 0.1px solid var(--border-color);
+   padding: 0.2rem;
+   color: inherit;
+}
+
+.btn:hover {
+   background: var(--card-color);
+   cursor: pointer;
+}

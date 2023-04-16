@@ -1,0 +1,31 @@
+.loader {
+   justify-self: center;
+   align-items: center;
+   text-align: center;
+   font-size: 2rem;
+   font-weight: bold;
+   animation-delay: 500ms;
+   animation: background-pan 2s linear infinite;
+   font-size: 4rem;
+   background: linear-gradient(to right, var(--purple), var(--violet), var(--pink), var(--purple));
+   background-size: 200%;
+   background-clip: text;
+   -webkit-text-fill-color: transparent;
+   font-weight: bold;
+}
+
+.loader {
+   font-size: 2rem;
+   font-family: monospace;
+   font-weight: bold;
+}
+
+@keyframes background-pan {
+   from {
+      background-position: 0% center;
+   }
+
+   to {
+      background-position: -200% center;
+   }
+}

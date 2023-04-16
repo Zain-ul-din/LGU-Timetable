@@ -1,0 +1,73 @@
+.developer {
+   display: flex;
+   max-width: 1400px;
+   width: 100%;
+   margin: 0 auto;
+   flex-direction: column;
+   padding: 1.5rem;
+}
+
+@keyframes background-pan {
+   from {
+      background-position: 0% center;
+   }
+
+   to {
+      background-position: -200% center;
+   }
+}
+
+.developer > h1 {
+   animation-delay: 500ms;
+   animation: background-pan 1.5s linear infinite;
+   font-size: 3rem;
+   background: linear-gradient(to right, var(--purple), var(--violet), var(--pink), var(--purple));
+   background-size: 200%;
+   background-clip: text;
+   -webkit-text-fill-color: transparent;
+   font-weight: bold;
+}
+
+.developer > p {
+   margin-top: 1rem;
+   line-height: 1.5rem;
+   font-size: 1rem;
+   padding-left: 0.5rem;
+}
+
+.api {
+   width: 100%;
+   padding: 2rem 0rem 2rem 0rem;
+}
+
+.api > h1 {
+   font-size: 3rem;
+   font-weight: bold;
+   margin-bottom: 1rem;
+   color: rgba(255, 255, 255, 0.5);
+}
+
+.api > p {
+   font-size: 1.2rem;
+}
+
+.api > p > b {
+   color: orange;
+}
+
+.api > p > i {
+   color: red;
+   font-style: normal;
+}
+
+.api_btn {
+   margin-top: 2rem;
+   margin-bottom: 2rem;
+   font-size: 1.5rem;
+   padding: 0.3rem;
+   color: inherit;
+}
+
+.api_btn > svg {
+   margin-right: 0.5rem;
+}

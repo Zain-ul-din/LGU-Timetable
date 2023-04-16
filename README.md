@@ -30,7 +30,7 @@ LGU-TimeTable
 ```command
   # run these commands to setup this project on your machine
   >> git clone https://github.com/Zain-ul-din/LGU-BetterTimeTable.git
-  >> cd LGU-BetterTimeTable
+  >> cd LGU-Timetable
   >> npm i yarn -g
   >> yarn 
   >> yarn dev

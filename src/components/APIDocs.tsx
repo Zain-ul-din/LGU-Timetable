@@ -30,13 +30,12 @@ import { LINKS } from '~/lib/constant';
 import Loader from './design/Loader';
 import { IApiDoc } from '~/types/typedef';
 
-
-export default function APIDocs({ staticDocs }: { staticDocs: Array <IApiDoc> } ) {
+export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) {
    const [docs, setDocs] = useState<Array<IApiDoc>>(staticDocs);
 
    const user = useContext(UserCredentialsContext);
    const [loading, setLoading] = useState<boolean>(false);
-   
+
    //! not required since using staticSiteRendering
    // useEffect(() => {
    //    async function fetchDocs() {

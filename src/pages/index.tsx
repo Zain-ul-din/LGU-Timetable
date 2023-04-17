@@ -5,9 +5,8 @@ import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/Fir
 import { SocialLinks } from '~/components/seo/Seo';
 
 export default function Home() {
-
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
-   
+
    return (
       <>
          <Head>
@@ -18,14 +17,13 @@ export default function Home() {
                name="description"
                content="A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Made with ❤️"
             />
-            
+
             <meta
                name="keywords"
                content="LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms"
             />
 
             <SocialLinks />
-
          </Head>
          <main>
             <div className={'roboto'}>
@@ -36,7 +34,3 @@ export default function Home() {
       </>
    );
 }
-
-
-
-

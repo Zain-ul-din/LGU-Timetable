@@ -6,9 +6,8 @@ import { ContributeSocialLinks, SocialLinks } from '~/components/seo/Seo';
 import Header from '~/components/Header';
 
 export default function ContributePage() {
-
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.contribute);
-   
+
    return (
       <>
          <Head>
@@ -40,11 +39,13 @@ export default function ContributePage() {
    );
 }
 
-const SEO = ()=> {
-   return <>
-      <article>
-         <title>Contribute on Github</title>
-         <p>Contribute to this project on github</p>
-      </article>
-   </>
-}
+const SEO = () => {
+   return (
+      <>
+         <article>
+            <title>Contribute on Github</title>
+            <p>Contribute to this project on github</p>
+         </article>
+      </>
+   );
+};

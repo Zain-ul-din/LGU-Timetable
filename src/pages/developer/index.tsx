@@ -10,29 +10,28 @@ import { IApiDoc } from '~/types/typedef';
 export const getStaticProps = async (context: any) => {
    const docs = await getDocs(docsCol);
    const res = docs.docs.map((doc) => ({ id: doc.id, docData: doc.data().doc }));
-   
+
    return {
       props: {
-         docs: res 
+         docs: res
       },
       revalidate: 5
    };
 };
 
-export default function DeveloperDashboard({ docs } : {docs: Array<IApiDoc>}) {
-
+export default function DeveloperDashboard({ docs }: { docs: Array<IApiDoc> }) {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.developer);
-   
-   const keyWords = docs.map((doc)=>{
-      return doc.id
+
+   const keyWords = docs.map((doc) => {
+      return doc.id;
    });
-   
+
    return (
       <>
          <Head>
             <title>LGU Timetable - Developer APIS</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            
+
             <meta
                name="description"
                content="A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Get you api key to make your own timetable application."
@@ -50,10 +49,8 @@ export default function DeveloperDashboard({ docs } : {docs: Array<IApiDoc>}) {
          </Head>
          {/* <Blob/> */}
          <Developer>
-            <APIDocs staticDocs={docs}/>
+            <APIDocs staticDocs={docs} />
          </Developer>
       </>
    );
 }
-
-

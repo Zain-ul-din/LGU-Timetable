@@ -21,14 +21,14 @@ import {
    useColorMode,
    useToast
 } from '@chakra-ui/react';
-import { CopyIcon } from '@chakra-ui/icons';
+import { CopyIcon, ArrowBackIcon } from '@chakra-ui/icons';
 
 import Btn from './design/Button';
 
 import TimeTablePrint from './TimetablePrint';
 import ReactToPrint from 'react-to-print';
 
-import { timetableHeadTiles } from '~/lib/constant';
+import { ROUTING, timetableHeadTiles } from '~/lib/constant';
 
 const day_sorter = {
    monday: 1,
@@ -55,6 +55,19 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
    return (
       <>
          <div className={`roboto ${styles.timetable_container}`}>
+            <Link href={ROUTING.timetable}>
+               <Btn style={{ margin: '0rem 0rem 0.2rem 0.6rem', padding: '0.4rem' }}>
+                  Go back
+                  <b
+                     style={{
+                        margin: '0rem 0.3rem 0rem 0.3rem',
+                        transform: 'translateY(-2px)'
+                     }}
+                  >
+                     <ArrowBackIcon />
+                  </b>
+               </Btn>
+            </Link>
             <span>{`${fall} / ${semester} / ${section}`}</span>
             <div>
                {!timetableData ? (
@@ -77,12 +90,15 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
                            }}
                            content={() => printTableRef.current}
                            onBeforePrint={() => {
-                              setColorMode('light')
-                              reportFirebaseAnalytics(FIREBASE_ANALYTICS_EVENTS.print_time_table.toString(), {});
+                              setColorMode('light');
+                              reportFirebaseAnalytics(
+                                 FIREBASE_ANALYTICS_EVENTS.print_time_table.toString(),
+                                 {}
+                              );
                            }}
                            onAfterPrint={() => setColorMode('dark')}
                         />
-                  
+
                         <Btn
                            style={{ margin: '0rem 1rem 0rem 1rem', padding: '0.4rem' }}
                            onClick={(e) => {
@@ -106,13 +122,19 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
                            </b>
                         </Btn>
                      </Center>
+
                      <Center>
                         <Button
                            marginY={'1rem'}
                            colorScheme={`gray`}
                            onClick={(e) => {
-                              reportFirebaseAnalytics(FIREBASE_ANALYTICS_EVENTS.link_share_on_whatsapp.toString(), {});
-                              window.location.href = `https://api.whatsapp.com/send/?text=${encodeURI(window.location.href)}&type=custom_url&app_absent=0`;
+                              reportFirebaseAnalytics(
+                                 FIREBASE_ANALYTICS_EVENTS.link_share_on_whatsapp.toString(),
+                                 {}
+                              );
+                              window.location.href = `https://api.whatsapp.com/send/?text=${encodeURI(
+                                 window.location.href
+                              )}&type=custom_url&app_absent=0`;
                            }}
                         >
                            Share on WhatsApp {` `}
@@ -133,7 +155,7 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
                         <TimeTablePrint
                            headTitles={timetableHeadTiles}
                            data={timetableData.timetable}
-                           payload= {`${fall} / ${semester} / ${section}`}
+                           payload={`${fall} / ${semester} / ${section}`}
                         />
                      </div>
 
@@ -176,6 +198,7 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
 
 import { motion } from 'framer-motion';
 import { FIREBASE_ANALYTICS_EVENTS, reportFirebaseAnalytics } from '~/lib/FirebaseAnalysis';
+import Link from 'next/link';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
    const { isOpen, onToggle } = useDisclosure({

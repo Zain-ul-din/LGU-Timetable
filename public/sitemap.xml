@@ -1,0 +1,40 @@
+<!-- public/sitemap.xml -->
+<xml version="1.0" encoding="UTF-8">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- home page  -->
+  <url>
+    <loc>https://www.lgutimetable.live/</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+  <!-- timetable  -->
+  <url>
+    <loc>https://www.lgutimetable.live/timetable</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+  <!-- profile  -->
+  <url>
+    <loc>https://www.lgutimetable.live/profile</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+  <!-- developer  -->
+  <url>
+    <loc>https://www.lgutimetable.live/developer</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+  <!-- free classrooms  -->
+  <url>
+    <loc>https://www.lgutimetable.live/freeclassrooms</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+  <!-- notifications  -->
+  <url>
+    <loc>https://www.lgutimetable.live/notifications</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+  <!-- contribute -->
+  <url>
+    <loc>https://www.lgutimetable.live/contribute</loc>
+    <lastmod>2023-04-17</lastmod>
+  </url>
+</urlset>
+</xml>

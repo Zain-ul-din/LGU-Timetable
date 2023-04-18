@@ -18,7 +18,7 @@ import { useUserCredentials } from '~/hooks/hooks';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 import { useRouter } from 'next/router';
 
-const footerPages = ['/', '/contribute', '/developer', '/notifications'];
+const footerPages = ['/', '/contribute', '/developer', '/notifications', '/freeclassrooms'];
 
 export default function App({ Component, pageProps }: AppProps) {
    const [timeTableInput, setTimeTableInput] = useState<TimetableInput>({

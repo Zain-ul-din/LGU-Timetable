@@ -10,48 +10,52 @@ import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/Fir
 import { timeTableCol } from '~/lib/firebase';
 import { TimetableData, TimetableDocType } from '~/types/typedef';
 
+import { isLectureTime } from "~/lib/util";
+
+
+
 export async function getServerSideProps(context: GetServerSidePropsContext) {
    const timetableDocSpanShot = await getDocs(timeTableCol);
 
-   const timetables: Array<TimetableDocType> = timetableDocSpanShot
-   .docs
-   .map((timetable) =>
-      timetable.data()
-   ) as Array<TimetableDocType>;
-
-   const rooms = Array.from(
-      new Set(
-         timetables
-            .map((timetable) =>
-               Object.entries(timetable.timetable)
-                  .map(([_, timetableData]: [string, Array<TimetableData>]) =>
-                     timetableData.map((data) => data.roomNo)
-                  )
-                  .reduce((prev, curr) => prev.concat(curr), [])
-            )
-            .reduce((prev, curr) => prev.concat(curr), [])
-      )
-   );
-   
    const currTime = new Date (
       (await axios.get("http://worldtimeapi.org/api/timezone/Asia/Karachi"))
       .data
       .datetime
    );
    
+   const timetables: Array<TimetableDocType> = timetableDocSpanShot
+   .docs
+   .map((timetable) =>
+      timetable.data()
+   ) as Array<TimetableDocType>;
    
-   // calculate free classrooms here
-   
-   console.log(currTime)      
+   const freeRooms = Array.from(
+      new Set(
+         timetables
+            .map((timetable) =>
+               Object.entries(timetable.timetable)
+                  .map(([_, timetableData]: [string, Array<TimetableData>]) => 
+                     timetableData
+                     .map (
+                        (data) => isLectureTime(data, currTime) ?  "" : data.roomNo
+                     )
+                  )
+                  .reduce((prev, curr) => prev.concat(curr), [])
+            )
+            .reduce((prev, curr) => prev.concat(curr), [])
+      )
+   )
+   .filter(room => room != "");
+    
    return {
       props: {
-         freeRooms: rooms,
+         freeRooms,
          currTime: currTime.toDateString()
       } // will be passed to the page component as props
    };
 }
 
-export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms: Array<string>, currTime: Date }) {
+export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms: Array<string>, currTime: string }) {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.free_classrooms);
 
    return (
@@ -75,7 +79,7 @@ export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms:
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <FreeClassRooms freeRooms={freeRooms} />
+         <FreeClassRooms freeRooms={freeRooms} currTime={new Date(currTime)}/>
       </>
    );
 }

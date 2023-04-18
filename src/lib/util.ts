@@ -1,4 +1,4 @@
-import { ITimetableHistory, TimeType } from '~/types/typedef';
+import { ITimetableHistory, TimeType, TimetableData } from '~/types/typedef';
 import { daysName } from './constant';
 
 /**
@@ -126,3 +126,26 @@ export function removeDuplicateTimetableHistory(arr: Array<ITimetableHistory>) {
       );
    });
 }
+
+
+export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
+   const time = new Date(currTime);
+
+   ///! TODOS
+   /// retrieve tolerance value from database.
+   const tolerance = 20; // min
+   time.setMinutes(currTime.getMinutes() + tolerance);
+   
+   const lectureStartTime = new Date(currTime);
+   const lectureEndTime = new Date(currTime);
+
+   lectureStartTime.setHours(timetableData.startTime.hours);
+   lectureStartTime.setMinutes(timetableData.startTime.minutes);
+
+   lectureEndTime.setHours(timetableData.endTime.hours);
+   lectureEndTime.setMinutes(timetableData.endTime.minutes);
+
+   return time >= lectureStartTime && time <= lectureEndTime;
+};
+
+

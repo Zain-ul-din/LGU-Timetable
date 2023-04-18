@@ -56,17 +56,7 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
       <>
          <div className={`roboto ${styles.timetable_container}`}>
             <Link href={ROUTING.timetable}>
-               <Btn style={{ margin: '0rem 0rem 0.2rem 0.6rem', padding: '0.4rem' }}>
-                  Go back
-                  <b
-                     style={{
-                        margin: '0rem 0.3rem 0rem 0.3rem',
-                        transform: 'translateY(-2px)'
-                     }}
-                  >
-                     <ArrowBackIcon />
-                  </b>
-               </Btn>
+               <BackBtn />
             </Link>
             <span>{`${fall} / ${semester} / ${section}`}</span>
             <div>
@@ -199,6 +189,7 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
 import { motion } from 'framer-motion';
 import { FIREBASE_ANALYTICS_EVENTS, reportFirebaseAnalytics } from '~/lib/FirebaseAnalysis';
 import Link from 'next/link';
+import BackBtn from './design/BackBtn';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
    const { isOpen, onToggle } = useDisclosure({

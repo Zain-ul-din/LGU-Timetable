@@ -1,28 +1,9 @@
 .container {
    display: flex;
-   justify-content: center;
-   max-width: 1200px;
+   max-width: 1400px;
    width: 100%;
    margin: 0 auto;
    flex-direction: column;
-   align-items: center;
-   padding: 1rem;
-   margin-top: 1rem;
-}
-
-.container > svg {
-   width: 50%;
-   fill: var(--card-color-dark);
-}
-
-.container > p {
-   font-size: 1.5rem;
-   margin: 2rem 0rem 0.5rem 0rem;
-   font-family: monospace;
-   text-align: center;
-}
-
-.container > button {
-   font-size: 1.5rem;
    padding: 0.5rem;
+   margin-top: 1rem;
 }

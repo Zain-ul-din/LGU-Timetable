@@ -1,10 +1,12 @@
 import styles from '~/styles/Contribute.module.css';
 import Blob from './Blob';
 import { Center, Flex, useMediaQuery, Text } from '@chakra-ui/react';
-import { LINKS } from '~/lib/constant';
+import { LINKS, ROUTING } from '~/lib/constant';
 import Footer from './Footer';
 
 import Image from 'next/image';
+import BackBtn from './design/BackBtn';
+import Link from 'next/link';
 
 export default function Contribute() {
    const [isUnder800] = useMediaQuery('(max-width: 800px)');
@@ -80,6 +82,12 @@ export default function Contribute() {
                         Ask questions here!
                      </a>
                   </Text>
+               </Center>
+
+               <Center marginY={'1rem'}>
+                  <Link href={ROUTING.home}>
+                     <BackBtn />
+                  </Link>
                </Center>
             </Flex>
          </Flex>

@@ -1,15 +1,63 @@
+import axios from 'axios';
+import { getDocs } from 'firebase/firestore';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import FreeClassRooms from '~/components/FreeClassRooms';
 import { SocialLinks } from '~/components/seo/Seo';
+
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
-export default function FreeClassRoomsPage() {
+import { timeTableCol } from '~/lib/firebase';
+import { TimetableData, TimetableDocType } from '~/types/typedef';
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+   const timetableDocSpanShot = await getDocs(timeTableCol);
+
+   const timetables: Array<TimetableDocType> = timetableDocSpanShot
+   .docs
+   .map((timetable) =>
+      timetable.data()
+   ) as Array<TimetableDocType>;
+
+   const rooms = Array.from(
+      new Set(
+         timetables
+            .map((timetable) =>
+               Object.entries(timetable.timetable)
+                  .map(([_, timetableData]: [string, Array<TimetableData>]) =>
+                     timetableData.map((data) => data.roomNo)
+                  )
+                  .reduce((prev, curr) => prev.concat(curr), [])
+            )
+            .reduce((prev, curr) => prev.concat(curr), [])
+      )
+   );
+   
+   const currTime = new Date (
+      (await axios.get("http://worldtimeapi.org/api/timezone/Asia/Karachi"))
+      .data
+      .datetime
+   );
+   
+   
+   // calculate free classrooms here
+   
+   console.log(currTime)      
+   return {
+      props: {
+         freeRooms: rooms,
+         currTime: currTime.toDateString()
+      } // will be passed to the page component as props
+   };
+}
+
+export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms: Array<string>, currTime: Date }) {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.free_classrooms);
 
    return (
       <>
          <Head>
-            <title>Lgu Free Classrooms</title>
+            <title>Lgu free classrooms</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
             <meta
@@ -27,7 +75,7 @@ export default function FreeClassRoomsPage() {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <FreeClassRooms />
+         <FreeClassRooms freeRooms={freeRooms} />
       </>
    );
 }

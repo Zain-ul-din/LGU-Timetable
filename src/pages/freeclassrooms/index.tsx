@@ -46,11 +46,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       )
    )
    .filter(room => room != "");
-    
+   
+   
    return {
       props: {
          freeRooms,
-         currTime: currTime.toDateString()
+         currTime: currTime.toString()
       } // will be passed to the page component as props
    };
 }

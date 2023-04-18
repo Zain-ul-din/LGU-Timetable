@@ -78,7 +78,7 @@ export default function FreeClassRooms({ freeRooms, currTime }: { freeRooms: Arr
                borderRadius={'lg'}
                marginY={'1rem'}
                >
-                  {`Queried at ${currTime.toUTCString()} - Refresh the page to again calculate free classrooms`} 
+                  {`Queried at ${currTime.toString()} - Refresh the page to again calculate free classrooms`} 
                </Alert>
                <Center>
                   <Input

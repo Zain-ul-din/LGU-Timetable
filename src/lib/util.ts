@@ -131,6 +131,7 @@ export function removeDuplicateTimetableHistory(arr: Array<ITimetableHistory>) {
 export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    const time = new Date(currTime);
 
+   time.setHours(8);
    ///! TODOS
    /// retrieve tolerance value from database.
    const tolerance = 20; // min
@@ -146,8 +147,6 @@ export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    lectureEndTime.setMinutes(timetableData.endTime.minutes);
 
    const isItTrue = time >= lectureStartTime && time <= lectureEndTime;
-   // console.log (lectureStartTime.toString() + " <=> " + lectureEndTime.toString() + " <=> " + time.toString()   + " " + isItTrue + " \n");
-
    return isItTrue;
 };
 

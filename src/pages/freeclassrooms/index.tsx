@@ -11,6 +11,7 @@ import { timeTableCol } from '~/lib/firebase';
 import { TimetableData, TimetableDocType } from '~/types/typedef';
 
 import { isLectureTime } from "~/lib/util";
+import { daysName } from '~/lib/constant';
 
 
 
@@ -33,42 +34,36 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
    const busyRooms = Array.from(
       new Set(
          timetables
-            .map((timetable) =>
+            .map(timetable =>
                Object.entries(timetable.timetable)
-                  .map(([_, timetableData]: [string, Array<TimetableData>]) => 
+                  .map((
+                     [day, timetableData]:[string, Array<TimetableData>]
+                  ) => day.toLocaleLowerCase() == daysName[currTime.getDay()].toLocaleLowerCase() ? 
                      timetableData
-                     .map (
-                        (data) => { 
-                           return isLectureTime(data, currTime) ?  data.roomNo : ""
-                        }
-                     )
+                     .map (data => isLectureTime(data, currTime) ? data.roomNo : ""):[]
                   )
                   .reduce((prev, curr) => prev.concat(curr), [])
             )
             .reduce((prev, curr) => prev.concat(curr), [])
       )
-   )
-   .filter(room => room != "");
+   ).filter(room => room != "");
    
    const freeRooms = Array.from(
       new Set(
          timetables
-            .map((timetable) =>
+            .map(timetable =>
                Object.entries(timetable.timetable)
-                  .map(([_, timetableData]: [string, Array<TimetableData>]) => 
+                  .map((
+                     [day, timetableData]: [string, Array<TimetableData>]
+                  ) => day.toLocaleLowerCase() == daysName[currTime.getDay()].toLocaleLowerCase() ?
                      timetableData
-                     .map (
-                        (data) => { 
-                           return !busyRooms.includes(data.roomNo) ?  data.roomNo : ""
-                        }
-                     )
+                     .map (data =>  !busyRooms.includes(data.roomNo) ?  data.roomNo : ""):[]
                   )
                   .reduce((prev, curr) => prev.concat(curr), [])
             )
             .reduce((prev, curr) => prev.concat(curr), [])
       )
-   )
-   .filter(room => room != "");
+   ).filter(room => room != "");
    
    return {
       props: {
@@ -80,7 +75,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms: Array<string>, currTime: string }) {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.free_classrooms);
-
+   
    return (
       <>
          <Head>

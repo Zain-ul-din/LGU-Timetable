@@ -40,6 +40,7 @@
     "react-to-print": "^2.14.12",
     "react-use-scroll-position": "^2.0.0",
     "redis-om": "^0.3.6",
+    "rehype-raw": "^6.1.1",
     "typescript": "5.0.3"
   },
   "devDependencies": {

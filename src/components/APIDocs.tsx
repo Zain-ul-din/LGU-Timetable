@@ -67,11 +67,19 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
             );
          })}
 
+         {docs.map((doc, key) => {
+            return (
+               <React.Fragment key={key}>
+                  { (!doc.id.startsWith("#") && doc.id != "index") && <DocMarkDown text={doc.docData} />}
+               </React.Fragment>
+            );
+         })}
+
          <Accordion allowToggle>
             {docs.map((doc, key) => {
                return (
                   <React.Fragment key={key}>
-                     {doc.id != 'index' && (
+                     {doc.id.startsWith("#")  && (
                         <DocAccordion title={<DocMarkDown text={doc.id} />}>
                            <DocMarkDown text={doc.docData} />
                         </DocAccordion>
@@ -118,11 +126,15 @@ const DocAccordion = ({
    );
 };
 
+import rehypeRaw from "rehype-raw";
+
 const DocMarkDown = ({ text }: { text: string }) => {
    return (
       <>
          <ReactMarkdown
+            skipHtml = {false}
             className="mark-down"
+            rehypePlugins={[ rehypeRaw ]}
             components={{
                code({ node, inline, className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || '');

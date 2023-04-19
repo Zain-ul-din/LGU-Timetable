@@ -145,7 +145,10 @@ export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    lectureEndTime.setHours(timetableData.endTime.hours);
    lectureEndTime.setMinutes(timetableData.endTime.minutes);
 
-   return time >= lectureStartTime && time <= lectureEndTime;
+   const isItTrue = time >= lectureStartTime && time <= lectureEndTime;
+   // console.log (lectureStartTime.toString() + " <=> " + lectureEndTime.toString() + " <=> " + time.toString()   + " " + isItTrue + " \n");
+
+   return isItTrue;
 };
 
 

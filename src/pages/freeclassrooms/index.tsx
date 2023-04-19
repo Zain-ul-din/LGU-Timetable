@@ -29,7 +29,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       timetable.data()
    ) as Array<TimetableDocType>;
    
-   const freeRooms = Array.from(
+   
+   const busyRooms = Array.from(
       new Set(
          timetables
             .map((timetable) =>
@@ -37,7 +38,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                   .map(([_, timetableData]: [string, Array<TimetableData>]) => 
                      timetableData
                      .map (
-                        (data) => isLectureTime(data, currTime) ?  "" : data.roomNo
+                        (data) => { 
+                           return isLectureTime(data, currTime) ?  data.roomNo : ""
+                        }
                      )
                   )
                   .reduce((prev, curr) => prev.concat(curr), [])
@@ -47,6 +50,25 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
    )
    .filter(room => room != "");
    
+   const freeRooms = Array.from(
+      new Set(
+         timetables
+            .map((timetable) =>
+               Object.entries(timetable.timetable)
+                  .map(([_, timetableData]: [string, Array<TimetableData>]) => 
+                     timetableData
+                     .map (
+                        (data) => { 
+                           return !busyRooms.includes(data.roomNo) ?  data.roomNo : ""
+                        }
+                     )
+                  )
+                  .reduce((prev, curr) => prev.concat(curr), [])
+            )
+            .reduce((prev, curr) => prev.concat(curr), [])
+      )
+   )
+   .filter(room => room != "");
    
    return {
       props: {

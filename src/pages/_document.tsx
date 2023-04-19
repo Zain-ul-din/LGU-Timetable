@@ -12,6 +12,12 @@ export default function Document() {
             <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
             <FavIcons />
 
+            <script 
+               async 
+               src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9921497734267177"
+               crossOrigin="anonymous"
+            ></script>
+            
             {/* google verification */}
             <meta
                name="google-site-verification"

@@ -10,7 +10,7 @@ export default function Home() {
    return (
       <>
          <Head>
-            <title>LGU Time-Table V2</title>
+            <title>lgu time table</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
 
             <meta

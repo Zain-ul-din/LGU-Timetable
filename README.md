@@ -4,7 +4,10 @@
 
 <h1 align="center">
 <br>
-  <a href="https://timetable.lgu.edu.pk"><img src="https://user-images.githubusercontent.com/41378765/200201356-6ebba91a-dec8-4314-93ff-3b7268c4274c.png" alt="Lahore Garrison University" width="500"></a>
+  <!---
+  <a href="https://timetable.lgu.edu.pk"><img src="https://user-images.githubusercontent.com/41378765/200201356-6ebba91a-dec8-4314-93ff-3b7268c4274c.png" alt="Lahore Garrison University" width="500">
+  -->
+  </a>
 <br>
 
 LGU-TimeTable

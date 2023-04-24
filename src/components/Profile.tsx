@@ -132,9 +132,9 @@ const History = () => {
                {removeDuplicateTimetableHistory(history).map((history, idx) => {
                   return (
                      <Link
-                        href={`/timetable/${history.payload.fall?.replace('/', '-')}/${
+                        href={`/timetable/${history.payload.fall?.replace('/', '-')} ${
                            history.payload.semester
-                        }/${history.payload.section}`}
+                        } ${history.payload.section}`}
                         key={idx}
                      >
                         <Box

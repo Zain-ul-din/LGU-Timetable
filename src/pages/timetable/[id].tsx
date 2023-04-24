@@ -18,16 +18,15 @@ import { TimetableDocType } from '~/types/typedef';
 export async function getStaticPaths() {
    const timetableDocs = await getDocs(timeTableCol);
 
-   const paths = timetableDocs.docs.map(doc => ({params: {id: doc.id}}))
-   
+   const paths = timetableDocs.docs.map((doc) => ({ params: { id: doc.id } }));
+
    return {
-     paths,
-     fallback: "blocking", // can also be true or 'blocking'
-   }
+      paths,
+      fallback: 'blocking' // can also be true or 'blocking'
+   };
 }
 
-export async function getStaticProps (context: GetStaticPropsContext)
-{
+export async function getStaticProps(context: GetStaticPropsContext) {
    const id = context.params!.id;
 
    const docRef = doc(timeTableCol, id as string);
@@ -35,23 +34,21 @@ export async function getStaticProps (context: GetStaticPropsContext)
 
    return {
       props: {
-         timetable: {id: id, ...timetable}
+         timetable: { id: id, ...timetable }
       },
       revalidate: 5000
-   }
+   };
 }
 
-interface GetStaticPropsReturnType extends TimetableDocType
-{
-   id: string
+interface GetStaticPropsReturnType extends TimetableDocType {
+   id: string;
 }
 
-export default function TimetablePage({ timetable } : { timetable: GetStaticPropsReturnType}) {
+export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
    const router = useRouter();
 
-   useEffect(()=> {
-      if (!timetable.timetable)
-         router.push("/timetable");
+   useEffect(() => {
+      if (!timetable.timetable) router.push('/timetable');
    }, []);
 
    return (
@@ -62,9 +59,11 @@ export default function TimetablePage({ timetable } : { timetable: GetStaticProp
 
             <meta
                name="description"
-               content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. timetable of ${timetable.id as string}.`}
+               content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. timetable of ${
+                  timetable.id as string
+               }.`}
             />
-            
+
             <meta
                name="keywords"
                content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
@@ -81,9 +80,9 @@ function TimetableRenderer({ timetable }: { timetable: any }) {
    const [timetableData, setTimetableData] = useState<any>();
 
    useEffect(() => {
-     setTimetableData(timetable);
+      setTimetableData(timetable);
    }, []);
-   
+
    return (
       <>
          {!timetableData && (
@@ -98,13 +97,9 @@ function TimetableRenderer({ timetable }: { timetable: any }) {
                animate={{ opacity: 1 }}
                transition={{ duration: 0.1, type: 'keyframes' }}
             >
-               <Timetable
-                  metaData={timetable.id}
-                  timetableData={timetableData}
-               />
+               <Timetable metaData={timetable.id} timetableData={timetableData} />
             </motion.div>
          )}
       </>
    );
 }
-

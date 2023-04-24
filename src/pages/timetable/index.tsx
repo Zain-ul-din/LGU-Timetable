@@ -39,7 +39,7 @@ export default function Timetable({ metaData }: any) {
          })
       );
    });
-   
+
    return (
       <>
          <Head>

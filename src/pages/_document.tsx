@@ -13,8 +13,8 @@ export default function Document() {
             <FavIcons />
 
             {/* ads */}
-            <script 
-               async 
+            <script
+               async
                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9921497734267177"
                crossOrigin="anonymous"
             ></script>

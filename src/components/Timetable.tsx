@@ -40,7 +40,7 @@ const day_sorter = {
    sunday: 7
 };
 
-interface IProps  {
+interface IProps {
    timetableData: any;
    metaData: string;
 }

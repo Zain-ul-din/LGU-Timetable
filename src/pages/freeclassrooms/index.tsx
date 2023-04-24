@@ -55,9 +55,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
                Object.entries(timetable.timetable)
                   .map((
                      [day, timetableData]: [string, Array<TimetableData>]
-                  ) => day.toLocaleLowerCase() == daysName[currTime.getDay()].toLocaleLowerCase() ?
-                     timetableData
-                     .map (data =>  !busyRooms.includes(data.roomNo) ?  data.roomNo : ""):[]
+                  ) => timetableData
+                     .map (data =>  !busyRooms.includes(data.roomNo) ?  data.roomNo : "")
                   )
                   .reduce((prev, curr) => prev.concat(curr), [])
             )

@@ -1,19 +1,21 @@
 import Timetable from '~/components/Timetable';
 
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useEffect, useState } from 'react';
 
-import { onSnapshot, doc, getDocs, getDoc } from 'firebase/firestore';
+import { doc, getDocs, getDoc } from 'firebase/firestore';
 import { timeTableCol } from '~/lib/firebase';
 
 import { motion } from 'framer-motion';
 import { Center } from '@chakra-ui/react';
 import Head from 'next/head';
 import { SocialLinks } from '~/components/seo/Seo';
-import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
-import { NextResponse } from 'next/server';
+import { GetStaticPropsContext } from 'next';
 import { TimetableDocType } from '~/types/typedef';
+
+import { useTimeout, useToast } from '@chakra-ui/react';
+import PromotionToast from '~/components/design/PromotionToast';
 
 export async function getStaticPaths() {
    const timetableDocs = await getDocs(timeTableCol);
@@ -45,8 +47,25 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
+   
    const router = useRouter();
+   const toast = useToast();
 
+   useTimeout(() => {
+      toast({
+         position: 'bottom',
+         colorScheme: 'gray',
+         duration: 1000 * 60,
+         render: () => (
+            <PromotionToast
+               closeHandler={() => {
+                  toast.closeAll();
+               }}
+            />
+         )
+      });
+   }, 2000);
+   
    useEffect(() => {
       if (!timetable.timetable) router.push('/timetable');
    }, []);

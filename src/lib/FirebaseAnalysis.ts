@@ -39,7 +39,8 @@ export enum FIREBASE_ANALYTICS_EVENTS {
    notifications = 'notifications',
    // click events
    link_share_on_whatsapp = 'link_share_on_whatsapp',
-   print_time_table = 'print_time_table'
+   print_time_table = 'print_time_table',
+   promotion_closed = 'promotion_closed'
 }
 
 import { logEvent } from 'firebase/analytics';

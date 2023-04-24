@@ -200,7 +200,7 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                                           `/timetable/${fall?.replace(
                                              '/',
                                              '-'
-                                          )}/${semester}/${section}`
+                                          )} ${semester} ${section}`
                                        );
                                     }}
                                  />
@@ -282,12 +282,12 @@ function HistoryDropDown({ menuItems }: { menuItems: Array<ITimetableHistory> })
                      ): JSX.Element => (
                         <Link
                            key={idx}
-                           href={`/timetable/${payload.fall?.replace('/', '-')}/${
+                           href={`/timetable/${payload.fall?.replace('/', '-')} ${
                               payload.semester
-                           }/${payload.section}`}
+                           } ${payload.section}`}
                         >
                            <MenuStyle.MenuItem>
-                              {`${payload.fall?.replace('/', '-')} / ${payload.semester} / ${
+                              {`${payload.fall?.replace('/', '-')}  ${payload.semester}  ${
                                  payload.section
                               }`}
                            </MenuStyle.MenuItem>

@@ -41,7 +41,12 @@ export async function getStaticProps (context: GetStaticPropsContext)
    }
 }
 
-export default function TimetablePage({ timetable } : { timetable: TimetableDocType}) {
+interface GetStaticPropsReturnType extends TimetableDocType
+{
+   id: string
+}
+
+export default function TimetablePage({ timetable } : { timetable: GetStaticPropsReturnType}) {
    const router = useRouter();
 
    useEffect(()=> {
@@ -57,9 +62,9 @@ export default function TimetablePage({ timetable } : { timetable: TimetableDocT
 
             <meta
                name="description"
-               content="A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Timetable Selection Page."
+               content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. timetable of ${timetable.id as string}.`}
             />
-
+            
             <meta
                name="keywords"
                content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}

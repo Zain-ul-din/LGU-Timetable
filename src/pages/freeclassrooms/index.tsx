@@ -30,7 +30,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       timetable.data()
    ) as Array<TimetableDocType>;
    
-   
    const busyRooms = Array.from(
       new Set(
          timetables

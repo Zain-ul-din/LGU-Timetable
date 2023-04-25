@@ -3,6 +3,7 @@ import Hero from '~/components/Hero';
 import TableOfContent from '~/components/TableOfContent';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 import { SocialLinks } from '~/components/seo/Seo';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export default function Home() {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
@@ -25,12 +26,12 @@ export default function Home() {
 
             <SocialLinks />
          </Head>
-         <main>
+         <MainAnimator>
             <div className={'roboto'}>
                <Hero renderDescription={true} />
                <TableOfContent />
             </div>
-         </main>
+         </MainAnimator>
       </>
    );
 }

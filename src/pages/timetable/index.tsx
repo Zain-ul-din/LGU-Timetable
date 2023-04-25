@@ -10,6 +10,7 @@ import { metaDataCol } from '~/lib/firebase';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
 import { SocialLinks } from '~/components/seo/Seo';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export const getStaticProps = async (context: any) => {
    const metaData_docs = await getDocs(metaDataCol);
@@ -58,14 +59,14 @@ export default function Timetable({ metaData }: any) {
 
             <SocialLinks />
          </Head>
-         <main>
+         <MainAnimator>
             <VisuallyHidden>
                <SEO metaData={metaData} />
             </VisuallyHidden>
             <Nav />
             <Hero renderDescription={false} />
             <TimetableSelection metaData={metaData} />
-         </main>
+         </MainAnimator>
       </>
    );
 }

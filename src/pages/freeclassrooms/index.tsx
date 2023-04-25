@@ -15,6 +15,7 @@ import Loader from '~/components/design/Loader';
 import { Center } from '@chakra-ui/react';
 import Button from '~/components/design/Button';
 import { useEffect, useState } from 'react';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export async function getStaticProps(context: GetStaticPropsContext) {
    const timetableDocSpanShot = await getDocs(timeTableCol);
@@ -94,17 +95,19 @@ export default function FreeClassRoomsPage({
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         {!state.loading && (
-            <FreeClassRooms key={'idx'} freeRooms={state.freeClassRooms} currTime={state.time} />
-         )}
-         {state.loading && (
-            <>
-               <Loader>Calculating Free Classrooms...</Loader>
-               <Center>
-                  <Button style={{ padding: '0.5rem 1.5rem 0.5rem 1.5rem' }}>Go Back</Button>
-               </Center>
-            </>
-         )}
+         <MainAnimator>
+            {!state.loading && (
+               <FreeClassRooms key={'idx'} freeRooms={state.freeClassRooms} currTime={state.time} />
+            )}
+            {state.loading && (
+               <>
+                  <Loader>Calculating Free Classrooms...</Loader>
+                  <Center>
+                     <Button style={{ padding: '0.5rem 1.5rem 0.5rem 1.5rem' }}>Go Back</Button>
+                  </Center>
+               </>
+            )}
+         </MainAnimator>
       </>
    );
 }

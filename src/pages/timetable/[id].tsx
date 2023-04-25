@@ -16,6 +16,7 @@ import { TimetableDocType } from '~/types/typedef';
 
 import { useTimeout, useToast } from '@chakra-ui/react';
 import PromotionToast from '~/components/design/PromotionToast';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export async function getStaticPaths() {
    const timetableDocs = await getDocs(timeTableCol);
@@ -47,11 +48,10 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
-   
    const router = useRouter();
    const toast = useToast();
 
-   useEffect(()=> ()=> toast.closeAll(), [])
+   useEffect(() => () => toast.closeAll(), []);
 
    useTimeout(() => {
       toast({
@@ -67,7 +67,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
          )
       });
    }, 2000);
-   
+
    useEffect(() => {
       if (!timetable.timetable) router.push('/timetable');
    }, []);
@@ -92,7 +92,9 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
 
             <SocialLinks />
          </Head>
-         {timetable.timetable && <TimetableRenderer timetable={timetable} />}
+         <MainAnimator>
+            {timetable.timetable && <TimetableRenderer timetable={timetable} />}
+         </MainAnimator>
       </>
    );
 }

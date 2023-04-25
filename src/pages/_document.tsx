@@ -24,7 +24,7 @@ export default function Document() {
                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9921497734267177"
                crossOrigin="anonymous"
             ></script>
-            
+
             <link
                href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&family=Roboto:wght@300&display=swap"
                rel="stylesheet"

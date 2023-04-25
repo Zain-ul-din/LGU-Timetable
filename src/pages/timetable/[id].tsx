@@ -51,6 +51,8 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
    const router = useRouter();
    const toast = useToast();
 
+   useEffect(()=> ()=> toast.closeAll(), [])
+
    useTimeout(() => {
       toast({
          position: 'bottom',

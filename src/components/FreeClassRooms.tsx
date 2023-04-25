@@ -99,7 +99,7 @@ export default function FreeClassRooms({
                return (
                   <React.Fragment key={idx}>
                      <Center>
-                        <Heading className="roboto">{`${key}s`.toUpperCase()}</Heading>
+                        <Heading className="roboto">{`Free ${key}s`.toUpperCase()}</Heading>
                      </Center>
                      {val.length == 0 && (
                         <Center marginY={'0.5rem'}>

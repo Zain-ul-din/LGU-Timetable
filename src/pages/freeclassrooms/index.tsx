@@ -63,7 +63,6 @@ export default function FreeClassRoomsPage({
       const timeUpdater = setInterval(() => {
          const updatedTime = state.time;
          updatedTime.setSeconds(state.time.getSeconds() + 1);
-         console.log(updatedTime.toString());
          setState({
             freeClassRooms: calculateFreeClassrooms(timetables, updatedTime),
             time: updatedTime,

@@ -99,7 +99,7 @@ const History = () => {
       const fetchTimetableHistory = async () => {
          const timetableHistoryQuery = query(
             timetableHistoryCol,
-            limit(20),
+            limit(50),
             where('email', '==', user.user?.email),
             orderBy('createdAt', 'desc')
          );

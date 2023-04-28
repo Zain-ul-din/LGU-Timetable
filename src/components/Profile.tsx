@@ -85,7 +85,6 @@ import { timetableHistoryCol } from '~/lib/firebase';
 import Link from 'next/link';
 
 import { ITimetableHistory } from '~/types/typedef';
-import SocialButton from './design/SocialButton';
 import { NotLoggedIn } from './Header';
 
 const History = () => {

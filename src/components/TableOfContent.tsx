@@ -78,6 +78,13 @@ export default function TableOfContent() {
 
    const scrollPos = useScrollPosition();
 
+   useEffect(()=>{ 
+      if (document.body.clientWidth < 600)
+      {
+         [tableOfContent[1],tableOfContent[3]] = [tableOfContent[3],tableOfContent[1]]; 
+      }
+   }, [])
+
    useEffect(() => {
       if (document.body.clientWidth < 600) {
          refs.forEach((ele) => {
@@ -96,7 +103,7 @@ export default function TableOfContent() {
          });
       }
    }, [scrollPos, refs]);
-
+   
    return (
       <div
          className={styles.content}

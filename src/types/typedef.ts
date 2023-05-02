@@ -2,6 +2,8 @@
   @types exports
 */
 
+import { User } from 'firebase/auth';
+
 /**
  * @type lecture time
  */
@@ -46,6 +48,7 @@ export interface ITimetableHistory {
    payload: TimetableInput;
    email: string;
    createdAt: any;
+   clickCount?: number | undefined
 }
 
 // docs
@@ -80,4 +83,10 @@ export interface TimetableResponseType {
 export interface TimetableDocType {
    timetable: TimetableResponseType;
    createdAt: string;
+}
+
+export interface UserDataDocType extends User {
+   comment: '';
+   createdAt: string;
+   isPublic: true;
 }

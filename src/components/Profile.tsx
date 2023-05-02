@@ -80,17 +80,21 @@ export default function Profile() {
 import { Flex, Heading, useMediaQuery, Box, Center } from '@chakra-ui/react';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 
-import { getDocs, limit, orderBy, query, where } from 'firebase/firestore';
+import { FieldValue, doc, getDocs, increment, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { timetableHistoryCol } from '~/lib/firebase';
 import Link from 'next/link';
 
 import { ITimetableHistory } from '~/types/typedef';
-import SocialButton from './design/SocialButton';
 import { NotLoggedIn } from './Header';
+
+interface IHistoryDocStateType extends ITimetableHistory
+{
+   docId: string
+}
 
 const History = () => {
    const [isUnder600] = useMediaQuery('(max-width: 600px)');
-   const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
+   const [history, setHistory] = useState<Array<IHistoryDocStateType>>([]);
 
    const user = useContext(UserCredentialsContext);
 
@@ -99,14 +103,14 @@ const History = () => {
       const fetchTimetableHistory = async () => {
          const timetableHistoryQuery = query(
             timetableHistoryCol,
-            limit(20),
+            limit(50),
             where('email', '==', user.user?.email),
             orderBy('createdAt', 'desc')
          );
          const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
-         const res = timetableHistoryDocs.docs.map((historyDoc) => historyDoc.data());
-
-         setHistory(res as Array<ITimetableHistory>);
+         const res = timetableHistoryDocs.docs.map((historyDoc) => ({docId: historyDoc.id, ...historyDoc.data()}));
+         
+         setHistory(res as Array<IHistoryDocStateType>);
       };
 
       fetchTimetableHistory();
@@ -132,10 +136,16 @@ const History = () => {
                {removeDuplicateTimetableHistory(history).map((history, idx) => {
                   return (
                      <Link
-                        href={`/timetable/${history.payload.fall?.replace('/', '-')}/${
+                        href={`/timetable/${history.payload.fall?.replace('/', '-')} ${
                            history.payload.semester
-                        }/${history.payload.section}`}
+                        } ${history.payload.section}`}
                         key={idx}
+                        onClick={()=>{
+                           const historyDoc = doc(timetableHistoryCol, (history as IHistoryDocStateType).docId)
+                           updateDoc(historyDoc, {
+                              clickCount: increment(1)
+                           })
+                        }}
                      >
                         <Box
                            background={'var(--card-color-dark)'}

@@ -1,4 +1,4 @@
-import { ITimetableHistory, TimeType, TimetableData } from '~/types/typedef';
+import { ITimetableHistory, TimeType, TimetableData, TimetableDocType } from '~/types/typedef';
 import { daysName } from './constant';
 
 /**
@@ -114,19 +114,14 @@ export function fillMissingDays(data: any): any {
 }
 
 export function removeDuplicateTimetableHistory(arr: Array<ITimetableHistory>) {
-   return arr.filter((currEle, idx) => {
-      return (
-         arr.slice(idx, history.length).filter((ele: ITimetableHistory) => {
-            return (
-               ele.payload.fall == currEle.payload.fall &&
-               ele.payload.section == currEle.payload.section &&
-               ele.payload.semester == currEle.payload.semester
-            );
-         }).length == 1
-      );
+   return arr.filter((currEle, idx, self) => {
+      return idx == self.findIndex(ele => {
+         return ele.payload.fall == currEle.payload.fall &&
+            ele.payload.section == currEle.payload.section &&
+            ele.payload.semester == currEle.payload.semester
+      })
    });
 }
-
 
 export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    const time = new Date(currTime);
@@ -135,7 +130,7 @@ export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    /// retrieve tolerance value from database.
    const tolerance = 0; // min
    time.setMinutes(currTime.getMinutes() + tolerance);
-   
+
    const lectureStartTime = new Date(currTime);
    const lectureEndTime = new Date(currTime);
 
@@ -149,4 +144,54 @@ export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    return isItTrue;
 };
 
+/**
+ * Calculates free classrooms
+ * @param timetables Array<TimetableDocType>
+ * @param currTime Date
+ * @returns free classrooms
+ */
+export function calculateFreeClassrooms(
+   timetables: Array<TimetableDocType>,
+   currTime: Date
+): Array<string> {
+   const busyRooms = Array.from(
+      new Set(
+         timetables
+            .map((timetable) =>
+               Object.entries(timetable.timetable)
+                  .map(([day, timetableData]: [string, Array<TimetableData>]) =>
+                     day.toLocaleLowerCase() == daysName[currTime.getDay()].toLocaleLowerCase()
+                        ? timetableData.map((data) =>
+                             isLectureTime(data, currTime) ? data.roomNo : ''
+                          )
+                        : []
+                  )
+                  .reduce((prev, curr) => prev.concat(curr), [])
+            )
+            .reduce((prev, curr) => prev.concat(curr), [])
+      )
+   ).filter((room) => room != '');
 
+   const freeRooms = Array.from(
+      new Set(
+         timetables
+            .map((timetable) =>
+               Object.entries(timetable.timetable)
+                  .map(([day, timetableData]: [string, Array<TimetableData>]) =>
+                     timetableData.map((data) =>
+                        !busyRooms.includes(data.roomNo) ? data.roomNo : ''
+                     )
+                  )
+                  .reduce((prev, curr) => prev.concat(curr), [])
+            )
+            .reduce((prev, curr) => prev.concat(curr), [])
+      )
+   ).filter((room) => room != '');
+
+   return freeRooms;
+}
+
+export function fromFirebaseTimeStamp(time: any): Date {
+   const fireBaseTime = new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
+   return fireBaseTime;
+}

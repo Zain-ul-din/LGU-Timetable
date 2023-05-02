@@ -6,6 +6,7 @@ import { SocialLinks } from '~/components/seo/Seo';
 import { docsCol } from '~/lib/firebase';
 import { getDocs } from 'firebase/firestore';
 import { IApiDoc } from '~/types/typedef';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export const getStaticProps = async (context: any) => {
    const docs = await getDocs(docsCol);
@@ -48,9 +49,11 @@ export default function DeveloperDashboard({ docs }: { docs: Array<IApiDoc> }) {
             <link rel="icon" href="/favicon.ico" />
          </Head>
          {/* <Blob/> */}
-         <Developer>
-            <APIDocs staticDocs={docs} />
-         </Developer>
+         <MainAnimator>
+            <Developer>
+               <APIDocs staticDocs={docs} />
+            </Developer>
+         </MainAnimator>
       </>
    );
 }

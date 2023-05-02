@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getDocs } from 'firebase/firestore';
-import { GetServerSidePropsContext } from 'next';
+import { GetStaticPropsContext } from 'next';
 import Head from 'next/head';
 import FreeClassRooms from '~/components/FreeClassRooms';
 import { SocialLinks } from '~/components/seo/Seo';
@@ -10,71 +10,69 @@ import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/Fir
 import { timeTableCol } from '~/lib/firebase';
 import { TimetableData, TimetableDocType } from '~/types/typedef';
 
-import { isLectureTime } from "~/lib/util";
-import { daysName } from '~/lib/constant';
+import { calculateFreeClassrooms, isLectureTime } from '~/lib/util';
+import Loader from '~/components/design/Loader';
+import { Center } from '@chakra-ui/react';
+import Button from '~/components/design/Button';
+import { useEffect, useState } from 'react';
+import MainAnimator from '~/components/design/MainAnimator';
 
-
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getStaticProps(context: GetStaticPropsContext) {
    const timetableDocSpanShot = await getDocs(timeTableCol);
 
-   const currTime = new Date (
-      (await axios.get("http://worldtimeapi.org/api/timezone/Asia/Karachi"))
-      .data
-      .datetime
-   );
-   
-   const timetables: Array<TimetableDocType> = timetableDocSpanShot
-   .docs
-   .map((timetable) =>
+   const timetables: Array<TimetableDocType> = timetableDocSpanShot.docs.map((timetable) =>
       timetable.data()
    ) as Array<TimetableDocType>;
-   
-   
-   const busyRooms = Array.from(
-      new Set(
-         timetables
-            .map(timetable =>
-               Object.entries(timetable.timetable)
-                  .map((
-                     [day, timetableData]:[string, Array<TimetableData>]
-                  ) => day.toLocaleLowerCase() == daysName[currTime.getDay()].toLocaleLowerCase() ? 
-                     timetableData
-                     .map (data => isLectureTime(data, currTime) ? data.roomNo : ""):[]
-                  )
-                  .reduce((prev, curr) => prev.concat(curr), [])
-            )
-            .reduce((prev, curr) => prev.concat(curr), [])
-      )
-   ).filter(room => room != "");
-   
-   const freeRooms = Array.from(
-      new Set(
-         timetables
-            .map(timetable =>
-               Object.entries(timetable.timetable)
-                  .map((
-                     [day, timetableData]: [string, Array<TimetableData>]
-                  ) => timetableData
-                     .map (data =>  !busyRooms.includes(data.roomNo) ?  data.roomNo : "")
-                  )
-                  .reduce((prev, curr) => prev.concat(curr), [])
-            )
-            .reduce((prev, curr) => prev.concat(curr), [])
-      )
-   ).filter(room => room != "");
-   
+
    return {
       props: {
-         freeRooms,
-         currTime: currTime.toString()
-      } // will be passed to the page component as props
+         timetables
+      }
    };
 }
 
-export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms: Array<string>, currTime: string }) {
+interface FreeClassRoomStateType {
+   loading: boolean;
+   time: Date;
+   freeClassRooms: Array<string>;
+}
+
+export default function FreeClassRoomsPage({
+   timetables
+}: {
+   timetables: Array<TimetableDocType>;
+}) {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.free_classrooms);
-   
+
+   const [state, setState] = useState<FreeClassRoomStateType>({
+      loading: true,
+      time: new Date(),
+      freeClassRooms: []
+   });
+
+   useEffect(() => {
+      const fetchTime = async () => {
+         const currTime = new Date(
+            (await axios.get('http://worldtimeapi.org/api/timezone/Asia/Karachi')).data.datetime
+         );
+         setState({ ...state, time: currTime, loading: false });
+      };
+
+      fetchTime();
+
+      const timeUpdater = setInterval(() => {
+         const updatedTime = state.time;
+         updatedTime.setSeconds(state.time.getSeconds() + 1);
+         setState({
+            freeClassRooms: calculateFreeClassrooms(timetables, updatedTime),
+            time: updatedTime,
+            loading: false
+         });
+      }, 1000);
+
+      return () => clearInterval(timeUpdater);
+   }, []);
+
    return (
       <>
          <Head>
@@ -96,7 +94,19 @@ export default function FreeClassRoomsPage({ freeRooms, currTime }: { freeRooms:
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <FreeClassRooms freeRooms={freeRooms} currTime={new Date(currTime)}/>
+         <MainAnimator>
+            {!state.loading && (
+               <FreeClassRooms key={'idx'} freeRooms={state.freeClassRooms} currTime={state.time} />
+            )}
+            {state.loading && (
+               <>
+                  <Loader>Calculating Free Classrooms...</Loader>
+                  <Center>
+                     <Button style={{ padding: '0.5rem 1.5rem 0.5rem 1.5rem' }}>Go Back</Button>
+                  </Center>
+               </>
+            )}
+         </MainAnimator>
       </>
    );
 }

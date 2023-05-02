@@ -40,13 +40,14 @@ const day_sorter = {
    sunday: 7
 };
 
-interface IProps extends TimetableInput {
+interface IProps {
    timetableData: any;
+   metaData: string;
 }
 
 import Image from 'next/image';
 
-export default function Timetable({ fall, semester, section, timetableData }: IProps) {
+export default function Timetable({ metaData, timetableData }: IProps) {
    let printTableRef = useRef<any>();
 
    const { setColorMode } = useColorMode();
@@ -58,7 +59,7 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
             <Link href={ROUTING.timetable}>
                <BackBtn />
             </Link>
-            <span>{`${fall} / ${semester} / ${section}`}</span>
+            <span>{`${metaData}`}</span>
             <div>
                {!timetableData ? (
                   <Loader>Loading...</Loader>
@@ -145,7 +146,7 @@ export default function Timetable({ fall, semester, section, timetableData }: IP
                         <TimeTablePrint
                            headTitles={timetableHeadTiles}
                            data={timetableData.timetable}
-                           payload={`${fall} / ${semester} / ${section}`}
+                           payload={`${metaData}`}
                         />
                      </div>
 

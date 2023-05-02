@@ -38,6 +38,7 @@ export default function Contribute() {
                      width={250}
                      height={250}
                      className={styles.github_img}
+                     loading="lazy"
                   />
                </a>
             </Center>

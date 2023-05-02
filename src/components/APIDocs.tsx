@@ -21,7 +21,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 
 import { docsCol } from '~/lib/firebase';
 import { updateDoc, getDocs, doc, setDoc } from 'firebase/firestore';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { admin_mail } from '~/lib/constant';
 import React from 'react';
@@ -67,15 +67,7 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
             );
          })}
 
-         {docs.map((doc, key) => {
-            return (
-               <React.Fragment key={key}>
-                  {!doc.id.startsWith('#') && doc.id != 'index' && (
-                     <DocMarkDown text={doc.docData} />
-                  )}
-               </React.Fragment>
-            );
-         })}
+         
 
          <Accordion allowToggle>
             {docs.map((doc, key) => {
@@ -90,6 +82,17 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
                );
             })}
          </Accordion>
+
+         {docs.map((doc, key) => {
+            return (
+               <React.Fragment key={key}>
+                  {!doc.id.startsWith('#') && doc.id != 'index' && (
+                     <DocMarkDown text={doc.docData} />
+                  )}
+               </React.Fragment>
+            );
+         })}
+
          <Center>
             <Text
                color={'blue.300'}
@@ -98,7 +101,7 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
                fontSize={'xl'}
             >
                <a href={`${LINKS.API_QA_LINK}`} target="_blank">
-                  Have any question or idea? ask here!
+                  Have any question or new idea? ask here!
                </a>
             </Text>
          </Center>
@@ -113,10 +116,24 @@ const DocAccordion = ({
    title: React.ReactNode;
    children: React.ReactNode;
 }) => {
+   const ref = useRef<any>();
+   const [openState, setOpenState] = useState<boolean>(false);
+
    return (
-      <AccordionItem margin={'0.5rem'}>
+      <AccordionItem margin={'0.5rem'} ref={ref}>
          <h2>
-            <AccordionButton>
+            <AccordionButton onClick={()=>{
+               if (!openState)
+               {
+                  setTimeout(()=> {
+                     ref.current.scrollIntoView({
+                        behavior: "smooth"
+                     }); 
+                  }, 100)
+               }
+               
+               setOpenState(!openState);
+            }}>
                <Box as="span" flex="1" textAlign="left">
                   {title}
                </Box>

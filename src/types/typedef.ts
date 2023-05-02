@@ -48,6 +48,7 @@ export interface ITimetableHistory {
    payload: TimetableInput;
    email: string;
    createdAt: any;
+   clickCount?: number | undefined
 }
 
 // docs

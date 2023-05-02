@@ -80,16 +80,21 @@ export default function Profile() {
 import { Flex, Heading, useMediaQuery, Box, Center } from '@chakra-ui/react';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 
-import { getDocs, limit, orderBy, query, where } from 'firebase/firestore';
+import { FieldValue, doc, getDocs, increment, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { timetableHistoryCol } from '~/lib/firebase';
 import Link from 'next/link';
 
 import { ITimetableHistory } from '~/types/typedef';
 import { NotLoggedIn } from './Header';
 
+interface IHistoryDocStateType extends ITimetableHistory
+{
+   docId: string
+}
+
 const History = () => {
    const [isUnder600] = useMediaQuery('(max-width: 600px)');
-   const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
+   const [history, setHistory] = useState<Array<IHistoryDocStateType>>([]);
 
    const user = useContext(UserCredentialsContext);
 
@@ -103,9 +108,9 @@ const History = () => {
             orderBy('createdAt', 'desc')
          );
          const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
-         const res = timetableHistoryDocs.docs.map((historyDoc) => historyDoc.data());
-
-         setHistory(res as Array<ITimetableHistory>);
+         const res = timetableHistoryDocs.docs.map((historyDoc) => ({docId: historyDoc.id, ...historyDoc.data()}));
+         
+         setHistory(res as Array<IHistoryDocStateType>);
       };
 
       fetchTimetableHistory();
@@ -135,6 +140,12 @@ const History = () => {
                            history.payload.semester
                         } ${history.payload.section}`}
                         key={idx}
+                        onClick={()=>{
+                           const historyDoc = doc(timetableHistoryCol, (history as IHistoryDocStateType).docId)
+                           updateDoc(historyDoc, {
+                              clickCount: increment(1)
+                           })
+                        }}
                      >
                         <Box
                            background={'var(--card-color-dark)'}

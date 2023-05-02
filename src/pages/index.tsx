@@ -7,7 +7,7 @@ import MainAnimator from '~/components/design/MainAnimator';
 
 export default function Home() {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
-
+   
    return (
       <>
          <Head>

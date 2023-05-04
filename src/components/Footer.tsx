@@ -59,6 +59,8 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
                borderTopWidth={1}
                borderStyle={'solid'}
                borderColor={useColorModeValue('gray.200', 'gray.700')}
+               flexBasis={'100%'}
+               width={'100%'}
             >
                <Container
                   as={Stack}

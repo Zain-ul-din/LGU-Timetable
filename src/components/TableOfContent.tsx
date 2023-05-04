@@ -83,6 +83,7 @@ const tableOfContent: TableOfContent[] = [
 
 const oxygen = Oxygen_Mono({ subsets: ['latin'], weight: '400' });
 
+
 export default function TableOfContent() {
    const refs = useMemo(() => Array<HTMLDivElement | null>(6).fill(null), []);
 

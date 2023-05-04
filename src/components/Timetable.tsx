@@ -219,9 +219,6 @@ const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }
    );
 };
 
-const table_headings = ['Subject', 'Timing', 'Room', 'Instructor'];
-
-
 
 const TimetableRenderer = ({ data }: { data: Array<any> }) => {
    const [isUnder700] = useMediaQuery('(max-width: 700px)');

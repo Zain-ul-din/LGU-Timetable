@@ -20,11 +20,11 @@ export default function Document() {
 
             
             {/* ads */}
-            <script
+            {/* <script
                async
                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9921497734267177"
                crossOrigin="anonymous"
-            ></script>
+            ></script> */}
             
             <link
                href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&family=Roboto:wght@300&display=swap"

@@ -41,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
                   {router.pathname != '/contribute' && <Header />}
                   <Component {...pageProps} />
                   {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
+                  {router.pathname.includes("/timetable/") && <Footer fixedBottom={false} />}
                </AppStyleProvider>
             </UserCredentialsContext.Provider>
          </TimeTableInputContext.Provider>

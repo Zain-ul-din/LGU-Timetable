@@ -32,6 +32,7 @@ export default function Home() {
                <Hero renderDescription={true} />
                <TableOfContent />
             </div>
+            <div className='google-ad'></div>
          </MainAnimator>
       </>
    );

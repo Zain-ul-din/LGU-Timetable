@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useEffect, useState } from 'react';
 
-import { doc, getDocs, getDoc, query, where } from 'firebase/firestore';
-import { timeTableCol } from '~/lib/firebase';
+import { doc, getDoc , getDocs } from 'firebase/firestore';
+import { teachersTimetableCol } from '~/lib/firebase';
 
 import { motion } from 'framer-motion';
 import { Center } from '@chakra-ui/react';
@@ -20,21 +20,8 @@ import MainAnimator from '~/components/design/MainAnimator';
 import { ROUTING } from '~/lib/constant';
 
 export async function getStaticPaths() {
-    const timetable_docs = await getDocs(timeTableCol);
-    
-    const res: Array<TimetableDocType> = timetable_docs.docs.map(doc => doc.data()) as Array<TimetableDocType>;
- 
-    const filterQuery =res
-     .map(timetableData => Object.entries(timetableData.timetable)
-         .map(([_, val]: [string, Array<TimetableData>])=> val
-         .map (data => data.teacher)
-         ).reduce((acc, curr)=> acc.concat(curr),[])
-     ).reduce((acc, curr)=> acc.concat(curr),[])
-     
-    /**@ts-ignore */
-    const teachers = [... new Set(filterQuery)]
- 
-   const paths = teachers.map((name) => ({ params: { id: name } }));
+   const timetable_docs = await getDocs(teachersTimetableCol);
+   const paths = timetable_docs.docs.map(doc => ({ params: { id: doc.id } }));
 
    return {
       paths,
@@ -44,43 +31,19 @@ export async function getStaticPaths() {
 
 interface TimetableDoc extends TimetableDocType
 {
-    id: string
+   id: string
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
    const id = context.params!.id;
 
-   const docsRef = await getDocs(timeTableCol) ;
+   const docRef = doc(teachersTimetableCol, id as string);
+   const docData = await getDoc(docRef);
    
-   const timetable: TimetableDocType = {
-        updatedAt: '',
-        timetable: {
-            Monday: [],
-            Friday: [],
-            Thursday: [],
-            Saturday: [],
-            Sunday: [],
-            Tuesday: [],
-            Wednesday: []
-        }
-   }
-   
-   const data = docsRef.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Array<TimetableDoc>
-   
-   data.forEach(d => {
-        Object.entries(d.timetable).forEach(([day, lectures]: [string, Array<TimetableData>])=> {
-            lectures.forEach(lecture => {
-                if (lecture.teacher == id)
-                    timetable.timetable[day as keyof TimetableResponseType]?.push({class: d.id,...lecture});
-            })
-        })
-   })
-   
-   timetable.updatedAt = data[0].updatedAt;
-
+  
    return {
       props: {
-         timetable: { id: id, ...timetable }
+         timetable: { id: docRef.id, ... docData.data() }
       },
       revalidate: 5000
    };
@@ -96,8 +59,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
    const toast = useToast();
 
    useEffect(() => () => toast.closeAll(), []);
-
-
+   
    useTimeout(() => {
       toast({
          position: 'bottom',
@@ -114,9 +76,8 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
    }, 2000);    
 
    useEffect(() => {
-        if (Object.entries(timetable.timetable)
-        .filter(([key, val])=> val.length > 0).length == 0)
-            router.push(ROUTING.teachers);
+      if (!timetable.timetable)
+         router.push(ROUTING.teachers);
    }, []);
    
    return (

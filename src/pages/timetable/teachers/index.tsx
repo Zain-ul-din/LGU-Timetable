@@ -6,7 +6,7 @@ import Nav from '~/components/Nav';
 import { VisuallyHidden } from '@chakra-ui/react';
 
 import { getDocs } from 'firebase/firestore';
-import { timeTableCol } from '~/lib/firebase';
+import { teachersTimetableCol, timeTableCol } from '~/lib/firebase';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
 import { SocialLinks } from '~/components/seo/Seo';
@@ -16,30 +16,19 @@ import { TimetableData, TimetableDocType } from '~/types/typedef';
 import TeacherTimetableSelection from '~/components/TeachersTimetableSelection';
 
 export const getStaticProps = async (context: any) => {
-   const timetable_docs = await getDocs(timeTableCol);
-    
-   const res: Array<TimetableDocType> = timetable_docs.docs.map(doc => doc.data()) as Array<TimetableDocType>;
-
-   const filterQuery =res
-    .map(timetableData => Object.entries(timetableData.timetable)
-        .map(([_, val]: [string, Array<TimetableData>])=> val
-        .map (data => data.teacher)
-        ).reduce((acc, curr)=> acc.concat(curr),[])
-    ).reduce((acc, curr)=> acc.concat(curr),[])
-    
-   /**@ts-ignore */
-   const teachers = [... new Set(filterQuery)]
+   const timetable_docs = await getDocs(teachersTimetableCol);
+   const teachers = timetable_docs.docs.map(doc => doc.id);
 
    return {
       props: {
-        teachers: teachers
+        teachers
       }
    };
 };
 
 export default function Timetable({ teachers }: { teachers: Array<string>}) {
-//    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.time_table);
-
+   useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.teacher_timetable);
+   
    return (
       <>
          <Head>
@@ -60,36 +49,23 @@ export default function Timetable({ teachers }: { teachers: Array<string>}) {
          </Head>
          <MainAnimator>
             <TeacherTimetableSelection teachers={teachers}/>
-            {/* <VisuallyHidden>
-               <SEO metaData={metaData} />
-            </VisuallyHidden>*/}
+            <VisuallyHidden>
+               <SEO metaData={teachers} />
+            </VisuallyHidden>
          </MainAnimator>
       </>
    );
 }
 
-const SEO = ({ metaData }: { metaData: any }) => {
+const SEO = ({ metaData }: { metaData: Array<string> }) => {
    return (
       <>
-         {Object.entries(metaData).map(([fall, val]: [any, any], idx) => {
-            return (
-               <div key={idx}>
-                  <h1>{fall}</h1>
-                  {Object.entries(val).map(([semester, secs]: [any, any], i) => {
-                     return (
-                        <span key={i}>
-                           <h2>{semester}</h2>
-                           <ul>
-                              {secs.map((sec: any, uid: number) => {
-                                 return <li key={uid}>{sec}</li>;
-                              })}
-                           </ul>
-                        </span>
-                     );
-                  })}
-               </div>
-            );
-         })}
+         <ul>
+            {metaData.map((val, key)=>{
+               return <li key ={key}>{val}</li>
+            })}
+         </ul>
       </>
    );
 };
+

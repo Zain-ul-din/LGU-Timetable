@@ -31,7 +31,7 @@ export default function TeacherTimetableSelection (
             gap={'1rem'}
         >
             <Heading as = {'h1'}>
-                <Icon mr = {3} style={{transform: 'TranslateY(-2px)'}}>
+                <Icon mr = {3} style={{transform: 'TranslateY(-6px)'}}>
                     <TimeIcon/>
                 </Icon>
                 <Box

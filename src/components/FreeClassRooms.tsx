@@ -74,9 +74,9 @@ export default function FreeClassRooms({
             transition={{ duration: 1 }}
          >
             <Box maxWidth={'10rem'}>
-               <Link href={ROUTING.home}>
+               <Box>
                   <BackBtn />
-               </Link>
+               </Box>
             </Box>
 
             <Box marginY={'2rem'}>

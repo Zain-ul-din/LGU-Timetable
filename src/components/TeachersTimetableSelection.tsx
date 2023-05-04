@@ -9,6 +9,7 @@ import { motion } from "framer-motion"
 import { ROUTING } from "~/lib/constant"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import BackBtn from "./design/BackBtn"
 
 export default function TeacherTimetableSelection (
     { teachers } : { teachers: Array<string> }
@@ -32,6 +33,10 @@ export default function TeacherTimetableSelection (
             marginBottom={'36'}
             gap={'1rem'}
         >
+            <Box>
+                <BackBtn />
+            </Box>
+            
             <Heading as = {'h1'}>
                 <Icon mr = {3} style={{transform: 'TranslateY(-6px)'}}>
                     <TimeIcon/>

@@ -53,12 +53,14 @@ export default function Timetable({ metaData, timetableData }: IProps) {
    const { setColorMode } = useColorMode();
    const toast = useToast();
 
+   const router = useRouter()
+
    return (
       <>
          <div className={`roboto ${styles.timetable_container}`}>
-            <Link href={ROUTING.timetable}>
+            <Box>
                <BackBtn />
-            </Link>
+            </Box>
             <span>{`${metaData}`}</span>
             <div>
                {!timetableData ? (
@@ -191,6 +193,7 @@ import { motion } from 'framer-motion';
 import { FIREBASE_ANALYTICS_EVENTS, reportFirebaseAnalytics } from '~/lib/FirebaseAnalysis';
 import Link from 'next/link';
 import BackBtn from './design/BackBtn';
+import { useRouter } from 'next/router';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
    const { isOpen, onToggle } = useDisclosure({

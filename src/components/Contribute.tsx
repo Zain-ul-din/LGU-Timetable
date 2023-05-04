@@ -86,9 +86,7 @@ export default function Contribute() {
                </Center>
 
                <Center marginY={'1rem'}>
-                  <Link href={ROUTING.home}>
                      <BackBtn />
-                  </Link>
                </Center>
             </Flex>
          </Flex>

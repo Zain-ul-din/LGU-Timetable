@@ -33,6 +33,7 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
       <Flex
          width={'100%'}
          marginTop={'4rem'}
+         flexDirection={'column'}
          padding={0}
          position={fixedBottom ? 'fixed' : 'initial'}
          bottom={0}

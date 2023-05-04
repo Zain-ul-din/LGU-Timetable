@@ -105,9 +105,6 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
                </a>
             </Text>
          </Center>
-
-         {/* @article-ads */}
-         <ArticleAd />
       </Flex>
    );
 }
@@ -149,7 +146,6 @@ const DocAccordion = ({
 };
 
 import rehypeRaw from 'rehype-raw';
-import ArticleAd from './Ads/ArticleAd';
 
 const DocMarkDown = ({ text }: { text: string }) => {
    return (

@@ -7,6 +7,7 @@ import { docsCol } from '~/lib/firebase';
 import { getDocs } from 'firebase/firestore';
 import { IApiDoc } from '~/types/typedef';
 import MainAnimator from '~/components/design/MainAnimator';
+import ArticleAd from '~/components/Ads/ArticleAd';
 
 export const getStaticProps = async (context: any) => {
    const docs = await getDocs(docsCol);
@@ -53,6 +54,9 @@ export default function DeveloperDashboard({ docs }: { docs: Array<IApiDoc> }) {
             <Developer>
                <APIDocs staticDocs={docs} />
             </Developer>
+
+            {/* @article-ads */}
+            <ArticleAd />
          </MainAnimator>
       </>
    );

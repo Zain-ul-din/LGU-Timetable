@@ -48,7 +48,7 @@ export default function Timetable({ teachers }: { teachers: Array<string>}) {
 
             <meta
                name="description"
-               content="A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Timetable Selection Page."
+               content="A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Teacher Timetable Page."
             />
 
             <meta

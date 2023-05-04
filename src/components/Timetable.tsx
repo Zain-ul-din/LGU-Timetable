@@ -21,8 +21,8 @@ import {
    useColorMode,
    useToast
 } from '@chakra-ui/react';
-import { CopyIcon, ArrowBackIcon } from '@chakra-ui/icons';
 
+import { CopyIcon, ArrowBackIcon } from '@chakra-ui/icons';
 import Btn from './design/Button';
 
 import TimeTablePrint from './TimetablePrint';
@@ -218,8 +218,13 @@ const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }
 
 const table_headings = ['Subject', 'Timing', 'Room', 'Instructor'];
 
+
+
 const TimetableRenderer = ({ data }: { data: Array<any> }) => {
    const [isUnder700] = useMediaQuery('(max-width: 700px)');
+
+   const table_headings = ['Subject', 'Timing', 'Room', data[0].class ? 'Class' : 'Instructor'];
+
 
    return (
       <TableContainer border={'1px solid var(--border-color)'} borderRadius={'md'}>
@@ -272,8 +277,13 @@ const TimetableRenderer = ({ data }: { data: Array<any> }) => {
                            whiteSpace={isUnder700 ? 'pre-wrap' : 'inherit'}
                            padding={isUnder700 ? '1.5px' : ''}
                            fontSize={isUnder700 ? 'small' : 'inherit'}
+                           color={'blue.200'}
+                           cursor={'pointer'}
+                           _hover={{textDecoration: 'underline'}}
                         >
-                           {curr.teacher}
+                           <Link href = {curr.class ? `${ROUTING.timetable}/${curr.class}` : `${ROUTING.teachers}/${curr.teacher}`}>
+                              {curr.class ? curr.class : curr.teacher}
+                           </Link>
                         </Td>
                      </Tr>
                   );

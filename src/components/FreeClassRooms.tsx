@@ -104,7 +104,7 @@ export default function FreeClassRooms({
                   be 100% accurate.
                </Alert>
             </Center>
-
+            
             {Object.entries(rooms).map(([key, val], idx) => {
                return (
                   <React.Fragment key={idx}>

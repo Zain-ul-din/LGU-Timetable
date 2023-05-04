@@ -62,5 +62,6 @@ export const ROUTING = {
    timetable: '/timetable',
    notification: '/notifications',
    free_class_rooms: '/freeclassrooms',
-   admin: '/admin'
+   admin: '/admin',
+   teachers: '/timetable/teachers'
 };

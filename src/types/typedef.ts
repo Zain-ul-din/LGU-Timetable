@@ -68,6 +68,7 @@ export interface TimetableData {
    teacher: string;
    startTime: TimetableLectureTime;
    endTime: TimetableLectureTime;
+   class?: string | undefined
 }
 
 export interface TimetableResponseType {
@@ -82,7 +83,7 @@ export interface TimetableResponseType {
 
 export interface TimetableDocType {
    timetable: TimetableResponseType;
-   createdAt: string;
+   updatedAt: string;
 }
 
 export interface UserDataDocType extends User {

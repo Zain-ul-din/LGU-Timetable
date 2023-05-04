@@ -25,6 +25,7 @@
     "eslint-config-next": "13.2.4",
     "firebase": "^9.19.1",
     "framer-motion": "^10.10.0",
+    "fuse.js": "^6.6.2",
     "joi": "^17.9.1",
     "next": "13.2.4",
     "nextjs-cors": "^2.1.2",

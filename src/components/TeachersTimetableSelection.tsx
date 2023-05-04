@@ -8,11 +8,13 @@ import { motion } from "framer-motion"
 
 import { ROUTING } from "~/lib/constant"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 export default function TeacherTimetableSelection (
     { teachers } : { teachers: Array<string> }
 )
 {
+    const router = useRouter()
     const [filterTeachers, setFilterTeachers] = useState<Array<string>>(teachers.sort())
     const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -58,6 +60,7 @@ export default function TeacherTimetableSelection (
             {filterTeachers
             .map((val, key)=>{
                 return <Flex
+                    onClick={(e)=> router.push(`${ROUTING.teachers}/${val}`)}
                     className="roboto"
                     key = {key} 
                     bg= {'var(--card-color)'} py = {'0.5rem'} px= {'1rem'}
@@ -66,7 +69,6 @@ export default function TeacherTimetableSelection (
                     rounded={'sm'}
                     cursor={'pointer'}
                 >
-                    <Link href = {`${ROUTING.teachers}/${val}`}>
                         <motion.div
                             initial = {{opacity: 0}}
                             animate = {{ opacity: 1}}
@@ -76,7 +78,6 @@ export default function TeacherTimetableSelection (
                              <LinkIcon/>
                             </Icon> {val} 
                         </motion.div>
-                    </Link>
                 </Flex>
             })}
         </Flex>

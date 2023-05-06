@@ -129,7 +129,7 @@ const DocAccordion = ({
                      ref.current.scrollIntoView({
                         behavior: "smooth"
                      }); 
-                  }, 100)
+                  }, 500)
                }
                
                setOpenState(!openState);

@@ -14,14 +14,10 @@ import {
    useToast
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
-import { nightOwl } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
-
-import ReactMarkdown from 'react-markdown';
-import SyntaxHighlighter from 'react-syntax-highlighter';
 
 import { docsCol } from '~/lib/firebase';
-import { updateDoc, getDocs, doc, setDoc } from 'firebase/firestore';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { updateDoc,  doc, setDoc } from 'firebase/firestore';
+import { useContext, useRef, useState } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { admin_mail } from '~/lib/constant';
 import React from 'react';
@@ -30,12 +26,14 @@ import { LINKS } from '~/lib/constant';
 import Loader from './design/Loader';
 import { IApiDoc } from '~/types/typedef';
 
+import DocMarkDown from './design/MarkDown';
+
 export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) {
    const [docs, setDocs] = useState<Array<IApiDoc>>(staticDocs);
 
    const user = useContext(UserCredentialsContext);
    const [loading, setLoading] = useState<boolean>(false);
-
+   
    //! not required since using staticSiteRendering
    // useEffect(() => {
    //    async function fetchDocs() {
@@ -66,8 +64,6 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
                </React.Fragment>
             );
          })}
-
-         
 
          <Accordion allowToggle>
             {docs.map((doc, key) => {
@@ -122,18 +118,19 @@ const DocAccordion = ({
    return (
       <AccordionItem margin={'0.5rem'} ref={ref}>
          <h2>
-            <AccordionButton onClick={()=>{
-               if (!openState)
-               {
-                  setTimeout(()=> {
-                     ref.current.scrollIntoView({
-                        behavior: "smooth"
-                     }); 
-                  }, 500)
-               }
-               
-               setOpenState(!openState);
-            }}>
+            <AccordionButton
+               onClick={() => {
+                  if (!openState) {
+                     setTimeout(() => {
+                        ref.current.scrollIntoView({
+                           behavior: 'smooth'
+                        });
+                     }, 500);
+                  }
+
+                  setOpenState(!openState);
+               }}
+            >
                <Box as="span" flex="1" textAlign="left">
                   {title}
                </Box>
@@ -142,43 +139,6 @@ const DocAccordion = ({
          </h2>
          <AccordionPanel pb={4}>{children}</AccordionPanel>
       </AccordionItem>
-   );
-};
-
-import rehypeRaw from 'rehype-raw';
-
-const DocMarkDown = ({ text }: { text: string }) => {
-   return (
-      <>
-         <ReactMarkdown
-            skipHtml={false}
-            className="mark-down"
-            rehypePlugins={[rehypeRaw]}
-            components={{
-               code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '');
-                  return !inline && match ? (
-                     <SyntaxHighlighter
-                        style={nightOwl}
-                        language={match[1]}
-                        PreTag="div"
-                        wrapLongLines={true}
-                        className="syntax-highlighter"
-                        // {...props}
-                     >
-                        {String(children).replace(/\n$/, '')}
-                     </SyntaxHighlighter>
-                  ) : (
-                     <code className={className} {...props}>
-                        {children}
-                     </code>
-                  );
-               }
-            }}
-         >
-            {text}
-         </ReactMarkdown>
-      </>
    );
 };
 

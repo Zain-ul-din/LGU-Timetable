@@ -80,16 +80,25 @@ export default function Profile() {
 import { Flex, Heading, useMediaQuery, Box, Center } from '@chakra-ui/react';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 
-import { FieldValue, doc, getDocs, increment, limit, orderBy, query, updateDoc, where } from 'firebase/firestore';
+import {
+   FieldValue,
+   doc,
+   getDocs,
+   increment,
+   limit,
+   orderBy,
+   query,
+   updateDoc,
+   where
+} from 'firebase/firestore';
 import { timetableHistoryCol } from '~/lib/firebase';
 import Link from 'next/link';
 
 import { ITimetableHistory } from '~/types/typedef';
 import { NotLoggedIn } from './Header';
 
-interface IHistoryDocStateType extends ITimetableHistory
-{
-   docId: string
+interface IHistoryDocStateType extends ITimetableHistory {
+   docId: string;
 }
 
 const History = () => {
@@ -108,8 +117,11 @@ const History = () => {
             orderBy('createdAt', 'desc')
          );
          const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
-         const res = timetableHistoryDocs.docs.map((historyDoc) => ({docId: historyDoc.id, ...historyDoc.data()}));
-         
+         const res = timetableHistoryDocs.docs.map((historyDoc) => ({
+            docId: historyDoc.id,
+            ...historyDoc.data()
+         }));
+
          setHistory(res as Array<IHistoryDocStateType>);
       };
 
@@ -140,11 +152,14 @@ const History = () => {
                            history.payload.semester
                         } ${history.payload.section}`}
                         key={idx}
-                        onClick={()=>{
-                           const historyDoc = doc(timetableHistoryCol, (history as IHistoryDocStateType).docId)
+                        onClick={() => {
+                           const historyDoc = doc(
+                              timetableHistoryCol,
+                              (history as IHistoryDocStateType).docId
+                           );
                            updateDoc(historyDoc, {
                               clickCount: increment(1)
-                           })
+                           });
                         }}
                      >
                         <Box

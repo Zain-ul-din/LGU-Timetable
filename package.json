@@ -13,6 +13,7 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
     "@chakra-ui/react": "^2.5.5",
+    "@choc-ui/chakra-autocomplete": "^5.1.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@types/node": "18.15.11",
@@ -42,9 +43,12 @@
     "react-use-scroll-position": "^2.0.0",
     "redis-om": "^0.3.6",
     "rehype-raw": "^6.1.1",
-    "typescript": "5.0.3"
+    "tesseract.js": "^4.0.5",
+    "typescript": "5.0.3",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.1",
     "next-sitemap": "^4.0.7",
     "prettier": "^2.8.7"
   }

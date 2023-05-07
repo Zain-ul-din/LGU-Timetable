@@ -1,12 +1,13 @@
 import styles from '~/styles/Contribute.module.css';
 import Blob from './Blob';
 import { Center, Flex, useMediaQuery, Text } from '@chakra-ui/react';
-import { LINKS, ROUTING } from '~/lib/constant';
-import Footer from './Footer';
+import { APIS_ENDPOINTS, LINKS } from '~/lib/constant';
 
 import Image from 'next/image';
 import BackBtn from './design/BackBtn';
-import Link from 'next/link';
+import MarkDown from './design/MarkDown';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function Contribute() {
    const [isUnder800] = useMediaQuery('(max-width: 800px)');
@@ -86,11 +87,36 @@ export default function Contribute() {
                </Center>
 
                <Center marginY={'1rem'}>
-                     <BackBtn />
+                  <BackBtn />
                </Center>
             </Flex>
          </Flex>
+         <Flex my = {'4rem'}></Flex>
          {/* <Footer fixedBottom={false}/> */}
+         <ReadmeMd/>
       </div>
    );
+}
+
+import { motion } from 'framer-motion';
+
+const ReadmeMd = ()=> {
+   const [readme, setReadme] = useState<string>("");
+
+   useEffect(()=> {
+      const fetchReadmeMd = async () => {
+         const res = await axios.get(APIS_ENDPOINTS.ReadMeMd)
+         if (res.data) setReadme(res.data as string);
+      } 
+
+      fetchReadmeMd()
+   }, [])
+
+   return <motion.div
+      initial = {{opacity: 0}}
+      animate = {{opacity: 1}}
+      transition={{ duration: 1, delay: 1 }}
+   >
+      <MarkDown text={readme}/>
+   </motion.div> 
 }

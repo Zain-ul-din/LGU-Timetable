@@ -48,7 +48,7 @@ export interface ITimetableHistory {
    payload: TimetableInput;
    email: string;
    createdAt: any;
-   clickCount?: number | undefined
+   clickCount?: number | undefined;
 }
 
 // docs
@@ -68,7 +68,7 @@ export interface TimetableData {
    teacher: string;
    startTime: TimetableLectureTime;
    endTime: TimetableLectureTime;
-   class?: string | undefined
+   class?: string | undefined;
 }
 
 export interface TimetableResponseType {
@@ -91,3 +91,28 @@ export interface UserDataDocType extends User {
    createdAt: string;
    isPublic: true;
 }
+
+import { FieldValue } from 'firebase/firestore';
+
+export interface UserMetaData 
+{
+   email: string | undefined;
+   photo_url: string | undefined;
+   display_name: string | undefined;
+}
+
+export interface PastPaperDocType {
+   imgUrl: string; // input
+   department: string; // input
+   examType: string; // input
+   subjectName: string; // input
+   isVerified: boolean;
+   approvedBy: UserMetaData | null;
+   uploadedBy: UserMetaData;
+   uploadedAt: FieldValue;
+   upvote: Array<any>;
+   downvote: Array<any>;
+   ml: {};
+   isPublic: boolean; // input
+}
+

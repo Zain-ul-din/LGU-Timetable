@@ -5,10 +5,9 @@ import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/Fir
 import { SocialLinks } from '~/components/seo/Seo';
 import MainAnimator from '~/components/design/MainAnimator';
 
-
 export default function Home() {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
-   
+
    return (
       <>
          <Head>
@@ -32,7 +31,7 @@ export default function Home() {
                <Hero renderDescription={true} />
                <TableOfContent />
             </div>
-            <div className='google-ad'></div>
+            <div className="google-ad"></div>
          </MainAnimator>
       </>
    );

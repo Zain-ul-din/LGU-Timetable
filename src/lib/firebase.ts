@@ -4,11 +4,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { collection, getFirestore } from 'firebase/firestore';
 import { getAnalytics, isSupported } from 'firebase/analytics';
+import { getStorage } from "firebase/storage";
 
 import type { FirebaseApp } from 'firebase/app';
 import type { Auth } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
 import type { Analytics } from 'firebase/analytics';
+import type { FirebaseStorage } from 'firebase/storage';
 
 const firebaseConfig = {
    apiKey: process.env.NEXT_PUBLIC_apiKey,
@@ -25,6 +27,7 @@ interface InitializeFirebaseAppType {
    firebaseAuth: Auth;
    firebaseStore: Firestore;
    firebaseAnalytics: Analytics | null;
+   firebaseStorage: FirebaseStorage
 }
 
 function initializeFirebaseApp(): InitializeFirebaseAppType {
@@ -33,12 +36,14 @@ function initializeFirebaseApp(): InitializeFirebaseAppType {
    const firebaseStore: Firestore = getFirestore(firebaseApp);
    const firebaseAnalytics: Analytics | null =
       typeof window !== 'undefined' ? getAnalytics(firebaseApp) : null;
+   const firebaseStorage = getStorage(firebaseApp)
 
    return {
       firebaseApp,
       firebaseAuth,
       firebaseStore,
-      firebaseAnalytics
+      firebaseAnalytics,
+      firebaseStorage
    };
 }
 
@@ -52,3 +57,5 @@ export const timetableHistoryCol = collection(firebase.firebaseStore, 'timetable
 export const apiAnalysisCol = collection(firebase.firebaseStore, 'api_analysis');
 export const userColsRef = collection(firebase.firebaseStore, 'users_data');
 export const teachersTimetableCol = collection(firebase.firebaseStore, 'teachers_timetable');
+export const pastPapersCol = collection(firebase.firebaseStore, 'past_papers');
+export const pastPapersInputCol = collection(firebase.firebaseStore, 'past_papers_input');

@@ -17,18 +17,18 @@ import TeacherTimetableSelection from '~/components/TeachersTimetableSelection';
 
 export const getStaticProps = async (context: any) => {
    const timetable_docs = await getDocs(teachersTimetableCol);
-   const teachers = timetable_docs.docs.map(doc => doc.id);
+   const teachers = timetable_docs.docs.map((doc) => doc.id);
 
    return {
       props: {
-        teachers
+         teachers
       }
    };
 };
 
-export default function Timetable({ teachers }: { teachers: Array<string>}) {
+export default function Timetable({ teachers }: { teachers: Array<string> }) {
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.teacher_timetable);
-   
+
    return (
       <>
          <Head>
@@ -48,7 +48,7 @@ export default function Timetable({ teachers }: { teachers: Array<string>}) {
             <SocialLinks />
          </Head>
          <MainAnimator>
-            <TeacherTimetableSelection teachers={teachers}/>
+            <TeacherTimetableSelection teachers={teachers} />
             <VisuallyHidden>
                <SEO metaData={teachers} />
             </VisuallyHidden>
@@ -61,11 +61,10 @@ const SEO = ({ metaData }: { metaData: Array<string> }) => {
    return (
       <>
          <ul>
-            {metaData.map((val, key)=>{
-               return <li key ={key}>{val}</li>
+            {metaData.map((val, key) => {
+               return <li key={key}>{val}</li>;
             })}
          </ul>
       </>
    );
 };
-

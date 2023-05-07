@@ -33,7 +33,16 @@ import { TimeTableInputContext } from '~/hooks/TimetableInputContext';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Text, Button, useMediaQuery } from '@chakra-ui/react';
 import { MenuStyle, TabStyle, Transitions } from '~/styles/Style';
-import { getDocs, increment, limit, orderBy, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
+import {
+   getDocs,
+   increment,
+   limit,
+   orderBy,
+   query,
+   serverTimestamp,
+   updateDoc,
+   where
+} from 'firebase/firestore';
 
 const tabTitles = ['Semester', 'Program', 'Section'];
 
@@ -65,8 +74,11 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
             orderBy('createdAt', 'desc')
          );
          const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
-         const res = timetableHistoryDocs.docs.map((historyDoc) => ({docId: historyDoc.id,...historyDoc.data()}));
-            
+         const res = timetableHistoryDocs.docs.map((historyDoc) => ({
+            docId: historyDoc.id,
+            ...historyDoc.data()
+         }));
+
          setHistory(res as any);
       };
 
@@ -276,20 +288,17 @@ function HistoryDropDown({ menuItems }: { menuItems: Array<ITimetableHistory> })
             <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} maxH={'80'}>
                {menuItems &&
                   menuItems?.map(
-                     (
-                        { payload, email, createdAt, docId }: any ,
-                        idx: number
-                     ): JSX.Element => (
+                     ({ payload, email, createdAt, docId }: any, idx: number): JSX.Element => (
                         <Link
                            key={idx}
                            href={`/timetable/${payload.fall?.replace('/', '-')} ${
                               payload.semester
                            } ${payload.section}`}
-                           onClick={()=> {
-                              const historyDoc = doc(timetableHistoryCol, docId)
+                           onClick={() => {
+                              const historyDoc = doc(timetableHistoryCol, docId);
                               updateDoc(historyDoc, {
                                  clickCount: increment(1)
-                              })
+                              });
                            }}
                         >
                            <MenuStyle.MenuItem>

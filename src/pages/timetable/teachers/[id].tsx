@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useEffect, useState } from 'react';
 
-import { doc, getDoc , getDocs } from 'firebase/firestore';
+import { doc, getDoc, getDocs } from 'firebase/firestore';
 import { teachersTimetableCol } from '~/lib/firebase';
 
 import { motion } from 'framer-motion';
@@ -21,7 +21,7 @@ import { ROUTING } from '~/lib/constant';
 
 export async function getStaticPaths() {
    const timetable_docs = await getDocs(teachersTimetableCol);
-   const paths = timetable_docs.docs.map(doc => ({ params: { id: doc.id } }));
+   const paths = timetable_docs.docs.map((doc) => ({ params: { id: doc.id } }));
 
    return {
       paths,
@@ -29,9 +29,8 @@ export async function getStaticPaths() {
    };
 }
 
-interface TimetableDoc extends TimetableDocType
-{
-   id: string
+interface TimetableDoc extends TimetableDocType {
+   id: string;
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
@@ -39,11 +38,10 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
    const docRef = doc(teachersTimetableCol, id as string);
    const docData = await getDoc(docRef);
-   
-  
+
    return {
       props: {
-         timetable: { id: docRef.id, ... docData.data() }
+         timetable: { id: docRef.id, ...docData.data() }
       },
       revalidate: 5000
    };
@@ -54,12 +52,11 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
-   
    const router = useRouter();
    const toast = useToast();
 
    useEffect(() => () => toast.closeAll(), []);
-   
+
    useTimeout(() => {
       toast({
          position: 'bottom',
@@ -73,13 +70,12 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
             />
          )
       });
-   }, 2000);    
+   }, 2000);
 
    useEffect(() => {
-      if (!timetable.timetable)
-         router.push(ROUTING.teachers);
+      if (!timetable.timetable) router.push(ROUTING.teachers);
    }, []);
-   
+
    return (
       <>
          <Head>
@@ -90,7 +86,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
                name="description"
                content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Teacher Timetable Page`}
             />
-            
+
             <meta
                name="keywords"
                content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}

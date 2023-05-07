@@ -115,11 +115,16 @@ export function fillMissingDays(data: any): any {
 
 export function removeDuplicateTimetableHistory(arr: Array<ITimetableHistory>) {
    return arr.filter((currEle, idx, self) => {
-      return idx == self.findIndex(ele => {
-         return ele.payload.fall == currEle.payload.fall &&
-            ele.payload.section == currEle.payload.section &&
-            ele.payload.semester == currEle.payload.semester
-      })
+      return (
+         idx ==
+         self.findIndex((ele) => {
+            return (
+               ele.payload.fall == currEle.payload.fall &&
+               ele.payload.section == currEle.payload.section &&
+               ele.payload.semester == currEle.payload.semester
+            );
+         })
+      );
    });
 }
 

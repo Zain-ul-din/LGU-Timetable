@@ -90,10 +90,10 @@ export default function Contribute() {
                   <BackBtn />
                </Center>
             </Flex>
+            <Flex my = {'4rem'}></Flex>
          </Flex>
-         <Flex my = {'4rem'}></Flex>
          {/* <Footer fixedBottom={false}/> */}
-         <ReadmeMd/>
+            {!isUnder800 && <ReadmeMd/>}
       </div>
    );
 }

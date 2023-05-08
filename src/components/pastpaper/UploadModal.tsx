@@ -303,7 +303,7 @@ const UploadModal = ({ isOpen, onClose, staticData }:
                      
                       {loading.validatingImage && <Loader>Please Wait Validating Image</Loader>}
                       {loading.uploading && <Loader>Uploading Image to Cloud</Loader>}
-                      <Center pt = {'0.4rem'}>
+                      <Center pt = {'0.4rem'} mb = {'3rem'}>
                          <Button colorScheme="whatsapp" type="submit" isLoading= {loading.validatingImage || loading.uploading}>
                             Submit
                          </Button>

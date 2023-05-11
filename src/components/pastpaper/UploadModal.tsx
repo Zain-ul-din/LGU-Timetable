@@ -423,3 +423,4 @@ const initialState: inputStateType = {
    examType: { value: '', error: InputError.examType},
    visibility: { value: true, error: undefined}
 }
+

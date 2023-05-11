@@ -123,6 +123,9 @@ function TimeTableCell({
    colCount: number;
    metaData: any;
 }): JSX.Element {
+
+   
+
    return (
       <>
          <Tr>
@@ -139,9 +142,10 @@ function TimeTableCell({
             ) : (
                <></>
             )}
-
+            
             {metaData &&
                metaData.map((val: any, idx: number): JSX.Element => {
+
                   const colSpan: number = getColSpan(
                      {
                         hour: parseInt(val.startTime.hours),

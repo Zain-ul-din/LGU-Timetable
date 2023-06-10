@@ -17,6 +17,7 @@ import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { useUserCredentials } from '~/hooks/hooks';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 import { useRouter } from 'next/router';
+import BgGlow from '~/components/BgGlow';
 
 const footerPages = ['/', '/contribute', '/developer', '/notifications', '/freeclassrooms'];
 
@@ -34,6 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <>
          <TimeTableInputContext.Provider value={{ timeTableInput, setTimeTableInput }}>
             <UserCredentialsContext.Provider value={{ user, setUser }}>
+               <BgGlow />
                <NextNProgress color="var(--loader-color)" />
                <AppStyleProvider theme={appTheme}>
                   <DarkTheme />

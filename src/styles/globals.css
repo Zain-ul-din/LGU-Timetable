@@ -40,7 +40,7 @@
    --violet: rgb(103, 58, 183);
    --pink: rgb(244, 143, 177);
 
-   --bg-color: rgb(20, 20, 20);
+   --bg-color: rgba(20, 20, 20, 0);
 
    --card-color: rgb(255, 255, 255, 0.02);
    --card-color-dark: rgb(255, 255, 255, 0.09);

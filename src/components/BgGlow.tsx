@@ -2,9 +2,9 @@ import { Flex, useMediaQuery  } from "@chakra-ui/react";
 
 export default function BgGlow () {
 
-    const [isUnder100] = useMediaQuery("(max-width: 100px)");
+    const [isUnder1000] = useMediaQuery("(max-width: 1000px)");
 
-    if (isUnder100) return <></>
+    if (isUnder1000) return <></>
 
     return <>
     

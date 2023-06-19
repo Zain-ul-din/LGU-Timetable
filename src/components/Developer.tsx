@@ -90,8 +90,9 @@ import { apiAnalysisCol } from '~/lib/firebase';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
 import { NotLoggedIn } from './Header';
+import { UserDocType } from '~/lib/firebase_doctypes';
 
-const DashBoardTable = ({ user }: { user: User }) => {
+const DashBoardTable = ({ user }: { user: UserDocType }) => {
    const [keys, setKeys] = useState<Array<IApiResponse>>([]);
    const [loading, setLoading] = useState<boolean>(false);
    const [isLimitedExceed, setIsLimitedExceed] = useState<boolean>(false);

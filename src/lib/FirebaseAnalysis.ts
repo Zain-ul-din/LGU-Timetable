@@ -2,13 +2,14 @@ import { setDoc, doc, serverTimestamp, getDoc } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 import { firebase, userColsRef } from './firebase';
 import { useEffect } from 'react';
+import { UserDocType } from "./firebase_doctypes";
 
 export function addLoggedInUser(user: User) {
    if (!user) return;
 
    const userDoc = doc(userColsRef, user.email as string);
 
-   const userData = {
+   const userData:UserDocType = {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
@@ -19,9 +20,10 @@ export function addLoggedInUser(user: User) {
       uid: user.uid,
       comment: '',
       createdAt: serverTimestamp(),
-      isPublic: true
+      isPublic: true,
+      repo: 0
    };
-
+   
    getDoc(userDoc).then((doc) => {
       if (doc.exists()) return;
       setDoc(userDoc, userData, { merge: true });

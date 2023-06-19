@@ -25,34 +25,13 @@ export default function Index() {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
          </Head>
-         <MainAnimator>
+         <MainAnimator style={{ height: '100%', padding: '0.2rem' }}>
             <Content />
          </MainAnimator>
       </>
    );
 }
 
-const Content = () => {
-   return (
-      <>
-         <Flex alignItems={'center'} flexDirection={'column'} height={'72%'}>
-            <Heading fontWeight={'hairline'}>{`Notifications`.toLocaleUpperCase()}</Heading>
-            <Flex
-               marginTop={'2rem'}
-               paddingY={'2rem'}
-               background={'var(--card-color)'}
-               width={'90%'}
-               borderRadius={'md'}
-               alignItems={'center'}
-               justifyContent={'center'}
-               height={'80%'}
-               border={'1px solid var(--border-color)'}
-            >
-               <Text color={'cyan.400'} fontWeight={'thin'} fontSize={'xl'}>
-                  No notification so far
-               </Text>
-            </Flex>
-         </Flex>
-      </>
-   );
-};
+import ChatRoom from '~/components/chat_room/ChatRoom';
+
+const Content = () => <ChatRoom />;

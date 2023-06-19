@@ -106,6 +106,7 @@ const History = () => {
    const [history, setHistory] = useState<Array<IHistoryDocStateType>>([]);
 
    const user = useContext(UserCredentialsContext);
+   const [queryCounts, SetQueriesCount] = useState<number>(0);
 
    useEffect(() => {
       if (!user?.user) return;
@@ -122,6 +123,10 @@ const History = () => {
             ...historyDoc.data()
          }));
 
+         SetQueriesCount(res.reduce((prev, curr)=> {
+            let count = (curr as any).clickCount || 0
+            return prev +  count;
+         }, 0));
          setHistory(res as Array<IHistoryDocStateType>);
       };
 
@@ -180,6 +185,11 @@ const History = () => {
                   );
                })}
             </Flex>
+            <Center>
+               <Text fontSize={'md'} fontFamily={'monospace'} color={'whatsapp.300'}>
+                  Total Potential Queries: {queryCounts}
+               </Text>
+            </Center>
          </Flex>
       </>
    );

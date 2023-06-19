@@ -19,7 +19,8 @@ import { AppStyleProvider, appTheme } from '~/styles/Style';
 import { useRouter } from 'next/router';
 import BgGlow from '~/components/BgGlow';
 
-const footerPages = ['/', '/contribute', '/developer', '/notifications', '/freeclassrooms'];
+const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
+const excludeHeadPages = ['/contribute']
 
 export default function App({ Component, pageProps }: AppProps) {
    const [timeTableInput, setTimeTableInput] = useState<TimetableInput>({
@@ -30,7 +31,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
    const [user, setUser] = useUserCredentials();
    const router = useRouter();
-
+   
    return (
       <>
          <TimeTableInputContext.Provider value={{ timeTableInput, setTimeTableInput }}>
@@ -40,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
                <AppStyleProvider theme={appTheme}>
                   <DarkTheme />
                   <OneTap />
-                  {router.pathname != '/contribute' && <Header />}
+                  {!excludeHeadPages.includes(router.pathname) && <Header />}
                   <Component {...pageProps} />
                   {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
                   {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
@@ -50,3 +51,4 @@ export default function App({ Component, pageProps }: AppProps) {
       </>
    );
 }
+

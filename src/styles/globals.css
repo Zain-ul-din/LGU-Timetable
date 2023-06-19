@@ -53,6 +53,10 @@
       var(--pink),
       var(--purple)
    );
+
+   --gold-dark: hsl(45,100%,47%);
+   --gold: hsl(48,100%,50%);
+   --gold-lighter: hsl(48,22%,30%);
 }
 
 @media (prefers-color-scheme: dark) {

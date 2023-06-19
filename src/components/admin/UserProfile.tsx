@@ -59,6 +59,9 @@ const History = ({ email }: { email: string }) => {
    const [isUnder600] = useMediaQuery('(max-width: 600px)');
    const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
 
+   const [queryCounts, SetQueriesCount] = useState<number>(0);
+
+
    useEffect(() => {
       const fetchTimetableHistory = async () => {
          const timetableHistoryQuery = query(
@@ -69,6 +72,11 @@ const History = ({ email }: { email: string }) => {
          );
          const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
          const res = timetableHistoryDocs.docs.map((historyDoc) => historyDoc.data());
+         
+         SetQueriesCount(res.reduce((prev, curr)=> {
+            let count = (curr as any).clickCount || 0
+            return prev +  count;
+         }, 0));
 
          setHistory(res as Array<ITimetableHistory>);
       };
@@ -119,6 +127,11 @@ const History = ({ email }: { email: string }) => {
                   );
                })}
             </Flex>
+            <Center>
+               <Text fontSize={'md'} fontFamily={'monospace'} color={'whatsapp.300'}>
+                  Total Queries: {queryCounts}
+               </Text>
+            </Center>
          </Flex>
       </>
    );

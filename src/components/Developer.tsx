@@ -60,7 +60,7 @@ export default function Developer({ children }: { children: React.ReactNode }) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5, duration: 1.5 }}
                >
-                  <DashBoardTable user={user.user} />
+                  <DashBoardTable user={user.user as User} />
                </motion.div>
             </>
          )}
@@ -90,9 +90,8 @@ import { apiAnalysisCol } from '~/lib/firebase';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
 import { NotLoggedIn } from './Header';
-import { UserDocType } from '~/lib/firebase_doctypes';
 
-const DashBoardTable = ({ user }: { user: UserDocType }) => {
+const DashBoardTable = ({ user }: { user: User }) => {
    const [keys, setKeys] = useState<Array<IApiResponse>>([]);
    const [loading, setLoading] = useState<boolean>(false);
    const [isLimitedExceed, setIsLimitedExceed] = useState<boolean>(false);

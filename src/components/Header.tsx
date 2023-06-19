@@ -31,7 +31,7 @@ export default function Header() {
             </h1>
             <div className={styles.items}>
                {user?.user ? (
-                  <LoggedIn user={user.user} />
+                  <LoggedIn user={user.user as User} />
                ) : (
                   <NotLoggedIn text={'Sign in with Google'} />
                )}

@@ -14,8 +14,7 @@ export async function getStaticProps(context: GetStaticPathsContext) {
    const data = docRef.data();
 
    const pastPapers = (await getDocs (pastPapersCol)).docs.map(data=> ({...data.data(), uploadedAt: fromFirebaseTimeStamp(data.data().uploadedAt).toString() }));
-
-   console.log (pastPapers[0].uploadedAt);
+   
 
    return {
       props: {

@@ -39,7 +39,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       props: {
          timetable: { id: id, ...timetable }
       },
-      revalidate: 1000 * 60
+      revalidate: 10
    };
 }
 

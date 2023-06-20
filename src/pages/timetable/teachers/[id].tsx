@@ -43,7 +43,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       props: {
          timetable: { id: docRef.id, ...docData.data() }
       },
-      revalidate: 5000
+      revalidate: 30
    };
 }
 

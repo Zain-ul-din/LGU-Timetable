@@ -93,6 +93,7 @@ export interface UserDataDocType extends User {
 }
 
 import { FieldValue } from 'firebase/firestore';
+import { SetStateAction } from 'react';
 
 export interface UserMetaData 
 {
@@ -116,3 +117,6 @@ export interface PastPaperDocType {
    isPublic: boolean; // input
 }
 
+import { Dispatch } from 'react';
+
+export type UseStateProps<T> = [T, Dispatch<SetStateAction<T>>];

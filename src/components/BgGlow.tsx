@@ -10,6 +10,7 @@ export default function BgGlow () {
     
         {/*eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/gradient-left-dark.svg" alt="gradient_img_left" 
+            className="bg-blob"
             style={{
                 position: 'fixed',
                 top: "0%",
@@ -23,14 +24,14 @@ export default function BgGlow () {
         
         {/*eslint-disable-next-line @next/next/no-img-element */}
         <img src="/images/gradient-right-dark.svg" alt="gradient_img_right" 
+            className="bg-blob"
             style={{
                 position: 'fixed',
                 top: "-50%",
                 right: "-50%",
                 zIndex: -10,
-                opacity: '60%'
+                opacity: '50%'
             }}
         />
     </>
 }
-

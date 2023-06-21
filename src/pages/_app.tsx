@@ -18,6 +18,9 @@ import { useUserCredentials } from '~/hooks/hooks';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 import { useRouter } from 'next/router';
 import BgGlow from '~/components/BgGlow';
+import ChatAppStateProvider, 
+   { AppState as ChatAppState, defaultState as defaultChatAppState } 
+from '~/components/chat_room/hooks/AppStateProvider';
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute']
@@ -32,6 +35,9 @@ export default function App({ Component, pageProps }: AppProps) {
    const [user, setUser] = useUserCredentials();
    const router = useRouter();
    
+   // chat app provider
+   const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
+   
    return (
       <>
          <TimeTableInputContext.Provider value={{ timeTableInput, setTimeTableInput }}>
@@ -42,7 +48,9 @@ export default function App({ Component, pageProps }: AppProps) {
                   <DarkTheme />
                   <OneTap />
                   {!excludeHeadPages.includes(router.pathname) && <Header />}
-                  <Component {...pageProps} />
+                  <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
+                     <Component {...pageProps} />
+                  </ChatAppStateProvider.Provider>
                   {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
                   {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
                </AppStyleProvider>
@@ -51,4 +59,3 @@ export default function App({ Component, pageProps }: AppProps) {
       </>
    );
 }
-

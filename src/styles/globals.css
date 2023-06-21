@@ -57,6 +57,8 @@
    --gold-dark: hsl(45,100%,47%);
    --gold: hsl(48,100%,50%);
    --gold-lighter: hsl(48,22%,30%);
+
+   --muted-color: #7d8590; 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -397,4 +399,35 @@ a {
    background-clip: text;
    -webkit-text-fill-color: transparent;
    font-weight: bold;
+}
+
+.hide-scrollbar {
+   overflow: auto;
+   scrollbar-width: thin;
+   scrollbar-color: transparent transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  background-color: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+ 
+@keyframes blob-animation {
+  0% {
+    transform: translate(-25%, -25%) scale(1);
+  }
+  50% {
+    transform: translate(-25%, -25%) scale(1.2);
+  }
+  100% {
+    transform: translate(-25%, -25%) scale(1);
+  }
+}
+
+.bg-blob {
+  animation: blob-animation 8s infinite;
 }

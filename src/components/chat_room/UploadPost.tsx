@@ -1,4 +1,4 @@
-import { Box, Button, ButtonProps, Flex, Heading, Input, Text, Textarea } from "@chakra-ui/react";
+import { Box, Button, ButtonProps, Center, Flex, Heading, Input, Text, Textarea } from "@chakra-ui/react";
 import { CHAT_CATEGORIES } from "~/lib/constant";
 import { useContext, useEffect } from "react";
 import { UseStateProps } from "~/types/typedef";
@@ -7,6 +7,7 @@ import { Fragment} from "react";
 import { useRouter } from "next/router";
 import { PushNestedRouterParam } from "./hooks/NestedRouting";
 
+import { EditIcon, ViewIcon } from "@chakra-ui/icons";
 
 export default function UploadPost () {
 
@@ -93,8 +94,25 @@ const UploadForm = ({ categoryState }: { categoryState: UseStateProps<AppState> 
 
         {/* Main Input */}
         <Text>Discussion title *</Text>
-        <Input placeholder="Title"/>
-        <Textarea placeholder="use markdown here"/>
+        <Input placeholder="Title" minH={'2.5rem'}/>
+        <Flex flexDir={'column'} bg={'var(--card-color)'} rounded={'lg'} gap={'0.5rem'} p = {'0.5rem'}>
+            <Flex gap={'0.5rem'}>
+                <Button size={'sm'} variant={'outline'}>
+                 <EditIcon/>
+                </Button>
+                <Button size={'sm'} variant={'outline'} isActive={true}>
+                 <ViewIcon/>
+                </Button>
+            </Flex>
+            <Textarea placeholder="use markdown here" minH={'10rem'} maxH={'30rem'} />
+            <Box ml={'auto'}>
+                <Button variant={'outline'} colorScheme="whatsapp" isDisabled={true}>start discussion</Button>
+            </Box>
+        </Flex>
+
+        <Center>
+            
+        </Center>            
     </Flex>
 }
 

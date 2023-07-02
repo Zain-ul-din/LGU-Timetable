@@ -37,6 +37,7 @@
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-google-one-tap-login": "^0.1.1",
+    "react-hook-form": "^7.45.0",
     "react-icons": "^4.8.0",
     "react-markdown": "^8.0.6",
     "react-spinners": "^0.13.8",

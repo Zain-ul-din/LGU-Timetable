@@ -1,5 +1,15 @@
-import { ITimetableHistory, TimeType, TimetableData, TimetableDocType } from '~/types/typedef';
+import {
+   ITimetableHistory,
+   TimeType,
+   TimetableData,
+   TimetableDocType,
+   UseStateProps
+} from '~/types/typedef';
 import { daysName } from './constant';
+import { AppState as ChatAppState } from '~/components/chat_room/hooks/AppStateProvider';
+import { doc, getDoc, getDocs, limit, query, where } from 'firebase/firestore';
+import { userColsRef } from './firebase';
+import { UserDocType } from './firebase_doctypes';
 
 /**
  * Get Table ColSpan base on startTime - endTime diff
@@ -200,3 +210,51 @@ export function fromFirebaseTimeStamp(time: any): Date {
    const fireBaseTime = new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
    return fireBaseTime;
 }
+
+export function calculateVotes(
+   downVotes: Array<string> | undefined,
+   upVotes: Array<string> | undefined
+) {
+   const down_votes = downVotes?.length || 0;
+   const up_votes = upVotes?.length || 0;
+   return down_votes > up_votes ? -down_votes : up_votes;
+}
+
+function userCacheHof() {
+   const userCache: { [key: string]: boolean } = {};
+   return (state: UseStateProps<ChatAppState>, uId: string) => {
+      if (uId in userCache) return;
+
+      userCache[uId] = true; // user cached
+
+      const userQuery = query(userColsRef, where('uid', '==', uId), limit(1));
+
+      getDocs(userQuery)
+      .then((docSnapShot) => {
+         state[1]((prevState) => {
+            return {
+               ...prevState,
+               users: {
+                  ...prevState.users,
+                  [uId]: {
+                     ...(docSnapShot.docs.map(d=> d.data())[0] as UserDocType),
+                     id: uId
+                  }
+               }
+            };
+         });
+      })
+      .catch((err) => {
+         delete userCache[uId]; // remove from cache, cuz it doesn't exist or fail to fetch
+      });
+   };
+}
+
+export const addUserToCache = userCacheHof();
+
+export function dateToUnixTimestampInSeconds(date: Date): number {
+   return Math.round(date.getTime() / 1000);
+}
+
+
+ 

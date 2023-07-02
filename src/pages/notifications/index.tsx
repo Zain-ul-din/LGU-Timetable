@@ -26,12 +26,15 @@ export default function Index() {
             <link rel="icon" href="/favicon.ico" />
          </Head>
          <MainAnimator style={{ height: 'auto', padding: '0.2rem' }}>
-            <Content />
+            <PreviewWrapper>
+               <Content />
+            </PreviewWrapper>
          </MainAnimator>
       </>
    );
 }
 
 import ChatRoom from '~/components/chat_room/ChatRoom';
+import PreviewWrapper from '~/components/design/PreviewWrapper';
 
 const Content = () => <ChatRoom />;

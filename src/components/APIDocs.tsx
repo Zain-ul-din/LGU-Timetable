@@ -16,7 +16,7 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 
 import { docsCol } from '~/lib/firebase';
-import { updateDoc,  doc, setDoc } from 'firebase/firestore';
+import { updateDoc, doc, setDoc } from 'firebase/firestore';
 import { useContext, useRef, useState } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { admin_mail } from '~/lib/constant';
@@ -33,7 +33,7 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
 
    const user = useContext(UserCredentialsContext);
    const [loading, setLoading] = useState<boolean>(false);
-   
+
    //! not required since using staticSiteRendering
    // useEffect(() => {
    //    async function fetchDocs() {

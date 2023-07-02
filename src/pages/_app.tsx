@@ -1,7 +1,7 @@
 import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { TimetableInput } from '~/types/typedef';
 import { TimeTableInputContext } from '~/hooks/TimetableInputContext';
@@ -18,12 +18,13 @@ import { useUserCredentials } from '~/hooks/hooks';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 import { useRouter } from 'next/router';
 import BgGlow from '~/components/BgGlow';
-import ChatAppStateProvider, 
-   { AppState as ChatAppState, defaultState as defaultChatAppState } 
-from '~/components/chat_room/hooks/AppStateProvider';
+import ChatAppStateProvider, {
+   AppState as ChatAppState,
+   defaultState as defaultChatAppState
+} from '~/components/chat_room/hooks/AppStateProvider';
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
-const excludeHeadPages = ['/contribute']
+const excludeHeadPages = ['/contribute'];
 
 export default function App({ Component, pageProps }: AppProps) {
    const [timeTableInput, setTimeTableInput] = useState<TimetableInput>({
@@ -34,10 +35,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
    const [user, setUser] = useUserCredentials();
    const router = useRouter();
-   
+
    // chat app provider
    const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
-   
+
    return (
       <>
          <TimeTableInputContext.Provider value={{ timeTableInput, setTimeTableInput }}>

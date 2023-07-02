@@ -90,35 +90,35 @@ export default function Contribute() {
                   <BackBtn />
                </Center>
             </Flex>
-            <Flex my = {'4rem'}></Flex>
+            <Flex my={'4rem'}></Flex>
          </Flex>
          {/* <Footer fixedBottom={false}/> */}
-            {!isUnder800 && <ReadmeMd/>}
+         {!isUnder800 && <ReadmeMd />}
       </div>
    );
 }
 
 import { motion } from 'framer-motion';
 
-const ReadmeMd = ()=> {
-   const [readme, setReadme] = useState<string>("");
+const ReadmeMd = () => {
+   const [readme, setReadme] = useState<string>('');
 
-   useEffect(()=> {
+   useEffect(() => {
       const fetchReadmeMd = async () => {
-         const res = await axios.get(APIS_ENDPOINTS.ReadMeMd)
+         const res = await axios.get(APIS_ENDPOINTS.ReadMeMd);
          if (res.data) setReadme(res.data as string);
-      } 
+      };
 
-      fetchReadmeMd()
-   }, [])
+      fetchReadmeMd();
+   }, []);
 
-   return <motion.div
-      initial = {{opacity: 0}}
-      animate = {{opacity: 1}}
-      transition={{ duration: 1, delay: 1 }}
-   >
-      <MarkDown text={readme}/>
-   </motion.div> 
-}
-
-
+   return (
+      <motion.div
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1 }}
+         transition={{ duration: 1, delay: 1 }}
+      >
+         <MarkDown text={readme} />
+      </motion.div>
+   );
+};

@@ -11,7 +11,7 @@ import {
    ModalHeader,
    ModalOverlay,
    Text,
-   useDisclosure,
+   useDisclosure
 } from '@chakra-ui/react';
 
 import { firebase } from '~/lib/firebase';
@@ -20,12 +20,20 @@ import React from 'react';
 import MustSignIn from '../design/MustSigin';
 import UploadModal from './UploadModal';
 
-export default function PastPaper({ staticData, pastPapers }: { staticData: {[department: string]: Array<string>}, pastPapers: Array<PastPaperDocType> }) {
+export default function PastPaper({
+   staticData,
+   pastPapers
+}: {
+   staticData: { [department: string]: Array<string> };
+   pastPapers: Array<PastPaperDocType>;
+}) {
    const { isOpen, onOpen, onClose } = useDisclosure();
 
    return (
       <>
-         {firebase.firebaseAuth.currentUser && <UploadModal isOpen={isOpen} onClose={onClose} staticData={staticData}/>}
+         {firebase.firebaseAuth.currentUser && (
+            <UploadModal isOpen={isOpen} onClose={onClose} staticData={staticData} />
+         )}
          <MustSignIn>
             <Flex
                bg={'var(--card-color)'}
@@ -48,10 +56,11 @@ export default function PastPaper({ staticData, pastPapers }: { staticData: {[de
                <Input placeholder={'Enter Subject Name'} className={'roboto'} />
             </Center>
 
-            <Flex justifyContent={'center'} flexWrap={'wrap'} gap ={'2rem'}>
-               {pastPapers && pastPapers.map ((paper, idx)=> {
-                  return <PastPaperRenderer key = {idx} props={paper}/>
-               })}
+            <Flex justifyContent={'center'} flexWrap={'wrap'} gap={'2rem'}>
+               {pastPapers &&
+                  pastPapers.map((paper, idx) => {
+                     return <PastPaperRenderer key={idx} props={paper} />;
+                  })}
             </Flex>
          </MustSignIn>
       </>
@@ -61,68 +70,81 @@ export default function PastPaper({ staticData, pastPapers }: { staticData: {[de
 import Image from 'next/image';
 import { PastPaperDocType } from '~/types/typedef';
 
-const PastPaperRenderer = ({ props }: {props: PastPaperDocType}) => {
-
-   const { isOpen, onOpen, onClose } = useDisclosure()
-   return <>
-      <ViewModal props= {props} isOpen={isOpen} onClose = {onClose}/>
-      <Flex >
-
-         {/*eslint-disable-next-line @next/next/no-img-element */}
-         <img
-            src={props.imgUrl}
-            alt= {`img ${props.subjectName}`}
-            
-            style={{ filter: 'brightness(130%)', minHeight: 250, maxHeight: 250,minWidth: 200, maxWidth: 200, cursor: 'pointer' }}
-            loading='lazy'
-            onClick={onOpen}
-         ></img>
-      </Flex> 
-   </> 
+const PastPaperRenderer = ({ props }: { props: PastPaperDocType }) => {
+   const { isOpen, onOpen, onClose } = useDisclosure();
+   return (
+      <>
+         <ViewModal props={props} isOpen={isOpen} onClose={onClose} />
+         <Flex>
+            {/*eslint-disable-next-line @next/next/no-img-element */}
+            <img
+               src={props.imgUrl}
+               alt={`img ${props.subjectName}`}
+               style={{
+                  filter: 'brightness(130%)',
+                  minHeight: 250,
+                  maxHeight: 250,
+                  minWidth: 200,
+                  maxWidth: 200,
+                  cursor: 'pointer'
+               }}
+               loading="lazy"
+               onClick={onOpen}
+            ></img>
+         </Flex>
+      </>
+   );
 };
 
 interface ModalProps {
-   props: PastPaperDocType,
-   isOpen: boolean
-   onClose: ()=> void
+   props: PastPaperDocType;
+   isOpen: boolean;
+   onClose: () => void;
 }
 
-const ViewModal = ({props, isOpen, onClose }: ModalProps)=> {
-   
-  return (
-    <>
-      <Modal
-        blockScrollOnMount={false}
-        allowPinchZoom = {true}
-        isCentered
-        onClose={onClose}
-        isOpen={isOpen}
-        motionPreset='slideInBottom'
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{`${props.subjectName} | ${props.department}`}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody p = {'2rem'} justifyContent={'center'}>
-            {/*eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={props.imgUrl}
-              alt= {`img ${props.subjectName}`}
-              style={{ objectFit: 'scale-down', cursor: 'pointer', borderRadius: '0.5rem', maxHeight: '70vh' }}
-              loading='lazy'
-            ></img>
-          </ModalBody>
-          <ModalFooter textAlign={'center'} justifyContent={'center'}>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <a href = {props.imgUrl} download={`${props.subjectName}_past_paper`} target='_blank'>
-               <Button variant='outline'>Download
-               </Button>
-            </a>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  )
-}
+const ViewModal = ({ props, isOpen, onClose }: ModalProps) => {
+   return (
+      <>
+         <Modal
+            blockScrollOnMount={false}
+            allowPinchZoom={true}
+            isCentered
+            onClose={onClose}
+            isOpen={isOpen}
+            motionPreset="slideInBottom"
+         >
+            <ModalOverlay />
+            <ModalContent>
+               <ModalHeader>{`${props.subjectName} | ${props.department}`}</ModalHeader>
+               <ModalCloseButton />
+               <ModalBody p={'2rem'} justifyContent={'center'}>
+                  {/*eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                     src={props.imgUrl}
+                     alt={`img ${props.subjectName}`}
+                     style={{
+                        objectFit: 'scale-down',
+                        cursor: 'pointer',
+                        borderRadius: '0.5rem',
+                        maxHeight: '70vh'
+                     }}
+                     loading="lazy"
+                  ></img>
+               </ModalBody>
+               <ModalFooter textAlign={'center'} justifyContent={'center'}>
+                  <Button colorScheme="blue" mr={3} onClick={onClose}>
+                     Close
+                  </Button>
+                  <a
+                     href={props.imgUrl}
+                     download={`${props.subjectName}_past_paper`}
+                     target="_blank"
+                  >
+                     <Button variant="outline">Download</Button>
+                  </a>
+               </ModalFooter>
+            </ModalContent>
+         </Modal>
+      </>
+   );
+};

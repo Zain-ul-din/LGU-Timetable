@@ -14,23 +14,21 @@ export function useUserCredentials(): [
 ] {
    const [loggedInUser, ,] = useAuthState(firebase.firebaseAuth);
    const [user, setUser] = useState<UserDocType | null>(null);
-   useEffect(() => { 
-      setUser(loggedInUser as UserDocType) 
+   useEffect(() => {
+      setUser(loggedInUser as UserDocType);
       const user_email = loggedInUser?.email;
       const user_doc = doc(userColsRef, `${user_email}`);
 
       let unSub: any = undefined;
-      if (loggedInUser)
-      {
-         unSub = onSnapshot(user_doc, (doc)=>{
-            setUser({...loggedInUser, ...doc.data()} as UserDocType);
+      if (loggedInUser) {
+         unSub = onSnapshot(user_doc, (doc) => {
+            setUser({ ...loggedInUser, ...doc.data() } as UserDocType);
          });
       }
-      
-      return ()=> {
-         if (typeof unSub == "function") unSub();
-      };
 
+      return () => {
+         if (typeof unSub == 'function') unSub();
+      };
    }, [loggedInUser]);
    return [user, setUser];
 }

@@ -4,7 +4,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { collection, getFirestore } from 'firebase/firestore';
 import { getAnalytics, isSupported } from 'firebase/analytics';
-import { getStorage } from "firebase/storage";
+import { getStorage } from 'firebase/storage';
 
 import type { FirebaseApp } from 'firebase/app';
 import type { Auth } from 'firebase/auth';
@@ -27,7 +27,7 @@ interface InitializeFirebaseAppType {
    firebaseAuth: Auth;
    firebaseStore: Firestore;
    firebaseAnalytics: Analytics | null;
-   firebaseStorage: FirebaseStorage
+   firebaseStorage: FirebaseStorage;
 }
 
 function initializeFirebaseApp(): InitializeFirebaseAppType {
@@ -36,7 +36,7 @@ function initializeFirebaseApp(): InitializeFirebaseAppType {
    const firebaseStore: Firestore = getFirestore(firebaseApp);
    const firebaseAnalytics: Analytics | null =
       typeof window !== 'undefined' ? getAnalytics(firebaseApp) : null;
-   const firebaseStorage = getStorage(firebaseApp)
+   const firebaseStorage = getStorage(firebaseApp);
 
    return {
       firebaseApp,
@@ -59,3 +59,7 @@ export const userColsRef = collection(firebase.firebaseStore, 'users_data');
 export const teachersTimetableCol = collection(firebase.firebaseStore, 'teachers_timetable');
 export const pastPapersCol = collection(firebase.firebaseStore, 'past_papers');
 export const pastPapersInputCol = collection(firebase.firebaseStore, 'past_papers_input');
+export const discussionsColRef = collection(firebase.firebaseStore, 'discussions');
+export const discussionsCommentsColRef = collection(firebase.firebaseStore, 'discussions_comments');
+export const discussionSubColName = "participants";
+

@@ -13,8 +13,10 @@ export async function getStaticProps(context: GetStaticPathsContext) {
    const docRef = await getDoc(subjectDocRef);
    const data = docRef.data();
 
-   const pastPapers = (await getDocs (pastPapersCol)).docs.map(data=> ({...data.data(), uploadedAt: fromFirebaseTimeStamp(data.data().uploadedAt).toString() }));
-   
+   const pastPapers = (await getDocs(pastPapersCol)).docs.map((data) => ({
+      ...data.data(),
+      uploadedAt: fromFirebaseTimeStamp(data.data().uploadedAt).toString()
+   }));
 
    return {
       props: {
@@ -26,17 +28,15 @@ export async function getStaticProps(context: GetStaticPathsContext) {
 
 interface GetStaticPropsReturnType {
    data: { data: { [department: string]: Array<string> } };
-   pastPapers: Array<PastPaperDocType>
+   pastPapers: Array<PastPaperDocType>;
 }
 
 export default function PastPaperPage({ data, pastPapers }: GetStaticPropsReturnType) {
    return (
       <>
          <AdminLayout>
-            <PastPaper staticData={data.data} pastPapers={pastPapers}/>
+            <PastPaper staticData={data.data} pastPapers={pastPapers} />
          </AdminLayout>
       </>
    );
 }
-
-

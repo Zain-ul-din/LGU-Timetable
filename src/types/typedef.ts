@@ -95,8 +95,7 @@ export interface UserDataDocType extends User {
 import { FieldValue } from 'firebase/firestore';
 import { SetStateAction } from 'react';
 
-export interface UserMetaData 
-{
+export interface UserMetaData {
    email: string | undefined;
    photo_url: string | undefined;
    display_name: string | undefined;

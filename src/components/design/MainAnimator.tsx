@@ -1,9 +1,12 @@
 import { motion, MotionStyle } from 'framer-motion';
 
-export default function MainAnimator(
-   { children, style }: 
-   { children: React.ReactNode, style?: MotionStyle  }
-) {
+export default function MainAnimator({
+   children,
+   style
+}: {
+   children: React.ReactNode;
+   style?: MotionStyle;
+}) {
    return (
       <motion.main
          initial={{ x: -300, opacity: 0 }}

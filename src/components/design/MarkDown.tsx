@@ -3,12 +3,12 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import rehypeRaw from 'rehype-raw';
 
-const MarkDown = ({ text }: { text: string }) => {
+const MarkDown = ({ text, className }: { text: string; className?: string }) => {
    return (
       <>
          <ReactMarkdown
             skipHtml={false}
-            className="mark-down"
+            className={className ? className : 'mark-down'}
             rehypePlugins={[rehypeRaw]}
             components={{
                code({ node, inline, className, children, ...props }) {

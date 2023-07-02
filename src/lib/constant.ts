@@ -66,19 +66,30 @@ export const ROUTING = {
    teachers: '/timetable/teachers'
 };
 
-
 export const APIS_ENDPOINTS = {
    ImgToTxt: 'https://api.api-ninjas.com/v1/imagetotext', // https://api-ninjas.com/api/imagetotext,
    ReadMeMd: 'https://raw.githubusercontent.com/Zain-ul-din/LGU-Timetable/master/README.md'
-}
-
+};
 
 export const CHAT_CATEGORIES = {
    ViewAll: '💬 View all discussions',
    Announcements: '📢 Announcements',
    General: '👋 General',
    Ideas: '💡 Ideas',
-   Polls: '📊 Polls', 
+   Polls: '📊 Polls',
    QNA: '🙋‍♀️ Q&A',
    Apis: '👩‍💻 Developer APIS'
-}
+};
+
+export const CHAT_CATEGORIES_EMOJIS = {
+   ViewAll: '💬',
+   Announcements: '📢',
+   General: '👋',
+   Ideas: '💡',
+   Polls: '📊',
+   QNA: '🙋‍♀️',
+   Apis: '👩‍💻'
+};
+
+
+export const EMOJIS = ['👍', '😄', '🎉', '❤️', '🚀', '👀', '🔥']

@@ -164,18 +164,17 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                            </Text>
                         </div>
                      </Center>
-                     
+
                      {/* chart render */}
-                     <TimetableChart timetable={
-                        Object.entries(timetableData.timetable)
-                        .sort(([lhs], [rhs]) => {
+                     <TimetableChart
+                        timetable={Object.entries(timetableData.timetable).sort(([lhs], [rhs]) => {
                            let day1 = lhs.toLowerCase();
                            let day2 = rhs.toLowerCase();
                            return (
                               day_sorter[day1 as keyof object] - day_sorter[day2 as keyof object]
                            );
-                        })
-                     }/>
+                        })}
+                     />
 
                      {Object.entries(timetableData.timetable)
                         .sort(([lhs], [rhs]) => {

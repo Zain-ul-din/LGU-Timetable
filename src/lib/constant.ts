@@ -4,7 +4,7 @@ import { LectureTime } from '~/types/typedef';
   @const def
 */
 
-export const timetableHeadTiles: Array<LectureTime> = [
+export const timetableHeadTitles: Array<LectureTime> = [
    { startTime: '8:00', endTime: '8:30' },
    { startTime: '8:30', endTime: '9:00' },
    { startTime: '9:00', endTime: '9:30' },

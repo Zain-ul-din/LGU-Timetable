@@ -1,4 +1,4 @@
-import { TimetableInput } from '~/types/typedef';
+import { TimetableData, TimetableInput } from '~/types/typedef';
 import styles from '~/styles/Timetable.module.css';
 import Loader from './design/Loader';
 import React, { useRef } from 'react';
@@ -28,7 +28,7 @@ import Btn from './design/Button';
 import TimeTablePrint from './TimetablePrint';
 import ReactToPrint from 'react-to-print';
 
-import { ROUTING, timetableHeadTiles } from '~/lib/constant';
+import { ROUTING, timetableHeadTitles } from '~/lib/constant';
 
 const day_sorter = {
    monday: 1,
@@ -146,7 +146,7 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                         style={{ width: '100%', height: '100%', overflow: 'auto' }}
                      >
                         <TimeTablePrint
-                           headTitles={timetableHeadTiles}
+                           headTitles={timetableHeadTitles}
                            data={timetableData.timetable}
                            payload={`${metaData}`}
                         />
@@ -185,10 +185,16 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                            );
                         })
                         .map(([day, data], idx) => {
+                           console.log(data);
                            return (
                               <React.Fragment key={idx}>
-                                 {(data as Array<any>).length > 0 && (
-                                    <Card data={data as Array<any>} day={day} idx={idx} />
+                                 {(data as Array<TimetableData>).length > 0 && (
+
+                                    <Card data={
+                                       (data as Array<TimetableData>).sort((lhs, rhs) => {
+                                          return ((lhs.startTime.hours * 60) + lhs.startTime.minutes) - ((rhs.startTime.hours * 60) + rhs.startTime.minutes);
+                                       })
+                                    } day={day} idx={idx} />
                                  )}
                               </React.Fragment>
                            );

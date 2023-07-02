@@ -59,7 +59,7 @@ export const ChatMessageCard = ({
       >
          <Flex flexDir={'column'} alignItems={'center'} mt={'auto'} gap={'0.01rem'}>
             <TriangleUpIcon fontSize={'xs'} />
-            <Text fontSize={'0.8rem'}>{calculateVotes(message.downVotes, message.upVotes)}</Text>
+            <Text fontSize={'0.8rem'}>{calculateVotes([], [])}</Text>
             <TriangleDownIcon fontSize={'xs'} />
          </Flex>
          <Flex bg={'var(--card-color-dark)'} p={'0.5rem'} rounded={'lg'}>

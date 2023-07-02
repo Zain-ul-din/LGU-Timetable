@@ -63,7 +63,8 @@ export const ROUTING = {
    notification: '/notifications',
    free_class_rooms: '/freeclassrooms',
    admin: '/admin',
-   teachers: '/timetable/teachers'
+   teachers: '/timetable/teachers',
+   rooms: '/timetable/rooms',
 };
 
 export const APIS_ENDPOINTS = {

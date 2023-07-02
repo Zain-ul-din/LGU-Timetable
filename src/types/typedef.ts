@@ -69,6 +69,7 @@ export interface TimetableData {
    startTime: TimetableLectureTime;
    endTime: TimetableLectureTime;
    class?: string | undefined;
+   room?: string | undefined;
 }
 
 export interface TimetableResponseType {

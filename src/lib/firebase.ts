@@ -57,6 +57,7 @@ export const timetableHistoryCol = collection(firebase.firebaseStore, 'timetable
 export const apiAnalysisCol = collection(firebase.firebaseStore, 'api_analysis');
 export const userColsRef = collection(firebase.firebaseStore, 'users_data');
 export const teachersTimetableCol = collection(firebase.firebaseStore, 'teachers_timetable');
+export const roomsTimetableCol = collection(firebase.firebaseStore, 'rooms_timetable');
 export const pastPapersCol = collection(firebase.firebaseStore, 'past_papers');
 export const pastPapersInputCol = collection(firebase.firebaseStore, 'past_papers_input');
 export const discussionsColRef = collection(firebase.firebaseStore, 'discussions');

@@ -235,7 +235,7 @@ const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }
 const TimetableRenderer = ({ data }: { data: Array<any> }) => {
    const [isUnder700] = useMediaQuery('(max-width: 700px)');
 
-   const table_headings = ['Subject', 'Timing', 'Room', data[0].class ? 'Class' : 'Instructor'];
+   const table_headings = ['Subject', 'Timing', data[0].room ? 'Instructor' : 'Room', data[0].class ? 'Class' : 'Instructor'];
 
    return (
       <TableContainer border={'1px solid var(--border-color)'} borderRadius={'md'}>
@@ -280,8 +280,20 @@ const TimetableRenderer = ({ data }: { data: Array<any> }) => {
                            whiteSpace={isUnder700 ? 'pre-wrap' : 'inherit'}
                            padding={isUnder700 ? '1.5px' : ''}
                            fontSize={isUnder700 ? 'small' : 'inherit'}
+                           color={'blue.200'}
+                           cursor={'pointer'}
+                           _hover={{ textDecoration: 'underline' }}
                         >
-                           {curr.roomNo}
+                           <Link
+                              href={
+                                 curr.room ?
+                                 `${ROUTING.teachers}/${curr.teacher}`
+                                 :
+                                 `${ROUTING.rooms}/${curr.roomNo}`
+                              }
+                           >
+                              {curr.room ? curr.teacher : curr.roomNo }
+                           </Link>
                         </Td>
                         <Td
                            textAlign={isUnder700 ? 'center' : 'initial'}

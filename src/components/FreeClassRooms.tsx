@@ -155,9 +155,12 @@ const RoomsRenderer = ({
                         key={key}
                         border={'1px solid var(--border-color)'}
                         fontWeight={'light'}
-                        _hover={{ cursor: 'pointer' }}
+                        _hover={{ cursor: 'pointer', scale: '1.1' }}
+
                      >
-                        {room}
+                        <Link href={`${ROUTING.rooms}/${room}`}>
+                           {room}
+                        </Link>
                      </Card>
                   );
                })}

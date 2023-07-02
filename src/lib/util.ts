@@ -255,6 +255,3 @@ export const addUserToCache = userCacheHof();
 export function dateToUnixTimestampInSeconds(date: Date): number {
    return Math.round(date.getTime() / 1000);
 }
-
-
- 

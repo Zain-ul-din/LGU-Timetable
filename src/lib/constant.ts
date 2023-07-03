@@ -33,6 +33,18 @@ export const daysName = [
    'Sunday'
 ];
 
+// sunday must be at index 0 to get exact day from date object
+// https://stackoverflow.com/questions/17038105/get-exact-day-from-date-string-in-javascript
+export const DAYS_NAME = [
+   'Sunday',
+   'Monday',
+   'Tuesday',
+   'Wednesday',
+   'Thursday',
+   'Friday',
+   'Saturday',
+]
+
 export const admin_mail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
 export const LINKS = {

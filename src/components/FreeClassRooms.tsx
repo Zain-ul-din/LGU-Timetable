@@ -2,23 +2,26 @@ import styles from '~/styles/freeclassroom.module.css';
 import Link from 'next/link';
 
 import { motion } from 'framer-motion';
-import { ROUTING } from '~/lib/constant';
+import { DAYS_NAME, ROUTING, daysName, timetableHeadTitles } from '~/lib/constant';
 import BackBtn from './design/BackBtn';
 import {
    Alert,
    Box,
+   Button,
    Card,
    Center,
    Flex,
    Heading,
    Icon,
    Input,
-   Textarea,
+   Text,
    useMediaQuery
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { WarningTwoIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, WarningTwoIcon } from '@chakra-ui/icons';
+import DropDown from './design/DropDown';
+import { FreeClassRoomStateType, UseStateProps } from '~/types/typedef';
 
 interface IRoomsType {
    room: Array<string>;
@@ -27,11 +30,9 @@ interface IRoomsType {
 }
 
 export default function FreeClassRooms({
-   freeRooms,
-   currTime
+   parentState
 }: {
-   freeRooms: Array<string>;
-   currTime: Date;
+   parentState: UseStateProps<FreeClassRoomStateType>
 }) {
    const [isUnder500] = useMediaQuery('(max-width: 500px)');
 
@@ -41,29 +42,32 @@ export default function FreeClassRooms({
       seminar: []
    });
 
+   const [state, setState] = parentState
    const [input, setInput] = useState<string>('');
 
+   
+
    useEffect(() => {
-      let state: IRoomsType = {
+      let room_states: IRoomsType = {
          room: [],
          lab: [],
          seminar: []
       };
 
-      freeRooms
+      state.freeClassRooms
          .filter((room) => room.toLocaleLowerCase().includes(input))
          .forEach((room) => {
             if (
                room.toLocaleLowerCase().includes('room') &&
                !room.toLocaleLowerCase().includes('seminar')
             )
-               state.room.push(room);
-            else if (room.toLocaleLowerCase().includes('lab')) state.lab.push(room);
-            else if (room.toLocaleLowerCase().includes('seminar')) state.seminar.push(room);
+            room_states.room.push(room);
+            else if (room.toLocaleLowerCase().includes('lab')) room_states.lab.push(room);
+            else if (room.toLocaleLowerCase().includes('seminar')) room_states.seminar.push(room);
          });
 
-      setRooms(state);
-   }, [freeRooms, input]);
+      setRooms(room_states);
+   }, [state.freeClassRooms, input]);
 
    return (
       <div>
@@ -81,7 +85,7 @@ export default function FreeClassRooms({
 
             <Box marginY={'2rem'}>
                <Alert background={'blue.600'} borderRadius={'lg'} marginY={'1rem'}>
-                  {`Queried at ${currTime.toString()} - Real time calculation`}
+                  {`Queried at ${state.time.toString()} - Real time calculation`}
                </Alert>
                <Center>
                   <Input
@@ -92,6 +96,58 @@ export default function FreeClassRooms({
                      value={input}
                      onChange={(e) => setInput(e.target.value.toLocaleLowerCase())}
                   />
+               </Center>
+
+               <Center mt={'1rem'}>
+                  <Text className='roboto' color={'var(--muted-color)'}>Choose a specific day and time to search for available classrooms during that particular timeframe.</Text>
+               </Center>
+               <Center mt={'0.5rem'} gap={'1rem'}>
+                  <DropDown onChange={(d)=> {
+                     const dayIdx = DAYS_NAME.indexOf(d)
+                     setState((prevState)=> {
+                        let customDate = prevState.customDate || new Date();
+                        while(customDate.getDay() != dayIdx)
+                           customDate.setDate(customDate.getDate() + 1);
+                        return {...prevState, customDate, loading: true};
+                     })
+                  }} options={DAYS_NAME}>
+                     <Button gap={'0.2rem'}>
+                        {state.customDate ? DAYS_NAME[state.customDate.getDay()] : `Select Day`} <ChevronDownIcon/>
+                     </Button>
+                  </DropDown>
+
+                  <DropDown onChange={(t)=> {
+                     const [hours, min] = t.split(":");
+                     setState((prevState)=> {
+                        let customDate = prevState.customDate || new Date();
+                        // set hours and min here
+                        customDate.setHours(parseInt(hours));
+                        customDate.setMinutes(parseInt(min));
+                        return {
+                           ...prevState, 
+                           customDate,
+                           loading: true
+                        };
+                     })
+                  }} options={
+                     Array.from(new Set(
+                     timetableHeadTitles.map(t => [t.startTime, t.endTime]).reduce((acc, curr)=> {
+                        return [...acc, ...curr.map(c=>c)]
+                     },[])))
+                  }>
+                     <Button gap={'0.2rem'} >
+                        {state.customDate ? `${state.customDate.getHours()}:${state.customDate.getMinutes().toString().padEnd(2, '0')}` : 'Select Time'} <ChevronDownIcon/>
+                     </Button>
+                  </DropDown>
+
+                  <Button isDisabled={state.customDate == null} onClick={()=> {
+                     setState((prevState)=> {
+                        let customDate = null
+                        return {...prevState, customDate};
+                     })
+                  }}>
+                     Reset
+                  </Button>
                </Center>
             </Box>
 
@@ -155,7 +211,7 @@ const RoomsRenderer = ({
                         key={key}
                         border={'1px solid var(--border-color)'}
                         fontWeight={'light'}
-                        _hover={{ cursor: 'pointer', scale: '1.1' }}
+                        _hover={{ cursor: 'pointer', textDecoration: 'underline'  }}
 
                      >
                         <Link href={`${ROUTING.rooms}/${room}`}>

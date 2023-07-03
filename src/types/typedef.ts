@@ -117,6 +117,15 @@ export interface PastPaperDocType {
    isPublic: boolean; // input
 }
 
+export interface FreeClassRoomStateType {
+   loading: boolean;
+   time: Date;
+   freeClassRooms: Array<string>;
+   customDate: Date | null
+}
+
 import { Dispatch } from 'react';
 
 export type UseStateProps<T> = [T, Dispatch<SetStateAction<T>>];
+
+

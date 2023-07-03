@@ -5,7 +5,7 @@ import {
    TimetableDocType,
    UseStateProps
 } from '~/types/typedef';
-import { daysName } from './constant';
+import { DAYS_NAME, daysName } from './constant';
 import { AppState as ChatAppState } from '~/components/chat_room/hooks/AppStateProvider';
 import { doc, getDoc, getDocs, limit, query, where } from 'firebase/firestore';
 import { userColsRef } from './firebase';
@@ -140,8 +140,8 @@ export function removeDuplicateTimetableHistory(arr: Array<ITimetableHistory>) {
 
 export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    const time = new Date(currTime);
-
-   ///! TODOS
+   
+   ///! TODO
    /// retrieve tolerance value from database.
    const tolerance = 0; // min
    time.setMinutes(currTime.getMinutes() + tolerance);
@@ -175,7 +175,7 @@ export function calculateFreeClassrooms(
             .map((timetable) =>
                Object.entries(timetable.timetable)
                   .map(([day, timetableData]: [string, Array<TimetableData>]) =>
-                     day.toLocaleLowerCase() == daysName[currTime.getDay()].toLocaleLowerCase()
+                     day.toLocaleLowerCase() == DAYS_NAME[currTime.getDay()].toLocaleLowerCase()
                         ? timetableData.map((data) =>
                              isLectureTime(data, currTime) ? data.roomNo : ''
                           )

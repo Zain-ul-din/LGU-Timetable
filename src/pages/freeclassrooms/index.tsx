@@ -8,9 +8,9 @@ import { SocialLinks } from '~/components/seo/Seo';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
 import { timeTableCol } from '~/lib/firebase';
-import { TimetableData, TimetableDocType } from '~/types/typedef';
+import { FreeClassRoomStateType, TimetableDocType } from '~/types/typedef';
 
-import { calculateFreeClassrooms, isLectureTime } from '~/lib/util';
+import { calculateFreeClassrooms } from '~/lib/util';
 import Loader from '~/components/design/Loader';
 import { Center } from '@chakra-ui/react';
 import Button from '~/components/design/Button';
@@ -27,16 +27,11 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    return {
       props: {
          timetables,
-         revalidate: 10
+         revalidate: 60
       }
    };
 }
 
-interface FreeClassRoomStateType {
-   loading: boolean;
-   time: Date;
-   freeClassRooms: Array<string>;
-}
 
 export default function FreeClassRoomsPage({
    timetables
@@ -48,6 +43,7 @@ export default function FreeClassRoomsPage({
    const [state, setState] = useState<FreeClassRoomStateType>({
       loading: true,
       time: new Date(),
+      customDate: null,
       freeClassRooms: []
    });
 
@@ -64,10 +60,13 @@ export default function FreeClassRoomsPage({
       const timeUpdater = setInterval(() => {
          const updatedTime = state.time;
          updatedTime.setSeconds(state.time.getSeconds() + 1);
-         setState({
-            freeClassRooms: calculateFreeClassrooms(timetables, updatedTime),
-            time: updatedTime,
-            loading: false
+         setState((prev) => {
+            return {
+               ...prev,
+               freeClassRooms: calculateFreeClassrooms(timetables, prev.customDate ? prev.customDate : updatedTime),
+               time: updatedTime,
+               loading: false,
+            }
          });
       }, 1000);
 
@@ -97,7 +96,9 @@ export default function FreeClassRoomsPage({
          </Head>
          <MainAnimator>
             {!state.loading && (
-               <FreeClassRooms key={'idx'} freeRooms={state.freeClassRooms} currTime={state.time} />
+               <>
+                  <FreeClassRooms parentState={[state, setState]}/>
+               </>
             )}
             {state.loading && (
                <>
@@ -107,6 +108,9 @@ export default function FreeClassRoomsPage({
                   </Center>
                </>
             )}
+            <Center>
+               Timetable Updated At: {new Date(timetables[0].updatedAt).toDateString()}
+            </Center>
          </MainAnimator>
       </>
    );

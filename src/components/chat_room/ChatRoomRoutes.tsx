@@ -11,24 +11,22 @@ export default function ChatRoomRoutes() {
    const [appState, setAppState] = useContext(AppStateProvider);
    const router = useRouter();
 
-   
    if (appState.loading_state)
       return (
          <Flex width={'100%'} height={'100%'} justifyContent={'center'} alignItems={'center'}>
-            <Spinner mx={'1rem'}/> Loading Discussions
+            <Spinner mx={'1rem'} /> Loading Discussions
          </Flex>
       );
-   
-   if (router.query.active_route == undefined)
-      return <ChatMessages />;
-   
+
+   if (router.query.active_route == undefined) return <ChatMessages />;
+
    switch ((router.query.active_route as string).toLowerCase()) {
       case 'home':
          return <ChatMessages />;
       case 'upload':
          return <UploadPost />;
       case 'view':
-         return <DiscussionView/>;
+         return <DiscussionView />;
       default:
          return (
             <Center p={'1rem'} flexDir={'column'} gap={'1rem'}>

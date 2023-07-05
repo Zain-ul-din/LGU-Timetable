@@ -1,4 +1,4 @@
-import {  TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
+import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons';
 import { Avatar, Flex, FlexProps, Heading, Text, useMediaQuery } from '@chakra-ui/react';
 import { CHAT_CATEGORIES_EMOJIS } from '~/lib/constant';
 import { DiscussionDocType } from '~/lib/firebase_doctypes';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 export default function ChatMessages() {
    const [appState, setAppState] = useContext(AppStateProvider);
    const router = useRouter();
-   
+
    return (
       <Flex flexDir={'column'} p={'0.5rem'} gap={'0.5rem'}>
          {Object.values(appState.discussions).map((message, idx) => (
@@ -22,7 +22,10 @@ export default function ChatMessages() {
                props={{
                   onClick: () => {
                      setAppState({ ...appState, active_route: 'View', discussion_id: message.id });
-                     PushNestedRouterParam({ ...appState, active_route: 'View', discussion_id: message.id }, router);
+                     PushNestedRouterParam(
+                        { ...appState, active_route: 'View', discussion_id: message.id },
+                        router
+                     );
                   }
                }}
             />

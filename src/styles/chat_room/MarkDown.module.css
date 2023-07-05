@@ -84,16 +84,16 @@
 }
 
 @media (max-width: 500px) {
-   .mark_down  p {
+   .mark_down p {
       font-size: 80%;
    }
-   
+
    .mark_down ul {
       font-family: 'Roboto', sans-serif;
       margin: 1rem 1rem 1rem 1.5rem;
       font-size: 0.9rem;
    }
-   
+
    .mark_down li {
       font-family: 'Roboto', sans-serif;
       font-size: 0.9rem;

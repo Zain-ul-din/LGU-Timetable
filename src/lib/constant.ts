@@ -42,8 +42,8 @@ export const DAYS_NAME = [
    'Wednesday',
    'Thursday',
    'Friday',
-   'Saturday',
-]
+   'Saturday'
+];
 
 export const admin_mail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
@@ -76,7 +76,7 @@ export const ROUTING = {
    free_class_rooms: '/freeclassrooms',
    admin: '/admin',
    teachers: '/timetable/teachers',
-   rooms: '/timetable/rooms',
+   rooms: '/timetable/rooms'
 };
 
 export const APIS_ENDPOINTS = {
@@ -104,5 +104,4 @@ export const CHAT_CATEGORIES_EMOJIS = {
    Apis: '👩‍💻'
 };
 
-
-export const EMOJIS = ['👍', '😄', '🎉', '❤️', '🚀', '👀', '🔥']
+export const EMOJIS = ['👍', '😄', '🎉', '❤️', '🚀', '👀', '🔥'];

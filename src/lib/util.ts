@@ -140,7 +140,7 @@ export function removeDuplicateTimetableHistory(arr: Array<ITimetableHistory>) {
 
 export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
    const time = new Date(currTime);
-   
+
    ///! TODO
    /// retrieve tolerance value from database.
    const tolerance = 0; // min
@@ -230,23 +230,23 @@ function userCacheHof() {
       const userQuery = query(userColsRef, where('uid', '==', uId), limit(1));
 
       getDocs(userQuery)
-      .then((docSnapShot) => {
-         state[1]((prevState) => {
-            return {
-               ...prevState,
-               users: {
-                  ...prevState.users,
-                  [uId]: {
-                     ...(docSnapShot.docs.map(d=> d.data())[0] as UserDocType),
-                     id: uId
+         .then((docSnapShot) => {
+            state[1]((prevState) => {
+               return {
+                  ...prevState,
+                  users: {
+                     ...prevState.users,
+                     [uId]: {
+                        ...(docSnapShot.docs.map((d) => d.data())[0] as UserDocType),
+                        id: uId
+                     }
                   }
-               }
-            };
+               };
+            });
+         })
+         .catch((err) => {
+            delete userCache[uId]; // remove from cache, cuz it doesn't exist or fail to fetch
          });
-      })
-      .catch((err) => {
-         delete userCache[uId]; // remove from cache, cuz it doesn't exist or fail to fetch
-      });
    };
 }
 

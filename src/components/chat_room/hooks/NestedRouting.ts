@@ -13,37 +13,38 @@ export default function useNestedRouting() {
    const router = useRouter();
 
    const user = useContext(UserCredentialsContext);
-   
+
    useEffect(() => {
       if (Object.keys(chatRoomState.discussions).length > 0) return;
 
-      let listeners: any = []
+      let listeners: any = [];
 
       // fetch posts
       const discussions_query = query(discussionsColRef, orderBy('createdAt', 'desc'));
 
       const listener = onSnapshot(discussions_query, (snapShot) => {
-          const discussions = snapShot.docs.map((doc) => ({
+         const discussions = snapShot.docs.map((doc) => ({
             ...doc.data(),
             id: doc.id
-          })) as Array<DiscussionDocType>;
+         })) as Array<DiscussionDocType>;
 
-          discussions.forEach((discussion) => {
+         discussions.forEach((discussion) => {
             addUserToCache([chatRoomState, setChatRoomState], discussion.authorId);
-          });
-          
-          
-          setChatRoomState((prevState)=> {
-            return {...prevState,
+         });
+
+         setChatRoomState((prevState) => {
+            return {
+               ...prevState,
                discussions: {
                   ...chatRoomState.discussions,
                   ...discussions.reduce((acc, curr) => {
                      return { ...acc, [curr.id]: curr };
                   }, {})
                },
-               loading_state: false}
-          });
-       });
+               loading_state: false
+            };
+         });
+      });
 
       return () => listener();
    }, []);
@@ -69,9 +70,11 @@ export default function useNestedRouting() {
                ? query.upload_category
                : defaultState.upload_category,
          discussion_id:
-            typeof query.discussion_id === 'string' ? query.discussion_id : defaultState.discussion_id
-       };
-       
+            typeof query.discussion_id === 'string'
+               ? query.discussion_id
+               : defaultState.discussion_id
+      };
+
       setChatRoomState({
          ...chatRoomState,
          active_route: chatRoomQueryParams.active_route as any,

@@ -39,10 +39,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    const docRef = doc(roomsTimetableCol, id as string);
    const docData = await getDoc(docRef);
 
-
    return {
       props: {
-         timetable: { id: docRef.id, room: docRef.id, ...docData.data() } 
+         timetable: { id: docRef.id, room: docRef.id, ...docData.data() }
       },
       revalidate: 30
    };
@@ -55,7 +54,6 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
    const router = useRouter();
    const toast = useToast();
-
 
    useEffect(() => () => toast.closeAll(), []);
 

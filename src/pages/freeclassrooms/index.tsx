@@ -32,7 +32,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    };
 }
 
-
 export default function FreeClassRoomsPage({
    timetables
 }: {
@@ -63,10 +62,13 @@ export default function FreeClassRoomsPage({
          setState((prev) => {
             return {
                ...prev,
-               freeClassRooms: calculateFreeClassrooms(timetables, prev.customDate ? prev.customDate : updatedTime),
+               freeClassRooms: calculateFreeClassrooms(
+                  timetables,
+                  prev.customDate ? prev.customDate : updatedTime
+               ),
                time: updatedTime,
-               loading: false,
-            }
+               loading: false
+            };
          });
       }, 1000);
 
@@ -97,7 +99,7 @@ export default function FreeClassRoomsPage({
          <MainAnimator>
             {!state.loading && (
                <>
-                  <FreeClassRooms parentState={[state, setState]}/>
+                  <FreeClassRooms parentState={[state, setState]} />
                </>
             )}
             {state.loading && (

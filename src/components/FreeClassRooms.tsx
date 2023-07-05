@@ -32,7 +32,7 @@ interface IRoomsType {
 export default function FreeClassRooms({
    parentState
 }: {
-   parentState: UseStateProps<FreeClassRoomStateType>
+   parentState: UseStateProps<FreeClassRoomStateType>;
 }) {
    const [isUnder500] = useMediaQuery('(max-width: 500px)');
 
@@ -42,10 +42,8 @@ export default function FreeClassRooms({
       seminar: []
    });
 
-   const [state, setState] = parentState
+   const [state, setState] = parentState;
    const [input, setInput] = useState<string>('');
-
-   
 
    useEffect(() => {
       let room_states: IRoomsType = {
@@ -61,7 +59,7 @@ export default function FreeClassRooms({
                room.toLocaleLowerCase().includes('room') &&
                !room.toLocaleLowerCase().includes('seminar')
             )
-            room_states.room.push(room);
+               room_states.room.push(room);
             else if (room.toLocaleLowerCase().includes('lab')) room_states.lab.push(room);
             else if (room.toLocaleLowerCase().includes('seminar')) room_states.seminar.push(room);
          });
@@ -99,61 +97,93 @@ export default function FreeClassRooms({
                </Center>
 
                <Center mt={'1rem'}>
-                  <Text className='roboto' color={'var(--muted-color)'}>Choose a specific day and time to search for available classrooms during that particular timeframe.</Text>
+                  <Text className="roboto" color={'var(--muted-color)'}>
+                     Choose a specific day and time to search for available classrooms during that
+                     particular timeframe.
+                  </Text>
                </Center>
-               <Center mt={'0.5rem'} gap={'1rem'}>
-                  <DropDown onChange={(d)=> {
-                     const dayIdx = DAYS_NAME.indexOf(d)
-                     setState((prevState)=> {
-                        let customDate = prevState.customDate || new Date();
-                        while(customDate.getDay() != dayIdx)
-                           customDate.setDate(customDate.getDate() + 1);
-                        return {...prevState, customDate, loading: true};
-                     })
-                  }} options={DAYS_NAME}>
-                     <Button gap={'0.2rem'}>
-                        {state.customDate ? DAYS_NAME[state.customDate.getDay()] : `Select Day`} <ChevronDownIcon/>
+
+               <Center mt={'0.5rem'} gap={'0.5rem'}>
+                  <DropDown
+                     onChange={(d) => {
+                        const dayIdx = DAYS_NAME.indexOf(d);
+                        setState((prevState) => {
+                           let customDate = prevState.customDate || new Date();
+                           while (customDate.getDay() != dayIdx)
+                              customDate.setDate(customDate.getDate() + 1);
+                           return { ...prevState, customDate, loading: true };
+                        });
+                     }}
+                     options={DAYS_NAME}
+                  >
+                     <Button gap={'0.2rem'} fontSize={'sm'}>
+                        {state.customDate ? DAYS_NAME[state.customDate.getDay()] : `Select Day`}{' '}
+                        <ChevronDownIcon />
                      </Button>
                   </DropDown>
 
-                  <DropDown onChange={(t)=> {
-                     const [hours, min] = t.split(":");
-                     setState((prevState)=> {
-                        let customDate = prevState.customDate || new Date();
-                        // set hours and min here
-                        customDate.setHours(parseInt(hours));
-                        customDate.setMinutes(parseInt(min));
-                        return {
-                           ...prevState, 
-                           customDate,
-                           loading: true
-                        };
-                     })
-                  }} options={
-                     Array.from(new Set(
-                     timetableHeadTitles.map(t => [t.startTime, t.endTime]).reduce((acc, curr)=> {
-                        return [...acc, ...curr.map(c=>c)]
-                     },[])))
-                  }>
-                     <Button gap={'0.2rem'} >
-                        {state.customDate ? `${state.customDate.getHours()}:${state.customDate.getMinutes().toString().padEnd(2, '0')}` : 'Select Time'} <ChevronDownIcon/>
+                  <DropDown
+                     onChange={(t) => {
+                        const [hours, min] = t.split(':');
+                        setState((prevState) => {
+                           let customDate = prevState.customDate || new Date();
+                           // set hours and min here
+                           customDate.setHours(parseInt(hours));
+                           customDate.setMinutes(parseInt(min));
+                           return {
+                              ...prevState,
+                              customDate,
+                              loading: true
+                           };
+                        });
+                     }}
+                     options={Array.from(
+                        new Set(
+                           timetableHeadTitles
+                              .map((t) => [t.startTime, t.endTime])
+                              .reduce((acc, curr) => {
+                                 return [...acc, ...curr.map((c) => c)];
+                              }, [])
+                        )
+                     )}
+                  >
+                     <Button gap={'0.2rem'} fontSize={'sm'}>
+                        {state.customDate
+                           ? `${state.customDate.getHours()}:${state.customDate
+                                .getMinutes()
+                                .toString()
+                                .padEnd(2, '0')}`
+                           : 'Select Time'}{' '}
+                        <ChevronDownIcon />
                      </Button>
                   </DropDown>
 
-                  <Button isDisabled={state.customDate == null} onClick={()=> {
-                     setState((prevState)=> {
-                        let customDate = null
-                        return {...prevState, customDate};
-                     })
-                  }}>
+                  <Button
+                     isDisabled={state.customDate == null}
+                     fontSize={'sm'}
+                     onClick={() => {
+                        setState((prevState) => {
+                           let customDate = null;
+                           return { ...prevState, customDate };
+                        });
+                     }}
+                  >
                      Reset
                   </Button>
                </Center>
             </Box>
 
             <Center marginY={'1rem'}>
-               <Alert status="success" background={'green.600'} justifyContent={'center'} rounded={'md'}>
-                  Free classrooms are no longer in preview. You can now confidently rely on the information generated by the Algorithm for accurate results. To verify the availability of a free classroom at a specific time, simply click on the room icon to view its corresponding table.
+               <Alert
+                  status="success"
+                  background={'green.600'}
+                  justifyContent={'center'}
+                  rounded={'md'}
+               >
+                  Free classrooms are no longer in preview. You can now confidently rely on the
+                  information generated by the Algorithm for accurate results. To verify the
+                  availability of a free classroom at a specific time, simply click on the room icon
+                  to view its corresponding table.
                </Alert>
             </Center>
 
@@ -207,12 +237,9 @@ const RoomsRenderer = ({
                         key={key}
                         border={'1px solid var(--border-color)'}
                         fontWeight={'light'}
-                        _hover={{ cursor: 'pointer', textDecoration: 'underline'  }}
-
+                        _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
                      >
-                        <Link href={`${ROUTING.rooms}/${room}`}>
-                           {room}
-                        </Link>
+                        <Link href={`${ROUTING.rooms}/${room}`}>{room}</Link>
                      </Card>
                   );
                })}

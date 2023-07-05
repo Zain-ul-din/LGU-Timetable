@@ -9,7 +9,7 @@ import {
    FormLabel,
    Heading,
    Input,
-   Text,
+   Text
 } from '@chakra-ui/react';
 import { CHAT_CATEGORIES } from '~/lib/constant';
 import { useContext, useEffect, useState } from 'react';
@@ -209,16 +209,16 @@ const UploadForm = ({ categoryState }: { categoryState: UseStateProps<AppState> 
                   handleSubmit((data) => {
                      const discussionDocRef = doc(discussionsColRef);
                      const discussion: DiscussionDocType = {
-                            id: discussionDocRef.id,
-                            title: data.title,
-                            content: data.content,
-                            discussionType: state.upload_category as string,
-                            authorId: user?.user?.uid as string,
-                            createdAt: serverTimestamp(),
-                            updatedAt: serverTimestamp(),
-                            weight: 0
-                        };
-                     
+                        id: discussionDocRef.id,
+                        title: data.title,
+                        content: data.content,
+                        discussionType: state.upload_category as string,
+                        authorId: user?.user?.uid as string,
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp(),
+                        weight: 0
+                     };
+
                      setLoading(true);
                      setDoc(discussionDocRef, discussion).then(() => {
                         setLoading(false);

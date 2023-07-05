@@ -189,12 +189,17 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                            return (
                               <React.Fragment key={idx}>
                                  {(data as Array<TimetableData>).length > 0 && (
-
-                                    <Card data={
-                                       (data as Array<TimetableData>).sort((lhs, rhs) => {
-                                          return ((lhs.startTime.hours * 60) + lhs.startTime.minutes) - ((rhs.startTime.hours * 60) + rhs.startTime.minutes);
-                                       })
-                                    } day={day} idx={idx} />
+                                    <Card
+                                       data={(data as Array<TimetableData>).sort((lhs, rhs) => {
+                                          return (
+                                             lhs.startTime.hours * 60 +
+                                             lhs.startTime.minutes -
+                                             (rhs.startTime.hours * 60 + rhs.startTime.minutes)
+                                          );
+                                       })}
+                                       day={day}
+                                       idx={idx}
+                                    />
                                  )}
                               </React.Fragment>
                            );
@@ -241,7 +246,12 @@ const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }
 const TimetableRenderer = ({ data }: { data: Array<any> }) => {
    const [isUnder700] = useMediaQuery('(max-width: 700px)');
 
-   const table_headings = ['Subject', 'Timing', data[0].room ? 'Instructor' : 'Room', data[0].class ? 'Class' : 'Instructor'];
+   const table_headings = [
+      'Subject',
+      'Timing',
+      data[0].room ? 'Instructor' : 'Room',
+      data[0].class ? 'Class' : 'Instructor'
+   ];
 
    return (
       <TableContainer border={'1px solid var(--border-color)'} borderRadius={'md'}>
@@ -292,13 +302,12 @@ const TimetableRenderer = ({ data }: { data: Array<any> }) => {
                         >
                            <Link
                               href={
-                                 curr.room ?
-                                 `${ROUTING.teachers}/${curr.teacher}`
-                                 :
-                                 `${ROUTING.rooms}/${curr.roomNo}`
+                                 curr.room
+                                    ? `${ROUTING.teachers}/${curr.teacher}`
+                                    : `${ROUTING.rooms}/${curr.roomNo}`
                               }
                            >
-                              {curr.room ? curr.teacher : curr.roomNo }
+                              {curr.room ? curr.teacher : curr.roomNo}
                            </Link>
                         </Td>
                         <Td

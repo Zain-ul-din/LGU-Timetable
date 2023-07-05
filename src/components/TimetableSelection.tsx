@@ -29,7 +29,6 @@ export default function TimetableSelection({ metaData }: { metaData: any }) {
 }
 
 import { useContext, useEffect, useState } from 'react';
-import { TimeTableInputContext } from '~/hooks/TimetableInputContext';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Text, Button, useMediaQuery } from '@chakra-ui/react';
 import { MenuStyle, TabStyle, Transitions } from '~/styles/Style';
@@ -50,19 +49,21 @@ import { useRouter } from 'next/router';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { doc, setDoc } from 'firebase/firestore';
 import { timetableHistoryCol } from '~/lib/firebase';
-import { ITimetableHistory } from '~/types/typedef';
+import { ITimetableHistory, TimetableInput } from '~/types/typedef';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 import Link from 'next/link';
 
 function Selection({ metaData }: { metaData: any }): JSX.Element {
-   const userInput = useContext(TimeTableInputContext);
+   const [userInput, setUserInput] = useState<TimetableInput>({
+      fall: null,
+      semester: null,
+      section: null
+   });
    const [currTabIdx, setCurrTabIdx] = useState<number>(0);
+   const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
 
    const user = useContext(UserCredentialsContext);
-
    const router = useRouter();
-
-   const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
 
    useEffect(() => {
       if (!user?.user) return;
@@ -115,12 +116,8 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                <TabStyle.Tabs index={currTabIdx} onChange={setCurrTabIdx}>
                   <TabStyle.TabList>
                      <TabStyle.Tab>Semester</TabStyle.Tab>
-                     <TabStyle.Tab isDisabled={userInput?.timeTableInput.fall == null}>
-                        Program
-                     </TabStyle.Tab>
-                     <TabStyle.Tab isDisabled={userInput?.timeTableInput.semester == null}>
-                        Section
-                     </TabStyle.Tab>
+                     <TabStyle.Tab isDisabled={userInput.fall == null}>Program</TabStyle.Tab>
+                     <TabStyle.Tab isDisabled={userInput.semester == null}>Section</TabStyle.Tab>
                   </TabStyle.TabList>
 
                   {/* Panels */}
@@ -133,13 +130,13 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                               selectedItem: string,
                               setSelectedItem: React.Dispatch<React.SetStateAction<string>>
                            ) => {
-                              userInput?.setTimeTableInput(
-                                 Object.assign(userInput.timeTableInput, {
+                              setUserInput(
+                                 Object.assign(userInput, {
                                     semester: null
                                  })
                               );
-                              userInput?.setTimeTableInput(
-                                 Object.assign(userInput.timeTableInput, {
+                              setUserInput(
+                                 Object.assign(userInput, {
                                     fall: selectedItem
                                  })
                               );
@@ -151,21 +148,21 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
 
                      <TabStyle.TabPanel textAlign={'center'}>
                         <Transitions.SlideFade in={currTabIdx == 1}>
-                           {userInput?.timeTableInput.fall != null && (
+                           {userInput.fall != null && (
                               <DropDown
                                  defautlSelectedItem={'choose program'}
-                                 menuItems={Object.keys(metaData[userInput?.timeTableInput.fall])}
+                                 menuItems={Object.keys(metaData[userInput.fall])}
                                  onClick={(
                                     selectedItem: string,
                                     setSelectedItem: React.Dispatch<React.SetStateAction<string>>
                                  ) => {
-                                    userInput?.setTimeTableInput(
-                                       Object.assign(userInput.timeTableInput, {
+                                    setUserInput(
+                                       Object.assign(userInput, {
                                           section: null
                                        })
                                     );
-                                    userInput?.setTimeTableInput(
-                                       Object.assign(userInput.timeTableInput, {
+                                    setUserInput(
+                                       Object.assign(userInput, {
                                           semester: selectedItem
                                        })
                                     );
@@ -179,44 +176,39 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
 
                      <TabStyle.TabPanel textAlign={'center'}>
                         <Transitions.SlideFade in={currTabIdx == 2}>
-                           {userInput?.timeTableInput.fall != null &&
-                              userInput?.timeTableInput.semester != null && (
-                                 <DropDown
-                                    defautlSelectedItem={'choose section'}
-                                    menuItems={
-                                       metaData[userInput?.timeTableInput.fall][
-                                          userInput.timeTableInput.semester
-                                       ]
+                           {userInput.fall != null && userInput.semester != null && (
+                              <DropDown
+                                 defautlSelectedItem={'choose section'}
+                                 menuItems={metaData[userInput.fall][userInput.semester]}
+                                 onClick={(
+                                    selectedItem: string,
+                                    setSelectedItem: React.Dispatch<React.SetStateAction<string>>
+                                 ) => {
+                                    setUserInput(
+                                       Object.assign(userInput, {
+                                          section: selectedItem
+                                       })
+                                    );
+                                    setSelectedItem(selectedItem);
+                                    const { fall, section, semester } = userInput;
+
+                                    if (user?.user) {
+                                       setDoc(doc(timetableHistoryCol), {
+                                          payload: userInput,
+                                          email: user.user.email,
+                                          createdAt: serverTimestamp()
+                                       });
                                     }
-                                    onClick={(
-                                       selectedItem: string,
-                                       setSelectedItem: React.Dispatch<React.SetStateAction<string>>
-                                    ) => {
-                                       userInput?.setTimeTableInput(
-                                          Object.assign(userInput.timeTableInput, {
-                                             section: selectedItem
-                                          })
-                                       );
-                                       setSelectedItem(selectedItem);
-                                       const { fall, section, semester } = userInput.timeTableInput;
 
-                                       if (user?.user) {
-                                          setDoc(doc(timetableHistoryCol), {
-                                             payload: userInput.timeTableInput,
-                                             email: user.user.email,
-                                             createdAt: serverTimestamp()
-                                          });
-                                       }
-
-                                       router.push(
-                                          `/timetable/${fall?.replace(
-                                             '/',
-                                             '-'
-                                          )} ${semester} ${section}`
-                                       );
-                                    }}
-                                 />
-                              )}
+                                    router.push(
+                                       `/timetable/${fall?.replace(
+                                          '/',
+                                          '-'
+                                       )} ${semester} ${section}`
+                                    );
+                                 }}
+                              />
+                           )}
                         </Transitions.SlideFade>
                      </TabStyle.TabPanel>
                   </TabStyle.TabPanels>

@@ -12,9 +12,15 @@ interface MarkDownProps {
 export default function MarkDown(props: MarkDownProps) {
    const [view, setView] = useState<boolean>(false);
 
-   
    return (
-      <Flex flexDir={'column'} bg={'var(--card-color)'} rounded={'lg'} gap={'0.5rem'} p={'0.5rem'} width={'100%'}>
+      <Flex
+         flexDir={'column'}
+         bg={'var(--card-color)'}
+         rounded={'lg'}
+         gap={'0.5rem'}
+         p={'0.5rem'}
+         width={'100%'}
+      >
          <Flex gap={'0.5rem'}>
             <Button size={'sm'} variant={'outline'} isActive={!view} onClick={() => setView(false)}>
                <EditIcon />

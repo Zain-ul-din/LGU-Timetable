@@ -276,7 +276,7 @@ a {
    body {
       display: flex;
       flex-direction: column;
-      height: auto;
+      height: 100%;
       min-width: 2020px !important;
       width: 100%;
       justify-content: center;
@@ -293,11 +293,19 @@ a {
       box-sizing: border-box !important;
       font-size: 1rem !important;
       padding: 3px !important;
+      border-color: black !important;
    }
 
    .print_timetable {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
       display: flex;
-      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid red;
    }
 
    ::-webkit-scrollbar-track {
@@ -438,5 +446,3 @@ a {
 .bg-blob {
    animation: blob-animation 8s infinite;
 }
-
-

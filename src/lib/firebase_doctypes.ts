@@ -53,7 +53,6 @@ export interface DiscussionDocType {
    isPremium?: boolean;
    weight: number;
 
-   isLocked?: boolean;
    hasAnswer?: boolean;
    acceptedAnswer?: boolean;
 
@@ -61,8 +60,16 @@ export interface DiscussionDocType {
 
    poll?: Array<Question>;
 
-   participants?: Array<ParticipantDocType>; /* Sub collection documents */
-   
+   participants?: Array<ParticipantDocType> /* Sub collection documents */;
+
+   // spam prevention
+   isLocked?: boolean;
+   contentEditCount?: number;
+   titleEditCount?: number;
+
+   requestUnlock?: Array<RequestStatus>;
+   requestEdit?: Array<RequestStatus>;
+   needModeratorAttention?: boolean;
 }
 
 export interface Post<T> {
@@ -72,30 +79,41 @@ export interface Post<T> {
 }
 
 export interface ParticipantDocType {
-   
-   user_id:       string;
-   createAt:      FieldValue;
-   updatedAt:     FieldValue;
-   
-   reacts?:        Array<string>;
-   isModerator?:   boolean;
-   voteType?:      "up" | "down"
-   isBanned?:      boolean;
-   
+   user_id: string;
+   createAt: FieldValue;
+   updatedAt: FieldValue;
 
-   pollAnswers?:   Array<Answer> /*Poll answers if exists*/;
+   reacts?: Array<string>;
+   isModerator?: boolean;
+   voteType?: 'up' | 'down';
+   isBanned?: boolean;
 
-   reports?:      UserPost<string>;
+   pollAnswers?: Array<Answer> /*Poll answers if exists*/;
+
+   reports?: UserPost<string>;
 }
+
+export type RequestStatus = {
+   status: 'pending' | 'accepted' | 'rejected';
+   moderator_weight: number;
+   moderator_id: string;
+};
 
 export interface Comment {
    id: string;
    user_id: string;
-   dis_id:  string;
-   
+   dis_id: string;
+
    comment: string;
    createdAt: FieldValue;
    updatedAt: FieldValue;
 
    isDeleted?: boolean;
+
+   // prevent spam
+   isLocked?: boolean;
+   editCount?: number;
+
+   requestUnlock?: Array<RequestStatus>;
+   requestEdit?: Array<RequestStatus>;
 }

@@ -1,6 +1,6 @@
 import PastPaper from '~/components/pastpaper/pastpaper';
 
-import { GetStaticPathsContext } from 'next';
+import { GetServerSidePropsContext } from 'next';
 import { doc, getDoc, getDocs } from 'firebase/firestore';
 import { pastPapersCol, pastPapersInputCol } from '~/lib/firebase';
 import { PastPaperDocType } from '~/types/typedef';
@@ -8,16 +8,21 @@ import { PastPaperDocType } from '~/types/typedef';
 import { fromFirebaseTimeStamp } from '~/lib/util';
 import AdminLayout from '~/components/admin/layout';
 
-export async function getStaticProps(context: GetStaticPathsContext) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
    const subjectDocRef = doc(pastPapersInputCol, 'subjects');
-   const docRef = await getDoc(subjectDocRef);
-   const data = docRef.data();
+   
+   const [subjectsSnapShot, pastPapersSnapShot] = await Promise.all([
+      getDoc(subjectDocRef),
+      getDocs(pastPapersCol)
+   ]);
 
-   const pastPapers = (await getDocs(pastPapersCol)).docs.map((data) => ({
+   const data = subjectsSnapShot.data();
+   
+   const pastPapers = pastPapersSnapShot.docs.map((data) => ({
       ...data.data(),
       uploadedAt: fromFirebaseTimeStamp(data.data().uploadedAt).toString()
    }));
-
+   
    return {
       props: {
          data,

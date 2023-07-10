@@ -10,7 +10,7 @@ export default function Index() {
    return (
       <>
          <Head>
-            <title>Lgu timetable Notifications</title>
+            <title>Lgu timetable Discussions</title>
 
             <meta
                name="description"
@@ -26,9 +26,11 @@ export default function Index() {
             <link rel="icon" href="/favicon.ico" />
          </Head>
          <MainAnimator style={{ height: 'auto', padding: '0.2rem' }}>
-            <PreviewWrapper>
+            {/* <PreviewWrapper> */}
+            <AdminLayout>
                <Content />
-            </PreviewWrapper>
+            </AdminLayout>
+            {/* </PreviewWrapper> */}
          </MainAnimator>
       </>
    );
@@ -36,5 +38,6 @@ export default function Index() {
 
 import ChatRoom from '~/components/chat_room/ChatRoom';
 import PreviewWrapper from '~/components/design/PreviewWrapper';
+import AdminLayout from '~/components/admin/layout';
 
 const Content = () => <ChatRoom />;

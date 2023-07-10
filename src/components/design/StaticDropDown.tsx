@@ -1,7 +1,7 @@
 import { Flex, Menu, MenuButton, MenuItem, MenuList, ColorProps } from '@chakra-ui/react';
 
 export interface Option {
-   label: string;
+   label: string | React.ReactNode;
    color?: ColorProps;
    onClick?: () => void;
 }

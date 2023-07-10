@@ -38,23 +38,25 @@ const EditableControls = () => {
       useEditableControls();
 
    return isEditing ? (
-      <ButtonGroup size="sm" display={'inline-block'} p={'0.2rem'}>
+      <Box  display={'flex'} p={'0.2rem'} gap={'0.5rem'}>
          <IconButton
-            size={'sm'}
+            size={'xs'}
             colorScheme="green"
+            variant={'outline'}
             icon={<CheckIcon />}
             {...(getSubmitButtonProps() as IconButtonProps)}
          />
          <IconButton
-            size={'sm'}
+            size={'xs'}
             colorScheme="red"
+            variant={'outline'}
             icon={<CloseIcon />}
             {...(getCancelButtonProps() as IconButtonProps)}
          />
-      </ButtonGroup>
+      </Box>
    ) : (
-      <Box display={'inline-block'} mx={'0.5rem'}>
-         <IconButton size="sm" icon={<EditIcon />} {...(getEditButtonProps() as IconButtonProps)} />
+      <Box display={'inline-block'} mx={'0.5rem'} alignItems={'center'}>
+         <IconButton size="xs" variant={"outline"} icon={<EditIcon />} {...(getEditButtonProps() as IconButtonProps)} />
       </Box>
    );
 };

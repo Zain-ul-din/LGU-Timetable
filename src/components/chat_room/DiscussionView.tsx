@@ -2,37 +2,45 @@ import { Fragment, useContext, useEffect, useState } from 'react';
 import AppStateProvider from './hooks/AppStateProvider';
 import { useRouter } from 'next/router';
 import {
-   Comment,
+   Comment as CommentType,
    DiscussionDocType,
    ParticipantDocType,
    UserDocType
 } from '~/lib/firebase_doctypes';
 import { EMOJIS, ROUTING } from '~/lib/constant';
-import { Avatar, AvatarGroup, Button, Divider, Flex, Icon, Text } from '@chakra-ui/react';
+import { Avatar, AvatarGroup, Button, Divider, Flex, Icon, Text, useToast } from '@chakra-ui/react';
 import EditableText from './components/EditableText';
 import MarkDown from '../design/MarkDown';
 import styles from '~/styles/chat_room/MarkDown.module.css';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
-import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons';
+import { ArrowDownIcon, ArrowUpIcon, CopyIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { BiMessageSquareCheck } from 'react-icons/bi';
 import EmojiPickUp from './components/EmojiPickUp';
 
 import MarkDownInput from './components/MarkDown';
+import Comment from './components/Comment';
+
 import { addUserToCache, fromFirebaseTimeStamp } from '~/lib/util';
 import { collection, doc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { discussionSubColName, discussionsColRef, discussionsCommentsColRef } from '~/lib/firebase';
 import { addComment, addReaction, postVote, removeReaction } from './lib/firebase_util';
-import { Unsubscribe, User } from 'firebase/auth';
+import { Unsubscribe } from 'firebase/auth';
+import { clientCommentsHandler } from './lib/ClientCommentsHandler';
+import StaticDropDown from '../design/StaticDropDown';
+import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function DiscussionView() {
    const [appState, setAppState] = useContext(AppStateProvider);
    const user = useContext(UserCredentialsContext);
 
    const router = useRouter();
+   const toast = useToast();
    const [discussion, setDiscussion] = useState<DiscussionDocType | undefined>(undefined);
    const [participants, setParticipants] = useState<ParticipantDocType[]>([]);
-   const [comments, setComments] = useState<Comment[]>([]);
+   const [comments, setComments] = useState<CommentType[]>([]);
 
+   const [edit, setEdit] = useState<boolean>(false);
+   
    useEffect(() => {
       if (typeof router.query.discussion_id != 'string') {
          router.push(ROUTING.notification);
@@ -45,7 +53,6 @@ export default function DiscussionView() {
 
       const discussionId = router.query.discussion_id as string;
 
-      console.log(discussionId + ' id');
       const commentsUnSub = onSnapshot(
          query(
             discussionsCommentsColRef,
@@ -54,14 +61,14 @@ export default function DiscussionView() {
          ),
          (snapShot) => {
             console.log(snapShot.docs.map((d) => d.data()));
-            const comments: Comment[] = [];
+            const comments: CommentType[] = [];
             snapShot.forEach((doc) => {
-               comments.push(doc.data() as Comment);
+               comments.push(doc.data() as CommentType);
             });
             setComments(comments);
          }
       );
-
+      
       if (appState.discussions[discussionId] == undefined) {
          // fetch discussion from server
          alert('we have to fetch the discussion from the server');
@@ -96,17 +103,17 @@ export default function DiscussionView() {
       <>
          {discussion && (
             <Flex p={'0.5rem'} flexDir={'column'} gap={'0.5rem'}>
-               {discussion.authorId == user?.user?.email ? (
+               {discussion.authorId == user?.user?.uid ? (
                   <EditableText
                      editAbleProps={{
                         defaultValue: discussion.title,
-                        fontSize: '3xl',
+                        fontSize: '2xl',
                         className: 'roboto',
                         fontWeight: 'bold'
                      }}
                   />
                ) : (
-                  <Text fontSize={'3xl'} className="roboto" fontWeight={'bold'}>
+                  <Text fontSize={'2xl'} className="roboto" fontWeight={'bold'}>
                      {discussion.title}
                   </Text>
                )}
@@ -120,7 +127,7 @@ export default function DiscussionView() {
                   flexDir={'column'}
                   gap={'0.5rem'}
                >
-                  <Flex>
+                  <Flex width={'100%'}>
                      {appState.users[discussion.authorId] && (
                         <Flex gap={'0.5rem'} alignItems={'center'}>
                            <Flex>
@@ -151,8 +158,59 @@ export default function DiscussionView() {
                            </Flex>
                         </Flex>
                      )}
+
+                     <Flex ml ={'auto'}>
+                        <StaticDropDown
+                           options={[
+                              {
+                                 label: <Flex alignItems={'center'} gap={'0.3rem'}>
+                                   <CopyIcon/> Copy
+                                 </Flex>,
+                                 onClick: () => {
+                                    navigator.clipboard.writeText(discussion.content);
+                                    toast({
+                                      title: 'Copied',
+                                      status: 'success',
+                                      position: 'top'
+                                    })
+                                 }
+                              },
+                              discussion.authorId == user?.user!.uid ? { label: <Flex alignItems={'center'} gap={'0.3rem'}>
+                              <EditIcon/> Edit
+                             </Flex>
+                              , onClick: () => { setEdit(true) } } : null,
+                              discussion.authorId == user?.user!.uid ? {
+                                 label: <Flex alignItems={'center'} gap={'0.3rem'}>
+                                 <DeleteIcon/> Delete
+                                </Flex>,
+                                 onClick: () => {
+                                 },
+                                 color: { color: 'red.300', textColor: 'red.300' }
+                              } : null
+                           ].filter((option) => option != null) as any[]}
+                        >
+                           <Icon fontSize={'xl'}>
+                              <BsThreeDotsVertical />
+                           </Icon>
+                        </StaticDropDown>
+                     </Flex>
                   </Flex>
-                  <MarkDown text={discussion.content} className={styles.mark_down} />
+                  {edit ? <Flex width={'100%'} flexDir={'column'}>
+                        <MarkDownInput 
+                           markdowntext={discussion.content}
+                           textAreaProps={{}}                           
+                        />
+                        <Flex ml={'auto'} gap={'0.5rem'} p = {'0.2rem'}>
+                           <Button size={'md'} variant={'outline'} colorScheme='red'
+                              onClick={()=> setEdit(false)}
+                           >
+                              Discard
+                           </Button>
+                           <Button size={'md'} variant={'outline'} colorScheme='green'>
+                              Save
+                           </Button>
+                        </Flex>
+                  </Flex> : <MarkDown text={discussion.content} className={styles.mark_down} />}
 
                   {/* votes & emojis */}
                   <Flex gap={'0.5rem'} mt={'1rem'}>
@@ -258,6 +316,7 @@ export default function DiscussionView() {
                            comment={comment}
                            user={appState.users[comment.user_id]}
                            key={idx}
+                           is_author = {user?.user?.uid == comment.user_id}
                         />
                      );
                   })}
@@ -284,7 +343,8 @@ export default function DiscussionView() {
                      size={'md'}
                      variant={'outline'}
                      onClick={() => {
-                        addComment(discussion.id, user?.user?.uid as string, comment);
+                        clientCommentsHandler.Post(discussion.id, user?.user?.uid as string, comment);
+                        setComment('');
                      }}
                   >
                      Comment
@@ -296,73 +356,4 @@ export default function DiscussionView() {
    );
 }
 
-import { BsThreeDotsVertical } from 'react-icons/bs';
-import DropDown from '../design/DropDown';
-import StaticDropDown from '../design/StaticDropDown';
 
-const Comment = ({ comment, user }: { comment: Comment; user: UserDocType | undefined }) => {
-   console.log(comment);
-   return (
-      <Flex
-         p={'1rem'}
-         border={'1px solid var(--border-color)'}
-         rounded={'lg'}
-         flexDir={'column'}
-         width={'100%'}
-         gap={'0.5rem'}
-      >
-         <Flex>
-            {user && (
-               <Flex gap={'0.5rem'} alignItems={'center'} width={'100%'}>
-                  <Flex>
-                     <Avatar src={user.photoURL as string} size={'sm'} />
-                  </Flex>
-                  <Flex flexDir={'column'}>
-                     <Text fontSize={'md'} fontWeight={'bold'} className={'roboto'} lineHeight={1}>
-                        {user.displayName}
-                     </Text>
-                     <Text
-                        fontSize={'sm'}
-                        fontWeight={'thin'}
-                        color={'var(--muted-light-color)'}
-                        className={'roboto'}
-                        lineHeight={1}
-                     >
-                        {comment.createdAt && (
-                           <>
-                              commented on {fromFirebaseTimeStamp(comment.createdAt).toDateString()}
-                           </>
-                        )}
-                     </Text>
-                  </Flex>
-                  <Flex ml={'auto'}>
-                     <StaticDropDown
-                        options={[
-                           {
-                              label: 'Copy',
-                              onClick: () => {
-                                 navigator.clipboard.writeText(comment.comment);
-                              }
-                           },
-                           { label: 'Edit', onClick: () => {} },
-                           {
-                              label: 'Delete',
-                              onClick: () => {},
-                              color: { color: 'red.300', textColor: 'red.300' }
-                           }
-                        ]}
-                     >
-                        <Icon fontSize={'xl'}>
-                           <BsThreeDotsVertical />
-                        </Icon>
-                     </StaticDropDown>
-                  </Flex>
-               </Flex>
-            )}
-         </Flex>
-         <Flex pl={'0.2rem'} rounded={'md'} p={'0.2rem'}>
-            <MarkDown text={comment.comment} className={styles.mark_down} />
-         </Flex>
-      </Flex>
-   );
-};

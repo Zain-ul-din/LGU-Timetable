@@ -1,8 +1,7 @@
 /*
     influence weight params
 */
-export const InfluenceWeightParams = 
-{
+export const InfluenceWeightParams = {
     member: 0.01,
     collaborator: 0.05, 
     premium: 0.10,
@@ -12,8 +11,7 @@ export const InfluenceWeightParams =
 /* 
     Discussion Weights
 */
-export const DiscussionWeightParams = 
-{
+export const DiscussionWeightParams = {
     on_created: 0.10,
     on_commented: 0.10,
     on_react: 0.05,
@@ -22,5 +20,19 @@ export const DiscussionWeightParams =
     down_vote_threshold: -0.10
 }
 
+/* 
+    user interaction limit
+*/
+export const UserInteractionLimit = {
+    edit_comment: 10,
+}
+
+/*
+    user input limit | defined in characters
+*/
+export const UserInputLimit = {
+    comment_min: 10,
+    comment_max: 2000,
+}
 
 

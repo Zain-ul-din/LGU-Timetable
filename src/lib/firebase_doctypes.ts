@@ -113,7 +113,7 @@ export interface Comment {
    // prevent spam
    isLocked?: boolean;
    editCount?: number;
-
+   
    requestUnlock?: Array<RequestStatus>;
    requestEdit?: Array<RequestStatus>;
 }

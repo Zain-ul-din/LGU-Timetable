@@ -28,6 +28,7 @@ import { Unsubscribe } from 'firebase/auth';
 import { clientCommentsHandler } from './lib/ClientCommentsHandler';
 import StaticDropDown from '../design/StaticDropDown';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import CommentUploader from './components/CommentUploader';
 
 export default function DiscussionView() {
    const [appState, setAppState] = useContext(AppStateProvider);
@@ -117,7 +118,7 @@ export default function DiscussionView() {
                      {discussion.title}
                   </Text>
                )}
-
+               
                <Flex
                   width={'100%'}
                   p={'1rem'}
@@ -323,37 +324,12 @@ export default function DiscussionView() {
                </Flex>
 
                <Divider />
-               <Flex width={'100%'}>
-                  <MarkDownInput
-                     textAreaProps={{
-                        minH: '10rem',
-                        onChange: (e) => setComment(e.target.value),
-                        value: comment
-                     }}
-                     markdowntext={comment}
-                  />
-               </Flex>
-
-               <Flex width={'100%'} justifyContent={'flex-end'} gap={'1rem'}>
-                  <Button colorScheme="purple" size={'md'} variant={'outline'}>
-                     <BiMessageSquareCheck style={{ margin: '0 0.2rem 0 0' }} /> Close Discussion
-                  </Button>
-                  <Button
-                     colorScheme="green"
-                     size={'md'}
-                     variant={'outline'}
-                     onClick={() => {
-                        clientCommentsHandler.Post(discussion.id, user?.user?.uid as string, comment);
-                        setComment('');
-                     }}
-                  >
-                     Comment
-                  </Button>
-               </Flex>
+               
+               {/* user comment uploader  */}
+               <CommentUploader discussion_id= {discussion.id} user={user?.user as UserDocType}/>
             </Flex>
          )}
       </>
    );
 }
-
 

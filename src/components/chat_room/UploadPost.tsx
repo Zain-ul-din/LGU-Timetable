@@ -114,9 +114,8 @@ const UploadForm = ({ categoryState }: { categoryState: UseStateProps<AppState> 
 
    const [content, setContent] = useState<string>('');
    const user = useContext(UserCredentialsContext);
-
    const [loading, setLoading] = useState<boolean>(false);
-
+   
    return (
       <Flex p={'1rem'} flexDir={'column'} gap={'0.5rem'} height={'100%'}>
          <Heading className="roboto" fontSize={'2xl'}>

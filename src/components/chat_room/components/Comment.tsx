@@ -11,6 +11,7 @@ import { CopyIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
 import MarkDownInput from "./MarkDown";
+import CommentEdit from "./CommentEdit";
 
 const Comment = ({ comment, user, is_author }: { comment: CommentType; user: UserDocType | undefined, is_author: boolean }) => {
     
@@ -19,6 +20,7 @@ const Comment = ({ comment, user, is_author }: { comment: CommentType; user: Use
     const [canEdit, setEdit] = useState<boolean>(false);
     
     const [commentInput, setCommentInput] = useState<string>(comment.comment);
+    const [loading, setLoading] = useState<boolean>(false);
 
     return (
        <Flex
@@ -59,22 +61,25 @@ const Comment = ({ comment, user, is_author }: { comment: CommentType; user: Use
                       <StaticDropDown
                          options={[
                             {
-                               label: <Flex alignItems={'center'} gap={'0.3rem'}>
-                                 <CopyIcon/> Copy
-                               </Flex>,
-                               onClick: () => {
-                                  navigator.clipboard.writeText(comment.comment);
-                                  toast({
-                                    title: 'Copied',
-                                    status: 'success',
-                                    position: 'top'
-                                  })
-                               }
+                              label: <Flex alignItems={'center'} gap={'0.3rem'}>
+                                <CopyIcon/> Copy
+                              </Flex>,
+                              onClick: () => {
+                                 navigator.clipboard.writeText(comment.comment);
+                                 toast({
+                                   title: 'Copied',
+                                   status: 'success',
+                                   position: 'top'
+                                 })
+                              }
                             },
                             is_author ? { label: <Flex alignItems={'center'} gap={'0.3rem'}>
                             <EditIcon/> Edit
                            </Flex>
-                            , onClick: () => { setEdit(true) } } : null,
+                            , onClick: () => { 
+                              setLoading(false);
+                              setEdit(true); 
+                           } } : null,
                             is_author ? {
                                label: <Flex alignItems={'center'} gap={'0.3rem'}>
                                <DeleteIcon/> Delete
@@ -106,23 +111,7 @@ const Comment = ({ comment, user, is_author }: { comment: CommentType; user: Use
                      fromFirebaseTimeStamp(comment.updatedAt).toDateString()}
                 </Text>
             </Flex>: <>
-                {canEdit ? <Flex width={'100%'} flexDir={'column'}> 
-                  <MarkDownInput markdowntext={commentInput} textAreaProps={{
-                     value: commentInput,
-                     onChange: (e) => {
-                        setCommentInput(e.target.value)
-                     }
-                  }}/> 
-                  <Flex width={'100%'} p = {'0.2rem'} mt={'0.5rem'}>
-                     <Flex ml={'auto'} gap={'0.5rem'}>
-                        <Button size={'md'} variant={'outline'} colorScheme="red" onClick={()=>{
-                           setEdit(false)
-                           setCommentInput(comment.comment)
-                        }}>Discard</Button>
-                        <Button size={'md'} variant={'outline'} colorScheme="green">Save</Button>
-                     </Flex>
-                  </Flex>
-                </Flex>
+               {canEdit ? <CommentEdit comment={comment} closeHandler={()=> setEdit(false)} />
                 : 
                   <MarkDown text={comment.comment} className={styles.mark_down} />}
             </>}

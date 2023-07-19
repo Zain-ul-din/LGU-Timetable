@@ -17,36 +17,36 @@ import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { useUserCredentials } from '~/hooks/hooks';
 
 import ChatAppStateProvider, {
-   AppState as ChatAppState,
-   defaultState as defaultChatAppState
+    AppState as ChatAppState,
+    defaultState as defaultChatAppState
 } from '~/components/chat_room/hooks/AppStateProvider';
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];
 
 export default function App({ Component, pageProps }: AppProps) {
-   const [user, setUser] = useUserCredentials();
-   const router = useRouter();
+    const [user, setUser] = useUserCredentials();
+    const router = useRouter();
 
-   // chat app state for caching
-   const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
+    // chat app state for caching
+    const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
 
-   return (
-      <>
-         <UserCredentialsContext.Provider value={{ user, setUser }}>
-            <BgGlow />
-            <NextNProgress color="var(--loader-color)" />
-            <AppStyleProvider theme={appTheme}>
-               <DarkTheme />
-               <OneTap />
-               {!excludeHeadPages.includes(router.pathname) && <Header />}
-               <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
-                  <Component {...pageProps} />
-               </ChatAppStateProvider.Provider>
-               {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
-               {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
-            </AppStyleProvider>
-         </UserCredentialsContext.Provider>
-      </>
-   );
+    return (
+        <>
+            <UserCredentialsContext.Provider value={{ user, setUser }}>
+                <BgGlow />
+                <NextNProgress color="var(--loader-color)" />
+                <AppStyleProvider theme={appTheme}>
+                    <DarkTheme />
+                    <OneTap />
+                    {!excludeHeadPages.includes(router.pathname) && <Header />}
+                    <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
+                        <Component {...pageProps} />
+                    </ChatAppStateProvider.Provider>
+                    {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
+                    {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
+                </AppStyleProvider>
+            </UserCredentialsContext.Provider>
+        </>
+    );
 }

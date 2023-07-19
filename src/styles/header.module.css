@@ -1,48 +1,48 @@
 .header_wrapper {
-   display: flex;
-   width: 100%;
-   border-bottom: 1px solid var(--border-color);
-   margin-bottom: 1rem;
-   justify-content: center;
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+    justify-content: center;
 }
 
 .header {
-   display: flex;
-   padding: 0.5rem 0rem 0.5rem 0rem;
-   max-width: 1250px;
-   width: 100%;
+    display: flex;
+    padding: 0.5rem 0rem 0.5rem 0rem;
+    max-width: 1250px;
+    width: 100%;
 }
 
 @keyframes background-pan {
-   from {
-      background-position: 0% center;
-   }
+    from {
+        background-position: 0% center;
+    }
 
-   to {
-      background-position: -200% center;
-   }
+    to {
+        background-position: -200% center;
+    }
 }
 
 .header > h1 {
-   font-size: 2rem;
-   animation-delay: 500ms;
-   animation: background-pan 2s linear infinite;
-   font-size: 2rem;
-   /* background: linear-gradient(to right, var(--purple), var(--card-color), var(--pink), var(--purple)); */
-   background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-   background-size: 200%;
-   background-clip: text;
-   -webkit-text-fill-color: transparent;
-   font-weight: bold;
-   padding: 0rem 1rem;
-   transform: translateY(4px);
+    font-size: 2rem;
+    animation-delay: 500ms;
+    animation: background-pan 2s linear infinite;
+    font-size: 2rem;
+    /* background: linear-gradient(to right, var(--purple), var(--card-color), var(--pink), var(--purple)); */
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    padding: 0rem 1rem;
+    transform: translateY(4px);
 }
 
 .items {
-   margin-left: auto;
-   margin-right: 1.5rem;
-   justify-self: center;
-   display: flex;
-   height: 100%;
-   align-items: center;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    justify-self: center;
+    display: flex;
+    height: 100%;
+    align-items: center;
 }

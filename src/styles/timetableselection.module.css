@@ -1,39 +1,39 @@
 .selection {
-   display: flex;
-   width: 100%;
-   max-width: 1200px;
-   justify-content: center;
-   align-items: center;
-   padding: 4rem;
-   padding-top: 0px;
-   margin: 0 auto;
-   margin-bottom: 2rem;
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+    padding-top: 0px;
+    margin: 0 auto;
+    margin-bottom: 2rem;
 }
 
 .selection > div {
-   background-color: var(--card-color);
-   border: 1px solid var(--border-color);
-   display: flex;
-   width: 100%;
-   height: 70vh;
-   border-radius: 1rem;
-   justify-content: center;
-   flex-direction: column;
+    background-color: var(--card-color);
+    border: 1px solid var(--border-color);
+    display: flex;
+    width: 100%;
+    height: 70vh;
+    border-radius: 1rem;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .selection > div > h1 {
-   padding: 1rem;
-   font-size: 2rem;
-   text-align: center;
+    padding: 1rem;
+    font-size: 2rem;
+    text-align: center;
 }
 
 @media (max-width: 600px) {
-   .selection {
-      padding: 1rem;
-      margin-bottom: 5rem;
-   }
+    .selection {
+        padding: 1rem;
+        margin-bottom: 5rem;
+    }
 
-   .selection > div {
-      height: 20rem;
-   }
+    .selection > div {
+        height: 20rem;
+    }
 }

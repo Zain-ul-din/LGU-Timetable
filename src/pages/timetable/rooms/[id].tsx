@@ -20,111 +20,110 @@ import MainAnimator from '~/components/design/MainAnimator';
 import { ROUTING } from '~/lib/constant';
 
 export async function getStaticPaths() {
-   const timetable_docs = await getDocs(roomsTimetableCol);
-   const paths = timetable_docs.docs.map((doc) => ({ params: { id: doc.id } }));
+    const timetable_docs = await getDocs(roomsTimetableCol);
+    const paths = timetable_docs.docs.map((doc) => ({ params: { id: doc.id } }));
 
-   return {
-      paths,
-      fallback: 'blocking' // can also be true or 'blocking'
-   };
+    return {
+        paths,
+        fallback: 'blocking' // can also be true or 'blocking'
+    };
 }
 
 interface TimetableDoc extends TimetableDocType {
-   id: string;
+    id: string;
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-   const id = context.params!.id;
+    const id = context.params!.id;
 
-   const docRef = doc(roomsTimetableCol, id as string);
-   const docData = await getDoc(docRef);
+    const docRef = doc(roomsTimetableCol, id as string);
+    const docData = await getDoc(docRef);
 
-   return {
-      props: {
-         timetable: { id: docRef.id, room: docRef.id, ...docData.data() }
-      },
-      revalidate: 30
-   };
+    return {
+        props: {
+            timetable: { id: docRef.id, room: docRef.id, ...docData.data() }
+        },
+        revalidate: 30
+    };
 }
 
 interface GetStaticPropsReturnType extends TimetableDocType {
-   id: string;
+    id: string;
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
-   const router = useRouter();
-   const toast = useToast();
+    const router = useRouter();
+    const toast = useToast();
 
-   useEffect(() => () => toast.closeAll(), []);
+    useEffect(() => () => toast.closeAll(), []);
 
-   useTimeout(() => {
-      toast({
-         position: 'bottom',
-         colorScheme: 'gray',
-         duration: 1000 * 60,
-         render: () => (
-            <PromotionToast
-               closeHandler={() => {
-                  toast.closeAll();
-               }}
-            />
-         )
-      });
-   }, 2000);
+    useTimeout(() => {
+        toast({
+            position: 'bottom',
+            colorScheme: 'gray',
+            duration: 1000 * 60,
+            render: () => (
+                <PromotionToast
+                    closeHandler={() => {
+                        toast.closeAll();
+                    }}
+                />
+            )
+        });
+    }, 2000);
 
-   useEffect(() => {
-      if (!timetable.timetable) router.push(ROUTING.timetable);
-   }, []);
+    useEffect(() => {
+        if (!timetable.timetable) router.push(ROUTING.timetable);
+    }, []);
 
-   return (
-      <>
-         <Head>
-            <title>LGU Timetable</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
+    return (
+        <>
+            <Head>
+                <title>LGU Timetable</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-            <meta
-               name="description"
-               content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Teacher Timetable Page`}
-            />
+                <meta
+                    name="description"
+                    content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Teacher Timetable Page`}
+                />
 
-            <meta
-               name="keywords"
-               content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
-            />
+                <meta
+                    name="keywords"
+                    content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
+                />
 
-            <SocialLinks />
-         </Head>
-         <MainAnimator>
-            {timetable.timetable && <TimetableRenderer timetable={timetable} />}
-         </MainAnimator>
-      </>
-   );
+                <SocialLinks />
+            </Head>
+            <MainAnimator>
+                {timetable.timetable && <TimetableRenderer timetable={timetable} />}
+            </MainAnimator>
+        </>
+    );
 }
 
 function TimetableRenderer({ timetable }: { timetable: any }) {
-   const [timetableData, setTimetableData] = useState<any>();
+    const [timetableData, setTimetableData] = useState<any>();
 
-   useEffect(() => {
-      setTimetableData(timetable);
-   }, []);
+    useEffect(() => {
+        setTimetableData(timetable);
+    }, []);
 
-   return (
-      <>
-         {!timetableData && (
-            <Center color={'green.600'}>
-               <ClipLoader cssOverride={{ width: '6rem', height: '6rem' }} color="white" />
-            </Center>
-         )}
+    return (
+        <>
+            {!timetableData && (
+                <Center color={'green.600'}>
+                    <ClipLoader cssOverride={{ width: '6rem', height: '6rem' }} color="white" />
+                </Center>
+            )}
 
-         {timetableData && (
-            <motion.div
-               initial={{ opacity: 0.5 }}
-               animate={{ opacity: 1 }}
-               transition={{ duration: 0.1, type: 'keyframes' }}
-            >
-               <Timetable metaData={timetable.id} timetableData={timetableData} />
-            </motion.div>
-         )}
-      </>
-   );
+            {timetableData && (
+                <motion.div
+                    initial={{ opacity: 0.5 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.1, type: 'keyframes' }}>
+                    <Timetable metaData={timetable.id} timetableData={timetableData} />
+                </motion.div>
+            )}
+        </>
+    );
 }

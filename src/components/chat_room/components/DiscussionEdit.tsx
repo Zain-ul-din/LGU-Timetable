@@ -2,19 +2,20 @@ import { Button, Flex, FormControl, FormErrorMessage, useToast } from '@chakra-u
 import MarkDownInput from './MarkDown';
 import { useState } from 'react';
 import { clientCommentsHandler } from '../lib/ClientCommentsHandler';
-import type { Comment as CommentType } from '~/lib/firebase_doctypes';
+import type { DiscussionDocType } from '~/lib/firebase_doctypes';
 import { useForm } from 'react-hook-form';
 import { UserInputLimit } from '../ranking/param';
+import { discussionHandler } from '../lib/DiscussionHandler';
 
-const CommentEdit = ({
-    comment,
+const DiscussionEdit = ({
+    discussion,
     closeHandler
 }: {
-    comment: CommentType;
+    discussion: DiscussionDocType;
     closeHandler: () => void;
 }) => {
     const toast = useToast();
-    const [content, setContent] = useState<string>(comment.comment);
+    const [content, setContent] = useState<string>(discussion.content);
 
     const {
         register,
@@ -31,28 +32,28 @@ const CommentEdit = ({
                 <FormControl isInvalid={errors.content !== undefined}>
                     <MarkDownInput
                         textAreaProps={{
-                            minH: '10rem',
-                            placeholder: 'Add a comment',
+                            minH: '20rem',
+                            placeholder: 'Add a Content',
                             ...register('content', {
                                 required: {
                                     value: true,
-                                    message: 'comment is too short'
+                                    message: 'content is too short'
                                 },
                                 minLength: {
-                                    value: UserInputLimit.comment_min,
+                                    value: UserInputLimit.discussion_min,
                                     message: `Add  ${
-                                        UserInputLimit.comment_min - content.length
+                                        UserInputLimit.discussion_min - content.length
                                     } more characters to go`
                                 },
                                 maxLength: {
-                                    value: UserInputLimit.comment_max,
-                                    message: 'comment is too long'
+                                    value: UserInputLimit.discussion_max,
+                                    message: 'Content is too long'
                                 },
                                 onChange: (e) => {
                                     setContent(e.target.value);
                                 }
                             }),
-                            defaultValue: comment.comment
+                            defaultValue: discussion.content
                         }}
                         markdowntext={content}
                     />
@@ -70,7 +71,7 @@ const CommentEdit = ({
                             colorScheme="red"
                             onClick={() => {
                                 closeHandler();
-                                setContent(comment.comment);
+                                setContent(discussion.content);
                             }}>
                             Discard
                         </Button>
@@ -82,16 +83,21 @@ const CommentEdit = ({
                                 setLoading(true);
                                 handleSubmit(
                                     (data) => {
-                                        clientCommentsHandler
-                                            .Update(comment, comment.id, data.content, (err) => {
-                                                setLoading(false);
-                                                toast({
-                                                    description: err,
-                                                    status: 'error',
-                                                    position: 'top'
-                                                });
-                                                reset({ content: comment.comment });
-                                            })
+                                        discussionHandler
+                                            .UpdateDiscussionContent(
+                                                discussion,
+                                                discussion.id,
+                                                data.content,
+                                                (err) => {
+                                                    setLoading(false);
+                                                    toast({
+                                                        description: err,
+                                                        status: 'error',
+                                                        position: 'top'
+                                                    });
+                                                    reset({ content: discussion.content });
+                                                }
+                                            )
                                             ?.then(() => {
                                                 setLoading(false);
                                                 closeHandler();
@@ -110,4 +116,4 @@ const CommentEdit = ({
     );
 };
 
-export default CommentEdit;
+export default DiscussionEdit;

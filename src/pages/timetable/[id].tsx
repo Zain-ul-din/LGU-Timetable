@@ -65,7 +65,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
             toast({
                 position: 'bottom',
                 colorScheme: 'gray',
-                duration: 1000 * 600,
+                duration: 1000 * 60,
                 render: () => (
                     <RatingFeedBack
                         closeHandler={() => {

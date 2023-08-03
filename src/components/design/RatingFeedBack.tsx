@@ -126,7 +126,8 @@ export const RatingFeedBackModal = ({
                                             toast({
                                                 description: 'Thanks for feedback 👍',
                                                 position: 'bottom',
-                                                colorScheme: 'green'
+                                                colorScheme: 'green',
+                                                duration: 2000
                                             });
                                         })
                                         .catch(() => {

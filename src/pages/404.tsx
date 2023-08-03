@@ -6,5 +6,6 @@ export default function $404() {
         Router.push('/');
     }, []);
 
-    return <>404</>;
+    return <>404 Not Found</>;
 }
+

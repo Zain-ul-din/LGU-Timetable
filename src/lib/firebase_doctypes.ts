@@ -16,6 +16,7 @@ export interface UserDocType {
     repo?: number | null;
     pro?: boolean | null;
     isBan?: boolean;
+    rating?: number;
 }
 
 interface UserPost<T> {

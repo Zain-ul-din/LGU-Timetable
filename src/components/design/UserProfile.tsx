@@ -31,6 +31,7 @@ import { ITimetableHistory } from '~/types/typedef';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 import Loader from './Loader';
 import { TimeIcon } from '@chakra-ui/icons';
+import { STAR_RATING } from '~/lib/constant';
 
 export default function UserProfile({
     user,
@@ -100,6 +101,11 @@ export default function UserProfile({
 
                         <h1>{user.displayName}</h1>
                         <p style={{ textAlign: 'center' }}>Email: {user.email}</p>
+
+                        {adminView && user.rating && (
+                            <p>Feedback: {STAR_RATING[user.rating - 1].toLocaleUpperCase()}</p>
+                        )}
+
                         {!adminView && (
                             <Button
                                 onClick={(e) => {

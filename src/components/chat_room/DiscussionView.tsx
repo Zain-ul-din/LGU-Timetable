@@ -8,7 +8,17 @@ import {
     UserDocType
 } from '~/lib/firebase_doctypes';
 import { EMOJIS, ROUTING } from '~/lib/constant';
-import { Avatar, AvatarGroup, Button, Divider, Flex, Icon, Text, useToast } from '@chakra-ui/react';
+import {
+    Avatar,
+    AvatarGroup,
+    Button,
+    Divider,
+    Flex,
+    Icon,
+    Text,
+    useDisclosure,
+    useToast
+} from '@chakra-ui/react';
 import EditableText from './components/EditableText';
 import MarkDown from '../design/MarkDown';
 import styles from '~/styles/chat_room/MarkDown.module.css';
@@ -31,6 +41,8 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import CommentUploader from './components/CommentUploader';
 import DiscussionEdit from './components/DiscussionEdit';
 import DiscussionTitleEdit from './components/DiscussionTitleEdit';
+import { UseStateProps } from '~/types/typedef';
+import AreYouSureModel from '../design/AreYouSureModel';
 
 export default function DiscussionView() {
     const [appState, setAppState] = useContext(AppStateProvider);
@@ -158,62 +170,14 @@ export default function DiscussionView() {
                             )}
 
                             <Flex ml={'auto'}>
-                                <StaticDropDown
-                                    options={
-                                        [
-                                            {
-                                                label: (
-                                                    <Flex alignItems={'center'} gap={'0.3rem'}>
-                                                        <CopyIcon /> Copy
-                                                    </Flex>
-                                                ),
-                                                onClick: () => {
-                                                    navigator.clipboard.writeText(
-                                                        discussion.content
-                                                    );
-                                                    toast({
-                                                        title: 'Copied',
-                                                        status: 'success',
-                                                        position: 'top'
-                                                    });
-                                                }
-                                            },
-                                            discussion.authorId == user?.user!.uid
-                                                ? {
-                                                      label: (
-                                                          <Flex
-                                                              alignItems={'center'}
-                                                              gap={'0.3rem'}>
-                                                              <EditIcon /> Edit
-                                                          </Flex>
-                                                      ),
-                                                      onClick: () => {
-                                                          setEdit(true);
-                                                      }
-                                                  }
-                                                : null,
-                                            discussion.authorId == user?.user!.uid
-                                                ? {
-                                                      label: (
-                                                          <Flex
-                                                              alignItems={'center'}
-                                                              gap={'0.3rem'}>
-                                                              <DeleteIcon /> Delete
-                                                          </Flex>
-                                                      ),
-                                                      onClick: () => {},
-                                                      color: {
-                                                          color: 'red.300',
-                                                          textColor: 'red.300'
-                                                      }
-                                                  }
-                                                : null
-                                        ].filter((option) => option != null) as any[]
-                                    }>
-                                    <Icon fontSize={'xl'}>
-                                        <BsThreeDotsVertical />
-                                    </Icon>
-                                </StaticDropDown>
+                                <DiscussionCrudControls
+                                    haveAccess={
+                                        discussion.authorId == user?.user?.uid ||
+                                        user?.user?.email == process.env.NEXT_PUBLIC_ADMIN_EMAIL
+                                    }
+                                    discussion={discussion}
+                                    editState={[edit, setEdit]}
+                                />
                             </Flex>
                         </Flex>
                         {edit ? (
@@ -360,3 +324,77 @@ export default function DiscussionView() {
         </>
     );
 }
+
+const DiscussionCrudControls = ({
+    haveAccess,
+    discussion,
+    editState
+}: {
+    haveAccess: boolean;
+    discussion: DiscussionDocType;
+    editState: UseStateProps<boolean>;
+}) => {
+    const toast = useToast();
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    return (
+        <>
+            <AreYouSureModel
+                title={'Are you sure you want to delete this discussion?'}
+                handler={{ isOpen, onClose, onOpen }}
+            />
+            <StaticDropDown
+                options={
+                    [
+                        {
+                            label: (
+                                <Flex alignItems={'center'} gap={'0.3rem'}>
+                                    <CopyIcon /> Copy
+                                </Flex>
+                            ),
+                            onClick: () => {
+                                navigator.clipboard.writeText(discussion.content);
+                                toast({
+                                    title: 'Copied',
+                                    status: 'success',
+                                    position: 'top'
+                                });
+                            }
+                        },
+                        haveAccess
+                            ? {
+                                  label: (
+                                      <Flex alignItems={'center'} gap={'0.3rem'}>
+                                          <EditIcon /> Edit
+                                      </Flex>
+                                  ),
+                                  onClick: () => {
+                                      editState[1](true);
+                                  }
+                              }
+                            : null,
+                        haveAccess
+                            ? {
+                                  label: (
+                                      <Flex alignItems={'center'} gap={'0.3rem'}>
+                                          <DeleteIcon /> Delete
+                                      </Flex>
+                                  ),
+                                  onClick: () => {
+                                      onOpen();
+                                  },
+                                  color: {
+                                      color: 'red.300',
+                                      textColor: 'red.300'
+                                  }
+                              }
+                            : null
+                    ].filter((option) => option != null) as any[]
+                }>
+                <Icon fontSize={'xl'}>
+                    <BsThreeDotsVertical />
+                </Icon>
+            </StaticDropDown>
+        </>
+    );
+};

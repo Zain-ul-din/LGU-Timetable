@@ -2,7 +2,7 @@ import Timetable from '~/components/Timetable';
 
 import { useRouter } from 'next/router';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { doc, getDocs, getDoc } from 'firebase/firestore';
 import { timeTableCol } from '~/lib/firebase';
@@ -17,6 +17,8 @@ import { TimetableDocType } from '~/types/typedef';
 import { useTimeout, useToast } from '@chakra-ui/react';
 import PromotionToast from '~/components/design/PromotionToast';
 import MainAnimator from '~/components/design/MainAnimator';
+import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
+import RatingFeedBack from '~/components/design/RatingFeedBack';
 
 export async function getStaticPaths() {
     const timetableDocs = await getDocs(timeTableCol);
@@ -51,9 +53,31 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
     const router = useRouter();
     const toast = useToast();
 
+    const user = useContext(UserCredentialsContext);
+
     useEffect(() => () => toast.closeAll(), []);
 
     useTimeout(() => {
+        if (!user) return;
+
+        console.log('hello');
+        if (user.user && !user.user.rating) {
+            toast({
+                position: 'bottom',
+                colorScheme: 'gray',
+                duration: 1000 * 600,
+                render: () => (
+                    <RatingFeedBack
+                        closeHandler={() => {
+                            toast.closeAll();
+                        }}
+                        user_uid={user.user?.email as string}
+                    />
+                )
+            });
+            return;
+        }
+
         toast({
             position: 'bottom',
             colorScheme: 'gray',

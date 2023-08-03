@@ -45,6 +45,13 @@ class DiscussionHandler extends Singleton<DiscussionHandler> {
         });
     }
 
+    /**
+     * Updates discussion title
+     * @param discussion
+     * @param new_title
+     * @param [err]
+     * @returns  Promise<void> | undefined
+     */
     public UpdateDiscussionTitle(
         discussion: DiscussionDocType,
         new_title: string,

@@ -105,3 +105,5 @@ export const CHAT_CATEGORIES_EMOJIS = {
 };
 
 export const EMOJIS = ['👍', '😄', '🎉', '❤️', '🚀', '👀', '🔥'];
+
+export const STAR_RATING = ['worst 😟', 'poor 😞', 'average 😐', 'good 😊', 'excellent 😄'];

@@ -5,15 +5,16 @@ import handleGlowBlob from '~/lib/glow';
 
 import { Secular_One } from 'next/font/google';
 import { FcGoogle } from 'react-icons/fc';
-import { Button as Btn } from '@chakra-ui/react';
+import { Button as Btn, Button } from '@chakra-ui/react';
 
 import { signInWithPopup, GoogleAuthProvider, UserCredential, User } from 'firebase/auth';
 import { firebase } from '~/lib/firebase';
 import { addLoggedInUser } from '~/lib/FirebaseAnalysis';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 
 import { Tooltip } from '@chakra-ui/react';
+import { getTimeRemaining } from '~/lib/util';
 
 const secular_One = Secular_One({ subsets: ['latin'], weight: '400' });
 
@@ -28,6 +29,7 @@ export default function Header() {
                 <h1>
                     <Link href={'/'}>LGU</Link>
                 </h1>
+                
                 <div className={styles.items}>
                     {user?.user ? (
                         <LoggedIn user={user.user as User} />
@@ -83,3 +85,5 @@ const LoggedIn = ({ user }: { user: User }) => {
         </Link>
     );
 };
+
+

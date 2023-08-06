@@ -20,6 +20,8 @@ import ChatAppStateProvider, {
     AppState as ChatAppState,
     defaultState as defaultChatAppState
 } from '~/components/chat_room/hooks/AppStateProvider';
+import UpComingEvent from '~/components/design/UpCommingEvent';
+import { Center } from '@chakra-ui/react';
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];
@@ -39,6 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <AppStyleProvider theme={appTheme}>
                     <DarkTheme />
                     <OneTap />
+                    <Center>
+                        <UpComingEvent/>
+                    </Center>
                     {!excludeHeadPages.includes(router.pathname) && <Header />}
                     <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
                         <Component {...pageProps} />

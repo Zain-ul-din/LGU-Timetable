@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import styles from '~/styles/hero.module.css';
-
 import handleGlowBlob from '~/lib/glow';
 
 export default function Hero({ renderDescription }: { renderDescription: boolean }) {
+    
     return (
         <div className={styles.hero + ' ' + 'glow'} onMouseMove={(e) => handleGlowBlob(e)}>
             <h1 style={{ fontFamily: 'inherit' }}>

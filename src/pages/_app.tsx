@@ -41,9 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <AppStyleProvider theme={appTheme}>
                     <DarkTheme />
                     <OneTap />
-                    <Center>
+                    {/*<Center>
                         <UpComingEvent/>
-                    </Center>
+                    </Center>*/}
                     {!excludeHeadPages.includes(router.pathname) && <Header />}
                     <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
                         <Component {...pageProps} />

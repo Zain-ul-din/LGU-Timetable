@@ -22,6 +22,7 @@ import ChatAppStateProvider, {
 } from '~/components/chat_room/hooks/AppStateProvider';
 import UpComingEvent from '~/components/design/UpCommingEvent';
 import { Center } from '@chakra-ui/react';
+import { officialSiteLink } from '~/lib/constant';
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];
@@ -30,6 +31,9 @@ export default function App({ Component, pageProps }: AppProps) {
     const [user, setUser] = useUserCredentials();
     const router = useRouter();
 
+    // not maintained during summer 
+    router.push(officialSiteLink)
+    
     // chat app state for caching
     const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
 

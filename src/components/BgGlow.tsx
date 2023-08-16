@@ -1,10 +1,20 @@
 import { Flex, useMediaQuery } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { officialSiteLink } from '~/lib/constant';
+
 
 export default function BgGlow() {
     const [isUnder1000] = useMediaQuery('(max-width: 1000px)');
+    const router = useRouter()
+    useEffect(()=>{
+        // not maintained during summer 
+        router.push(officialSiteLink)
+    }, [])
 
     if (isUnder1000) return <></>;
-
+    
+    
     return (
         <>
             {/*eslint-disable-next-line @next/next/no-img-element */}

@@ -27,9 +27,9 @@ export default function TimetableSelection({ metaData }: { metaData: any }) {
     );
 }
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Flex, Text, Button, useMediaQuery } from '@chakra-ui/react';
+import { Flex, Text, Button, useMediaQuery, Input } from '@chakra-ui/react';
 import { MenuStyle, TabStyle, Transitions } from '~/styles/Style';
 import {
     getDocs,
@@ -51,6 +51,7 @@ import { timetableHistoryCol } from '~/lib/firebase';
 import { ITimetableHistory, TimetableInput } from '~/types/typedef';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 import Link from 'next/link';
+import Fuse from 'fuse.js';
 
 function Selection({ metaData }: { metaData: any }): JSX.Element {
     const [userInput, setUserInput] = useState<TimetableInput>({
@@ -242,27 +243,65 @@ function DropDown({
     const [selectedItem, setSelectedItem]: [string, React.Dispatch<React.SetStateAction<string>>] =
         useState<string>(defautlSelectedItem);
 
+    const [filterItems, setFilterItems] = useState<string[]>(menuItems as string[])    
+    const searchRef = useRef<any>(null)
+    const [query, setQuery] = useState<string>('')
+
+    const fuse = new Fuse(menuItems as string[], {
+        threshold: 0.3
+    });
+
     return (
         <Transitions.SlideFade in={true}>
-            <MenuStyle.Menu preventOverflow={true}>
+            <MenuStyle.Menu preventOverflow={true} initialFocusRef={searchRef}>
                 <MenuStyle.MenuButton
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
                     textOverflow={'clip'}
-                    fontSize={{ base: 'xs', sm: 'md', lg: 'md' }}>
+                    fontSize={{ base: 'xs', sm: 'md', lg: 'md' }}
+                >
                     {selectedItem}
                 </MenuStyle.MenuButton>
-                <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} maxH={'80'}>
-                    {menuItems &&
-                        menuItems?.map(
+                <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} maxH={'80'}
+                    onScroll={(e)=> {
+                        if((e as any).target.scrollTop > 5) {
+                            (searchRef.current as HTMLElement).style.bottom ='0';
+                            (searchRef.current as HTMLElement).style.top ='';
+                        }
+                        else {
+                            (searchRef.current as HTMLElement).style.top ='0';
+                            (searchRef.current as HTMLElement).style.bottom ='';
+                        }
+                    }}
+                >
+                    <Input 
+                        value={query}
+                        ref={searchRef} 
+                        placeholder='search' w={'95%'} 
+                        m={'0.5rem'} 
+                        onChange={(e)=> {
+                            var val = e.target.value
+                            setQuery(val)
+                            const results = fuse.search(e.target.value);
+                            setFilterItems(results.map((val) => val.item));
+                            if (e.target.value == '') setFilterItems(menuItems as string[]);
+                        }}
+                        position={'fixed'}
+                        left={'0'}
+                        right={'0'}
+                    />
+                    {filterItems &&
+                        filterItems?.map(
                             (item: string, idx: number): JSX.Element => (
                                 <MenuStyle.MenuItem
                                     onClick={(e) => onClick(item, setSelectedItem)}
-                                    key={idx}>
+                                    key={idx}
+                                    marginTop={idx == 0 ? '3rem' : 'initial'}
+                                >
                                     {item}
                                 </MenuStyle.MenuItem>
                             )
-                        )}
+                    )}
                 </MenuStyle.MenuList>
             </MenuStyle.Menu>
         </Transitions.SlideFade>

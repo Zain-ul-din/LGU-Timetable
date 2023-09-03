@@ -92,13 +92,19 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                                 <Btn
                                     style={{ margin: '0rem 1rem 0rem 1rem', padding: '0.4rem' }}
                                     onClick={(e) => {
-                                        navigator.clipboard.writeText(window.location.href);
-                                        toast({
-                                            title: 'link copied',
-                                            position: 'top',
-                                            status: 'success',
-                                            duration: 1000
-                                        });
+                                        navigator.share({
+                                            title: 'LGU Timetable',
+                                            text: `LGU Timetable - ${metaData}`,
+                                            url: window.location.href
+                                        })
+                                        
+                                        // navigator.clipboard.writeText(window.location.href);
+                                        // toast({
+                                        //     title: 'link copied',
+                                        //     position: 'top',
+                                        //     status: 'success',
+                                        //     duration: 1000
+                                        // });
                                     }}>
                                     Share{' '}
                                     <b

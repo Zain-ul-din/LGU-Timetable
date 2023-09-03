@@ -12,7 +12,8 @@ import {
     Card,
     useMediaQuery,
     Center,
-    Heading
+    Heading,
+    Divider
 } from '@chakra-ui/react';
 
 import SocialButton from './design/SocialButton';
@@ -129,6 +130,7 @@ const FooterLinks = () => {
         <>
             <Flex
                 gap={isUnder600 ? '1.5rem' : '4rem'}
+                columnGap={'1rem'}
                 maxWidth={'1200px'}
                 margin={'1rem auto'}
                 justifyContent={'center'}
@@ -147,6 +149,7 @@ const FooterLinks = () => {
                                 _hover={{ textDecoration: 'underline' }}>
                                 {val.toUpperCase()}
                             </Text>
+                            <Divider />
                         </Link>
                     );
                 })}
@@ -184,7 +187,7 @@ type GithubApiResponse = typeof githubApiResponseSample;
 
 import NextImage from 'next/image';
 import Link from 'next/link';
-import handleGlowBlob from '~/lib/glow';
+
 
 const GithubContributors = ({ url }: { url: string }) => {
     const [contributors, setContributors] = useState<Array<GithubApiResponse>>([]);
@@ -193,8 +196,8 @@ const GithubContributors = ({ url }: { url: string }) => {
 
     useEffect(() => {
         axios.get(url).then((res) => setContributors(res.data));
-    }, []);
-
+    }, [url]);
+    
     return (
         <>
             {contributors

@@ -1,0 +1,6 @@
+[submodule "lgu-crawler"]
+	path = lgu-crawler
+	url = https://github.com/Zain-ul-din/lgu-crawler.git
+[submodule "packages/lgu-crawler"]
+	path = packages/lgu-crawler
+	url = https://github.com/Zain-ul-din/lgu-crawler.git

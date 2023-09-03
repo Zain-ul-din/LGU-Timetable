@@ -20,8 +20,9 @@ import ChatAppStateProvider, {
     AppState as ChatAppState,
     defaultState as defaultChatAppState
 } from '~/components/chat_room/hooks/AppStateProvider';
-import UpComingEvent from '~/components/design/UpCommingEvent';
-import { Center } from '@chakra-ui/react';
+
+// import UpComingEvent from '~/components/design/UpCommingEvent';
+// import { Center } from '@chakra-ui/react';
 
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];

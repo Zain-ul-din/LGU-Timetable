@@ -27,9 +27,9 @@ export default function TimetableSelection({ metaData }: { metaData: any }) {
     );
 }
 
-import { useContext, useEffect, useRef, useState } from 'react';
+import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Flex, Text, Button, useMediaQuery, Input } from '@chakra-ui/react';
+import { Flex, Text, Button, useMediaQuery, Input, Divider } from '@chakra-ui/react';
 import { MenuStyle, TabStyle, Transitions } from '~/styles/Style';
 import {
     getDocs,
@@ -87,7 +87,7 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
     }, [user]);
 
     const [isUnder400] = useMediaQuery('(max-width: 400px)');
-
+    
     return (
         <>
             <Transitions.SlideFade in={true}>
@@ -101,7 +101,8 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                     borderBottomWidth={'0.05px'}
                     borderColor={'gray.500'}
                     flexDir={'column'}
-                    className={oxygen.className}>
+                    className={oxygen.className}
+                >
                     {history.length > 0 && (
                         <Flex marginY={'1rem'} flexDirection={'column'}>
                             <HistoryDropDown menuItems={removeDuplicateTimetableHistory(history)} />
@@ -278,6 +279,8 @@ function DropDown({
                             (searchRef.current as HTMLElement).style.bottom ='';
                         }
                     }}
+                    maxW={'98vw'}
+                    m={'0.5rem'}
                 >
                     <Input 
                         value={query}
@@ -299,17 +302,19 @@ function DropDown({
                     {filterItems &&
                         filterItems?.map(
                             (item: string, idx: number): JSX.Element => (
-                                <MenuStyle.MenuItem
-                                    onClick={(e) => {
-                                        setQuery('')
-                                        setFilterItems(menuItems as string[])
-                                        onClick(item, setSelectedItem)
-                                    }}
-                                    key={idx}
-                                    marginTop={idx == 0 ? '3rem' : 'initial'}
-                                >
-                                    {item}
-                                </MenuStyle.MenuItem>
+                                <Fragment key={idx}>
+                                    <MenuStyle.MenuItem
+                                        onClick={(e) => {
+                                            setQuery('')
+                                            setFilterItems(menuItems as string[])
+                                            onClick(item, setSelectedItem)
+                                        }}
+                                        marginTop={idx == 0 ? '3rem' : 'initial'}
+                                    >
+                                        {item}
+                                    </MenuStyle.MenuItem>
+                                    <Divider />
+                                </Fragment>
                             )
                     )}
                 </MenuStyle.MenuList>
@@ -329,32 +334,33 @@ function HistoryDropDown({ menuItems }: { menuItems: Array<ITimetableHistory> })
                     fontSize={{ base: 'xs', sm: 'md', lg: 'md' }}>
                     {'Previous Selection History'}
                 </MenuStyle.MenuButton>
-                <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} maxH={'80'}>
+                <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} maxH={'80'} maxW={'98vw'} m={'0.5rem'}>
                     {menuItems &&
                         menuItems?.map(
-                            (
-                                { payload, email, createdAt, docId }: any,
-                                idx: number
-                            ): JSX.Element => (
-                                <Link
-                                    key={idx}
-                                    href={`/timetable/${payload.fall?.replace('/', '-')} ${
+                        (
+                            { payload, email, createdAt, docId }: any,
+                            idx: number
+                        ): JSX.Element => (
+                            <Link
+                                key={idx}
+                                href={`/timetable/${payload.fall?.replace('/', '-')} ${
+                                    payload.semester
+                                } ${payload.section}`}
+                                onClick={() => {
+                                    const historyDoc = doc(timetableHistoryCol, docId);
+                                    updateDoc(historyDoc, {
+                                        clickCount: increment(1)
+                                    });
+                                }}>
+                                <MenuStyle.MenuItem>
+                                    {`${payload.fall?.replace('/', '-')}  ${
                                         payload.semester
-                                    } ${payload.section}`}
-                                    onClick={() => {
-                                        const historyDoc = doc(timetableHistoryCol, docId);
-                                        updateDoc(historyDoc, {
-                                            clickCount: increment(1)
-                                        });
-                                    }}>
-                                    <MenuStyle.MenuItem>
-                                        {`${payload.fall?.replace('/', '-')}  ${
-                                            payload.semester
-                                        }  ${payload.section}`}
-                                    </MenuStyle.MenuItem>
-                                </Link>
-                            )
-                        )}
+                                    }  ${payload.section}`}
+                                </MenuStyle.MenuItem>
+                                <Divider />
+                            </Link>
+                        )
+                    )}
                 </MenuStyle.MenuList>
             </MenuStyle.Menu>
         </Transitions.SlideFade>

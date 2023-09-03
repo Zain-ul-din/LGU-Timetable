@@ -56,7 +56,6 @@ export default function Timetable({ metaData }: any) {
                     name="keywords"
                     content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms ${keyWords.toString()}`}
                 />
-
                 <SocialLinks />
             </Head>
             <MainAnimator>

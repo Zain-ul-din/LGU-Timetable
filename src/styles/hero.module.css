@@ -23,7 +23,7 @@
 .hero > h1 {
     animation-delay: 500ms;
     animation: background-pan 2s linear infinite;
-    font-size: 4rem;
+    font-size: 3.5rem;
     background: linear-gradient(to right, var(--purple), var(--violet), var(--pink), var(--purple));
     background-size: 200%;
     background-clip: text;
@@ -46,7 +46,7 @@
     }
 
     .hero > h1 {
-        font-size: 4rem;
+        font-size: 2.5rem;
         text-align: center;
     }
 

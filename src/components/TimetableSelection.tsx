@@ -234,11 +234,13 @@ type onClickCallBack = (
 function DropDown({
     defautlSelectedItem,
     menuItems,
-    onClick
+    onClick,
+    useInitialFocus
 }: {
     defautlSelectedItem: string;
     menuItems: Array<string> | null;
     onClick: onClickCallBack;
+    useInitialFocus?: boolean
 }): JSX.Element {
     const [selectedItem, setSelectedItem]: [string, React.Dispatch<React.SetStateAction<string>>] =
         useState<string>(defautlSelectedItem);
@@ -251,9 +253,12 @@ function DropDown({
         threshold: 0.3
     });
 
+    //const lastElementRef = useRef<any>(null);
+
+
     return (
         <Transitions.SlideFade in={true}>
-            <MenuStyle.Menu preventOverflow={true} initialFocusRef={searchRef}>
+            <MenuStyle.Menu preventOverflow={true}  initialFocusRef={useInitialFocus ? searchRef : undefined}>
                 <MenuStyle.MenuButton
                     as={Button}
                     rightIcon={<ChevronDownIcon />}
@@ -285,6 +290,7 @@ function DropDown({
                             const results = fuse.search(e.target.value);
                             setFilterItems(results.map((val) => val.item));
                             if (e.target.value == '') setFilterItems(menuItems as string[]);
+                            searchRef.current.scrollIntoView({behavior : 'smooth'})
                         }}
                         position={'fixed'}
                         left={'0'}
@@ -294,7 +300,11 @@ function DropDown({
                         filterItems?.map(
                             (item: string, idx: number): JSX.Element => (
                                 <MenuStyle.MenuItem
-                                    onClick={(e) => onClick(item, setSelectedItem)}
+                                    onClick={(e) => {
+                                        setQuery('')
+                                        setFilterItems(menuItems as string[])
+                                        onClick(item, setSelectedItem)
+                                    }}
                                     key={idx}
                                     marginTop={idx == 0 ? '3rem' : 'initial'}
                                 >

@@ -9,6 +9,11 @@ import { User } from 'firebase/auth';
  */
 export type LectureTime = { startTime: string; endTime: string };
 
+export type LectureTimeObjectType = {
+    startTime: {hours: number; minutes: number};
+    endTime: {hours: number; minutes: number};
+}
+
 /**
  * @type time type
  */
@@ -62,7 +67,20 @@ interface TimetableLectureTime {
     minutes: number;
 }
 
+/*
+    Deprecated
+*/
 export interface TimetableData {
+    subject: string;
+    roomNo: string;
+    teacher: string;
+    startTime: TimetableLectureTime;
+    endTime: TimetableLectureTime;
+    class?: string | undefined;
+    room?: string | undefined;
+}
+
+export interface TimetableDataType {
     subject: string;
     roomNo: string;
     teacher: string;
@@ -85,6 +103,7 @@ export interface TimetableResponseType {
 export interface TimetableDocType {
     timetable: TimetableResponseType;
     updatedAt: string;
+    id?: string
 }
 
 export interface UserDataDocType extends User {
@@ -117,6 +136,7 @@ export interface PastPaperDocType {
     isPublic: boolean; // input
 }
 
+
 export interface FreeClassRoomStateType {
     loading: boolean;
     time: Date;
@@ -127,3 +147,31 @@ export interface FreeClassRoomStateType {
 import { Dispatch } from 'react';
 
 export type UseStateProps<T> = [T, Dispatch<SetStateAction<T>>];
+
+
+export type Entries<T> = {
+    [K in keyof T]: [K, T[K]];
+}[keyof T][];
+
+
+/*
+    Clash Resolver Types
+*/
+
+export type SubjectLectureTime = {
+    day: string;
+    time: LectureTimeObjectType;
+}
+
+export type SubjectObjectVal = {
+    url_id: string;
+    lectures: SubjectLectureTime[]
+    isInCart: boolean,
+    conflicts: {
+        [key: string]: SubjectLectureTime[]
+    }
+}
+
+export type SubjectOjectType = {
+    [key: string]: SubjectObjectVal
+}

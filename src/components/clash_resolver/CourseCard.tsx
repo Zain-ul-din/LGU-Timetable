@@ -1,4 +1,4 @@
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
+import { AddIcon, DeleteIcon, LinkIcon } from "@chakra-ui/icons";
 import { Alert, AlertIcon, Box, Button, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { memo } from "react";
@@ -22,7 +22,9 @@ const CourseCard = (
                 <Text  _hover={{
                     textDecoration: 'underline'
                 }}>
-                 {name} 
+                <LinkIcon fontSize={'sm'} style={{
+                    transform: 'translateY(-1px)'
+                }}/> {name} 
                 </Text>
             </Link>
             {!subject.isInCart  ?
@@ -54,7 +56,7 @@ const CourseCard = (
                              {' '}
                             At:
                             {lectures.map((l,i)=>{
-                                return <Text key={i} bg={'red.200'} p={0.5} px={2} fontWeight={'extrabold'}>
+                                return <Text key={i} bg={'red.700'} p={0.5} px={2} fontWeight={'extrabold'}>
                                     - {l.day} 
                                     <Box display={'inline-block'} mx={2}>
                                         <TimeRenderer 

@@ -1,5 +1,6 @@
 import {
     ITimetableHistory,
+    SubjectLectureTime,
     TimeType,
     TimetableData,
     TimetableDocType,
@@ -271,4 +272,58 @@ export const getTimeRemaining= (endtime: Date)=> {
         minutes,
         seconds
     };
+}
+
+/**
+ * returns true if lecture1 or lecture2 has time conflict
+ * @param lecture1_time 
+ * @param lecture2_time 
+ * ```ts
+    const t1: SubjectLectureTime = {
+        day: "Monday",
+        time: {
+            startTime: { hours: 12, minutes: 0 },
+            endTime: { hours: 1, minutes: 30 }
+        }
+    };
+
+    const t2: SubjectLectureTime = {
+        day: "Monday",
+        time: {
+            startTime: { hours: 1, minutes: 0 },
+            endTime: { hours: 2, minutes: 0 }
+        }
+    };
+    HasTimeConflict(t1,t2)
+ * ```
+ */
+export const HasTimeConflict = (
+    lecture1_time: SubjectLectureTime,
+    lecture2_time: SubjectLectureTime
+) => {
+    if(lecture1_time.day !== lecture2_time.day)
+        return false;
+
+    if(JSON.stringify(lecture1_time) === JSON.stringify(lecture2_time))
+        return true;
+
+    const lecture1_StartDate = new Date()
+    lecture1_StartDate.setHours(lecture1_time.time.startTime.hours)
+    lecture1_StartDate.setMinutes(lecture1_time.time.startTime.minutes)
+    
+    const lecture1_EndDate = new Date()
+    lecture1_EndDate.setHours(lecture1_time.time.endTime.hours)
+    lecture1_EndDate.setMinutes(lecture1_time.time.endTime.minutes)
+
+    const lecture2_StartDate = new Date()
+    lecture2_StartDate.setHours(lecture2_time.time.startTime.hours)
+    lecture2_StartDate.setMinutes(lecture2_time.time.startTime.minutes+1)
+    
+    const lecture2_EndDate = new Date()
+    lecture2_EndDate.setHours(lecture2_time.time.endTime.hours)
+    lecture2_EndDate.setMinutes(lecture2_time.time.endTime.minutes)
+
+    return lecture1_StartDate <= lecture2_EndDate
+        &&
+        lecture1_EndDate >= lecture2_StartDate;
 }

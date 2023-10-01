@@ -1,10 +1,10 @@
 import { Box,  Flex,  Input, Text } from "@chakra-ui/react";
-import {  useCallback, useEffect, useState } from "react";
+import {  useCallback, useEffect, useMemo, useState } from "react";
 import {  SubjectObjectVal, SubjectOjectType, TimetableDataType, TimetableDocType } from "~/types/typedef";
 import CourseCard from "./CourseCard";
 import TimeClashResolverIntro from "./TimeClashResolverInto";
 import CourseCart from "./CourseCart";
-import { HasTimeConflict } from "~/lib/util";
+import { findCoursesTimeConflicts } from "~/lib/util";
 
 export default function TimetableClashResolver ({
     timetables
@@ -15,95 +15,23 @@ export default function TimetableClashResolver ({
     const [subjects, setSubjects] = useState<SubjectOjectType>({})
     const [filter, setFilter] = useState<string>("")
     
-    useEffect(()=> {
-        const subjects: SubjectOjectType = {}
-        timetables.forEach(timetable=> {
-            (Object.entries(timetable.timetable))
-            .forEach(([day,lectures]:[string, Array<TimetableDataType>])=>{
-                lectures.forEach(lecture=> {
-                    var key = lecture.subject+ " " + (timetable.id as string);
-                    if (subjects[key] == undefined) subjects[key] = {
-                        isInCart: false,
-                        conflicts: {},
-                        lectures: [],
-                        url_id: timetable.id as string
-                    }
-                    
-                    subjects[key].lectures.push({
-                        day,
-                        time: {
-                            endTime: lecture.endTime,
-                            startTime: lecture.startTime 
-                        } as any
-                    });
-                })
-            })
-        });
+    useEffect(()=> setSubjects(constructSubjectOjectFromTimetables(timetables)),[])
 
-        setSubjects(subjects)
-    }, [])
-    
+    const memoSubjects = useMemo(()=> findCoursesTimeConflicts(subjects),[subjects])
+
+    const visibleSubjectsCount = useMemo<number>(()=> Object
+        .keys(subjects).filter(e=> e.toLowerCase().includes(filter.toLowerCase()))
+    .length, [subjects,filter]);
     
     const handleCartAdd = useCallback((subjName:string)=>{
         setSubjects(state=>{
-            const newState = {...state, [subjName]: {...state[subjName],isInCart: true, conflicts: undefined}};
-
-            return Object
-            .entries(newState)
-            .reduce((acc, curr)=> {
-                return {
-                    ...acc, 
-                    [curr[0]]: {
-                        ...curr[1],
-                        conflicts: curr[1].isInCart ? {} : Object.fromEntries( 
-                            Object.entries(
-                                Object
-                                .entries(newState)
-                                .filter(v=>v[1].isInCart)
-                                .reduce((prev,val)=>{
-                                    return {...prev, [val[0]]: val[1].lectures.filter(lhs=>{
-                                            return curr[1].lectures.filter(rhs=>{
-                                                return HasTimeConflict(lhs, rhs)
-                                            }).length > 0
-                                        })
-                                    }
-                                }, {})
-                            ).filter(v=> (v[1] as Array<any>).length > 0)
-                        )
-                    } 
-                }
-            }, {})
+            return {...state, [subjName]: {...state[subjName],isInCart: true, conflicts: {}}}
         });
     },[setSubjects]);
     
     const handleCartRemove = useCallback((subjName: string)=>{
         setSubjects(s=>{
-            const newState = {...s, [subjName]: {...s[subjName],isInCart: false, conflicts: {} }} 
-            return Object
-            .entries(newState)
-            .reduce((acc, curr)=> {
-                return {
-                    ...acc, 
-                    [curr[0]]: {
-                        ...curr[1],
-                        conflicts: curr[1].isInCart ? {} : Object.fromEntries( 
-                            Object.entries(
-                                Object
-                                .entries(newState)
-                                .filter(v=>v[1].isInCart)
-                                .reduce((prev,val)=>{
-                                    return {...prev, [val[0]]: val[1].lectures.filter(lhs=>{
-                                            return curr[1].lectures.filter(rhs=>{
-                                                return HasTimeConflict(lhs, rhs)
-                                            }).length > 0
-                                        })
-                                    }
-                                }, {})
-                            ).filter(v=> (v[1] as Array<any>).length > 0)
-                        )
-                    } 
-                }
-            }, {})
+            return {...s, [subjName]: {...s[subjName],isInCart: false, conflicts: {} }} 
         });
     }, [setSubjects])
     
@@ -122,8 +50,7 @@ export default function TimetableClashResolver ({
             {/* search input */}
             <Box px={5}>
                 <Text fontWeight={'bold'} my={1}>
-                    Search Courses: {Object.keys(subjects).filter(e=> e.toLowerCase().includes(filter.toLowerCase()))
-                    .length} found
+                    Search Courses: {visibleSubjectsCount} found
                 </Text>
                 <Input size={'md'}
                     onChange={(e)=> setFilter(e.target.value)}
@@ -134,7 +61,7 @@ export default function TimetableClashResolver ({
 
             {/* courses list */}
             <Flex flexDir={'column'} px={5} gap={3}>
-                {Object.entries(subjects)
+                {Object.entries(memoSubjects)
                 .filter(e=> e[0].toLowerCase().includes(filter.toLowerCase()))
                 .map(([subjName,subj]:[string,SubjectObjectVal],i)=>{
                     return <CourseCard
@@ -151,4 +78,38 @@ export default function TimetableClashResolver ({
             <Flex my={'5rem'}></Flex>
         </Flex>
     </>
+}
+
+/**
+ * Construct Object of type SubjectOject from timetables
+ * @param timetables 
+ * @returns 
+ */
+const constructSubjectOjectFromTimetables = (
+    timetables: Array<TimetableDocType>
+) => {
+    const subjects: SubjectOjectType = {}
+    timetables.forEach(timetable=> {
+        (Object.entries(timetable.timetable))
+        .forEach(([day,lectures]:[string, Array<TimetableDataType>])=>{
+            lectures.forEach(lecture=> {
+                var key = lecture.subject+ " " + (timetable.id as string);
+                if (subjects[key] == undefined) subjects[key] = {
+                    isInCart: false,
+                    conflicts: {},
+                    lectures: [],
+                    url_id: timetable.id as string
+                }
+                
+                subjects[key].lectures.push({
+                    day,
+                    time: {
+                        endTime: lecture.endTime,
+                        startTime: lecture.startTime 
+                    } as any
+                });
+            })
+        })
+    });
+    return subjects
 }

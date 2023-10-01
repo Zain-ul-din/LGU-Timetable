@@ -317,13 +317,15 @@ export const HasTimeConflict = (
 
     const lecture2_StartDate = new Date()
     lecture2_StartDate.setHours(lecture2_time.time.startTime.hours)
-    lecture2_StartDate.setMinutes(lecture2_time.time.startTime.minutes+1)
+    lecture2_StartDate.setMinutes(lecture2_time.time.startTime.minutes)
     
     const lecture2_EndDate = new Date()
     lecture2_EndDate.setHours(lecture2_time.time.endTime.hours)
     lecture2_EndDate.setMinutes(lecture2_time.time.endTime.minutes)
 
-    return lecture1_StartDate <= lecture2_EndDate
-        &&
-        lecture1_EndDate >= lecture2_StartDate;
+    return lecture1_StartDate < lecture2_EndDate
+    &&
+    lecture1_EndDate > lecture2_StartDate; 
+    // lecture1_StartDate <= lecture2_EndDate
+    // lecture1_EndDate >= lecture2_StartDate;
 }

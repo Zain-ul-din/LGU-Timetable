@@ -1,6 +1,7 @@
 import {
     ITimetableHistory,
     SubjectLectureTime,
+    SubjectOjectType,
     TimeType,
     TimetableData,
     TimetableDocType,
@@ -326,6 +327,35 @@ export const HasTimeConflict = (
     return lecture1_StartDate < lecture2_EndDate
     &&
     lecture1_EndDate > lecture2_StartDate; 
-    // lecture1_StartDate <= lecture2_EndDate
-    // lecture1_EndDate >= lecture2_StartDate;
+}
+
+/*
+    finds in cart courses time conflicts with other courses
+*/
+export const findCoursesTimeConflicts = (coursesObj: SubjectOjectType): SubjectOjectType => {
+    return Object
+    .entries(coursesObj)
+    .reduce((acc, curr)=> {
+        return {
+            ...acc, 
+            [curr[0]]: {
+                ...curr[1],
+                conflicts: curr[1].isInCart ? {} : Object.fromEntries( 
+                    Object.entries(
+                        Object
+                        .entries(coursesObj)
+                        .filter(v=>v[1].isInCart)
+                        .reduce((prev,val)=>{
+                            return {...prev, [val[0]]: val[1].lectures.filter(lhs=>{
+                                    return curr[1].lectures.filter(rhs=>{
+                                        return HasTimeConflict(lhs, rhs)
+                                    }).length > 0
+                                })
+                            }
+                        }, {})
+                    ).filter(v=> (v[1] as Array<any>).length > 0)
+                )
+            } 
+        }
+    }, {})
 }

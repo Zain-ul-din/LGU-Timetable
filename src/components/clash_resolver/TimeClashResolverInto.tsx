@@ -1,4 +1,5 @@
-import { Alert, AlertIcon, Heading, Text } from "@chakra-ui/react";
+import { CopyIcon } from "@chakra-ui/icons";
+import { Alert, AlertIcon, Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { FcOvertime } from "react-icons/fc";
 
 export default function TimeClashResolverIntro ()
@@ -16,6 +17,37 @@ export default function TimeClashResolverIntro ()
             Welcome to our Timetable Clash Resolution Tool, designed exclusively for students like you, navigating the maze of course selection at our university. We understand that creating the perfect timetable can be a daunting task, especially when faced with clashes in schedules. Fret not! Our user-friendly tool is here to ensure that you can craft your ideal timetable without any time conflicts
         </Text>
         
+        <Flex justifyContent={'center'} flexDir={'column'} alignContent={'center'} alignItems={'center'}>
+            
+            <Flex alignItems={'center'} flexDir={'column'}>
+                <Heading>
+                    USAGE
+                </Heading>
+                <Flex gap={2} py={3} flexWrap={'wrap'} justifyContent={'center'} px={4}>
+                    <Text>
+                        1. Search and Add Subject to cart
+                    </Text>
+                    <Text>
+                        2. Resolve conflicts if any
+                    </Text>
+                    <Text>
+                        3. Reverify from official site
+                    </Text>
+                </Flex>
+            </Flex>
+            
+            <Button 
+            onClick={()=>{
+                navigator.share({
+                    title: 'LGU Timetable',
+                    text: `LGU Timetable Clash Resolver`,
+                    url: window.location.href
+                })
+            }}>
+                Share Link <CopyIcon />
+            </Button>
+        </Flex>
+
         <Alert status="warning" justifyContent={'center'}>
             <AlertIcon /> 
             This tool is not an official university website. Verify all course details on the official site before finalizing your selection.

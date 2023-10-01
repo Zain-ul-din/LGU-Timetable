@@ -55,7 +55,6 @@ export default function TimetableClashResolver ({
                     ...acc, 
                     [curr[0]]: {
                         ...curr[1],
-                        // conflicts at same time
                         conflicts: curr[1].isInCart ? {} : Object.fromEntries( 
                             Object.entries(
                                 Object
@@ -64,8 +63,7 @@ export default function TimetableClashResolver ({
                                 .reduce((prev,val)=>{
                                     return {...prev, [val[0]]: val[1].lectures.filter(lhs=>{
                                             return curr[1].lectures.filter(rhs=>{
-                                                return lhs.day === rhs.day &&
-                                                JSON.stringify(lhs.time) === JSON.stringify(rhs.time)
+                                                return HasTimeConflict(lhs, rhs)
                                             }).length > 0
                                         })
                                     }

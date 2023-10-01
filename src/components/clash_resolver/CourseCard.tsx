@@ -1,8 +1,7 @@
 import { AddIcon, DeleteIcon, LinkIcon } from "@chakra-ui/icons";
 import { Alert, AlertIcon, Box, Button, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { memo } from "react";
-import { BiErrorCircle } from "react-icons/bi";
+import { memo, useEffect } from "react";
 import { ROUTING } from "~/lib/constant";
 import { LectureTimeObjectType, SubjectObjectVal } from "~/types/typedef";
 
@@ -16,8 +15,24 @@ const CourseCard = (
     }
 )=> {
     
-    console.log("child render!!")
+
+    useEffect(()=> {
+        console.log("re-render due to onAdd")
+    }, [onAdd])
     
+    useEffect(()=> {
+        console.log("re-render due to onRemove")
+    }, [onRemove])
+    
+    useEffect(()=> {
+        console.log("re-render due to subject")
+    }, [subject])
+
+    useEffect(()=> {
+        console.log("re-render due to name")
+    }, [name])
+    
+
     return <Flex bg={'gray.700'} p={2} rounded={'md'} flexDir={'column'} gap={2} border={'1px solid var(--border-color)'}>
         <Flex gap={4}>
             <Link href={ROUTING.timetable+"/"+subject.url_id} target="_blank">
@@ -83,7 +98,12 @@ const TimeRenderer = ({ time }: { time: LectureTimeObjectType }) => {
     </>
 }
 
-const CourseCardMemo = memo(CourseCard);
+const CourseCardMemo = memo(CourseCard, (acc, curr)=> {
+    if(JSON.stringify(acc.subject) == JSON.stringify(curr.subject))
+        return true;
+    return false;
+});
+
 export default CourseCardMemo;
 
 

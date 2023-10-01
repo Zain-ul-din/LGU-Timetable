@@ -15,7 +15,9 @@ const CourseCard = (
         onRemove: (subjName: string) => void
     }
 )=> {
-
+    
+    console.log("child render!!")
+    
     return <Flex bg={'gray.700'} p={2} rounded={'md'} flexDir={'column'} gap={2} border={'1px solid var(--border-color)'}>
         <Flex gap={4}>
             <Link href={ROUTING.timetable+"/"+subject.url_id} target="_blank">
@@ -48,7 +50,7 @@ const CourseCard = (
             <>
                 <Flex flexDir={'column'} gap={5}>
                     {Object.entries(subject.conflicts).map(([subjName, lectures], i)=>{
-                        return <Flex key={1} bg={'red.400'} p={1} rounded={'md'}
+                        return <Flex key={i} bg={'red.400'} p={1} rounded={'md'}
                             flexDir={'column'}
                         >
                             CONFLICT WITH: 
@@ -56,14 +58,14 @@ const CourseCard = (
                              {' '}
                             At:
                             {lectures.map((l,i)=>{
-                                return <Text key={i} bg={'red.700'} p={0.5} px={2} fontWeight={'extrabold'}>
+                                return <Flex key={i} bg={'red.700'} p={0.5} px={2} fontWeight={'extrabold'}>
                                     - {l.day} 
-                                    <Box display={'inline-block'} mx={2}>
+                                    <Text display={'inline-block'} mx={2}>
                                         <TimeRenderer 
                                             time={l.time}
                                         />
-                                    </Box>
-                                </Text>
+                                    </Text>
+                                </Flex>
                             })}
                         </Flex>
                     })}
@@ -81,4 +83,7 @@ const TimeRenderer = ({ time }: { time: LectureTimeObjectType }) => {
     </>
 }
 
-export default memo(CourseCard);
+const CourseCardMemo = memo(CourseCard);
+export default CourseCardMemo;
+
+

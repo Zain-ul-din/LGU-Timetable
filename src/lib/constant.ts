@@ -52,7 +52,8 @@ export const LINKS = {
     SHARE_IDEAS_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable/discussions/new?category=ideas',
     BUG_REPORT_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable/issues/new',
     GIT_HUB_REPO_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable',
-    BACK_END_REPO_LINK: 'https://github.com/IIvexII/LGU-TimetableAPI'
+    BACK_END_REPO_LINK: 'https://github.com/IIvexII/LGU-TimetableAPI',
+    QA_REDIRECT_LINK: 'https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2FZain-ul-din%2FLGU-Timetable%2Fdiscussions%2Fnew%3Fcategory%3Dq-a'
 };
 
 export const GITHUB_REPOS = [
@@ -72,11 +73,12 @@ export const ROUTING = {
     contribute: '/contribute',
     profile: '/profile',
     timetable: '/timetable',
-    notification: '/notifications',
+    discussions: '/discussions',
     free_class_rooms: '/freeclassrooms',
     admin: '/admin',
     teachers: '/timetable/teachers',
-    rooms: '/timetable/rooms'
+    rooms: '/timetable/rooms',
+    clash_resolver: '/util/timetable_clashresolver'
 };
 
 export const APIS_ENDPOINTS = {

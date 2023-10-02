@@ -20,10 +20,11 @@ import ChatAppStateProvider, {
     AppState as ChatAppState,
     defaultState as defaultChatAppState
 } from '~/components/chat_room/hooks/AppStateProvider';
+import NewFeature from '~/components/design/NewFeature';
+import { ROUTING } from '~/lib/constant';
 
 // import UpComingEvent from '~/components/design/UpCommingEvent';
 // import { Center } from '@chakra-ui/react';
-
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];
@@ -43,9 +44,20 @@ export default function App({ Component, pageProps }: AppProps) {
                 <AppStyleProvider theme={appTheme}>
                     <DarkTheme />
                     <OneTap />
+
+                    {!excludeHeadPages.includes(router.pathname) && <NewFeature 
+                        name='Timetable Clash Resolver'
+                        description={`
+                            Welcome to our Timetable Clash Resolution Tool, created for students like you who are dealing with course scheduling challenges at university. We know it can be tough to create a schedule without conflicts. Don't worry! Our easy-to-use tool helps you design your perfect timetable without any overlapping classes.
+                        `}
+                        link={ROUTING.clash_resolver}
+                        timeOut={1000}
+                    />}
+                    
                     {/*<Center>
                         <UpComingEvent/>
                     </Center>*/}
+
                     {!excludeHeadPages.includes(router.pathname) && <Header />}
                     <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
                         <Component {...pageProps} />

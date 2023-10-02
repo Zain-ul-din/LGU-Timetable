@@ -39,11 +39,12 @@ export enum FIREBASE_ANALYTICS_EVENTS {
     developer = 'developer',
     contribute = 'contribute',
     notifications = 'notifications',
+    clash_resolver = 'clash_resolver',
     // click events
     link_share_on_whatsapp = 'link_share_on_whatsapp',
     print_time_table = 'print_time_table',
     promotion_closed = 'promotion_closed',
-    teacher_timetable = 'teacher_timetable'
+    teacher_timetable = 'teacher_timetable',
 }
 
 import { logEvent } from 'firebase/analytics';

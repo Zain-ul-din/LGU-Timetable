@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { Flex, Heading, Text } from '@chakra-ui/react';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 import MainAnimator from '~/components/design/MainAnimator';
 
@@ -37,7 +36,6 @@ export default function Index() {
 }
 
 import ChatRoom from '~/components/chat_room/ChatRoom';
-import PreviewWrapper from '~/components/design/PreviewWrapper';
 import AdminLayout from '~/components/admin/layout';
 
 const Content = () => <ChatRoom />;

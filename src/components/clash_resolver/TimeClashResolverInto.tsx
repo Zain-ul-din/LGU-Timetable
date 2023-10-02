@@ -1,9 +1,14 @@
 import { CopyIcon } from "@chakra-ui/icons";
 import { Alert, AlertIcon, Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { BiErrorCircle } from "react-icons/bi";
 import { FcOvertime } from "react-icons/fc";
+import { LINKS } from "~/lib/constant";
 
 export default function TimeClashResolverIntro ()
 {
+    const router = useRouter()
+
     return <> 
         <Heading alignItems={'center'} p ={2} textAlign={'center'}>
         <FcOvertime style={{
@@ -45,6 +50,22 @@ export default function TimeClashResolverIntro ()
                 })
             }}>
                 Share Link <CopyIcon />
+            </Button>
+            <Button
+                my={2}
+                size={'sm'}
+                onClick={()=> {
+                    router.push(LINKS.QA_REDIRECT_LINK)
+                }}
+                colorScheme="red"
+                variant={'ghost'}
+            >
+                <BiErrorCircle style={{
+                    marginRight: '0.1rem',
+                    fontSize: '1rem',
+                    transform: 'translateY(1px)'
+                }}/>
+                Report Bug here
             </Button>
         </Flex>
 

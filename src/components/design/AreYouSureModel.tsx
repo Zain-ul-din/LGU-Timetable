@@ -13,10 +13,12 @@ import { UseDisclosureProps } from '@chakra-ui/react';
 
 export default function AreYouSureModel({
     title = 'Are you sure?',
+    onYes,
     handler: { onClose, isOpen }
 }: {
     title?: string;
     handler: UseDisclosureProps;
+    onYes?: ()=> void;
 }) {
     return (
         <Modal onClose={onClose || (() => {})} isOpen={isOpen as boolean} isCentered>
@@ -31,7 +33,10 @@ export default function AreYouSureModel({
                     <Button onClick={onClose} mr={'0.5rem'}>
                         Nope
                     </Button>
-                    <Button onClick={onClose} ml={'0.5rem'}>
+                    <Button onClick={()=>{
+                        onClose && (onClose())
+                        onYes && (onYes())
+                    }} ml={'0.5rem'}>
                         Yep
                     </Button>
                 </ModalFooter>

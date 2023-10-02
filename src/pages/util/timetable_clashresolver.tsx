@@ -3,6 +3,7 @@ import { GetStaticPropsContext } from "next";
 import Head from "next/head";
 import TimetableClashResolver from "~/components/clash_resolver/TimetableClashResolver";
 import { SocialLinks } from "~/components/seo/Seo";
+import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from "~/lib/FirebaseAnalysis";
 import { timeTableCol } from "~/lib/firebase";
 import { TimetableDocType } from "~/types/typedef";
 
@@ -31,6 +32,8 @@ export default function Page ({
     timetables: Array<TimetableDocType>
 }) {
 
+    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.clash_resolver);
+    
     return <>
         <Head>
         <title>Timetable Clash Reslover</title>

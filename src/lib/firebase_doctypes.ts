@@ -73,6 +73,8 @@ export interface DiscussionDocType {
     requestUnlock?: Array<RequestStatus>;
     requestEdit?: Array<RequestStatus>;
     needModeratorAttention?: boolean;
+
+    voteCount: number;
 }
 
 export interface Post<T> {

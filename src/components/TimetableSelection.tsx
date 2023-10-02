@@ -52,6 +52,8 @@ import { ITimetableHistory, TimetableInput } from '~/types/typedef';
 import { removeDuplicateTimetableHistory } from '~/lib/util';
 import Link from 'next/link';
 import Fuse from 'fuse.js';
+import ViewLinkTxt from './design/ViewLinkTxt';
+import { ROUTING } from '~/lib/constant';
 
 function Selection({ metaData }: { metaData: any }): JSX.Element {
     const [userInput, setUserInput] = useState<TimetableInput>({
@@ -103,6 +105,12 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                     flexDir={'column'}
                     className={oxygen.className}
                 >
+                    <Flex justifyContent={'center'}>
+                        <ViewLinkTxt href={ROUTING.clash_resolver}>
+                            Timetable Clash Resolver
+                        </ViewLinkTxt>
+                    </Flex>
+
                     {history.length > 0 && (
                         <Flex marginY={'1rem'} flexDirection={'column'}>
                             <HistoryDropDown menuItems={removeDuplicateTimetableHistory(history)} />

@@ -1,13 +1,13 @@
 import { discussionsColRef, discussionsCommentsColRef } from '~/lib/firebase';
 import Singleton from '../base/Singleton';
-import { Comment, DiscussionDocType } from '~/lib/firebase_doctypes';
-import { doc, increment, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import { DiscussionDocType } from '~/lib/firebase_doctypes';
+import { deleteDoc, doc, getDocs, increment, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore';
 import errorMessages from '../ranking/errors_messages';
 import { UserInteractionLimit } from '../ranking/param';
 
 /**
  * Discussion handler
- */
+*/
 class DiscussionHandler extends Singleton<DiscussionHandler> {
     /**
      * Updates discussion content
@@ -45,6 +45,25 @@ class DiscussionHandler extends Singleton<DiscussionHandler> {
         });
     }
 
+    /**
+     * Deletes discussion comments
+     * @param discussion 
+     */
+    public deleteDiscussion(
+        discussion: DiscussionDocType
+    ) {
+        return deleteDoc(doc(discussionsColRef, discussion.id as string))
+        .then(()=>{
+            // delete discussion comments
+            getDocs(query(
+                discussionsCommentsColRef,
+                where('dis_id', '==', discussion.id)
+            )).then((snapShot)=>{
+                snapShot.docs.map(d=>deleteDoc(doc(discussionsCommentsColRef, d.id)))
+            })
+        })
+    }
+    
     /**
      * Updates discussion title
      * @param discussion

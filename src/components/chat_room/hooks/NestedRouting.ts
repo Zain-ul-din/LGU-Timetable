@@ -90,5 +90,5 @@ export function PushNestedRouterParam(state: AppState, router: NextRouter) {
     const queryParams = Object.fromEntries(
         Object.entries(state).filter(([key, val], idx) => typeof val === 'string')
     );
-    router.push({ pathname: ROUTING.notification, query: queryParams as any });
+    router.push({ pathname: ROUTING.discussions, query: queryParams as any });
 }

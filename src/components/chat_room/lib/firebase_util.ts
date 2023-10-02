@@ -6,11 +6,13 @@ import {
     updateDoc,
     setDoc,
     arrayUnion,
-    arrayRemove
+    arrayRemove,
+    increment,
+    getDoc
 } from 'firebase/firestore';
 import { discussionsColRef, discussionsCommentsColRef, discussionSubColName } from '~/lib/firebase';
-import { Comment, ParticipantDocType, Post } from '~/lib/firebase_doctypes';
-import { dateToUnixTimestampInSeconds } from '~/lib/util';
+import { Comment, ParticipantDocType } from '~/lib/firebase_doctypes';
+
 
 export function postVote(docId: string, user_id: string, voteType: 'up' | 'down') {
     const discussionDocRef = doc(discussionsColRef, docId);

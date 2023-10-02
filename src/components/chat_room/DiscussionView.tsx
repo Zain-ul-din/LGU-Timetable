@@ -31,7 +31,7 @@ import MarkDownInput from './components/MarkDown';
 import Comment from './components/Comment';
 
 import { addUserToCache, fromFirebaseTimeStamp } from '~/lib/util';
-import { collection, doc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query, where } from 'firebase/firestore';
 import { discussionSubColName, discussionsColRef, discussionsCommentsColRef } from '~/lib/firebase';
 import { addComment, addReaction, postVote, removeReaction } from './lib/firebase_util';
 import { Unsubscribe } from 'firebase/auth';
@@ -43,6 +43,7 @@ import DiscussionEdit from './components/DiscussionEdit';
 import DiscussionTitleEdit from './components/DiscussionTitleEdit';
 import { UseStateProps } from '~/types/typedef';
 import AreYouSureModel from '../design/AreYouSureModel';
+import { discussionHandler } from './lib/DiscussionHandler';
 
 export default function DiscussionView() {
     const [appState, setAppState] = useContext(AppStateProvider);
@@ -58,10 +59,10 @@ export default function DiscussionView() {
 
     useEffect(() => {
         if (typeof router.query.discussion_id != 'string') {
-            router.push(ROUTING.notification);
+            router.push(ROUTING.discussions);
             return;
         }
-
+        
         if (appState.loading_state) return;
 
         let unSub: Unsubscribe | undefined = undefined;
@@ -75,7 +76,6 @@ export default function DiscussionView() {
                 orderBy('createdAt', 'asc')
             ),
             (snapShot) => {
-                console.log(snapShot.docs.map((d) => d.data()));
                 const comments: CommentType[] = [];
                 snapShot.forEach((doc) => {
                     comments.push(doc.data() as CommentType);
@@ -336,12 +336,18 @@ const DiscussionCrudControls = ({
 }) => {
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const router = useRouter()
 
     return (
         <>
             <AreYouSureModel
                 title={'Are you sure you want to delete this discussion?'}
                 handler={{ isOpen, onClose, onOpen }}
+                onYes={()=>{
+                    discussionHandler.deleteDiscussion(discussion).then(()=>{
+                        router.push(ROUTING.discussions)
+                    })
+                }}
             />
             <StaticDropDown
                 options={
@@ -376,9 +382,10 @@ const DiscussionCrudControls = ({
                         haveAccess
                             ? {
                                   label: (
-                                      <Flex alignItems={'center'} gap={'0.3rem'}>
+                                        <Flex alignItems={'center'} gap={'0.3rem'}
+                                        >
                                           <DeleteIcon /> Delete
-                                      </Flex>
+                                        </Flex>
                                   ),
                                   onClick: () => {
                                       onOpen();

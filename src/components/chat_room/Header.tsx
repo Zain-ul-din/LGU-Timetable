@@ -1,13 +1,11 @@
-import { Avatar, Badge, Flex, Stack, Text } from '@chakra-ui/react';
-import { useContext, useState } from 'react';
+import { Avatar, Badge, Flex, Text } from '@chakra-ui/react';
+import { useContext } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
-import { CHAT_CATEGORIES, ROUTING } from '~/lib/constant';
-import handleGlowBlob from '~/lib/glow';
+import {  ROUTING } from '~/lib/constant';
 import { NotLoggedIn } from '../Header';
 import Link from 'next/link';
-import { ChatIcon, TriangleUpIcon } from '@chakra-ui/icons';
+import { ChatIcon, TriangleUpIcon, ArrowLeftIcon } from '@chakra-ui/icons';
 
-import type { FlexProps } from '@chakra-ui/react';
 import AppStateProvider from './hooks/AppStateProvider';
 import { useRouter } from 'next/router';
 import { PushNestedRouterParam } from './hooks/NestedRouting';
@@ -46,6 +44,19 @@ export default function Header() {
                     </Text>
                 </Flex>
 
+                {appState.active_route == "Upload" ? 
+                <Flex
+                    ml={'auto'}
+                    alignSelf={'center'}
+                    cursor={'pointer'}
+                    mr={'1rem'}
+                    onClick={() => {
+                        router.push(ROUTING.discussions)
+                    }}
+                >
+                    <ArrowLeftIcon />
+                </Flex>
+                    :
                 <Flex
                     ml={'auto'}
                     alignSelf={'center'}
@@ -61,9 +72,10 @@ export default function Header() {
                             { ...appState, active_route: 'Upload', upload_category: undefined },
                             router
                         );
-                    }}>
+                    }}
+                >
                     <ChatIcon />
-                </Flex>
+                </Flex>}
             </Flex>
         </Flex>
     );

@@ -1,4 +1,5 @@
 import {
+    Alert,
     Box,
     Button,
     ButtonProps,
@@ -11,7 +12,7 @@ import {
     Input,
     Text
 } from '@chakra-ui/react';
-import { CHAT_CATEGORIES } from '~/lib/constant';
+import { CHAT_CATEGORIES, ROUTING } from '~/lib/constant';
 import { useContext, useEffect, useState } from 'react';
 import { UseStateProps } from '~/types/typedef';
 import AppStateProvider, { AppState } from './hooks/AppStateProvider';
@@ -23,7 +24,27 @@ import MarkDown from './components/MarkDown';
 
 export default function UploadPost() {
     const [appState, setAppState] = useContext(AppStateProvider);
+    const potentialUser = useContext(UserCredentialsContext)
+    const router = useRouter()
 
+    if(!potentialUser?.user)
+        return <Flex justifyContent={'center'} p={4}>
+            <NotLoggedIn text='You must login to create new post'/>
+        </Flex>
+
+    if(
+        potentialUser?.user?.repo === undefined ||
+        (potentialUser?.user?.repo as number) === 0
+    )
+        return <Flex p={4}>
+            <Alert p={3} rounded={'md'} status="error" flexWrap={'wrap'}>
+                {`You don't have enough reputation to create new post`}
+                <Button size={'xs'} m={'0 auto'} colorScheme='whatsapp' 
+                    onClick={()=> router.push(ROUTING.discussions)}
+                >Go Back</Button>
+            </Alert>
+        </Flex>
+    
     return (
         <>
             {/* <Text>Welcome to Discussions</Text> */}
@@ -85,6 +106,7 @@ import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { DiscussionDocType } from '~/lib/firebase_doctypes';
 import { discussionsColRef } from '~/lib/firebase';
 import { UserInputLimit } from './ranking/param';
+import { NotLoggedIn } from '../Header';
 
 const UploadForm = ({ categoryState }: { categoryState: UseStateProps<AppState> }) => {
     const [state, setState] = categoryState;
@@ -220,9 +242,10 @@ const UploadForm = ({ categoryState }: { categoryState: UseStateProps<AppState> 
                                 authorId: user?.user?.uid as string,
                                 createdAt: serverTimestamp(),
                                 updatedAt: serverTimestamp(),
-                                weight: 0
+                                weight: 0,
+                                voteCount: 0
                             };
-
+                            
                             setLoading(true);
                             setDoc(discussionDocRef, discussion).then(() => {
                                 setLoading(false);

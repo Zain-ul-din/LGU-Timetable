@@ -83,7 +83,8 @@ export const ROUTING = {
 
 export const APIS_ENDPOINTS = {
     ImgToTxt: 'https://api.api-ninjas.com/v1/imagetotext', // https://api-ninjas.com/api/imagetotext,
-    ReadMeMd: 'https://raw.githubusercontent.com/Zain-ul-din/LGU-Timetable/master/README.md'
+    ReadMeMd: 'https://raw.githubusercontent.com/Zain-ul-din/LGU-Timetable/master/README.md',
+    Util_Cache: '/api/util/cache'
 };
 
 export const CHAT_CATEGORIES = {

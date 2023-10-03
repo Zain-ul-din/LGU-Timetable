@@ -8,7 +8,7 @@ import { LINKS } from "~/lib/constant";
 export default function TimeClashResolverIntro ()
 {
     const router = useRouter()
-
+    
     return <> 
         <Heading alignItems={'center'} p ={2} textAlign={'center'}>
         <FcOvertime style={{

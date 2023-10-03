@@ -1,7 +1,7 @@
 import { AddIcon, DeleteIcon, LinkIcon } from "@chakra-ui/icons";
 import { Alert, AlertIcon, Box, Button, Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { ROUTING } from "~/lib/constant";
 import { LectureTimeObjectType, SubjectObjectVal } from "~/types/typedef";
 
@@ -15,22 +15,6 @@ const CourseCard = (
     }
 )=> {
     
-
-    useEffect(()=> {
-        console.log("re-render due to onAdd")
-    }, [onAdd])
-    
-    useEffect(()=> {
-        console.log("re-render due to onRemove")
-    }, [onRemove])
-    
-    useEffect(()=> {
-        console.log("re-render due to subject")
-    }, [subject])
-
-    useEffect(()=> {
-        console.log("re-render due to name")
-    }, [name])
     
 
     return <Flex bg={'gray.700'} p={2} rounded={'md'} flexDir={'column'} gap={2} border={'1px solid var(--border-color)'}>

@@ -21,18 +21,18 @@ export default function CourseCart (
             bg={'var(--bg-color)'}
             zIndex={2}
         >
-             <Button variant={'outline'} size={'sm'} position={'relative'}
-                 onClick={onOpen}
-             >
+            <Button variant={'outline'} size={'sm'} position={'relative'}
+                onClick={onOpen}
+            >
                  View Your Courses
                 <ArrowUpIcon />
                 {!isEmpty && <Flex position={'absolute'} 
-                     width={'8px'} height={'8px'} bg={'red'}
-                     rounded={'full'}
-                     top={-1}
-                     right={-1}
+                    width={'8px'} height={'8px'} bg={'red'}
+                    rounded={'full'}
+                    top={-1}
+                    right={-1}
                 >
-                     {' '}
+                    {' '}
                 </Flex>}
             </Button>
         </Flex>
@@ -47,7 +47,7 @@ export default function CourseCart (
                     <BiExit />
                 </Button>
               </DrawerHeader>
-                <DrawerBody>
+                <DrawerBody maxH={'80vh'} overflowY={'auto'}>
                   <Flex mb={'5rem'} flexDir={'column'} justifyContent={'center'}>
                     {isEmpty && <Text>No, Course added so far</Text>}
                     {Object.entries(subjects)

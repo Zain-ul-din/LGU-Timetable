@@ -104,7 +104,11 @@ export default function NewFeature (
                 >   
                     Get Started
                 </Button>
-                <Button>
+                <Button
+                    onClick={()=>{
+                        onClose()
+                    }}
+                >
                     May be later
                 </Button>
             </Flex>

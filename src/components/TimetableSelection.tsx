@@ -276,7 +276,8 @@ function DropDown({
                 >
                     {selectedItem}
                 </MenuStyle.MenuButton>
-                <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} maxH={'80'}
+                <MenuStyle.MenuList className="dropDown" overflowY={'scroll'} 
+                    maxH={'80'}
                     onScroll={(e)=> {
                         if((e as any).target.scrollTop > 5) {
                             (searchRef.current as HTMLElement).style.bottom ='0';
@@ -290,7 +291,7 @@ function DropDown({
                     maxW={'98vw'}
                     m={'0.5rem'}
                 >
-                    <Input 
+                    {/* <Input 
                         value={query}
                         ref={searchRef} 
                         placeholder='search' w={'95%'} 
@@ -306,7 +307,8 @@ function DropDown({
                         position={'fixed'}
                         left={'0'}
                         right={'0'}
-                    />
+                    /> */}
+                    
                     {filterItems &&
                         filterItems?.map(
                             (item: string, idx: number): JSX.Element => (
@@ -317,7 +319,7 @@ function DropDown({
                                             setFilterItems(menuItems as string[])
                                             onClick(item, setSelectedItem)
                                         }}
-                                        marginTop={idx == 0 ? '3rem' : 'initial'}
+                                        // marginTop={idx == 0 ? '3rem' : 'initial'}
                                     >
                                         {item}
                                     </MenuStyle.MenuItem>

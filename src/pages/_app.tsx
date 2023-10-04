@@ -24,7 +24,7 @@ import NewFeature from '~/components/design/NewFeature';
 import { ROUTING } from '~/lib/constant';
 
 // import UpComingEvent from '~/components/design/UpCommingEvent';
-// import { Center } from '@chakra-ui/react';
+
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];

@@ -120,7 +120,7 @@ export default function TimetableClashResolver () {
             </Flex>
             
             {/* Admin Stuff */}
-            <AdminLayout>
+            {/* <AdminLayout>
                 <Center p={4}>
                     <Button my={2} variant={'outline'}
                         onClick={async ()=> {
@@ -133,7 +133,7 @@ export default function TimetableClashResolver () {
                         Update Cache
                     </Button>
                 </Center>
-            </AdminLayout>
+            </AdminLayout>*/}
             
             {/* flexible space since we have fixed footer in the bottom*/}
             <Flex my={'5rem'}></Flex>

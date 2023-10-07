@@ -48,7 +48,7 @@ export default function CourseCart (
                         color: 'blue.300'
                     }}
                     >
-                    Do know how to use? View this post
+                    {"Don't know how to use? View this post"}
                 </Text>
             </Link>
             </Flex>

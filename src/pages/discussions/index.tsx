@@ -26,9 +26,9 @@ export default function Index() {
             </Head>
             <MainAnimator style={{ height: 'auto', padding: '0.2rem' }}>
                 {/* <PreviewWrapper> */}
-                <AdminLayout>
+                {/* <AdminLayout> */}
                     <Content />
-                </AdminLayout>
+                {/* </AdminLayout> */}
                 {/* </PreviewWrapper> */}
             </MainAnimator>
         </>

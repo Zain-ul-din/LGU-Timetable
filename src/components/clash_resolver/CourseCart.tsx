@@ -4,6 +4,7 @@ import SubjectCard from "./CourseCard";
 import { ArrowUpIcon } from "@chakra-ui/icons";
 import { useMemo } from "react";
 import { BiExit } from "react-icons/bi";
+import Link from "next/link";
 
 export default function CourseCart (
     { subjects, removeCartItemHandle }: 
@@ -20,7 +21,12 @@ export default function CourseCart (
             justifyContent={'center'}
             bg={'var(--bg-color)'}
             zIndex={2}
+            alignContent={'center'}
+            flexDir={'column'}
+            alignItems={'center'}
         >
+            <Flex flexDir={'column'} gap={2}>
+            
             <Button variant={'outline'} size={'sm'} position={'relative'}
                 onClick={onOpen}
             >
@@ -35,6 +41,17 @@ export default function CourseCart (
                     {' '}
                 </Flex>}
             </Button>
+            <Link href={`/discussions?active_route=View&discussion_id=4NgpCTfJ2cX8Tkzdbs3C`}>
+                <Text fontSize={'sm'} color={'blue.200'} textDecoration={'underline'}
+                    _hover={{
+                        cursor: 'pointer',
+                        color: 'blue.300'
+                    }}
+                    >
+                    Do know how to use? View this post
+                </Text>
+            </Link>
+            </Flex>
         </Flex>
 
         {/* Drawer */}

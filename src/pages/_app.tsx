@@ -11,7 +11,7 @@ import DarkTheme from '~/components/design/DarkTheme';
 import BgGlow from '~/components/BgGlow';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 
-// credentials
+
 import OneTap from '~/components/OneTap';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { useUserCredentials } from '~/hooks/hooks';

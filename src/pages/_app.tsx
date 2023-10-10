@@ -33,7 +33,9 @@ export default function App({ Component, pageProps }: AppProps) {
     const [user, setUser] = useUserCredentials();
     const router = useRouter();
     
-    // chat app state for caching
+    /* 
+     * chat app state for caching
+    */
     const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
 
     return (

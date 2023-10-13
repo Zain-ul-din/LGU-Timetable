@@ -17,7 +17,7 @@ export function useReferrer (opts: UseReferrerOptions)
     
     useEffect(()=> {
         const LOCAL_STORAGE_KEY = "USE_REFERRER";
-        if(isUserFromSearchEngine() && localStorage.getItem(LOCAL_STORAGE_KEY) === undefined) 
+        if(isUserFromSearchEngine() && localStorage.getItem(LOCAL_STORAGE_KEY) == undefined) 
         {
             localStorage.setItem(LOCAL_STORAGE_KEY, "used");
             router.push(ROUTING[opts.redirectTo])

@@ -43,7 +43,7 @@ export default function App({ Component, pageProps }: AppProps) {
     useReferrer({
         redirectTo: 'timetable'
     })
-
+    
     return (
         <>
             <UserCredentialsContext.Provider value={{ user, setUser }}>

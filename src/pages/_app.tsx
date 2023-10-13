@@ -11,7 +11,6 @@ import DarkTheme from '~/components/design/DarkTheme';
 import BgGlow from '~/components/BgGlow';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 
-
 import OneTap from '~/components/OneTap';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { useUserCredentials } from '~/hooks/hooks';
@@ -21,6 +20,7 @@ import ChatAppStateProvider, {
     defaultState as defaultChatAppState
 } from '~/components/chat_room/hooks/AppStateProvider';
 import { ROUTING } from '~/lib/constant';
+import { useReferrer } from '~/hooks/useReferrer';
 
 // import NewFeature from '~/components/design/NewFeature';
 // import UpComingEvent from '~/components/design/UpCommingEvent';
@@ -36,6 +36,13 @@ export default function App({ Component, pageProps }: AppProps) {
      * chat app state for caching
     */
     const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
+
+    /*
+    * helps new users to redirect directly to timetable section for better UX 
+    */
+    useReferrer({
+        redirectTo: 'timetable'
+    })
 
     return (
         <>

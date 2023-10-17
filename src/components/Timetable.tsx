@@ -153,18 +153,21 @@ export default function Timetable({ metaData, timetableData }: IProps) {
 
                             <Center>
                                 <div>
-                                    <Text fontFamily={'heading'}>
+                                    <Text fontFamily={'heading'} bg={'yellow.400'} color={'blackAlpha.900'}
+                                        p={2} rounded={'sm'} fontWeight={'bold'}
+                                    >
                                         UPDATED AT:
                                         <Box
                                             fontFamily={'heading'}
-                                            color={'gray.50'}
+                                            color={'gray.900'}
+                                            fontWeight={'bold'}
                                             display={'inline'}>{` ${new Date(
                                             timetableData.updatedAt
                                         ).toDateString()}`}</Box>
                                     </Text>
                                 </div>
                             </Center>
-
+                            
                             {/* chart render */}
                             <TimetableChart
                                 timetable={Object.entries(timetableData.timetable).sort(

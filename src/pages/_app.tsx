@@ -21,6 +21,7 @@ import ChatAppStateProvider, {
 } from '~/components/chat_room/hooks/AppStateProvider';
 import { ROUTING } from '~/lib/constant';
 import { useReferrer } from '~/hooks/useReferrer';
+import PalestineSupportBanner from '~/components/announcements/PalestineSupportBanner';
 
 // import NewFeature from '~/components/design/NewFeature';
 // import UpComingEvent from '~/components/design/UpCommingEvent';
@@ -52,6 +53,10 @@ export default function App({ Component, pageProps }: AppProps) {
                 <AppStyleProvider theme={appTheme}>
                     <DarkTheme />
                     <OneTap />
+
+                    <PalestineSupportBanner 
+                        hideMessage={!footerPages.includes(router.pathname)}
+                    />
 
                     {/* {!excludeHeadPages.includes(router.pathname) && <NewFeature 
                         name='Timetable Clash Resolver'

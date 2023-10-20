@@ -8,7 +8,7 @@ import { NotLoggedIn } from './Header';
 export default function Profile() {
     const user = useContext(UserCredentialsContext);
     const [isUnder600] = useMediaQuery('(max-width: 600px)');
-
+    
     return (
         <>
             {user?.user ? (

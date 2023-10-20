@@ -44,6 +44,8 @@ import DiscussionTitleEdit from './components/DiscussionTitleEdit';
 import { UseStateProps } from '~/types/typedef';
 import AreYouSureModel from '../design/AreYouSureModel';
 import { discussionHandler } from './lib/DiscussionHandler';
+import MustSignIn from '../design/MustSigin';
+import { NotLoggedIn } from '../Header';
 
 export default function DiscussionView() {
     const [appState, setAppState] = useContext(AppStateProvider);
@@ -315,10 +317,15 @@ export default function DiscussionView() {
                     <Divider />
 
                     {/* user comment uploader  */}
+                    {!user?.user ? <>
+                        <Flex justifyContent={'center'} p={4}>
+                            <NotLoggedIn text='login to comment'/>
+                        </Flex>
+                    </> : 
                     <CommentUploader
                         discussion_id={discussion.id}
                         user={user?.user as UserDocType}
-                    />
+                    />}
                 </Flex>
             )}
         </>

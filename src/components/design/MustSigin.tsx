@@ -3,6 +3,7 @@ import BackBtn from './BackBtn';
 import { NotLoggedIn } from '../Header';
 import { firebase } from '~/lib/firebase';
 
+
 const MustSignIn = ({ children }: { children: React.ReactNode }) => {
     return (
         <Flex
@@ -12,7 +13,8 @@ const MustSignIn = ({ children }: { children: React.ReactNode }) => {
             margin={'0 auto'}
             flexDirection={'column'}
             marginBottom={'36'}
-            gap={'1rem'}>
+            gap={'1rem'}
+        >
             <Box>
                 <BackBtn />
             </Box>

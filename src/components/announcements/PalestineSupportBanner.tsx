@@ -1,5 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import Link from "next/link";
 
 // [![ReadMeSupportPalestine]()](https://github.com/Safouene1/support-palestine-banner)
 
@@ -19,6 +20,7 @@ export default function PalestineSupportBanner (props: PalestineSupportBannerPro
                 fontSize={'xl'} color={'transparent'}
                 background= {`#007A4D`}
                 backgroundClip= {'text'}
+                as={'span'}
             >
                 Free Palestine 
             </Text>
@@ -30,10 +32,13 @@ export default function PalestineSupportBanner (props: PalestineSupportBannerPro
         </Text>}
         <Flex position={'absolute'} top={-5}  bg='transparent' width={'100%'} height={'1'}
             boxShadow={'0px 0px 50px rgba(255,255,255,0.1)'}
+            as={'span'}
         >
             {' '}
         </Flex>
-        <Image src={'/images/StandWithPalestine.svg'} alt="stand with palestine" width={200} height={100} />
+        <Link href={'/announcements/support_palestine'}>
+            <Image src={'/images/StandWithPalestine.svg'} alt="stand with palestine" width={200} height={100} />
+        </Link>
     </Flex>
 }
 

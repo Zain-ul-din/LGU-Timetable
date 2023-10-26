@@ -30,6 +30,7 @@ export default function PalestineSupportBanner (props: PalestineSupportBannerPro
             </Text>
             and ensure that every life in this region has access to the most basic necessities.
         </Text>}
+        
         <Flex position={'absolute'} top={-5}  bg='transparent' width={'100%'} height={'1'}
             boxShadow={'0px 0px 50px rgba(255,255,255,0.1)'}
             as={'span'}
@@ -38,6 +39,12 @@ export default function PalestineSupportBanner (props: PalestineSupportBannerPro
         </Flex>
         <Link href={'/announcements/support_palestine'}>
             <Image src={'/images/StandWithPalestine.svg'} alt="stand with palestine" width={200} height={100} />
+        </Link>
+
+        <Link href={`/discussions?active_route=View&discussion_id=sxEYysWe4NpZcaHXaZyN`}>
+            <Text mt={3} textDecoration={'underline'} color={'blue.200'} fontSize={'sm'}>
+                How can i help Palestine?
+            </Text>
         </Link>
     </Flex>
 }

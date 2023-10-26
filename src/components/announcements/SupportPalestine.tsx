@@ -21,7 +21,7 @@ export default function SupportPalestine ()
             />
         </Link>
 
-        <Link href={'https://www.lgutimetable.live/discussions?active_route=View&discussion_id=sxEYysWe4NpZcaHXaZyN'}>
+        <Link href={'/discussions?active_route=View&discussion_id=sxEYysWe4NpZcaHXaZyN'}>
             <Button variant={'outline'}>
                 Contribute
             </Button>

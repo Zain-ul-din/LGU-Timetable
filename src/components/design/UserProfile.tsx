@@ -58,14 +58,16 @@ export default function UserProfile({
             <div className={styles.profile + ' roboto'}>
                 <h1>PROFILE</h1>
                 <div className={styles.credentials}>
-                    <Image
+                    
+                    {/* eslint-disable-next-line @next/next/no-img-element*/}
+                    <img
                         src={user.photoURL as string}
                         alt="user_photo"
                         width={150}
                         height={150}
                         style={{ maxWidth: '150px', maxHeight: '150px' }}
-                        quality={100}
                     />
+                    
                     <div style={{ paddingBottom: '1rem' }}>
                         {user.pro && !adminView && (
                             <Flex width={'100%'} justifyContent={isUnder600 ? 'center' : 'initial'}>

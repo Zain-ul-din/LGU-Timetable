@@ -80,11 +80,17 @@ const UserRenderer = ({ user }: { user: UserDataDocType }) => {
                     minW={'150px'}
                     overflowX={'auto'}
                     cursor={'pointer'}>
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element*/}
+                    <img
                         src={user.photoURL as string}
                         alt={user.displayName + ' photo_url'}
                         width={100}
                         height={100}
+                        style={{
+                            borderRadius: '0.3rem',
+                            boxShadow: '2px 2px 10px rgba(255,255,255,0.05)',
+                            border: '1px solid rgba(255,255,255,0.1)'
+                        }}
                     />
 
                     <Flex flexDirection={'column'}>

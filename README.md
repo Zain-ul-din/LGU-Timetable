@@ -1,3 +1,5 @@
+# [New Site Link](https://www.lgutimetable.online/)
+
 # Not Documented Yet, Looking for a contributor 🦄.
 
 <!-- INTRO -->

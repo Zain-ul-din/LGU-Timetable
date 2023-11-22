@@ -10,6 +10,7 @@ import { metaDataCol } from '~/lib/firebase';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
 import { SocialLinks } from '~/components/seo/Seo';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export const getStaticProps = async (context: any) => {
    const metaData_docs = await getDocs(metaDataCol);
@@ -28,13 +29,16 @@ export const getStaticProps = async (context: any) => {
 };
 
 export default function Timetable({ metaData }: any) {
-
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.time_table);
-   
-   const keyWords = Object.entries(metaData).map(([fall, semesters])=>{
-      return fall + ' department ' + Object.entries(semesters as any).map(([semester, sections])=>{
-         return semester + ' ' + (sections as Array<string>).map (sec => sec);
-      })
+
+   const keyWords = Object.entries(metaData).map(([fall, semesters]) => {
+      return (
+         fall +
+         ' department ' +
+         Object.entries(semesters as any).map(([semester, sections]) => {
+            return semester + ' ' + (sections as Array<string>).map((sec) => sec);
+         })
+      );
    });
 
    return (
@@ -42,7 +46,7 @@ export default function Timetable({ metaData }: any) {
          <Head>
             <title>LGU Timetable Selection</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            
+
             <meta
                name="description"
                content="A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. Timetable Selection Page."
@@ -54,37 +58,41 @@ export default function Timetable({ metaData }: any) {
             />
 
             <SocialLinks />
-
          </Head>
-         <main>
+         <MainAnimator>
             <VisuallyHidden>
-               <SEO metaData={metaData}/>
+               <SEO metaData={metaData} />
             </VisuallyHidden>
             <Nav />
             <Hero renderDescription={false} />
             <TimetableSelection metaData={metaData} />
-         </main>
+         </MainAnimator>
       </>
    );
 }
 
-
-const SEO = ({metaData}: {metaData: any})=> {
-   return <>
-      {Object.entries(metaData).map(([fall, val]:[any, any],idx)=>{
-         return <div key={idx}>
-            <h1>{fall}</h1>
-               {Object.entries(val).map(([semester, secs]: [any, any], i)=> {
-                  return <span key={i}>
-                    <h2>{semester}</h2>
-                     <ul>
-                        {secs.map((sec: any, uid: number)=>{
-                           return <li key = {uid}>{sec}</li>
-                        })}
-                     </ul>
-                  </span>
-               })}
-         </div>
-      })}
-   </>
-}
+const SEO = ({ metaData }: { metaData: any }) => {
+   return (
+      <>
+         {Object.entries(metaData).map(([fall, val]: [any, any], idx) => {
+            return (
+               <div key={idx}>
+                  <h1>{fall}</h1>
+                  {Object.entries(val).map(([semester, secs]: [any, any], i) => {
+                     return (
+                        <span key={i}>
+                           <h2>{semester}</h2>
+                           <ul>
+                              {secs.map((sec: any, uid: number) => {
+                                 return <li key={uid}>{sec}</li>;
+                              })}
+                           </ul>
+                        </span>
+                     );
+                  })}
+               </div>
+            );
+         })}
+      </>
+   );
+};

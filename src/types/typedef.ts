@@ -2,6 +2,8 @@
   @types exports
 */
 
+import { User } from 'firebase/auth';
+
 /**
  * @type lecture time
  */
@@ -46,6 +48,7 @@ export interface ITimetableHistory {
    payload: TimetableInput;
    email: string;
    createdAt: any;
+   clickCount?: number | undefined
 }
 
 // docs
@@ -54,3 +57,36 @@ export interface IApiDoc {
    docData: string;
 }
 
+interface TimetableLectureTime {
+   hours: number;
+   minutes: number;
+}
+
+export interface TimetableData {
+   subject: string;
+   roomNo: string;
+   teacher: string;
+   startTime: TimetableLectureTime;
+   endTime: TimetableLectureTime;
+}
+
+export interface TimetableResponseType {
+   Monday?: Array<TimetableData>;
+   Tuesday?: Array<TimetableData>;
+   Wednesday?: Array<TimetableData>;
+   Thursday?: Array<TimetableData>;
+   Friday?: Array<TimetableData>;
+   Saturday?: Array<TimetableData>;
+   Sunday?: Array<TimetableData>;
+}
+
+export interface TimetableDocType {
+   timetable: TimetableResponseType;
+   createdAt: string;
+}
+
+export interface UserDataDocType extends User {
+   comment: '';
+   createdAt: string;
+   isPublic: true;
+}

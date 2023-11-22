@@ -8,6 +8,8 @@ const oxygen = Oxygen({ subsets: ['latin'], weight: '300' });
 import handleGlowBlob from '~/lib/glow';
 
 export default function TimetableSelection({ metaData }: { metaData: any }) {
+   const [isUnder400] = useMediaQuery('(max-width: 450px)');
+
    return (
       <div className={styles.selection}>
          <motion.div
@@ -17,7 +19,9 @@ export default function TimetableSelection({ metaData }: { metaData: any }) {
             className={`box-shadow ${metaData && 'glow glow_xl'}`}
             onMouseMove={(e) => handleGlowBlob(e)}
          >
-            <h1 className={ubuntu.className}>Timetable Selection</h1>
+            <h1 className={ubuntu.className} style={{ fontSize: isUnder400 ? '1.5rem' : '' }}>
+               Timetable Selection
+            </h1>
             <Selection metaData={metaData} />
          </motion.div>
       </div>
@@ -27,9 +31,9 @@ export default function TimetableSelection({ metaData }: { metaData: any }) {
 import { useContext, useEffect, useState } from 'react';
 import { TimeTableInputContext } from '~/hooks/TimetableInputContext';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { Flex, Text, Button } from '@chakra-ui/react';
+import { Flex, Text, Button, useMediaQuery } from '@chakra-ui/react';
 import { MenuStyle, TabStyle, Transitions } from '~/styles/Style';
-import { getDocs, limit, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
+import { getDocs, increment, limit, orderBy, query, serverTimestamp, updateDoc, where } from 'firebase/firestore';
 
 const tabTitles = ['Semester', 'Program', 'Section'];
 
@@ -56,18 +60,20 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
       const fetchTimetableHistory = async () => {
          const timetableHistoryQuery = query(
             timetableHistoryCol,
-            limit(20),
+            limit(50),
             where('email', '==', user.user?.email),
             orderBy('createdAt', 'desc')
          );
          const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
-         const res = timetableHistoryDocs.docs.map((historyDoc) => historyDoc.data());
-
-         setHistory(res as Array<ITimetableHistory>);
+         const res = timetableHistoryDocs.docs.map((historyDoc) => ({docId: historyDoc.id,...historyDoc.data()}));
+            
+         setHistory(res as any);
       };
 
       fetchTimetableHistory();
    }, [user]);
+
+   const [isUnder400] = useMediaQuery('(max-width: 400px)');
 
    return (
       <>
@@ -76,7 +82,7 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                outline={1}
                justifyContent={'center'}
                alignItems={'center'}
-               p={5}
+               p={isUnder400 ? 1 : 5}
                borderWidth={'0px'}
                borderTopWidth={'0.05px'}
                borderBottomWidth={'0.05px'}
@@ -194,7 +200,7 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                                           `/timetable/${fall?.replace(
                                              '/',
                                              '-'
-                                          )}/${semester}/${section}`
+                                          )} ${semester} ${section}`
                                        );
                                     }}
                                  />
@@ -271,17 +277,23 @@ function HistoryDropDown({ menuItems }: { menuItems: Array<ITimetableHistory> })
                {menuItems &&
                   menuItems?.map(
                      (
-                        { payload, email, createdAt }: ITimetableHistory,
+                        { payload, email, createdAt, docId }: any ,
                         idx: number
                      ): JSX.Element => (
                         <Link
                            key={idx}
-                           href={`/timetable/${payload.fall?.replace('/', '-')}/${
+                           href={`/timetable/${payload.fall?.replace('/', '-')} ${
                               payload.semester
-                           }/${payload.section}`}
+                           } ${payload.section}`}
+                           onClick={()=> {
+                              const historyDoc = doc(timetableHistoryCol, docId)
+                              updateDoc(historyDoc, {
+                                 clickCount: increment(1)
+                              })
+                           }}
                         >
                            <MenuStyle.MenuItem>
-                              {`${payload.fall?.replace('/', '-')} / ${payload.semester} / ${
+                              {`${payload.fall?.replace('/', '-')}  ${payload.semester}  ${
                                  payload.section
                               }`}
                            </MenuStyle.MenuItem>

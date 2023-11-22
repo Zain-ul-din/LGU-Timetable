@@ -23,7 +23,7 @@ export default function Blob() {
          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.6 }}
-            transition={{ delay: 0.2, duration: 2 }}
+            transition={{ delay: 0.5, duration: 2 }}
             className={styles.blob}
             ref={blobRef}
          ></motion.div>

@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next-sitemap",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ./src"
+    "format": "prettier --write ./src",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.18",
@@ -39,9 +40,11 @@
     "react-to-print": "^2.14.12",
     "react-use-scroll-position": "^2.0.0",
     "redis-om": "^0.3.6",
+    "rehype-raw": "^6.1.1",
     "typescript": "5.0.3"
   },
   "devDependencies": {
+    "next-sitemap": "^4.0.7",
     "prettier": "^2.8.7"
   }
 }

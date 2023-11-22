@@ -3,7 +3,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { collection, getFirestore } from 'firebase/firestore';
-import { getAnalytics, isSupported } from "firebase/analytics"
+import { getAnalytics, isSupported } from 'firebase/analytics';
 
 import type { FirebaseApp } from 'firebase/app';
 import type { Auth } from 'firebase/auth';
@@ -31,9 +31,9 @@ function initializeFirebaseApp(): InitializeFirebaseAppType {
    const firebaseApp: FirebaseApp = initializeApp(firebaseConfig);
    const firebaseAuth: Auth = getAuth(firebaseApp);
    const firebaseStore: Firestore = getFirestore(firebaseApp);
-   const firebaseAnalytics: Analytics | null = typeof window !== 'undefined' ? getAnalytics(firebaseApp) : null;
+   const firebaseAnalytics: Analytics | null =
+      typeof window !== 'undefined' ? getAnalytics(firebaseApp) : null;
 
-   
    return {
       firebaseApp,
       firebaseAuth,

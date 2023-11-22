@@ -92,6 +92,7 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
                      </SocialButton>
                   </Stack>
                </Container>
+               <FooterLinks />
                <Center marginY={'1rem'}>
                   <Heading fontWeight={'thin'} className="roboto">
                      Github Contributors
@@ -121,6 +122,43 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
    );
 }
 
+import { ROUTING } from '~/lib/constant';
+
+const FooterLinks = () => {
+   const [isUnder600] = useMediaQuery('(max-width: 600px)');
+
+   return (
+      <>
+         <Flex
+            gap={isUnder600 ? '1.5rem' : '4rem'}
+            maxWidth={'1200px'}
+            margin={'1rem auto'}
+            justifyContent={'center'}
+            paddingX={'2rem'}
+            paddingBottom={'1rem'}
+            flexWrap={'wrap'}
+            borderBottom={'1px solid var(--border-color)'}
+         >
+            {Object.entries(ROUTING).map(([val, link], idx) => {
+               return (
+                  <Link key={idx} href={link}>
+                     <Text
+                        fontSize={'1xl'}
+                        fontWeight={'hairline'}
+                        className="roboto"
+                        color={'blue.300'}
+                        _hover={{ textDecoration: 'underline' }}
+                     >
+                        {val.toUpperCase()}
+                     </Text>
+                  </Link>
+               );
+            })}
+         </Flex>
+      </>
+   );
+};
+
 import { GITHUB_REPOS } from '~/lib/constant';
 import axios from 'axios';
 
@@ -149,6 +187,7 @@ const githubApiResponseSample = {
 type GithubApiResponse = typeof githubApiResponseSample;
 
 import NextImage from 'next/image';
+import Link from 'next/link';
 import handleGlowBlob from '~/lib/glow';
 
 const GithubContributors = ({ url }: { url: string }) => {

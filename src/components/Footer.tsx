@@ -215,7 +215,7 @@ const GithubContributors = ({ url }: { url: string }) => {
                                 display={'flex'}
                                 justifyContent={'center'}
                                 borderBottom={'1px solid var(--border-color)'}>
-                                <NextImage
+                                <img
                                     src={user.avatar_url}
                                     alt={`${user.login}-avatar`}
                                     width={80}

@@ -98,6 +98,42 @@ class DiscussionHandler extends Singleton<DiscussionHandler> {
             // isLocked: use participants limit
         });
     }
+
+    /*
+        determine weather view counted already
+    */
+    private isViewCounted: boolean = false;
+
+    /*
+        increment view count by 1 per session 
+        @ignore case
+        - new visit under COOL_DOWN_TIME
+    */
+    public incrementViewCount (
+        discussion_id: string
+    ) {
+        if(this.isViewCounted) return;
+        this.isViewCounted = true;
+
+        const COOL_DOWN_TIME = 5;
+        const DISCUSSION_DATE_STORAGE_KEY = "discussion_view_date";
+
+        let timeDiffInMin: number = Math.abs(
+            Math.round(
+            (new Date().getTime() - new Date(
+                localStorage.getItem(DISCUSSION_DATE_STORAGE_KEY) || new 
+                Date().setMinutes(new Date().getMinutes() + COOL_DOWN_TIME)
+            ).getTime()) / 60000
+        ));
+        
+        if(timeDiffInMin >= COOL_DOWN_TIME) {
+            localStorage.setItem(DISCUSSION_DATE_STORAGE_KEY, new Date().toString());
+            updateDoc(doc(discussionsColRef,discussion_id), {
+                viewCount: increment(1)
+            });
+        }
+        
+    }
 }
 
 export const discussionHandler = DiscussionHandler.Instance as DiscussionHandler;

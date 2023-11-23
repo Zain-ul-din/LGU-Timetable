@@ -37,7 +37,7 @@ import { addComment, addReaction, postVote, removeReaction } from './lib/firebas
 import { Unsubscribe } from 'firebase/auth';
 import { clientCommentsHandler } from './lib/ClientCommentsHandler';
 import StaticDropDown from '../design/StaticDropDown';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BsEye, BsThreeDotsVertical } from 'react-icons/bs';
 import CommentUploader from './components/CommentUploader';
 import DiscussionEdit from './components/DiscussionEdit';
 import DiscussionTitleEdit from './components/DiscussionTitleEdit';
@@ -85,8 +85,12 @@ export default function DiscussionView() {
                 setComments(comments);
             }
         );
-
+        
+        // increment view count
+        discussionHandler.incrementViewCount(discussionId)
+        
         if (appState.discussions[discussionId] == undefined) {
+            
             // fetch discussion from server
             alert('we have to fetch the discussion from the server');
         }
@@ -127,7 +131,21 @@ export default function DiscussionView() {
                             {discussion.title}
                         </Text>
                     )}
-
+                
+                    <Text fontSize={'1rem'} fontFamily={'monospace'}
+                        color={'whiteAlpha.600'}
+                        ml={1} 
+                    >
+                        <BsEye 
+                            style={{ 
+                                display: 'inline', 
+                                transform: 'translateY(3px)',
+                                margin: '0rem 0.2rem'
+                            }}
+                        />
+                        Views {discussion.viewCount || 0}
+                    </Text>
+                            
                     <Flex
                         width={'100%'}
                         p={'1rem'}

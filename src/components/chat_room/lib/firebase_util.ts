@@ -7,8 +7,6 @@ import {
     setDoc,
     arrayUnion,
     arrayRemove,
-    increment,
-    getDoc
 } from 'firebase/firestore';
 import { discussionsColRef, discussionsCommentsColRef, discussionSubColName } from '~/lib/firebase';
 import { Comment, ParticipantDocType } from '~/lib/firebase_doctypes';

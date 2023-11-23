@@ -5,7 +5,7 @@ using namespace std;
 int main() 
 {
     const string api_key = "add_your_key";
-    const string base_url = "https://www.lgutimetable.live";
+    const string base_url = "https://www.lgutimetable.online";
     const string metadata_url = base_url + "/api/metadata?apikey=" + api_key;
     const string timetable_url = base_url + "/api/public/timetable?apikey=" + api_key;
     

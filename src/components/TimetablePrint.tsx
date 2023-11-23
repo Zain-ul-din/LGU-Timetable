@@ -68,7 +68,7 @@ export default function TimeTablePrint({
                             textAlign={'center'}
                             colSpan={headTitles.length + 7}
                             color={'blackAlpha.800'}>
-                            https://www.lgutimetable.live
+                            https://www.lgutimetable.online
                         </Th>
                     </Tfoot>
                 </Table>

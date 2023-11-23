@@ -75,6 +75,8 @@ export interface DiscussionDocType {
     needModeratorAttention?: boolean;
 
     voteCount: number;
+
+    viewCount?: number;
 }
 
 export interface Post<T> {

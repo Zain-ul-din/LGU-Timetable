@@ -1,4 +1,4 @@
-const baseUrl = "https://www.lgutimetable.live";
+const baseUrl = "https://www.lgutimetable.online";
 const apiKey = "add_your_api_key";
 
 const endPoints = {

@@ -41,9 +41,10 @@ export default function App({ Component, pageProps }: AppProps) {
     /*
     * helps new users to redirect directly to timetable section for better UX 
     */
-    useReferrer({
-        redirectTo: 'timetable'
-    })
+    // disabled due to google crawler is complaining about redirect pages 
+    // useReferrer({
+    //     redirectTo: 'timetable'
+    // })
     
     return (
         <>

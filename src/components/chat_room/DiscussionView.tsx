@@ -80,6 +80,7 @@ export default function DiscussionView() {
             (snapShot) => {
                 const comments: CommentType[] = [];
                 snapShot.forEach((doc) => {
+                    addUserToCache([appState, setAppState], doc.data().user_id);
                     comments.push(doc.data() as CommentType);
                 });
                 setComments(comments);
@@ -321,12 +322,17 @@ export default function DiscussionView() {
 
                     <Flex width={'100%'} flexDir={'column'} gap={'0.5rem'}>
                         {comments.map((comment, idx) => {
+                            
                             return (
                                 <Comment
                                     comment={comment}
                                     user={appState.users[comment.user_id]}
                                     key={idx}
-                                    is_author={user?.user?.uid == comment.user_id}
+                                    is_author={
+                                        user?.user?.uid == comment.user_id
+                                        || 
+                                        user?.user?.email == process.env.NEXT_PUBLIC_ADMIN_EMAIL
+                                    }
                                 />
                             );
                         })}

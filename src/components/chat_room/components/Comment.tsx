@@ -28,6 +28,8 @@ const Comment = ({
     const [commentInput, setCommentInput] = useState<string>(comment.comment);
     const [loading, setLoading] = useState<boolean>(false);
 
+    
+    
     return (
         <Flex
             p={'1rem'}

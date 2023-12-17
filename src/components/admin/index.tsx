@@ -14,9 +14,10 @@ export default function Admin() {
     const [users, setUsers] = useState<Array<UserDataDocType>>([]);
     const [userSearch, setUserSearch] = useState<string>('');
 
+    
     useEffect(() => {
         setLoading(true);
-
+        
         const getUsers = async () => {
             const userQuery = query(userColsRef, orderBy('createdAt', 'desc'));
             const userDocs = await getDocs(userQuery);

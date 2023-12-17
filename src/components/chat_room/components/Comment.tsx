@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Icon, Text, useToast } from '@chakra-ui/react';
+import { Avatar, Badge, Button, Flex, Icon, Text, useToast } from '@chakra-ui/react';
 import { UserDocType } from '~/lib/firebase_doctypes';
 import { fromFirebaseTimeStamp } from '~/lib/util';
 import type { Comment as CommentType } from '~/lib/firebase_doctypes';
@@ -45,13 +45,21 @@ const Comment = ({
                             <Avatar src={user.photoURL as string} size={'sm'} />
                         </Flex>
                         <Flex flexDir={'column'}>
-                            <Text
-                                fontSize={'md'}
-                                fontWeight={'bold'}
-                                className={'roboto'}
-                                lineHeight={1}>
-                                {user.displayName}
-                            </Text>
+                            <Flex py={1} gap={2}>
+                                <Text
+                                    fontSize={'md'}
+                                    fontWeight={'bold'}
+                                    className={'roboto'}
+                                    lineHeight={1}>
+                                    {user.displayName}
+                                </Text>
+                                {user.pro && 
+                                <Badge
+                                    bgGradient='linear(to-l, #7928CA, #FF0080)'
+                                >
+                                    👑 Pro User
+                                </Badge>}
+                            </Flex>
                             <Text
                                 fontSize={'sm'}
                                 fontWeight={'thin'}

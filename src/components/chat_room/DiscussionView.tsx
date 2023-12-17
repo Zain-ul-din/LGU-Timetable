@@ -11,6 +11,7 @@ import { EMOJIS, ROUTING } from '~/lib/constant';
 import {
     Avatar,
     AvatarGroup,
+    Badge,
     Button,
     Divider,
     Flex,
@@ -157,7 +158,7 @@ export default function DiscussionView() {
                         gap={'0.5rem'}>
                         <Flex width={'100%'}>
                             {appState.users[discussion.authorId] && (
-                                <Flex gap={'0.5rem'} alignItems={'center'}>
+                                <Flex gap={'0.5rem'} alignItems={'center'} mb={4}>
                                     <Flex>
                                         <Avatar
                                             src={
@@ -168,13 +169,21 @@ export default function DiscussionView() {
                                         />
                                     </Flex>
                                     <Flex flexDir={'column'}>
-                                        <Text
-                                            fontSize={'md'}
-                                            fontWeight={'bold'}
-                                            className={'roboto'}
-                                            lineHeight={1}>
-                                            {appState.users[discussion.authorId].displayName}
-                                        </Text>
+                                        <Flex gap={2} py={1} alignItems={'center'}>
+                                            <Text
+                                                fontSize={'md'}
+                                                fontWeight={'bold'}
+                                                className={'roboto'}
+                                                lineHeight={1}>
+                                                {appState.users[discussion.authorId].displayName}
+                                            </Text>
+                                            {user?.user?.pro && 
+                                            <Badge
+                                                bgGradient='linear(to-l, #7928CA, #FF0080)'
+                                            >
+                                                👑 Pro User
+                                            </Badge>}
+                                        </Flex>
                                         <Text
                                             fontSize={'sm'}
                                             fontWeight={'thin'}

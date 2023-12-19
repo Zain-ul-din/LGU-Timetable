@@ -49,7 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
     return (
         <>
             <UserCredentialsContext.Provider value={{ user, setUser }}>
-                <BgGlow />
+                {/* <BgGlow /> */}
                 <NextNProgress color="var(--loader-color)" />
                 <AppStyleProvider theme={appTheme}>
                     <DarkTheme />

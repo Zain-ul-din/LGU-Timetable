@@ -22,7 +22,7 @@ import {
     useToast
 } from '@chakra-ui/react';
 
-import { CopyIcon, ArrowBackIcon } from '@chakra-ui/icons';
+import { CopyIcon } from '@chakra-ui/icons';
 import Btn from './design/Button';
 
 import TimeTablePrint from './TimetablePrint';
@@ -56,6 +56,11 @@ export default function Timetable({ metaData, timetableData }: IProps) {
     return (
         <>
             <div className={`roboto ${styles.timetable_container}`}>
+                {/* support palestine */}
+                <PalestineSideAd 
+                    url='/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87'
+                />
+                
                 <Box>
                     <BackBtn />
                 </Box>
@@ -227,6 +232,7 @@ import { FIREBASE_ANALYTICS_EVENTS, reportFirebaseAnalytics } from '~/lib/Fireba
 import Link from 'next/link';
 import BackBtn from './design/BackBtn';
 import TimetableChart from './charts/TimetableChart';
+import PalestineSideAd from './announcements/PalestineSideAd';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
     const { isOpen, onToggle } = useDisclosure({

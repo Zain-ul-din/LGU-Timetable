@@ -73,7 +73,7 @@ export default function PalestineSideAd ({
                         navigator.share({
                             title: 'The Palestine Side',
                             text: palestineSideDescription,
-                            url: window.location.href
+                            url: 'https://www.palestineside.site/'
                         })
                     }}
                 >

@@ -19,10 +19,16 @@ import {
     Box,
     Text,
     useColorMode,
-    useToast
+    useToast,
+    Flex,
+    Accordion,
+    AccordionItem,
+    AccordionPanel,
+    AccordionButton,
+    AccordionIcon
 } from '@chakra-ui/react';
 
-import { CopyIcon } from '@chakra-ui/icons';
+import { CalendarIcon, CopyIcon, DownloadIcon } from '@chakra-ui/icons';
 import Btn from './design/Button';
 
 import TimeTablePrint from './TimetablePrint';
@@ -56,95 +62,26 @@ export default function Timetable({ metaData, timetableData }: IProps) {
     return (
         <>
             <div className={`roboto ${styles.timetable_container}`}>
-                {/* support palestine */}
-                <PalestineSideAd 
-                    url='/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87'
-                />
-                
-                <Box>
+                <Box mt={'0.5rem'}>
                     <BackBtn />
                 </Box>
-                <span>{`${metaData}`}</span>
+
+                {/* support palestine */}
+                <PalestineSideAd url="/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87" />
+
+                {/* timetable header */}
+                <TimetableHeader
+                    metadataStr={metaData}
+                    loading={!timetableData}
+                    printTableRef={printTableRef}
+                    updatedAt={new Date(timetableData.updatedAt as string)}
+                />
+
                 <div>
                     {!timetableData ? (
                         <Loader>Loading...</Loader>
                     ) : (
                         <>
-                            <Center>
-                                <ReactToPrint
-                                    trigger={() => {
-                                        return (
-                                            <Button
-                                                colorScheme="whatsapp"
-                                                fontSize={'2xl'}
-                                                marginY={'1rem'}
-                                                textAlign={'center'}>
-                                                Print Timetable
-                                            </Button>
-                                        );
-                                    }}
-                                    content={() => printTableRef.current}
-                                    onBeforePrint={() => {
-                                        setColorMode('light');
-                                        reportFirebaseAnalytics(
-                                            FIREBASE_ANALYTICS_EVENTS.print_time_table.toString(),
-                                            {}
-                                        );
-                                    }}
-                                    onAfterPrint={() => setColorMode('dark')}
-                                />
-
-                                <Btn
-                                    style={{ margin: '0rem 1rem 0rem 1rem', padding: '0.4rem' }}
-                                    onClick={(e) => {
-                                        navigator.share({
-                                            title: 'LGU Timetable',
-                                            text: `LGU Timetable - ${metaData}`,
-                                            url: window.location.href
-                                        })
-                                        
-                                        // navigator.clipboard.writeText(window.location.href);
-                                        // toast({
-                                        //     title: 'link copied',
-                                        //     position: 'top',
-                                        //     status: 'success',
-                                        //     duration: 1000
-                                        // });
-                                    }}>
-                                    Share{' '}
-                                    <b
-                                        style={{
-                                            margin: '0rem 0.3rem 0rem 0.3rem',
-                                            transform: 'translateY(-2px)'
-                                        }}>
-                                        <CopyIcon />
-                                    </b>
-                                </Btn>
-                            </Center>
-
-                            <Center>
-                                <Button
-                                    marginY={'1rem'}
-                                    colorScheme={`gray`}
-                                    onClick={(e) => {
-                                        reportFirebaseAnalytics(
-                                            FIREBASE_ANALYTICS_EVENTS.link_share_on_whatsapp.toString(),
-                                            {}
-                                        );
-                                        window.location.href = `https://api.whatsapp.com/send/?text=${encodeURI(
-                                            window.location.href
-                                        )}&type=custom_url&app_absent=0`;
-                                    }}>
-                                    Share on WhatsApp {` `}
-                                    <Image
-                                        src={'/images/whatsapp.png'}
-                                        alt="hello_world"
-                                        width={35}
-                                        height={35}
-                                    />
-                                </Button>
-                            </Center>
-
                             <div
                                 ref={printTableRef}
                                 className="print_timetable"
@@ -156,36 +93,29 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                                 />
                             </div>
 
-                            <Center>
-                                <div>
-                                    <Text fontFamily={'heading'} bg={'yellow.400'} color={'blackAlpha.900'}
-                                        p={2} rounded={'sm'} fontWeight={'bold'}
-                                    >
-                                        UPDATED AT:
-                                        <Box
-                                            fontFamily={'heading'}
-                                            color={'gray.900'}
-                                            fontWeight={'bold'}
-                                            display={'inline'}>{` ${new Date(
-                                            timetableData.updatedAt
-                                        ).toDateString()}`}</Box>
-                                    </Text>
-                                </div>
-                            </Center>
-                            
                             {/* chart render */}
-                            <TimetableChart
-                                timetable={Object.entries(timetableData.timetable).sort(
-                                    ([lhs], [rhs]) => {
-                                        let day1 = lhs.toLowerCase();
-                                        let day2 = rhs.toLowerCase();
-                                        return (
-                                            day_sorter[day1 as keyof object] -
-                                            day_sorter[day2 as keyof object]
-                                        );
-                                    }
-                                )}
-                            />
+                            <Accordion mx={2} my={4} mb={8}>
+                                <AccordionItem>
+                                    <AccordionButton>
+                                        <Box mr={2}>Show Chart Expand</Box>
+                                        <AccordionIcon />
+                                    </AccordionButton>
+                                    <AccordionPanel>
+                                        <TimetableChart
+                                            timetable={Object.entries(timetableData.timetable).sort(
+                                                ([lhs], [rhs]) => {
+                                                    let day1 = lhs.toLowerCase();
+                                                    let day2 = rhs.toLowerCase();
+                                                    return (
+                                                        day_sorter[day1 as keyof object] -
+                                                        day_sorter[day2 as keyof object]
+                                                    );
+                                                }
+                                            )}
+                                        />
+                                    </AccordionPanel>
+                                </AccordionItem>
+                            </Accordion>
 
                             {Object.entries(timetableData.timetable)
                                 .sort(([lhs], [rhs]) => {
@@ -197,7 +127,6 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                                     );
                                 })
                                 .map(([day, data], idx) => {
-                                    console.log(data);
                                     return (
                                         <React.Fragment key={idx}>
                                             {(data as Array<TimetableData>).length > 0 && (
@@ -226,6 +155,122 @@ export default function Timetable({ metaData, timetableData }: IProps) {
         </>
     );
 }
+
+const TimetableHeader = ({
+    metadataStr,
+    loading,
+    printTableRef,
+    updatedAt
+}: {
+    metadataStr: string;
+    loading: boolean;
+    printTableRef: React.MutableRefObject<any>;
+    updatedAt: Date;
+}) => {
+    const { setColorMode } = useColorMode();
+
+    const [isMobile] = useMediaQuery('(max-width: 500px)');
+
+    if (loading) return <span>{`${metadataStr}`}</span>;
+
+    return (
+        <>
+            <Flex
+                width={'100%'}
+                py={'2.5'}
+                px={2}
+                justifyContent={'center'}
+                minW={'100%'}
+                className="glow">
+                <Flex
+                    alignItems={isMobile ? 'center' : 'initial'}
+                    w={'full'}
+                    padding={'0.5rem'}
+                    gap={'1rem'}
+                    bg={'var(--card-color)'}
+                    border={'1px solid var(--border-color)'}
+                    rounded={'md'}
+                    flexDir={'column'}>
+                    <Flex flexWrap={'wrap'} gap={2}>
+                        <Text fontSize={'md'}>{metadataStr}</Text>
+                        <Text
+                            px={2}
+                            fontFamily={'heading'}
+                            bg={'yellow.400'}
+                            color={'blackAlpha.900'}
+                            rounded={'md'}
+                            fontWeight={'bold'}>
+                            UPDATED AT:
+                            <Box
+                                fontFamily={'heading'}
+                                color={'gray.900'}
+                                fontWeight={'bold'}
+                                display={'inline'}>{` ${new Date(updatedAt).toDateString()}`}</Box>
+                        </Text>
+                    </Flex>
+                    <Flex
+                        w={'100%'}
+                        gap={'0.5rem'}
+                        justifyContent={isMobile ? 'center' : 'initial'}>
+                        <Button
+                            variant={'outline'}
+                            size={'sm'}
+                            onClick={(e) => {
+                                navigator.share({
+                                    title: 'LGU Timetable',
+                                    text: `LGU Timetable - ${metadataStr}`,
+                                    url: window.location.href
+                                });
+                            }}>
+                            Share 🚀
+                        </Button>
+                        <Button
+                            variant={'outline'}
+                            size={'sm'}
+                            onClick={(e) => {
+                                reportFirebaseAnalytics(
+                                    FIREBASE_ANALYTICS_EVENTS.link_share_on_whatsapp.toString(),
+                                    {}
+                                );
+                                window.location.href = `https://api.whatsapp.com/send/?text=${encodeURI(
+                                    window.location.href
+                                )}&type=custom_url&app_absent=0`;
+                            }}>
+                            Share on {` `}
+                            <Image
+                                src={'/images/whatsapp.png'}
+                                alt="hello_world"
+                                width={18}
+                                height={18}
+                                style={{
+                                    marginLeft: '0.2rem'
+                                }}
+                            />
+                        </Button>
+                        <ReactToPrint
+                            trigger={() => {
+                                return (
+                                    <Button size={'sm'} variant={'outline'}>
+                                        Print Timetable 🖨
+                                    </Button>
+                                );
+                            }}
+                            content={() => printTableRef.current}
+                            onBeforePrint={() => {
+                                setColorMode('light');
+                                reportFirebaseAnalytics(
+                                    FIREBASE_ANALYTICS_EVENTS.print_time_table.toString(),
+                                    {}
+                                );
+                            }}
+                            onAfterPrint={() => setColorMode('dark')}
+                        />
+                    </Flex>
+                </Flex>
+            </Flex>
+        </>
+    );
+};
 
 import { motion } from 'framer-motion';
 import { FIREBASE_ANALYTICS_EVENTS, reportFirebaseAnalytics } from '~/lib/FirebaseAnalysis';

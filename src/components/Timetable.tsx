@@ -97,7 +97,7 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                             <Accordion mx={2} my={4} mb={8}>
                                 <AccordionItem>
                                     <AccordionButton>
-                                        <Box mr={2}>Show Chart Expand</Box>
+                                        <Box mr={2}>Show Chart</Box>
                                         <AccordionIcon />
                                     </AccordionButton>
                                     <AccordionPanel>

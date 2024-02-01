@@ -47,6 +47,7 @@ import AreYouSureModel from '../design/AreYouSureModel';
 import { discussionHandler } from './lib/DiscussionHandler';
 import MustSignIn from '../design/MustSigin';
 import { NotLoggedIn } from '../Header';
+import axios from 'axios';
 
 export default function DiscussionView() {
     const [appState, setAppState] = useContext(AppStateProvider);
@@ -218,7 +219,9 @@ export default function DiscussionView() {
                                 }}
                             />
                         ) : (
-                            <MarkDown text={discussion.content} className={styles.mark_down} />
+                            <>
+                                <MarkDown text={discussion.content} className={styles.mark_down} />
+                            </>
                         )}
 
                         {/* votes & emojis */}
@@ -234,7 +237,7 @@ export default function DiscussionView() {
                                 fontSize={'lg'}>
                                 <ArrowUpIcon />
                                 {participants.filter((p) => p.voteType == 'up').length}
-
+                                
                                 <AvatarGroup size="xs" max={5} mx={'0.2rem'}>
                                     {participants
                                         .filter((p) => p.voteType == 'up')

@@ -1,9 +1,30 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import rehypeRaw from 'rehype-raw';
 
 const MarkDown = ({ text, className }: { text: string; className?: string }) => {
+
+    const [isRemoteMD, setIsRemoteMD] = useState<boolean>(false);
+    const [remoteMdContent, setRemoteMdContent] = useState<string>("loading...");
+
+    useEffect(()=> {
+        const signal = "remote~sync:";
+        let isRemoteMD = text.trim().startsWith(signal);
+        setIsRemoteMD(isRemoteMD);
+        if(!isRemoteMD) return;
+
+        const url = text.trim().split(signal)[1] || "null"
+        
+        axios.get(url)
+        .then(res=> {setRemoteMdContent(res.data)})
+        .catch(()=>{
+            setRemoteMdContent("Error loading remote MD")
+        })
+    }, [text])
+
     return (
         <>
             <ReactMarkdown
@@ -31,7 +52,7 @@ const MarkDown = ({ text, className }: { text: string; className?: string }) => 
                         );
                     }
                 }}>
-                {text}
+                {isRemoteMD ? remoteMdContent : text}
             </ReactMarkdown>
         </>
     );

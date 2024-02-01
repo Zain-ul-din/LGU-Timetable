@@ -396,7 +396,7 @@ a {
 }
 
 .rotate-anim {
-    animation: rotate360 7s linear infinite;
+    animation: rotate360 4s linear infinite;
 }
 
 @keyframes rotate360 {

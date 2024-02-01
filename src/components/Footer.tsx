@@ -218,6 +218,7 @@ const GithubContributors = ({ urls }: { urls: string[] }) => {
                                 flexDirection={'column'}
                                 background={'transparent'}
                                 margin={0}
+                                position={'relative'}
                                 display={'flex'}
                                 boxShadow={'none'}
                                 justifyContent={'center'}>
@@ -226,8 +227,26 @@ const GithubContributors = ({ urls }: { urls: string[] }) => {
                                     alt={`${user.login}-avatar`}
                                     width={50}
                                     height={50}
-                                    style={{ margin: '0 auto', borderRadius: '50%' }}
+                                    style={{ margin: '0 auto', borderRadius: '50%',
+                                        border: '1px solid transparent'
+                                    }}
                                 />
+
+                            {user.contributions > 400 && 
+                                <Flex position="absolute"
+                                    className='rotate-anim'
+                                    w={'50px'}
+                                    height={'50px'}
+                                    background={'linear-gradient(90deg, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);'}
+                                    filter={'blur(5px)'}
+                                    rounded={'50%'}
+                                    boxShadow={'0px 0px 20px rgba(255,255,255,0.05)'}
+                                    zIndex={'-10'}
+                                    top={'0'}
+                                    left={'0'}
+                                >
+                                    {" "}
+                                </Flex>}
                                 {/*<Text textAlign={'center'}>{user.login}</Text>*/}
                             </Card>
                         </a>

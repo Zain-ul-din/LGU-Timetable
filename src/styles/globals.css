@@ -395,6 +395,22 @@ a {
     font-style: normal;
 }
 
+.rotate-anim {
+    animation: rotate360 7s linear infinite;
+}
+
+@keyframes rotate360 {
+    from {
+        rotate: 0deg;
+        scale: 1;
+    }
+    
+    to {
+        rotate: 360deg;
+        scale: 1.01;
+    }
+}
+
 @keyframes background-pan {
     from {
         background-position: 0% center;

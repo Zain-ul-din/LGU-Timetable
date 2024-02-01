@@ -1,9 +1,11 @@
+import { Heading } from '@chakra-ui/react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { nightOwl } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import rehypeRaw from 'rehype-raw';
+import { generateHeadingId } from '~/lib/markdown-util';
 
 const MarkDown = ({ text, className }: { text: string; className?: string }) => {
 
@@ -32,6 +34,15 @@ const MarkDown = ({ text, className }: { text: string; className?: string }) => 
                 className={className ? className : 'mark-down'}
                 rehypePlugins={[rehypeRaw]}
                 components={{
+                    h1({ children }) {
+                        return <h1 id={generateHeadingId(children.toString())}>{children}</h1>
+                    },
+                    h2({ children }) {
+                        return <h2 id={generateHeadingId(children.toString())}>{children}</h2>
+                    },
+                    h3({ children }) {
+                        return <h3 id={generateHeadingId(children.toString())}>{children}</h3>
+                    },
                     code({ node, inline, className, children, ...props }) {
                         const match = /language-(\w+)/.exec(className || '');
                         return !inline && match ? (

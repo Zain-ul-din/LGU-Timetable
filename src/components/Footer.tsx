@@ -33,7 +33,7 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
     return (
         <Flex
             width={'100%'}
-            marginTop={'4rem'}
+            marginTop={'2rem'}
             flexDirection={'column'}
             padding={0}
             position={fixedBottom ? 'fixed' : 'initial'}
@@ -43,17 +43,6 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
                 borderTop={'1px solid var(--border-color)'}
                 color={'white'}
                 width={'100%'}>
-                {/* <Flex pl = {5} py = {5} flexDirection = {'row'}>
-      		  <Textarea height={'36'} maxHeight={'200px'} placeholder = {'Leave your reply...'} px = {2} value = {reply} onChange = {(e)=> setReply (e.target.value.length <= 250 ? e.target.value : reply)}/>
-      		  <Flex maxHeight={'200px'} px = {'1%'} flexDirection = {'column'} alignItems = {'center'}>
-      		    	<Image src = {`https://avatars.dicebear.com/api/adventurer-neutral/${reply.replace(/[\W_]/g,"") == '' ? 'happy' : reply.replace(/[\W_]/g,"")}.svg?mood=happy`} height = {'100px'} width = {'100px'} rounded = {'base'} alt="emjoi"/>
-      		    	<Tooltip label = 'login to add reply'>
-						<Button width={'100px'} mt = {'5%'} isDisabled = {userCredentials?.user == null}>
-							Add reply
-						</Button>
-					</Tooltip>
-      		  </Flex>
-      		</Flex> */}
                 <Box
                     borderTopWidth={1}
                     borderStyle={'solid'}
@@ -63,7 +52,7 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
                     <Container
                         as={Stack}
                         maxW={'6xl'}
-                        py={4}
+                        py={2}
                         direction={{ base: 'column', md: 'row' }}
                         spacing={4}
                         justify={{ base: 'center', md: 'space-between' }}
@@ -94,26 +83,25 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
                     </Container>
                     <FooterLinks />
                     <Center marginY={'1rem'}>
-                        <Heading fontWeight={'thin'} className="roboto">
+                        <Heading fontWeight={'thin'} className="roboto"
+                            fontSize={'2xl'}
+                        >
                             Github Contributors
                         </Heading>
                     </Center>
                     <Flex
                         background={'inherit'}
-                        gap={isUnder600 ? '0.5rem' : '2.5rem'}
+                        gap={isUnder600 ? '0.5rem' : '1rem'}
                         flexDirection={'row'}
                         flexWrap={'wrap'}
                         justifyContent={'center'}
-                        marginBottom={'1rem'}>
-                        {GITHUB_REPOS.map((repo, idx) => {
-                            return (
-                                <React.Fragment key={idx}>
-                                    <GithubContributors
-                                        url={`https://api.github.com/repos/${repo.owner}/${repo.repo_name}/contributors`}
-                                    />
-                                </React.Fragment>
-                            );
-                        })}
+                        marginBottom={'1rem'} px={4}>
+                        {
+                            <GithubContributors
+                                urls={GITHUB_REPOS
+                                    .map(repo => `https://api.github.com/repos/${repo.owner}/${repo.repo_name}/contributors`)}
+                            />
+                        }
                     </Flex>
                 </Box>
             </Box>
@@ -132,24 +120,23 @@ const FooterLinks = () => {
                 gap={isUnder600 ? '1.5rem' : '4rem'}
                 columnGap={'1rem'}
                 maxWidth={'1200px'}
-                margin={'1rem auto'}
+                margin={'0.5rem auto'}
                 justifyContent={'center'}
-                paddingX={'2rem'}
-                paddingBottom={'1rem'}
+                paddingX={'0.5rem'}
                 flexWrap={'wrap'}
-                borderBottom={'1px solid var(--border-color)'}>
+            >
                 {Object.entries(ROUTING).map(([val, link], idx) => {
                     return (
                         <Link key={idx} href={link}>
                             <Text
-                                fontSize={'1xl'}
+                                fontFamily={'revert'}
+                                fontSize={'sm'}
                                 fontWeight={'hairline'}
                                 className="roboto"
                                 color={'blue.300'}
                                 _hover={{ textDecoration: 'underline' }}>
                                 {val.toUpperCase()}
                             </Text>
-                            <Divider />
                         </Link>
                     );
                 })}
@@ -185,23 +172,43 @@ const githubApiResponseSample = {
 
 type GithubApiResponse = typeof githubApiResponseSample;
 
-import NextImage from 'next/image';
 import Link from 'next/link';
 
 
-const GithubContributors = ({ url }: { url: string }) => {
+const GithubContributors = ({ urls }: { urls: string[] }) => {
     const [contributors, setContributors] = useState<Array<GithubApiResponse>>([]);
 
-    const [isUnder600] = useMediaQuery('(max-width:600px)');
-
     useEffect(() => {
-        axios.get(url).then((res) => setContributors(res.data));
-    }, [url]);
-    
+        Promise.all(urls.map(url => {
+            return axios.get(url)
+        }))
+        .then(responses=> responses.map(res => res.data))
+        .then(res=> res.reduce((acc,curr)=> acc.concat(curr)))
+        .then((contributors)=> (contributors as GithubApiResponse[])
+            .reduce((acc, curr)=>  {
+                return acc.filter(c => c.url == curr.url).length > 0
+                    ? acc : acc.concat(curr)
+            }, [] as GithubApiResponse[])
+        )
+        // keep me at first 😉
+        .then(contributors => contributors.map(contributor=> {
+            return contributor.url === githubApiResponseSample.url ?
+                ({...contributor, contributions: Infinity }) : contributor 
+        }))
+        .then(distContributors=> setContributors(distContributors))
+    }, [urls]);
+
     return (
         <>
             {contributors
                 .filter((ele) => ele.contributions > 1)
+                .sort((x,y)=> {
+                    if(x.contributions < y.contributions)
+                        return 1;
+                    if(x.contributions > y.contributions)
+                        return -1;
+                    return 0;
+                })
                 .map((user, idx) => {
                     return (
                         <a key={idx} href={user.html_url} target="_blank">
@@ -209,20 +216,19 @@ const GithubContributors = ({ url }: { url: string }) => {
                                 key={idx}
                                 width={'100%'}
                                 flexDirection={'column'}
-                                background={'inherit'}
-                                padding={isUnder600 ? '0.5rem' : '1rem'}
+                                background={'transparent'}
                                 margin={0}
                                 display={'flex'}
-                                justifyContent={'center'}
-                                borderBottom={'1px solid var(--border-color)'}>
+                                boxShadow={'none'}
+                                justifyContent={'center'}>
                                 <img
                                     src={user.avatar_url}
                                     alt={`${user.login}-avatar`}
-                                    width={80}
-                                    height={80}
-                                    style={{ margin: '0 auto', borderRadius: '0.2rem' }}
+                                    width={50}
+                                    height={50}
+                                    style={{ margin: '0 auto', borderRadius: '50%' }}
                                 />
-                                <Text textAlign={'center'}>{user.login}</Text>
+                                {/*<Text textAlign={'center'}>{user.login}</Text>*/}
                             </Card>
                         </a>
                     );

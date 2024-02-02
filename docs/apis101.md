@@ -9,3 +9,6 @@
 ```html
     url?apikey=<your_api_key>
 ```
+### Watch Video Tutorial
+
+- [Get Started With LGU Timetable APIS | Lahore Garrison University Timetable | HTML, CSS, JS Project](https://www.youtube.com/watch?v=PVZn0EBwSG4)

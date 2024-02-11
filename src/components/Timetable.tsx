@@ -28,13 +28,11 @@ import {
     AccordionIcon
 } from '@chakra-ui/react';
 
-import { CalendarIcon, CopyIcon, DownloadIcon } from '@chakra-ui/icons';
-import Btn from './design/Button';
-
+import { FaFileImage } from 'react-icons/fa';
 import TimeTablePrint from './TimetablePrint';
 import ReactToPrint from 'react-to-print';
 
-import { ROUTING, timetableHeadTitles } from '~/lib/constant';
+import { APIS_ENDPOINTS, ROUTING, timetableHeadTitles } from '~/lib/constant';
 
 const day_sorter = {
     monday: 1,
@@ -168,8 +166,8 @@ const TimetableHeader = ({
     updatedAt: Date;
 }) => {
     const { setColorMode } = useColorMode();
-
     const [isMobile] = useMediaQuery('(max-width: 500px)');
+    const router = useRouter();
 
     if (loading) return <span>{`${metadataStr}`}</span>;
 
@@ -209,6 +207,7 @@ const TimetableHeader = ({
                         </Text>
                     </Flex>
                     <Flex
+                        flexWrap={'wrap'}
                         w={'100%'}
                         gap={'0.5rem'}
                         justifyContent={isMobile ? 'center' : 'initial'}>
@@ -265,6 +264,18 @@ const TimetableHeader = ({
                             }}
                             onAfterPrint={() => setColorMode('dark')}
                         />
+                        <Link
+                            href={`${APIS_ENDPOINTS.SCREEN_SHOTS_PATH}/${metadataStr}.png`}
+                            target="_blank">
+                            <Button variant={'outline'} size={'sm'}>
+                                Download Screen Shot
+                                <FaFileImage
+                                    style={{
+                                        marginLeft: '0.2rem'
+                                    }}
+                                />
+                            </Button>
+                        </Link>
                     </Flex>
                 </Flex>
             </Flex>
@@ -278,6 +289,7 @@ import Link from 'next/link';
 import BackBtn from './design/BackBtn';
 import TimetableChart from './charts/TimetableChart';
 import PalestineSideAd from './announcements/PalestineSideAd';
+import { useRouter } from 'next/router';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
     const { isOpen, onToggle } = useDisclosure({

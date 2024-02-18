@@ -51,7 +51,7 @@ async function updateCache () {
 /**
  * Construct Object of type SubjectOject from timetables
  * @param timetables 
- * @returns 
+ * @returns {SubjectOjectType}
  */
 const constructSubjectOjectFromTimetables = (
     timetables: Array<TimetableDocType>

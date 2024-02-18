@@ -266,7 +266,8 @@ const TimetableHeader = ({
                         />
                         <Link
                             href={`${APIS_ENDPOINTS.SCREEN_SHOTS_PATH}/${metadataStr}.png`}
-                            target="_blank">
+                            target="_blank"
+                            download>
                             <Button variant={'outline'} size={'sm'}>
                                 Download Screen Shot
                                 <FaFileImage

@@ -1,206 +1,173 @@
-import { Box,  Button,  Center,  Flex,  Heading,  Input, Skeleton, Spinner, Text } from "@chakra-ui/react";
-import {  useCallback, useEffect, useMemo, useState } from "react";
-import {  SubjectObjectVal, SubjectOjectType, TimetableDataType, TimetableDocType } from "~/types/typedef";
-import CourseCard from "./CourseCard";
-import TimeClashResolverIntro from "./TimeClashResolverInto";
-import CourseCart from "./CourseCart";
-import { findCoursesTimeConflicts } from "~/lib/util";
-import { HttpClient } from "~/lib/httpclient";
-import { APIS_ENDPOINTS } from "~/lib/constant";
-import Loader from "../design/Loader";
-import { BiLoader } from "react-icons/bi";
-import AdminLayout from "../admin/layout";
-import axios from "axios";
+import { Box, Flex, Input, Text } from '@chakra-ui/react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { SubjectObjectVal, SubjectOjectType } from '~/types/typedef';
+import CourseCard from './CourseCard';
+import TimeClashResolverIntro from './TimeClashResolverInto';
+import CourseCart from './CourseCart';
+import { findCoursesTimeConflicts } from '~/lib/util';
+import { HttpClient } from '~/lib/httpclient';
+import { APIS_ENDPOINTS } from '~/lib/constant';
+import Loader from '../design/Loader';
+import LoadingOverlay from './LoadingOverlay';
+import usePagination from '~/hooks/usePagination';
+import { usePaginator } from 'chakra-paginator';
+import Pagination from '../design/Pagination';
 
-export default function TimetableClashResolver () {
-    
-    const [loading, setLoading] = useState<boolean>(true)
-    const [subjects, setSubjects] = useState<SubjectOjectType>({})
-    const [filter, setFilter] = useState<string>("")
-    
+const PaginationConfig = {
+    MAX_CARD_PER_PAGE: 10
+};
 
-    useEffect(()=> {
-        const getSubjects =async () => {
+export default function TimetableClashResolver() {
+    const [loading, setLoading] = useState<boolean>(true);
+    const [subjects, setSubjects] = useState<SubjectOjectType>({});
+    const [filter, setFilter] = useState<string>('');
+
+    useEffect(() => {
+        const getSubjects = async () => {
             const httpClient = new HttpClient<SubjectOjectType>(
-                APIS_ENDPOINTS.Util_Cache, (res)=> {
-                    setLoading(false)
-                    setSubjects(res.data)
+                APIS_ENDPOINTS.Util_Cache,
+                (res) => {
+                    setLoading(false);
+                    setSubjects(res.data);
                 }
             );
-            
-            httpClient.get()
-        }
 
-        getSubjects()
-    }, [])
+            httpClient.get();
+        };
 
-    const [subjectLoading, setSubjectLoading] = useState<boolean>(false)
-    
-    const visibleSubjectsCount = useMemo<number>(()=> Object
-        .keys(subjects).filter(e=> e.toLowerCase().includes(filter.toLowerCase()))
-    .length, [subjects,filter]);
-    
-    const handleCartAdd = useCallback((subjName:string)=>{
-        setSubjectLoading(true)
-        setSubjects(state=>{
-            return {...state, [subjName]: {...state[subjName],isInCart: true, conflicts: {}}}
-        });
-    },[setSubjects]);
-    
-    const handleCartRemove = useCallback((subjName: string)=>{
-        setSubjectLoading(true)
-        setSubjects(s=>{
-            return {...s, [subjName]: {...s[subjName],isInCart: false, conflicts: {} }} 
-        });
-    }, [setSubjects])
+        getSubjects();
+    }, []);
 
-    useEffect(()=> {
-        if(!subjectLoading) return;
-        
-        const stateAsync = async ()=> {
-            await (new Promise(resolve=> {
-                setSubjects(newState => findCoursesTimeConflicts(newState))
-                resolve(true)
-            })).then((val)=>{
-                setSubjectLoading(newState=> false)
-            })
-        }
+    const [subjectLoading, setSubjectLoading] = useState<boolean>(false);
 
-        stateAsync()
-    }, [subjectLoading, subjects, setSubjects])
-    
+    const visibleSubjectsCount = useMemo<number>(
+        () =>
+            Object.keys(subjects).filter((e) => e.toLowerCase().includes(filter.toLowerCase()))
+                .length,
+        [subjects, filter]
+    );
 
-    return <>
-        
-        <CourseCart 
-            removeCartItemHandle={handleCartRemove}
-            subjects={subjects}
-        />
+    const handleCartAdd = useCallback(
+        (subjName: string) => {
+            setSubjectLoading(true);
+            setSubjects((state) => {
+                return {
+                    ...state,
+                    [subjName]: { ...state[subjName], isInCart: true, conflicts: {} }
+                };
+            });
+        },
+        [setSubjects]
+    );
 
-        
+    const handleCartRemove = useCallback(
+        (subjName: string) => {
+            setSubjectLoading(true);
+            setSubjects((s) => {
+                return { ...s, [subjName]: { ...s[subjName], isInCart: false, conflicts: {} } };
+            });
+        },
+        [setSubjects]
+    );
 
-        {subjectLoading && <LoadingOverlay />}
+    useEffect(() => {
+        if (!subjectLoading) return;
 
-        <Flex maxW={'1200px'} m={'0 auto'} py={'2'}
-            justifyContent={'center'} flexDir={'column'}
-            gap={5}
-        >
-            <TimeClashResolverIntro />
+        const stateAsync = async () => {
+            await new Promise((resolve) => {
+                setSubjects((newState) => findCoursesTimeConflicts(newState));
+                resolve(true);
+            }).then((val) => {
+                setSubjectLoading((newState) => false);
+            });
+        };
 
-            {/* search input */}
-            <Box px={5}>
-                <Text fontWeight={'bold'} my={1}>
-                    Search Courses: {visibleSubjectsCount} found
-                </Text>
-                <Input size={'md'}
-                    onChange={(e)=> setFilter(e.target.value)}
-                    value={filter}
-                    placeholder="Enter Course Name"
-                />
-            </Box>
+        stateAsync();
+    }, [subjectLoading, subjects, setSubjects]);
 
-            {loading && 
-            <Loader>
-                Please wait fetching subjects data
-            </Loader>}
-            
-            {/* courses list */}
-            <Flex flexDir={'column'} px={5} gap={3}>
-                {Object.entries(subjects)
-                .filter(e=> e[0].toLowerCase().includes(filter.toLowerCase()))
-                .map(([subjName,subj]:[string,SubjectObjectVal],i)=>{
-                    return <CourseCard
-                        key={i} 
-                        name={subjName}
-                        subject = {subj} 
-                        onAdd={handleCartAdd}
-                        onRemove={handleCartRemove}
+    const subjectsToEntries = useMemo(
+        () =>
+            Object.entries(subjects).filter((e) =>
+                e[0].toLowerCase().includes(filter.toLowerCase())
+            ),
+        [subjects, filter]
+    );
+
+    const [subjectToShow, paginationIndices, activePageIdx, setActivePaginationIdx] = usePagination(
+        subjectsToEntries,
+        PaginationConfig.MAX_CARD_PER_PAGE
+    );
+
+    // reset pagination on search
+    useEffect(() => setActivePaginationIdx(1), [filter]);
+
+    return (
+        <>
+            <CourseCart removeCartItemHandle={handleCartRemove} subjects={subjects} />
+
+            {subjectLoading && <LoadingOverlay />}
+
+            <Flex
+                maxW={'1200px'}
+                m={'0 auto'}
+                py={'2'}
+                justifyContent={'center'}
+                flexDir={'column'}
+                gap={5}>
+                <TimeClashResolverIntro />
+
+                {/* search input */}
+                <Box px={5}>
+                    <Text fontWeight={'bold'} my={1}>
+                        Search Courses: {visibleSubjectsCount} found
+                    </Text>
+                    <Input
+                        size={'md'}
+                        onChange={(e) => setFilter(e.target.value)}
+                        value={filter}
+                        placeholder="Enter Course Name"
                     />
-                })}
-            </Flex>
-            
-            {/* Admin Stuff */}
-            {/* <AdminLayout>
-                <Center p={4}>
-                    <Button my={2} variant={'outline'}
-                        onClick={async ()=> {
-                            setLoading(true)
-                            axios.post(`${APIS_ENDPOINTS.Util_Cache}?key=${process.env.NEXT_PUBLIC_REDIS_URL}`)
-                            .then(()=> setLoading(false))
+                </Box>
+
+                {loading && <Loader>Please wait fetching subjects data</Loader>}
+
+                {/* courses list */}
+                <Flex flexDir={'column'} px={5} gap={3}>
+                    {subjectToShow.map(([subjName, subj]: [string, SubjectObjectVal], i) => {
+                        return (
+                            <CourseCard
+                                key={i}
+                                name={subjName}
+                                subject={subj}
+                                onAdd={handleCartAdd}
+                                onRemove={handleCartRemove}
+                            />
+                        );
+                    })}
+                </Flex>
+
+                <Flex justifyContent={'flex-end'}>
+                    <Box>
+                        <Input
+                            size={'sm'}
+                            onChange={(e) => setFilter(e.target.value)}
+                            value={filter}
+                            placeholder="Enter Course Name"
+                        />
+                    </Box>
+                    <Pagination
+                        mr={'min(1.5rem, 5%)'}
+                        pageCounts={paginationIndices}
+                        activePage={activePageIdx}
+                        handlePageChange={(page) => {
+                            setActivePaginationIdx(page);
                         }}
-                        isLoading={loading}
-                    >
-                        Update Cache
-                    </Button>
-                </Center>
-            </AdminLayout>*/}
-            
-            {/* flexible space since we have fixed footer in the bottom*/}
-            <Flex my={'5rem'}></Flex>
-        </Flex>
-    </>
-}
+                    />
+                </Flex>
 
-const LoadingOverlay = ()=> {
-    return <Flex
-        position={'fixed'}
-        top={2} right={2} bottom={0} left={2}
-        bg={'var(--bg-dark)'}
-        zIndex={9999}
-        justifyContent={'center'}
-        alignContent={'center'}
-        alignItems={'center'}
-    >
-        <Flex p={5} bg={'black'} rounded={'md'} gap={2} alignItems={'center'}
-            border={'2px solid'} borderColor={'var(--border-color)'}
-        >
-            <Loader 
-                style={{
-                    display:'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap:'0.5rem',
-                    justifyContent: 'center'
-                }}
-            >
-                <BiLoader className="spinner"/>
-                Wait, Updating Subjects
-            </Loader>
-        </Flex>
-        {' '}
-    </Flex>
-}
-
-/**
- * Construct Object of type SubjectOject from timetables
- * @param timetables 
- * @returns 
- */
-const constructSubjectOjectFromTimetables = (
-    timetables: Array<TimetableDocType>
-) => {
-    const subjects: SubjectOjectType = {}
-    timetables.forEach(timetable=> {
-        (Object.entries(timetable.timetable))
-        .forEach(([day,lectures]:[string, Array<TimetableDataType>])=>{
-            lectures.forEach(lecture=> {
-                var key = lecture.subject+ " " + (timetable.id as string);
-                if (subjects[key] == undefined) subjects[key] = {
-                    isInCart: false,
-                    conflicts: {},
-                    lectures: [],
-                    url_id: timetable.id as string
-                }
-                
-                subjects[key].lectures.push({
-                    day,
-                    time: {
-                        endTime: lecture.endTime,
-                        startTime: lecture.startTime 
-                    } as any
-                });
-            })
-        })
-    });
-    return subjects
+                {/* flexible space since we have fixed footer in the bottom*/}
+                <Flex my={'5rem'}></Flex>
+            </Flex>
+        </>
+    );
 }

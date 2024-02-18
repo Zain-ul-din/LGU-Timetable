@@ -39,11 +39,12 @@ const Pagination = ({ pageCounts, activePage, handlePageChange, ...rest }: Pagin
                     </Button>
 
                     <HStack>
-                        <Text>Page</Text>
+                        <Text whiteSpace={'nowrap'}>Page</Text>
                         <NumberInput
                             variant={'filled'}
                             rounded={'lg'}
                             maxW={'6rem'}
+                            minW={'6rem'}
                             value={input}
                             onChange={(txtValue, v) => {
                                 if (isNaN(v)) return setInput(txtValue);
@@ -66,7 +67,7 @@ const Pagination = ({ pageCounts, activePage, handlePageChange, ...rest }: Pagin
                                 <NumberDecrementStepper />
                             </NumberInputStepper>
                         </NumberInput>
-                        <Text>of {pageCounts[pageCounts.length - 1]} </Text>
+                        <Text whiteSpace={'nowrap'}>of {pageCounts[pageCounts.length - 1]} </Text>
                     </HStack>
 
                     <Button

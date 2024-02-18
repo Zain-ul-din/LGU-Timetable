@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Text } from '@chakra-ui/react';
+import { Box, Flex, Input, Text, useMediaQuery } from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SubjectObjectVal, SubjectOjectType } from '~/types/typedef';
 import CourseCard from './CourseCard';
@@ -101,6 +101,8 @@ export default function TimetableClashResolver() {
     // reset pagination on search
     useEffect(() => setActivePaginationIdx(1), [filter]);
 
+    const [isMdScreen] = useMediaQuery('(max-width: 600px)');
+
     return (
         <>
             <CourseCart removeCartItemHandle={handleCartRemove} subjects={subjects} />
@@ -146,7 +148,7 @@ export default function TimetableClashResolver() {
                     })}
                 </Flex>
 
-                <Flex justifyContent={'flex-end'}>
+                <Flex justifyContent={isMdScreen ? 'center' : 'flex-end'} flexWrap={'wrap'} gap={4}>
                     <Box>
                         <Input
                             size={'sm'}
@@ -156,7 +158,7 @@ export default function TimetableClashResolver() {
                         />
                     </Box>
                     <Pagination
-                        mr={'min(1.5rem, 5%)'}
+                        mr={isMdScreen ? '0' : 'min(1.5rem, 5%)'}
                         pageCounts={paginationIndices}
                         activePage={activePageIdx}
                         handlePageChange={(page) => {
@@ -165,8 +167,24 @@ export default function TimetableClashResolver() {
                     />
                 </Flex>
 
+                <Flex px={5}>
+                    <Text
+                        as={'a'}
+                        ml={'auto'}
+                        textColor={'var(--muted-color)'}
+                        fontWeight={'normal'}
+                        textDecoration={'underline'}
+                        cursor={'pointer'}
+                        href={
+                            'https://github.com/Zain-ul-din/LGU-Timetable/blob/production/src/lib/util.ts#L279'
+                        }
+                        target="_blank">
+                        View technical implementation
+                    </Text>
+                </Flex>
+
                 {/* flexible space since we have fixed footer in the bottom*/}
-                <Flex my={'5rem'}></Flex>
+                <Flex my={'6rem'}></Flex>
             </Flex>
         </>
     );

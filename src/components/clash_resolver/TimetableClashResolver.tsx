@@ -10,7 +10,6 @@ import { APIS_ENDPOINTS } from '~/lib/constant';
 import Loader from '../design/Loader';
 import LoadingOverlay from './LoadingOverlay';
 import usePagination from '~/hooks/usePagination';
-import { usePaginator } from 'chakra-paginator';
 import Pagination from '../design/Pagination';
 
 const PaginationConfig = {
@@ -100,7 +99,6 @@ export default function TimetableClashResolver() {
 
     // reset pagination on search
     useEffect(() => setActivePaginationIdx(1), [filter]);
-
     const [isMdScreen] = useMediaQuery('(max-width: 600px)');
 
     return (
@@ -147,41 +145,47 @@ export default function TimetableClashResolver() {
                         );
                     })}
                 </Flex>
-
-                <Flex justifyContent={isMdScreen ? 'center' : 'flex-end'} flexWrap={'wrap'} gap={4}>
-                    <Box>
-                        <Input
-                            size={'sm'}
-                            onChange={(e) => setFilter(e.target.value)}
-                            value={filter}
-                            placeholder="Enter Course Name"
-                        />
-                    </Box>
-                    <Pagination
-                        mr={isMdScreen ? '0' : 'min(1.5rem, 5%)'}
-                        pageCounts={paginationIndices}
-                        activePage={activePageIdx}
-                        handlePageChange={(page) => {
-                            setActivePaginationIdx(page);
-                        }}
-                    />
-                </Flex>
-
-                <Flex px={5}>
-                    <Text
-                        as={'a'}
-                        ml={'auto'}
-                        textColor={'var(--muted-color)'}
-                        fontWeight={'normal'}
-                        textDecoration={'underline'}
-                        cursor={'pointer'}
-                        href={
-                            'https://github.com/Zain-ul-din/LGU-Timetable/blob/production/src/lib/util.ts#L279'
-                        }
-                        target="_blank">
-                        View technical implementation
-                    </Text>
-                </Flex>
+                {!loading && (
+                    <>
+                        {' '}
+                        <Flex
+                            justifyContent={isMdScreen ? 'center' : 'flex-end'}
+                            flexWrap={'wrap'}
+                            gap={4}>
+                            <Box>
+                                <Input
+                                    size={'sm'}
+                                    onChange={(e) => setFilter(e.target.value)}
+                                    value={filter}
+                                    placeholder="Enter Course Name"
+                                />
+                            </Box>
+                            <Pagination
+                                mr={isMdScreen ? '0' : 'min(1.5rem, 5%)'}
+                                pageCounts={paginationIndices}
+                                activePage={activePageIdx}
+                                handlePageChange={(page) => {
+                                    setActivePaginationIdx(page);
+                                }}
+                            />
+                        </Flex>
+                        <Flex px={5}>
+                            <Text
+                                as={'a'}
+                                ml={'auto'}
+                                textColor={'var(--muted-color)'}
+                                fontWeight={'normal'}
+                                textDecoration={'underline'}
+                                cursor={'pointer'}
+                                href={
+                                    'https://github.com/Zain-ul-din/LGU-Timetable/blob/production/src/lib/util.ts#L279'
+                                }
+                                target="_blank">
+                                View technical implementation
+                            </Text>
+                        </Flex>
+                    </>
+                )}
 
                 {/* flexible space since we have fixed footer in the bottom*/}
                 <Flex my={'6rem'}></Flex>

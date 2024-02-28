@@ -13,11 +13,12 @@ import {
 } from '@chakra-ui/react';
 import PremiumButton from './PremiumButton';
 import { signOut } from 'firebase/auth';
-import { firebase, timetableHistoryCol, userColsRef } from '~/lib/firebase';
+import { apiAnalysisCol, firebase, timetableHistoryCol, userColsRef } from '~/lib/firebase';
 import Button from './Button';
 import { useEffect, useState } from 'react';
 import {
     doc,
+    getCountFromServer,
     getDocs,
     increment,
     limit,
@@ -45,12 +46,26 @@ export default function UserProfile({
         updateToPro: false
     });
 
+    const [{ developerMember }, setBadges] = useState({
+        developerMember: false
+    });
+
+    useEffect(() => {
+        if (user == undefined) return;
+
+        getCountFromServer(query(apiAnalysisCol, where('email', '==', user.email))).then(
+            (snapShot) => {
+                setBadges((prev) => ({ ...prev, developerMember: snapShot.data().count > 0 }));
+            }
+        );
+    }, [user]);
+
     const setProUser = (state: boolean) => {
         const user_doc = doc(userColsRef, `${user.email as string}`);
         setLoading({ ...loading, updateToPro: true });
-        updateDoc(user_doc, {
-            pro: state
-        }).then(() => setLoading({ ...loading, updateToPro: false }));
+        updateDoc(user_doc, { pro: state }).then(() =>
+            setLoading({ ...loading, updateToPro: false })
+        );
     };
 
     return (
@@ -58,7 +73,6 @@ export default function UserProfile({
             <div className={styles.profile + ' roboto'}>
                 <h1>PROFILE</h1>
                 <div className={styles.credentials}>
-                    
                     {/* eslint-disable-next-line @next/next/no-img-element*/}
                     <img
                         src={user.photoURL as string}
@@ -67,11 +81,18 @@ export default function UserProfile({
                         height={150}
                         style={{ maxWidth: '150px', maxHeight: '150px' }}
                     />
-                    
+
                     <div style={{ paddingBottom: '1rem' }}>
-                        {user.pro && !adminView && (
-                            <Flex width={'100%'} justifyContent={isUnder600 ? 'center' : 'initial'}>
-                                <PremiumButton size={'sm'}>👑 Pro User</PremiumButton>
+                        {!adminView && (
+                            <Flex
+                                width={'100%'}
+                                justifyContent={isUnder600 ? 'center' : 'initial'}
+                                gap={2}
+                                flexWrap={'wrap'}>
+                                {user.pro && <PremiumButton size={'sm'}>👑 Pro User</PremiumButton>}
+                                {developerMember && (
+                                    <PremiumButton size={'sm'}>👩‍💻 Developer Member</PremiumButton>
+                                )}
                             </Flex>
                         )}
 

@@ -32,7 +32,7 @@ const useTyperEffect = ({ text, speed }: TyperEffectProps): TyperEffectResult =>
 
     return () => clearInterval(intervalId); // Cleanup on unmount or dependency change
   }, [text, speed]);
-  
+
   return { displayText, isTypingComplete };
 };
 

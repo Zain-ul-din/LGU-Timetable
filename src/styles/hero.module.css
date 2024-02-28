@@ -1,62 +1,62 @@
 .hero {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 1600px;
-    margin: 0 auto;
-    align-items: center;
-    padding-right: 4rem;
-    margin-bottom: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 1600px;
+  margin: 0 auto;
+  align-items: center;
+  padding-right: 4rem;
+  margin-bottom: 1rem;
 }
 
 @keyframes background-pan {
-    from {
-        background-position: 0% center;
-    }
+  from {
+    background-position: 0% center;
+  }
 
-    to {
-        background-position: -200% center;
-    }
+  to {
+    background-position: -200% center;
+  }
 }
 
 .hero > h1 {
-    animation-delay: 500ms;
-    animation: background-pan 2s linear infinite;
-    font-size: 3.5rem;
-    background: linear-gradient(to right, var(--purple), var(--violet), var(--pink), var(--purple));
-    background-size: 200%;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: bold;
+  animation-delay: 500ms;
+  animation: background-pan 2s linear infinite;
+  font-size: 3.5rem;
+  background: linear-gradient(to right, var(--purple), var(--violet), var(--pink), var(--purple));
+  background-size: 200%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
 }
 
 .hero > p {
-    font-size: 1rem;
-    font-family: monospace;
-    padding: 0rem 0rem 0rem 2rem;
-    font-weight: bold;
+  font-size: 1rem;
+  font-family: monospace;
+  padding: 0rem 0rem 0rem 2rem;
+  font-weight: bold;
 }
 
 @media (max-width: 550px) {
-    .hero {
-        padding-left: 1rem;
-        padding-right: 0rem;
-        margin-bottom: 1rem;
-    }
+  .hero {
+    padding-left: 1rem;
+    padding-right: 0rem;
+    margin-bottom: 1rem;
+  }
 
-    .hero > h1 {
-        font-size: 2.5rem;
-        text-align: center;
-    }
+  .hero > h1 {
+    font-size: 2.5rem;
+    text-align: center;
+  }
 
-    .hero {
-        padding: 1rem;
-    }
+  .hero {
+    padding: 1rem;
+  }
 
-    .hero > p {
-        padding: 0.5rem;
-        padding-left: 1rem;
-        text-align: center;
-    }
+  .hero > p {
+    padding: 0.5rem;
+    padding-left: 1rem;
+    text-align: center;
+  }
 }

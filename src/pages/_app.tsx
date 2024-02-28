@@ -16,8 +16,8 @@ import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { useUserCredentials } from '~/hooks/hooks';
 
 import ChatAppStateProvider, {
-    AppState as ChatAppState,
-    defaultState as defaultChatAppState
+  AppState as ChatAppState,
+  defaultState as defaultChatAppState
 } from '~/components/chat_room/hooks/AppStateProvider';
 import { ROUTING } from '~/lib/constant';
 import { useReferrer } from '~/hooks/useReferrer';
@@ -30,36 +30,34 @@ const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];
 
 export default function App({ Component, pageProps }: AppProps) {
-    const [user, setUser] = useUserCredentials();
-    const router = useRouter();
-    
-    /* 
-     * chat app state for caching
-    */
-    const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
+  const [user, setUser] = useUserCredentials();
+  const router = useRouter();
 
-    /*
-    * helps new users to redirect directly to timetable section for better UX 
-    */
-    // disabled due to google crawler is complaining about redirect pages 
-    // useReferrer({
-    //     redirectTo: 'timetable'
-    // })
-    
-    return (
-        <>
-            <UserCredentialsContext.Provider value={{ user, setUser }}>
-                {/* <BgGlow /> */}
-                <NextNProgress color="var(--loader-color)" />
-                <AppStyleProvider theme={appTheme}>
-                    <DarkTheme />
-                    <OneTap />
+  /*
+   * chat app state for caching
+   */
+  const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
 
-                    <PalestineSupportBanner 
-                        hideMessage={!footerPages.includes(router.pathname)}
-                    />
+  /*
+   * helps new users to redirect directly to timetable section for better UX
+   */
+  // disabled due to google crawler is complaining about redirect pages
+  // useReferrer({
+  //     redirectTo: 'timetable'
+  // })
 
-                    {/* {!excludeHeadPages.includes(router.pathname) && <NewFeature 
+  return (
+    <>
+      <UserCredentialsContext.Provider value={{ user, setUser }}>
+        {/* <BgGlow /> */}
+        <NextNProgress color="var(--loader-color)" />
+        <AppStyleProvider theme={appTheme}>
+          <DarkTheme />
+          <OneTap />
+
+          <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
+
+          {/* {!excludeHeadPages.includes(router.pathname) && <NewFeature 
                         name='Timetable Clash Resolver'
                         description={`
                             Welcome to our Timetable Clash Resolution Tool, created for students like you who are dealing with course scheduling challenges at university. We know it can be tough to create a schedule without conflicts. Don't worry! Our easy-to-use tool helps you design your perfect timetable without any overlapping classes.
@@ -67,19 +65,19 @@ export default function App({ Component, pageProps }: AppProps) {
                         link={ROUTING.clash_resolver}
                         timeOut={1000}
                     />} */}
-                    
-                    {/*<Center>
+
+          {/*<Center>
                         <UpComingEvent/>
                     </Center>*/}
 
-                    {!excludeHeadPages.includes(router.pathname) && <Header />}
-                    <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
-                        <Component {...pageProps} />
-                    </ChatAppStateProvider.Provider>
-                    {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
-                    {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
-                </AppStyleProvider>
-            </UserCredentialsContext.Provider>
-        </>
-    );
+          {!excludeHeadPages.includes(router.pathname) && <Header />}
+          <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
+            <Component {...pageProps} />
+          </ChatAppStateProvider.Provider>
+          {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
+          {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
+        </AppStyleProvider>
+      </UserCredentialsContext.Provider>
+    </>
+  );
 }

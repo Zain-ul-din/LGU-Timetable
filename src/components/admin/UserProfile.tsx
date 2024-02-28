@@ -6,20 +6,20 @@ import Profile from '../design/UserProfile';
 import { UserDocType } from '~/lib/firebase_doctypes';
 
 export default function UserProfile({ docId }: { docId: string }) {
-    const [user, setUser] = useState<UserDocType>();
+  const [user, setUser] = useState<UserDocType>();
 
-    useEffect(() => {
-        const userDocRef = doc(userColsRef, docId);
-        const unSub = onSnapshot(userDocRef, (user) => {
-            setUser(user.data() as UserDocType);
-        });
+  useEffect(() => {
+    const userDocRef = doc(userColsRef, docId);
+    const unSub = onSnapshot(userDocRef, (user) => {
+      setUser(user.data() as UserDocType);
+    });
 
-        return () => unSub();
-    }, []);
+    return () => unSub();
+  }, []);
 
-    if (!user) {
-        return <Loader>Loading User Data</Loader>;
-    }
+  if (!user) {
+    return <Loader>Loading User Data</Loader>;
+  }
 
-    return <Profile user={user} adminView={true} />;
+  return <Profile user={user} adminView={true} />;
 }

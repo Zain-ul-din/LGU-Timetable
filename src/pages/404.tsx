@@ -2,10 +2,9 @@ import Router from 'next/router';
 import { useEffect } from 'react';
 
 export default function $404() {
-    useEffect(() => {
-        Router.push('/');
-    }, []);
+  useEffect(() => {
+    Router.push('/');
+  }, []);
 
-    return <>404 Not Found</>;
+  return <>404 Not Found</>;
 }
-

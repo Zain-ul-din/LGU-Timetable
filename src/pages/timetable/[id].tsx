@@ -21,131 +21,131 @@ import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import RatingFeedBack from '~/components/design/RatingFeedBack';
 
 export async function getStaticPaths() {
-    const timetableDocs = await getDocs(timeTableCol);
+  const timetableDocs = await getDocs(timeTableCol);
 
-    const paths = timetableDocs.docs.map((doc) => ({ params: { id: doc.id } }));
+  const paths = timetableDocs.docs.map((doc) => ({ params: { id: doc.id } }));
 
-    return {
-        paths,
-        fallback: 'blocking' // can also be true or 'blocking'
-    };
+  return {
+    paths,
+    fallback: 'blocking' // can also be true or 'blocking'
+  };
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-    const id = context.params!.id;
+  const id = context.params!.id;
 
-    const docRef = doc(timeTableCol, id as string);
-    const timetable = (await getDoc(docRef)).data();
+  const docRef = doc(timeTableCol, id as string);
+  const timetable = (await getDoc(docRef)).data();
 
-    return {
-        props: {
-            timetable: { id: id, ...timetable }
-        },
-        revalidate: 10
-    };
+  return {
+    props: {
+      timetable: { id: id, ...timetable }
+    },
+    revalidate: 10
+  };
 }
 
 interface GetStaticPropsReturnType extends TimetableDocType {
-    id: string;
+  id: string;
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
-    const router = useRouter();
-    const toast = useToast();
+  const router = useRouter();
+  const toast = useToast();
 
-    const user = useContext(UserCredentialsContext);
+  const user = useContext(UserCredentialsContext);
 
-    useEffect(() => () => toast.closeAll(), []);
+  useEffect(() => () => toast.closeAll(), []);
 
-    useTimeout(() => {
-        if (!user) return;
+  useTimeout(() => {
+    if (!user) return;
 
-        console.log('hello');
-        if (user.user && !user.user.rating) {
-            toast({
-                position: 'bottom',
-                colorScheme: 'gray',
-                duration: 1000 * 60,
-                render: () => (
-                    <RatingFeedBack
-                        closeHandler={() => {
-                            toast.closeAll();
-                        }}
-                        user_uid={user.user?.email as string}
-                    />
-                )
-            });
-            return;
-        }
+    console.log('hello');
+    if (user.user && !user.user.rating) {
+      toast({
+        position: 'bottom',
+        colorScheme: 'gray',
+        duration: 1000 * 60,
+        render: () => (
+          <RatingFeedBack
+            closeHandler={() => {
+              toast.closeAll();
+            }}
+            user_uid={user.user?.email as string}
+          />
+        )
+      });
+      return;
+    }
 
-        toast({
-            position: 'bottom',
-            colorScheme: 'gray',
-            duration: 1000 * 60,
-            render: () => (
-                <PromotionToast
-                    closeHandler={() => {
-                        toast.closeAll();
-                    }}
-                />
-            )
-        });
-    }, 2000);
+    toast({
+      position: 'bottom',
+      colorScheme: 'gray',
+      duration: 1000 * 60,
+      render: () => (
+        <PromotionToast
+          closeHandler={() => {
+            toast.closeAll();
+          }}
+        />
+      )
+    });
+  }, 2000);
 
-    useEffect(() => {
-        if (!timetable.timetable) router.push('/timetable');
-    }, []);
+  useEffect(() => {
+    if (!timetable.timetable) router.push('/timetable');
+  }, []);
 
-    return (
-        <>
-            <Head>
-                <title>LGU Timetable</title>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
+  return (
+    <>
+      <Head>
+        <title>LGU Timetable</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-                <meta
-                    name="description"
-                    content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. timetable of ${
-                        timetable.id as string
-                    }.`}
-                />
+        <meta
+          name="description"
+          content={`A non-official blazingly 🔥 fast website to access the LGU timetable and lgu timetable developer APIS. timetable of ${
+            timetable.id as string
+          }.`}
+        />
 
-                <meta
-                    name="keywords"
-                    content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
-                />
+        <meta
+          name="keywords"
+          content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
+        />
 
-                <SocialLinks />
-            </Head>
-            <MainAnimator>
-                {timetable.timetable && <TimetableRenderer timetable={timetable} />}
-            </MainAnimator>
-        </>
-    );
+        <SocialLinks />
+      </Head>
+      <MainAnimator>
+        {timetable.timetable && <TimetableRenderer timetable={timetable} />}
+      </MainAnimator>
+    </>
+  );
 }
 
 function TimetableRenderer({ timetable }: { timetable: any }) {
-    const [timetableData, setTimetableData] = useState<any>();
+  const [timetableData, setTimetableData] = useState<any>();
 
-    useEffect(() => {
-        setTimetableData(timetable);
-    }, []);
+  useEffect(() => {
+    setTimetableData(timetable);
+  }, []);
 
-    return (
-        <>
-            {!timetableData && (
-                <Center color={'green.600'}>
-                    <ClipLoader cssOverride={{ width: '6rem', height: '6rem' }} color="white" />
-                </Center>
-            )}
+  return (
+    <>
+      {!timetableData && (
+        <Center color={'green.600'}>
+          <ClipLoader cssOverride={{ width: '6rem', height: '6rem' }} color="white" />
+        </Center>
+      )}
 
-            {timetableData && (
-                <motion.div
-                    initial={{ opacity: 0.5 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.1, type: 'keyframes' }}>
-                    <Timetable metaData={timetable.id} timetableData={timetableData} />
-                </motion.div>
-            )}
-        </>
-    );
+      {timetableData && (
+        <motion.div
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.1, type: 'keyframes' }}>
+          <Timetable metaData={timetable.id} timetableData={timetableData} />
+        </motion.div>
+      )}
+    </>
+  );
 }

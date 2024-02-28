@@ -1,44 +1,44 @@
 .blob {
-    height: 20vmax;
-    aspect-ratio: 1;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    translate: -50% -50%;
-    border-radius: 50%;
-    background: linear-gradient(to right, aquamarine, mediumpurple);
-    /* background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); */
-    animation: rotate 20s infinite;
-    opacity: 0.8; /*0.8*/
-    backdrop-filter: blur(19vmax);
-    z-index: -2;
-    overflow: hidden;
-    opacity: 80%;
+  height: 20vmax;
+  aspect-ratio: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: linear-gradient(to right, aquamarine, mediumpurple);
+  /* background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); */
+  animation: rotate 20s infinite;
+  opacity: 0.8; /*0.8*/
+  backdrop-filter: blur(19vmax);
+  z-index: -2;
+  overflow: hidden;
+  opacity: 80%;
 }
 
 @keyframes rotate {
-    from {
-        rotate: 0deg;
-    }
+  from {
+    rotate: 0deg;
+  }
 
-    50% {
-        scale: 1 1.5;
-    }
+  50% {
+    scale: 1 1.5;
+  }
 
-    to {
-        rotate: 360deg;
-    }
+  to {
+    rotate: 360deg;
+  }
 }
 
 .blur {
-    height: 100%;
-    width: 100%;
-    /* position: absolute; */
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: -1;
-    backdrop-filter: blur(10vmax);
+  height: 100%;
+  width: 100%;
+  /* position: absolute; */
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  backdrop-filter: blur(10vmax);
 }

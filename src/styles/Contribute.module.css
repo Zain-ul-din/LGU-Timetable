@@ -1,19 +1,19 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100%;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  width: 100%;
 }
 
 .github_img {
-    transition: all 2000ms ease;
+  transition: all 2000ms ease;
 }
 
 .github_img:hover {
-    transition: all 1000ms ease;
-    filter: brightness(110%);
-    scale: 1.2;
-    cursor: pointer;
+  transition: all 1000ms ease;
+  filter: brightness(110%);
+  scale: 1.2;
+  cursor: pointer;
 }

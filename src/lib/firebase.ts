@@ -13,38 +13,38 @@ import type { Analytics } from 'firebase/analytics';
 import type { FirebaseStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_apiKey,
-    authDomain: process.env.NEXT_PUBLIC_authDomain,
-    projectId: process.env.NEXT_PUBLIC_projectId,
-    storageBucket: process.env.NEXT_PUBLIC_storageBucket,
-    messagingSenderId: process.env.NEXT_PUBLIC_messagingSenderId,
-    appId: process.env.NEXT_PUBLIC_appId,
-    measurementId: process.env.NEXT_PUBLIC_measurementId
+  apiKey: process.env.NEXT_PUBLIC_apiKey,
+  authDomain: process.env.NEXT_PUBLIC_authDomain,
+  projectId: process.env.NEXT_PUBLIC_projectId,
+  storageBucket: process.env.NEXT_PUBLIC_storageBucket,
+  messagingSenderId: process.env.NEXT_PUBLIC_messagingSenderId,
+  appId: process.env.NEXT_PUBLIC_appId,
+  measurementId: process.env.NEXT_PUBLIC_measurementId
 };
 
 interface InitializeFirebaseAppType {
-    firebaseApp: FirebaseApp;
-    firebaseAuth: Auth;
-    firebaseStore: Firestore;
-    firebaseAnalytics: Analytics | null;
-    firebaseStorage: FirebaseStorage;
+  firebaseApp: FirebaseApp;
+  firebaseAuth: Auth;
+  firebaseStore: Firestore;
+  firebaseAnalytics: Analytics | null;
+  firebaseStorage: FirebaseStorage;
 }
 
 function initializeFirebaseApp(): InitializeFirebaseAppType {
-    const firebaseApp: FirebaseApp = initializeApp(firebaseConfig);
-    const firebaseAuth: Auth = getAuth(firebaseApp);
-    const firebaseStore: Firestore = getFirestore(firebaseApp);
-    const firebaseAnalytics: Analytics | null =
-        typeof window !== 'undefined' ? getAnalytics(firebaseApp) : null;
-    const firebaseStorage = getStorage(firebaseApp);
+  const firebaseApp: FirebaseApp = initializeApp(firebaseConfig);
+  const firebaseAuth: Auth = getAuth(firebaseApp);
+  const firebaseStore: Firestore = getFirestore(firebaseApp);
+  const firebaseAnalytics: Analytics | null =
+    typeof window !== 'undefined' ? getAnalytics(firebaseApp) : null;
+  const firebaseStorage = getStorage(firebaseApp);
 
-    return {
-        firebaseApp,
-        firebaseAuth,
-        firebaseStore,
-        firebaseAnalytics,
-        firebaseStorage
-    };
+  return {
+    firebaseApp,
+    firebaseAuth,
+    firebaseStore,
+    firebaseAnalytics,
+    firebaseStorage
+  };
 }
 
 export const firebase: InitializeFirebaseAppType = initializeFirebaseApp();

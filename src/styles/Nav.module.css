@@ -1,13 +1,13 @@
 .navbar {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    padding: 1rem;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 1rem;
 }
 
 .navbar > button {
-    padding: 0rem 1rem 0rem 1rem;
-    font-size: 1.5rem;
+  padding: 0rem 1rem 0rem 1rem;
+  font-size: 1.5rem;
 }

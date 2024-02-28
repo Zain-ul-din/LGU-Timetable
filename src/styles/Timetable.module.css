@@ -1,50 +1,50 @@
 .timetable_container {
-    display: flex;
-    max-width: 1250px;
-    width: 100%;
-    margin: 0 auto;
-    flex-direction: column;
+  display: flex;
+  max-width: 1250px;
+  width: 100%;
+  margin: 0 auto;
+  flex-direction: column;
 }
 
 .timetable_container > span {
-    font-size: 1rem;
-    margin-top: 3rem;
-    text-align: center;
-    padding: 0.5rem;
-    background-color: var(--card-color);
-    border: 1px solid var(--border-color);
-    border-radius: 0.3rem;
-    margin: 0.5rem;
+  font-size: 1rem;
+  margin-top: 3rem;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.3rem;
+  margin: 0.5rem;
 }
 
 .card {
-    display: flex;
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-left: 0.3rem solid var(--card-color);
-    flex-direction: column;
+  display: flex;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-left: 0.3rem solid var(--card-color);
+  flex-direction: column;
 }
 
 .card > h1 {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .card_content {
-    background-color: var(--card-color);
-    border: 1px solid var(--border-color);
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-    flex-wrap: wrap;
-    overflow: auto;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  overflow: auto;
 }
 
 @media (max-width: 600px) {
-    .card {
-        margin: 0;
-        padding: 0.5rem;
-        border: none;
-    }
+  .card {
+    margin: 0;
+    padding: 0.5rem;
+    border: none;
+  }
 }

@@ -98,7 +98,7 @@ export default function TimetableClashResolver() {
     );
 
     // reset pagination on search
-    useEffect(() => setActivePaginationIdx(1), [filter]);
+    useEffect(() => setActivePaginationIdx(1), [filter, setActivePaginationIdx]);
     const [isMdScreen] = useMediaQuery('(max-width: 600px)');
 
     return (

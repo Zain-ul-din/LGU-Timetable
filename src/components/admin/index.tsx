@@ -29,10 +29,15 @@ export default function Admin() {
 
     setLoading(true);
     getDocs(userQuery).then((userDocs) => {
-      setUsers((prevDocs) => [
-        ...prevDocs,
-        ...(userDocs.docs.map((user) => user.data()) as Array<UserDataDocType>)
-      ]);
+      setUsers((prevDocs) =>
+        [
+          ...prevDocs,
+          ...(userDocs.docs.map((user) => user.data()) as Array<UserDataDocType>)
+        ].reduce((acc: Array<UserDataDocType>, curr) => {
+          if (acc.findIndex((ele) => ele.email === curr.email) < 0) acc.push(curr);
+          return acc;
+        }, [])
+      );
       setLastVisible(userDocs.docs[userDocs.docs.length - 1]);
       setLoading(false);
     });
@@ -42,7 +47,7 @@ export default function Admin() {
     setLoading(true);
 
     const getUsers = async () => {
-      const userQuery = query(userColsRef, orderBy('createdAt', 'desc'), limit(10));
+      const userQuery = query(userColsRef, orderBy('createdAt', 'desc'), limit(20));
       const userDocs = await getDocs(userQuery);
       setLastVisible(userDocs.docs[userDocs.docs.length - 1]);
       setUsers(userDocs.docs.map((user) => user.data()) as Array<UserDataDocType>);

@@ -2,6 +2,7 @@ import { AddIcon, DeleteIcon, LinkIcon } from '@chakra-ui/icons';
 import { Alert, AlertIcon, Box, Button, Flex, Text } from '@chakra-ui/react';
 import Link from 'next/link';
 import { memo, useEffect, useState } from 'react';
+import { hashStr } from '~/lib/cipher';
 import { ROUTING } from '~/lib/constant';
 import { LectureTimeObjectType, SubjectObjectVal } from '~/types/typedef';
 
@@ -25,7 +26,7 @@ const CourseCard = ({
       gap={2}
       border={'1px solid var(--border-color)'}>
       <Flex gap={4}>
-        <Link href={ROUTING.timetable + '/' + subject.url_id} target="_blank">
+        <Link href={ROUTING.timetable + '/' + hashStr(subject.url_id)} target="_blank">
           <Text
             _hover={{
               textDecoration: 'underline'

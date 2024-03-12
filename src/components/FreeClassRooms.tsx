@@ -22,6 +22,7 @@ import { ChevronDownIcon, WarningTwoIcon } from '@chakra-ui/icons';
 import DropDown from './design/DropDown';
 import { FreeClassRoomStateType, UseStateProps } from '~/types/typedef';
 import { BiVerticalTop } from 'react-icons/bi';
+import { hashStr } from '~/lib/cipher';
 
 interface IRoomsType {
   room: Array<string>;
@@ -228,7 +229,7 @@ const RoomsRenderer = ({
                 border={'1px solid var(--border-color)'}
                 fontWeight={'light'}
                 _hover={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                <Link href={`${ROUTING.rooms}/${room}`}>{room}</Link>
+                <Link href={`${ROUTING.rooms}/${hashStr(room)}`}>{room}</Link>
               </Card>
             );
           })}

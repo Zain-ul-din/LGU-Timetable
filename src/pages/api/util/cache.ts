@@ -1,12 +1,14 @@
+import axios from 'axios';
 import { getDocs } from 'firebase/firestore';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { decrypt } from '~/lib/cipher';
+import { APIS_ENDPOINTS } from '~/lib/constant';
 import { timeTableCol } from '~/lib/firebase';
 import { SubjectOjectType, TimetableDataType, TimetableDocType } from '~/types/typedef';
 
 var cache: SubjectOjectType = {};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-  console.log(req.method);
 
   if (req.method == 'POST') {
     try {
@@ -38,12 +40,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
  */
 async function updateCache() {
   console.log('At Util Cache, Going to Cache values from firebase');
-  const timetableDocSpanShot = await getDocs(timeTableCol);
-
-  const timetables: Array<TimetableDocType> = timetableDocSpanShot.docs.map((timetable) => ({
-    id: timetable.id,
-    ...timetable.data()
-  })) as Array<TimetableDocType>;
+  const { data } = await axios.get(APIS_ENDPOINTS.ALL_TIMETABLES)
+  interface APIResponseType extends TimetableDocType  
+  { uid: string } 
+  
+  const timetables = decrypt<Array<APIResponseType>>(data).map((t)=> ({
+    id: t.uid,  ...t
+  }))
+  
   cache = constructSubjectOjectFromTimetables(timetables);
 }
 

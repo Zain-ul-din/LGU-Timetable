@@ -19,12 +19,13 @@ import PromotionToast from '~/components/design/PromotionToast';
 import MainAnimator from '~/components/design/MainAnimator';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import RatingFeedBack from '~/components/design/RatingFeedBack';
+import axios from 'axios';
+import { APIS_ENDPOINTS } from '~/lib/constant';
+import { decrypt } from '~/lib/cipher';
 
 export async function getStaticPaths() {
-  const timetableDocs = await getDocs(timeTableCol);
-
-  const paths = timetableDocs.docs.map((doc) => ({ params: { id: doc.id } }));
-
+  const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
+  const paths = decrypt<string[]>(data).map((path) => ({ params: { id: path } }));
   return {
     paths,
     fallback: 'blocking' // can also be true or 'blocking'
@@ -33,13 +34,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
-
-  const docRef = doc(timeTableCol, id as string);
-  const timetable = (await getDoc(docRef)).data();
+  const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
+  const timetable = decrypt(data);
 
   return {
     props: {
-      timetable: { id: id, ...timetable }
+      timetable: { id: timetable.uid, ...timetable }
     },
     revalidate: 10
   };
@@ -60,7 +60,6 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
   useTimeout(() => {
     if (!user) return;
 
-    console.log('hello');
     if (user.user && !user.user.rating) {
       toast({
         position: 'bottom',

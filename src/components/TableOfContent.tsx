@@ -13,6 +13,7 @@ type TableOfContent = {
 };
 
 import { ROUTING } from '~/lib/constant';
+import ClashResolverAd from './announcements/ClashResolverAd';
 
 const tableOfContent: TableOfContent[] = [
   {
@@ -108,42 +109,44 @@ export default function TableOfContent() {
   }, [scrollPos, refs]);
 
   return (
-    <div
-      className={styles.content}
-      onMouseMove={(e) => {
-        refs.forEach((ele) => {
-          if (!ele) return;
-          const rect = ele.getBoundingClientRect(),
-            x = e.clientX - rect.left,
-            y = e.clientY - rect.top;
+    <>
+      <div
+        className={styles.content}
+        onMouseMove={(e) => {
+          refs.forEach((ele) => {
+            if (!ele) return;
+            const rect = ele.getBoundingClientRect(),
+              x = e.clientX - rect.left,
+              y = e.clientY - rect.top;
 
-          ele.style.setProperty('--mouse-x', `${x}px`);
-          ele.style.setProperty('--mouse-y', `${y}px`);
-        });
-      }}>
-      {tableOfContent.map((content, idx) => {
-        return (
-          <Link key={idx} href={content.link}>
-            <motion.div
-              className={styles.card}
-              ref={(ele) => refs.push(ele)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{
-                delay: idx % 3 == 0 ? 0.15 : (idx % 3) * 0.2,
-                duration: idx % 3 ? 2 : 1.5
-              }}>
-              {/* <>
+            ele.style.setProperty('--mouse-x', `${x}px`);
+            ele.style.setProperty('--mouse-y', `${y}px`);
+          });
+        }}>
+        {tableOfContent.map((content, idx) => {
+          return (
+            <Link key={idx} href={content.link}>
+              <motion.div
+                className={styles.card}
+                ref={(ele) => refs.push(ele)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  delay: idx % 3 == 0 ? 0.15 : (idx % 3) * 0.2,
+                  duration: idx % 3 ? 2 : 1.5
+                }}>
+                {/* <>
                     {content.title == "Notifications" && <>
                         <span>10 New Notifications</span>
                     </>}
                 </> */}
-              {content.img}
-              <h1 className={oxygen.className}>{content.title.toUpperCase()}</h1>
-            </motion.div>
-          </Link>
-        );
-      })}
-    </div>
+                {content.img}
+                <h1 className={oxygen.className}>{content.title.toUpperCase()}</h1>
+              </motion.div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 }

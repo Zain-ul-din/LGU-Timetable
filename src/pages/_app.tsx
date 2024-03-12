@@ -22,6 +22,7 @@ import ChatAppStateProvider, {
 import { ROUTING } from '~/lib/constant';
 import { useReferrer } from '~/hooks/useReferrer';
 import PalestineSupportBanner from '~/components/announcements/PalestineSupportBanner';
+import NewFeature from '~/components/design/NewFeature';
 
 // import NewFeature from '~/components/design/NewFeature';
 // import UpComingEvent from '~/components/design/UpCommingEvent';
@@ -57,14 +58,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
           <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
 
-          {/* {!excludeHeadPages.includes(router.pathname) && <NewFeature 
-                        name='Timetable Clash Resolver'
-                        description={`
+          {/* {!excludeHeadPages.includes(router.pathname) && (
+            <NewFeature
+              name="Timetable Clash Resolver"
+              description={`
                             Welcome to our Timetable Clash Resolution Tool, created for students like you who are dealing with course scheduling challenges at university. We know it can be tough to create a schedule without conflicts. Don't worry! Our easy-to-use tool helps you design your perfect timetable without any overlapping classes.
                         `}
-                        link={ROUTING.clash_resolver}
-                        timeOut={1000}
-                    />} */}
+              link={ROUTING.clash_resolver}
+              timeOut={1000}
+            />
+          )} */}
 
           {/*<Center>
                         <UpComingEvent/>

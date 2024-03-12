@@ -31,16 +31,7 @@ import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Flex, Text, Button, useMediaQuery, Input, Divider } from '@chakra-ui/react';
 import { MenuStyle, TabStyle, Transitions } from '~/styles/Style';
-import {
-  getDocs,
-  increment,
-  limit,
-  orderBy,
-  query,
-  serverTimestamp,
-  updateDoc,
-  where
-} from 'firebase/firestore';
+import { serverTimestamp } from 'firebase/firestore';
 
 const tabTitles = ['Semester', 'Program', 'Section'];
 
@@ -48,12 +39,11 @@ import { useRouter } from 'next/router';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { doc, setDoc } from 'firebase/firestore';
 import { timetableHistoryCol } from '~/lib/firebase';
-import { ITimetableHistory, TimetableInput } from '~/types/typedef';
-import { removeDuplicateTimetableHistory } from '~/lib/util';
-import Link from 'next/link';
+import { TimetableInput } from '~/types/typedef';
 import Fuse from 'fuse.js';
 import ViewLinkTxt from './design/ViewLinkTxt';
 import { ROUTING } from '~/lib/constant';
+import { hashStr } from '~/lib/cipher';
 
 function Selection({ metaData }: { metaData: any }): JSX.Element {
   const [userInput, setUserInput] = useState<TimetableInput>({
@@ -62,31 +52,9 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
     section: null
   });
   const [currTabIdx, setCurrTabIdx] = useState<number>(0);
-  const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
 
   const user = useContext(UserCredentialsContext);
   const router = useRouter();
-
-  useEffect(() => {
-    if (!user?.user) return;
-    const fetchTimetableHistory = async () => {
-      const timetableHistoryQuery = query(
-        timetableHistoryCol,
-        limit(50),
-        where('email', '==', user.user?.email),
-        orderBy('createdAt', 'desc')
-      );
-      const timetableHistoryDocs = await getDocs(timetableHistoryQuery);
-      const res = timetableHistoryDocs.docs.map((historyDoc) => ({
-        docId: historyDoc.id,
-        ...historyDoc.data()
-      }));
-
-      setHistory(res as any);
-    };
-
-    fetchTimetableHistory();
-  }, [user]);
 
   const [isUnder400] = useMediaQuery('(max-width: 400px)');
 
@@ -107,12 +75,6 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
           <Flex justifyContent={'center'}>
             <ViewLinkTxt href={ROUTING.clash_resolver}>Timetable Clash Resolver</ViewLinkTxt>
           </Flex>
-
-          {history.length > 0 && (
-            <Flex marginY={'1rem'} flexDirection={'column'}>
-              <HistoryDropDown menuItems={removeDuplicateTimetableHistory(history)} />
-            </Flex>
-          )}
 
           <Text fontSize={{ base: '1xl', md: '2xl', lg: '3xl' }} fontWeight={'light'}>
             {`Select ${tabTitles[currTabIdx]}`.toLocaleUpperCase()}
@@ -204,8 +166,13 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                             createdAt: serverTimestamp()
                           });
                         }
-
-                        router.push(`/timetable/${fall?.replace('/', '-')} ${semester} ${section}`);
+                        const hash = hashStr(`${fall} ${semester} ${section}`.replaceAll('/', ''));
+                        console.log(
+                          `${fall} ${semester} ${section}`.replaceAll('/', ''),
+                          ' ~ ',
+                          hash
+                        );
+                        router.push(`/timetable/${hash}`);
                       }}
                     />
                   )}
@@ -264,35 +231,8 @@ function DropDown({
           className="dropDown"
           overflowY={'scroll'}
           maxH={'80'}
-          onScroll={(e) => {
-            if ((e as any).target.scrollTop > 5) {
-              (searchRef.current as HTMLElement).style.bottom = '0';
-              (searchRef.current as HTMLElement).style.top = '';
-            } else {
-              (searchRef.current as HTMLElement).style.top = '0';
-              (searchRef.current as HTMLElement).style.bottom = '';
-            }
-          }}
           maxW={'98vw'}
           m={'0.5rem'}>
-          {/* <Input 
-                        value={query}
-                        ref={searchRef} 
-                        placeholder='search' w={'95%'} 
-                        m={'0.5rem'} 
-                        onChange={(e)=> {
-                            var val = e.target.value
-                            setQuery(val)
-                            const results = fuse.search(e.target.value);
-                            setFilterItems(results.map((val) => val.item));
-                            if (e.target.value == '') setFilterItems(menuItems as string[]);
-                            searchRef.current.scrollIntoView({behavior : 'smooth'})
-                        }}
-                        position={'fixed'}
-                        left={'0'}
-                        right={'0'}
-                    /> */}
-
           {filterItems &&
             filterItems?.map(
               (item: string, idx: number): JSX.Element => (
@@ -309,50 +249,6 @@ function DropDown({
                   </MenuStyle.MenuItem>
                   <Divider />
                 </Fragment>
-              )
-            )}
-        </MenuStyle.MenuList>
-      </MenuStyle.Menu>
-    </Transitions.SlideFade>
-  );
-}
-
-function HistoryDropDown({ menuItems }: { menuItems: Array<ITimetableHistory> }): JSX.Element {
-  return (
-    <Transitions.SlideFade in={true}>
-      <MenuStyle.Menu preventOverflow={true}>
-        <MenuStyle.MenuButton
-          as={Button}
-          rightIcon={<ChevronDownIcon />}
-          textOverflow={'clip'}
-          fontSize={{ base: 'xs', sm: 'md', lg: 'md' }}>
-          {'Previous Selection History'}
-        </MenuStyle.MenuButton>
-        <MenuStyle.MenuList
-          className="dropDown"
-          overflowY={'scroll'}
-          maxH={'80'}
-          maxW={'98vw'}
-          m={'0.5rem'}>
-          {menuItems &&
-            menuItems?.map(
-              ({ payload, email, createdAt, docId }: any, idx: number): JSX.Element => (
-                <Link
-                  key={idx}
-                  href={`/timetable/${payload.fall?.replace('/', '-')} ${payload.semester} ${
-                    payload.section
-                  }`}
-                  onClick={() => {
-                    const historyDoc = doc(timetableHistoryCol, docId);
-                    updateDoc(historyDoc, {
-                      clickCount: increment(1)
-                    });
-                  }}>
-                  <MenuStyle.MenuItem>
-                    {`${payload.fall?.replace('/', '-')}  ${payload.semester}  ${payload.section}`}
-                  </MenuStyle.MenuItem>
-                  <Divider />
-                </Link>
               )
             )}
         </MenuStyle.MenuList>

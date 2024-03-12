@@ -69,7 +69,7 @@ export default function NewFeature({ name, description, link, timeOut }: NewFeat
         borderTop={'1px solid'}
         borderColor={'var(--border-color)'}
         bg={'var(--bg-color)'}
-        zIndex={2}>
+        zIndex={999}>
         <Center>
           <ViewLinkTxt href={link}>{name}</ViewLinkTxt>
         </Center>

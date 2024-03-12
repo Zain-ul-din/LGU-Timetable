@@ -86,7 +86,15 @@ export const APIS_ENDPOINTS = {
   ImgToTxt: 'https://api.api-ninjas.com/v1/imagetotext', // https://api-ninjas.com/api/imagetotext,
   ReadMeMd: 'https://raw.githubusercontent.com/Zain-ul-din/LGU-Timetable/master/README.md',
   Util_Cache: '/api/util/cache',
-  SCREEN_SHOTS_PATH: 'https://raw.githubusercontent.com/zainuldeen/lgu-crawler/master/dist/'
+  SCREEN_SHOTS_PATH: 'https://raw.githubusercontent.com/zainuldeen/lgu-crawler/master/dist/',
+  META_DATA: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/meta_data.json',
+  TEACHERS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/teachers.json',
+  ROOMS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/rooms.json',
+  TEACHER_PATHS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/teacher_paths.json',
+  ROOM_PATHS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/room_paths.json',
+  TIMETABLE_PATHS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/timetable_paths.json',
+  TIMETABLE: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/',
+  ALL_TIMETABLES: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/all_timetables.json'
 };
 
 export const CHAT_CATEGORIES = {

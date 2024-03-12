@@ -10,6 +10,7 @@ import { ROUTING } from '~/lib/constant';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import BackBtn from './design/BackBtn';
+import { hashStr } from '~/lib/cipher';
 
 export default function TeacherTimetableSelection({ teachers }: { teachers: Array<string> }) {
   const router = useRouter();
@@ -62,30 +63,31 @@ export default function TeacherTimetableSelection({ teachers }: { teachers: Arra
         </div>
         {filterTeachers.map((val, key) => {
           return (
-            <Flex
-              onClick={(e) => router.push(`${ROUTING.teachers}/${val}`)}
-              className="roboto"
-              key={key}
-              bg={'var(--card-color)'}
-              py={'0.5rem'}
-              px={'1rem'}
-              border={'1px solid var(--border-color)'}
-              _hover={{ bg: 'var(--card-dark-color)' }}
-              rounded={'sm'}
-              cursor={'pointer'}>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  duration: Math.random() * 0.5,
-                  delay: (Math.random() * 1.5) % 1
-                }}>
-                <Icon style={{ transform: 'TranslateY(-2px)' }} mx={'6px'}>
-                  <LinkIcon />
-                </Icon>{' '}
-                {val}
-              </motion.div>
-            </Flex>
+            <Link href={`${ROUTING.teachers}/${hashStr(val)}`} key={key}>
+              <Flex
+                onClick={(e) => router.push(``)}
+                className="roboto"
+                bg={'var(--card-color)'}
+                py={'0.5rem'}
+                px={'1rem'}
+                border={'1px solid var(--border-color)'}
+                _hover={{ bg: 'var(--card-dark-color)' }}
+                rounded={'sm'}
+                cursor={'pointer'}>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    duration: Math.random() * 0.5,
+                    delay: (Math.random() * 1.5) % 1
+                  }}>
+                  <Icon style={{ transform: 'TranslateY(-2px)' }} mx={'6px'}>
+                    <LinkIcon />
+                  </Icon>{' '}
+                  {val}
+                </motion.div>
+              </Flex>
+            </Link>
           );
         })}
       </Flex>

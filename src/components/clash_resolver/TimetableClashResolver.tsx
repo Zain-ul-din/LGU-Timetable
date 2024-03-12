@@ -1,5 +1,5 @@
 import { Box, Flex, Input, Text, useMediaQuery } from '@chakra-ui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SubjectObjectVal, SubjectOjectType } from '~/types/typedef';
 import CourseCard from './CourseCard';
 import TimeClashResolverIntro from './TimeClashResolverInto';
@@ -94,9 +94,27 @@ export default function TimetableClashResolver() {
   useEffect(() => setActivePaginationIdx(1), [filter, setActivePaginationIdx]);
   const [isMdScreen] = useMediaQuery('(max-width: 600px)');
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusOnInput = useCallback(() => {
+    const id = setTimeout(() => {
+      if (!inputRef.current) return;
+      inputRef.current.scrollIntoView({
+        behavior: 'smooth'
+      });
+      inputRef.current.focus();
+    }, 400);
+
+    return () => clearTimeout(id);
+  }, [inputRef]);
+
   return (
     <>
-      <CourseCart removeCartItemHandle={handleCartRemove} subjects={subjects} />
+      <CourseCart
+        focusInputCb={focusOnInput}
+        removeCartItemHandle={handleCartRemove}
+        subjects={subjects}
+      />
 
       {subjectLoading && <LoadingOverlay />}
 
@@ -115,6 +133,7 @@ export default function TimetableClashResolver() {
             Search Courses: {visibleSubjectsCount} found
           </Text>
           <Input
+            ref={inputRef}
             size={'md'}
             onChange={(e) => setFilter(e.target.value)}
             value={filter}

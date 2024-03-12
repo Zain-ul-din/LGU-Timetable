@@ -14,10 +14,13 @@ import MainAnimator from '~/components/design/MainAnimator';
 import { TimetableData, TimetableDocType } from '~/types/typedef';
 
 import TeacherTimetableSelection from '~/components/TeachersTimetableSelection';
+import axios from 'axios';
+import { APIS_ENDPOINTS } from '~/lib/constant';
+import { decrypt } from '~/lib/cipher';
 
 export const getStaticProps = async (context: any) => {
-  const timetable_docs = await getDocs(teachersTimetableCol);
-  const teachers = timetable_docs.docs.map((doc) => doc.id);
+  const { data } = await axios.get(APIS_ENDPOINTS.TEACHERS);
+  const teachers = decrypt(data);
 
   return {
     props: {

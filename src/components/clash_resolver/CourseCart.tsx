@@ -8,7 +8,9 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  useDisclosure
+  useDisclosure,
+  Center,
+  Stack
 } from '@chakra-ui/react';
 import { SubjectObjectVal, SubjectOjectType } from '~/types/typedef';
 import SubjectCard from './CourseCard';
@@ -19,10 +21,12 @@ import Link from 'next/link';
 
 export default function CourseCart({
   subjects,
-  removeCartItemHandle
+  removeCartItemHandle,
+  focusInputCb
 }: {
   subjects: SubjectOjectType;
   removeCartItemHandle: (subj: string) => void;
+  focusInputCb: () => void;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const isEmpty = useMemo(
@@ -89,7 +93,19 @@ export default function CourseCart({
           </DrawerHeader>
           <DrawerBody maxH={'80vh'} overflowY={'auto'}>
             <Flex mb={'5rem'} flexDir={'column'} justifyContent={'center'}>
-              {isEmpty && <Text>No, Course added so far</Text>}
+              {isEmpty && (
+                <Stack>
+                  <Text>No, Course added so far</Text>
+                  <Button
+                    variant={'outline'}
+                    onClick={() => {
+                      onClose();
+                      focusInputCb();
+                    }}>
+                    Click here to add new course
+                  </Button>
+                </Stack>
+              )}
               {Object.entries(subjects)
                 .filter((e) => e[1].isInCart)
                 .map(([subjName, subj]: [string, SubjectObjectVal], i) => {

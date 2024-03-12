@@ -17,11 +17,13 @@ import { TimetableData, TimetableDocType, TimetableResponseType } from '~/types/
 import { useTimeout, useToast } from '@chakra-ui/react';
 import PromotionToast from '~/components/design/PromotionToast';
 import MainAnimator from '~/components/design/MainAnimator';
-import { ROUTING } from '~/lib/constant';
+import { APIS_ENDPOINTS, ROUTING } from '~/lib/constant';
+import axios from 'axios';
+import { decrypt } from '~/lib/cipher';
 
 export async function getStaticPaths() {
-  const timetable_docs = await getDocs(roomsTimetableCol);
-  const paths = timetable_docs.docs.map((doc) => ({ params: { id: doc.id } }));
+  const { data } = await axios.get(APIS_ENDPOINTS.ROOMS);
+  const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
 
   return {
     paths,
@@ -36,12 +38,12 @@ interface TimetableDoc extends TimetableDocType {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
 
-  const docRef = doc(roomsTimetableCol, id as string);
-  const docData = await getDoc(docRef);
+  const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
+  const timetable = decrypt(data);
 
   return {
     props: {
-      timetable: { id: docRef.id, room: docRef.id, ...docData.data() }
+      timetable: { id: timetable.uid, room: timetable.uid, ...timetable }
     },
     revalidate: 30
   };

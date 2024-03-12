@@ -16,13 +16,12 @@ import { Center } from '@chakra-ui/react';
 import Button from '~/components/design/Button';
 import { useEffect, useState } from 'react';
 import MainAnimator from '~/components/design/MainAnimator';
+import { APIS_ENDPOINTS } from '~/lib/constant';
+import { decrypt } from '~/lib/cipher';
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const timetableDocSpanShot = await getDocs(timeTableCol);
-
-  const timetables: Array<TimetableDocType> = timetableDocSpanShot.docs.map((timetable) =>
-    timetable.data()
-  ) as Array<TimetableDocType>;
+  const { data } = await axios.get(APIS_ENDPOINTS.ALL_TIMETABLES);
+  const timetables = decrypt(data);
 
   return {
     props: {

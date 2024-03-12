@@ -5,21 +5,17 @@ import Nav from '~/components/Nav';
 
 import { VisuallyHidden } from '@chakra-ui/react';
 
-import { getDocs } from 'firebase/firestore';
-import { metaDataCol } from '~/lib/firebase';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
 import { SocialLinks } from '~/components/seo/Seo';
 import MainAnimator from '~/components/design/MainAnimator';
+import axios from 'axios';
+import { APIS_ENDPOINTS } from '~/lib/constant';
+import { decrypt } from '~/lib/cipher';
 
 export const getStaticProps = async (context: any) => {
-  const metaData_docs = await getDocs(metaDataCol);
-  const metaData = metaData_docs.docs
-    .map((doc) => doc.data())
-    .reduce((acc, curr) => {
-      const [key, val] = Object.entries(curr)[0];
-      return { ...acc, [key]: val };
-    }, {});
+  const { data } = await axios.get(APIS_ENDPOINTS.META_DATA);
+  const metaData = decrypt(data);
 
   return {
     props: {

@@ -277,6 +277,7 @@ import BackBtn from './design/BackBtn';
 import TimetableChart from './charts/TimetableChart';
 import PalestineSideAd from './announcements/PalestineSideAd';
 import { useRouter } from 'next/router';
+import { hashStr } from '~/lib/cipher';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
   const { isOpen, onToggle } = useDisclosure({
@@ -358,8 +359,8 @@ const TimetableRenderer = ({ data }: { data: Array<any> }) => {
                   <Link
                     href={
                       curr.room
-                        ? `${ROUTING.teachers}/${curr.teacher}`
-                        : `${ROUTING.rooms}/${curr.roomNo}`
+                        ? `${ROUTING.teachers}/${hashStr(curr.teacher)}`
+                        : `${ROUTING.rooms}/${hashStr(curr.roomNo)}`
                     }>
                     {curr.room ? curr.teacher : curr.roomNo}
                   </Link>
@@ -375,8 +376,8 @@ const TimetableRenderer = ({ data }: { data: Array<any> }) => {
                   <Link
                     href={
                       curr.class
-                        ? `${ROUTING.timetable}/${curr.class}`
-                        : `${ROUTING.teachers}/${curr.teacher}`
+                        ? `${ROUTING.timetable}/${hashStr(curr.class)}`
+                        : `${ROUTING.teachers}/${hashStr(curr.teacher)}`
                     }>
                     {curr.class ? curr.class : curr.teacher}
                   </Link>

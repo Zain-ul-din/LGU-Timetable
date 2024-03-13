@@ -28,7 +28,7 @@ export async function getStaticPaths() {
   const paths = decrypt<string[]>(data).map((path) => ({ params: { id: path } }));
   return {
     paths,
-    fallback: 'blocking' // can also be true or 'blocking'
+    fallback: true // can also be true or 'blocking'
   };
 }
 

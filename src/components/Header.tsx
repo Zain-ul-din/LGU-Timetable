@@ -42,7 +42,7 @@ export default function Header() {
   );
 }
 
-export const NotLoggedIn = ({ text }: { text: string }) => {
+export const NotLoggedIn = ({ text, isLoading }: { text: string; isLoading?: boolean }) => {
   return (
     <Btn
       colorScheme="linkedin"
@@ -51,7 +51,8 @@ export const NotLoggedIn = ({ text }: { text: string }) => {
           (data: UserCredential) => addLoggedInUser(data.user)
         );
       }}
-      fontWeight={'hairline'}>
+      fontWeight={'hairline'}
+      isLoading>
       {text}
       <i style={{ margin: '0rem 0.1rem 0rem 0.3rem' }}>
         <FcGoogle />

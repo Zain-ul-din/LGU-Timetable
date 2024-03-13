@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import TimetableClashResolver from '~/components/clash_resolver/TimetableClashResolver';
+import MustSignIn from '~/components/design/MustSigin';
 import { SocialLinks } from '~/components/seo/Seo';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
@@ -21,7 +22,9 @@ export default function Page() {
         />
         <SocialLinks />
       </Head>
-      <TimetableClashResolver />
+      <MustSignIn>
+        <TimetableClashResolver />
+      </MustSignIn>
     </>
   );
 }

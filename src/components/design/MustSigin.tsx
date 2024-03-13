@@ -1,9 +1,24 @@
-import { Box, Center, Flex } from '@chakra-ui/react';
+import { Box, Center, Flex, Text } from '@chakra-ui/react';
 import BackBtn from './BackBtn';
 import { NotLoggedIn } from '../Header';
 import { firebase } from '~/lib/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const MustSignIn = ({ children }: { children: React.ReactNode }) => {
+  const [user, loading, err] = useAuthState(firebase.firebaseAuth);
+
+  if (err) {
+    return (
+      <Center>
+        <Text color={'red.300'} p={10}>
+          Error loading auth. Try refreshing the page.
+        </Text>
+      </Center>
+    );
+  }
+
+  if (user) return <>{children}</>;
+
   return (
     <Flex
       justifyContent={'center'}
@@ -16,16 +31,9 @@ const MustSignIn = ({ children }: { children: React.ReactNode }) => {
       <Box>
         <BackBtn />
       </Box>
-
-      {firebase.firebaseAuth.currentUser ? (
-        <>{children}</>
-      ) : (
-        <>
-          <Center>
-            <NotLoggedIn text="Sign-in to view the content" />
-          </Center>
-        </>
-      )}
+      <Center>
+        <NotLoggedIn text="Sign-in to view the content" isLoading={loading} />
+      </Center>
     </Flex>
   );
 };

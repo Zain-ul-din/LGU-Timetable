@@ -18,22 +18,21 @@ import { APIS_ENDPOINTS, ROUTING } from '~/lib/constant';
 import axios from 'axios';
 import { decrypt } from '~/lib/cipher';
 
-// export async function getStaticPaths() {
-//   const { data } = await axios.get(APIS_ENDPOINTS.ROOMS);
-//   const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
+export async function getStaticPaths() {
+  const { data } = await axios.get(APIS_ENDPOINTS.ROOMS);
+  const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
 
-//   return {
-//     paths,
-//     fallback: true
-//   };
-// }
+  return {
+    paths,
+    fallback: true
+  };
+}
 
 interface TimetableDoc extends TimetableDocType {
   id: string;
 }
-// getStaticProps
 
-export async function getServerSideProps(context: GetStaticPropsContext) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
 
   const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
@@ -42,8 +41,8 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
   return {
     props: {
       timetable: { id: timetable.uid, room: timetable.uid, ...timetable }
-    }
-    // revalidate: 30
+    },
+    revalidate: 30
   };
 }
 

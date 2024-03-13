@@ -23,18 +23,16 @@ import axios from 'axios';
 import { APIS_ENDPOINTS } from '~/lib/constant';
 import { decrypt } from '~/lib/cipher';
 
-// export async function getStaticPaths() {
-//   const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
-//   const paths = decrypt<string[]>(data).map((path) => ({ params: { id: path } }));
-//   return {
-//     paths,
-//     fallback: true // can also be true or 'blocking'
-//   };
-// }
+export async function getStaticPaths() {
+  const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
+  const paths = decrypt<string[]>(data).map((path) => ({ params: { id: path } }));
+  return {
+    paths,
+    fallback: true // can also be true or 'blocking'
+  };
+}
 
-// getStaticProps
-
-export async function getServerSideProps(context: GetStaticPropsContext) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
   const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
   const timetable = decrypt(data);
@@ -42,8 +40,8 @@ export async function getServerSideProps(context: GetStaticPropsContext) {
   return {
     props: {
       timetable: { id: timetable.uid, ...timetable }
-    }
-    // revalidate: 10
+    },
+    revalidate: 10
   };
 }
 

@@ -33,6 +33,7 @@ import { removeDuplicateTimetableHistory } from '~/lib/util';
 import Loader from './Loader';
 import { TimeIcon } from '@chakra-ui/icons';
 import { STAR_RATING } from '~/lib/constant';
+import { hashStr } from '~/lib/cipher';
 
 export default function UserProfile({
   user,
@@ -223,9 +224,15 @@ const HistoryComponent = ({ user, adminView }: { user: UserDocType; adminView?: 
           {removeDuplicateTimetableHistory(history).map((history, idx) => {
             return (
               <Link
-                href={`/timetable/${history.payload.fall?.replace('/', '-')} ${
-                  history.payload.semester
-                } ${history.payload.section}`}
+                href={
+                  '/timetable/' +
+                  hashStr(
+                    `${history.payload.fall} ${history.payload.semester} ${history.payload.section}`.replaceAll(
+                      '/',
+                      ''
+                    )
+                  )
+                }
                 key={idx}
                 onClick={() => {
                   const historyDoc = doc(

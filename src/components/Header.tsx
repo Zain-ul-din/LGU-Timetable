@@ -52,7 +52,7 @@ export const NotLoggedIn = ({ text, isLoading }: { text: string; isLoading?: boo
         );
       }}
       fontWeight={'hairline'}
-      isLoading>
+      isLoading={isLoading}>
       {text}
       <i style={{ margin: '0rem 0.1rem 0rem 0.3rem' }}>
         <FcGoogle />

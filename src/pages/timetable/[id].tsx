@@ -24,9 +24,7 @@ import { APIS_ENDPOINTS } from '~/lib/constant';
 import { decrypt } from '~/lib/cipher';
 
 export async function getStaticPaths() {
-  console.log('going to fetch timetable[id]');
   const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
-  console.log('GOT', JSON.stringify(data), ' ', decrypt<string[]>(data));
   const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
   return {
     paths,
@@ -36,7 +34,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
-  console.log('Gotcha ', id);
   const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
   const timetable = decrypt(data);
 
@@ -53,6 +50,7 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
+  console.log('~~~ id: ', timetable.id);
   const router = useRouter();
   const toast = useToast();
 

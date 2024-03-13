@@ -19,9 +19,8 @@ import axios from 'axios';
 import { decrypt } from '~/lib/cipher';
 
 export async function getStaticPaths() {
-  const { data } = await axios.get(APIS_ENDPOINTS.ROOMS);
+  const { data } = await axios.get(APIS_ENDPOINTS.ROOM_PATHS);
   const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
-
   return {
     paths,
     fallback: true

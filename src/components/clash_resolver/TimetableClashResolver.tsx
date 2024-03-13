@@ -102,7 +102,6 @@ export default function TimetableClashResolver() {
       inputRef.current.scrollIntoView({
         behavior: 'smooth'
       });
-      inputRef.current.focus();
     }, 400);
 
     return () => clearTimeout(id);

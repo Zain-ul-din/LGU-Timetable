@@ -35,7 +35,6 @@ LGU-TimeTable
   >> npm i yarn -g
   >> yarn
   >> yarn dev
-  <!--  -->
 ```
 
 ## Contributors ✨

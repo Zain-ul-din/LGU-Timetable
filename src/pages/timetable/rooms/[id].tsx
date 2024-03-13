@@ -70,8 +70,10 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
   }, 2000);
 
   useEffect(() => {
-    if (!timetable.timetable) router.push(ROUTING.timetable);
+    if (!timetable || !timetable.timetable) router.push('/timetable');
   }, []);
+
+  if (!timetable || !timetable.timetable) return <>Not Found</>;
 
   return (
     <>

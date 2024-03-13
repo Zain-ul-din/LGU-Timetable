@@ -26,7 +26,6 @@ import { decrypt } from '~/lib/cipher';
 export async function getStaticPaths() {
   const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
   const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
-  console.log(JSON.stringify(paths));
   return {
     paths,
     fallback: true // can also be true or 'blocking'
@@ -35,7 +34,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
-  console.log('got id ', id);
   const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
   const timetable = decrypt(data);
 
@@ -52,7 +50,6 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
-  console.log('~~~ id: ', timetable.id);
   const router = useRouter();
   const toast = useToast();
 
@@ -95,8 +92,10 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
   }, 2000);
 
   useEffect(() => {
-    if (!timetable.timetable) router.push('/timetable');
+    if (!timetable || !timetable.timetable) router.push('/timetable');
   }, []);
+
+  if (!timetable || !timetable.timetable) return <>Not Found</>;
 
   return (
     <>

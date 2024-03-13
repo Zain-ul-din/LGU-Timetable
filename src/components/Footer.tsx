@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Box,
   Button,
@@ -82,14 +83,14 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
             </Stack>
           </Container>
           <FooterLinks />
-          <Center marginY={'1rem'}>
+          <Center my={6}>
             <Heading fontWeight={'thin'} className="roboto" fontSize={'2xl'}>
               Github Contributors
             </Heading>
           </Center>
           <Flex
             background={'inherit'}
-            gap={isUnder600 ? '0.5rem' : '1rem'}
+            gap={isUnder600 ? '0.5rem' : '1.5rem'}
             flexDirection={'row'}
             flexWrap={'wrap'}
             justifyContent={'center'}
@@ -222,7 +223,8 @@ const GithubContributors = ({ urls }: { urls: string[] }) => {
                 position={'relative'}
                 display={'flex'}
                 boxShadow={'none'}
-                justifyContent={'center'}>
+                justifyContent={'center'}
+                gap={1}>
                 <img
                   src={user.avatar_url}
                   alt={`${user.login}-avatar`}
@@ -245,11 +247,13 @@ const GithubContributors = ({ urls }: { urls: string[] }) => {
                     boxShadow={'0px 0px 20px rgba(255,255,255,0.05)'}
                     zIndex={'-10'}
                     top={'0'}
-                    left={'0'}>
+                    left={'13px'}>
                     {' '}
                   </Flex>
                 )}
-                {/*<Text textAlign={'center'}>{user.login}</Text>*/}
+                <Text textAlign={'center'} fontWeight={'hairline'}>
+                  {user.login}
+                </Text>
               </Card>
             </a>
           );

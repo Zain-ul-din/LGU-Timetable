@@ -27,7 +27,7 @@ export async function getStaticPaths() {
   console.log('going to fetch timetable[id]');
   const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
   console.log('GOT', JSON.stringify(data), ' ', decrypt<string[]>(data));
-  const paths = decrypt<string[]>(data).map((path) => ({ params: { id: path } }));
+  const paths = decrypt<string[]>(data).map((id) => ({ params: { id } }));
   return {
     paths,
     fallback: true // can also be true or 'blocking'
@@ -36,6 +36,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
+  console.log('Gotcha ', id);
   const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
   const timetable = decrypt(data);
 

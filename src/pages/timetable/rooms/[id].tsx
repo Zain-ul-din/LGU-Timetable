@@ -4,15 +4,12 @@ import { useRouter } from 'next/router';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useEffect, useState } from 'react';
 
-import { doc, getDoc, getDocs } from 'firebase/firestore';
-import { roomsTimetableCol, teachersTimetableCol } from '~/lib/firebase';
-
 import { motion } from 'framer-motion';
 import { Center } from '@chakra-ui/react';
 import Head from 'next/head';
 import { SocialLinks } from '~/components/seo/Seo';
 import { GetStaticPropsContext } from 'next';
-import { TimetableData, TimetableDocType, TimetableResponseType } from '~/types/typedef';
+import { TimetableData, TimetableDocType } from '~/types/typedef';
 
 import { useTimeout, useToast } from '@chakra-ui/react';
 import PromotionToast from '~/components/design/PromotionToast';
@@ -27,7 +24,7 @@ export async function getStaticPaths() {
 
   return {
     paths,
-    fallback: 'blocking' // can also be true or 'blocking'
+    fallback: 'blocking'
   };
 }
 
@@ -108,7 +105,7 @@ function TimetableRenderer({ timetable }: { timetable: any }) {
 
   useEffect(() => {
     setTimetableData(timetable);
-  }, []);
+  }, [timetable]);
 
   return (
     <>

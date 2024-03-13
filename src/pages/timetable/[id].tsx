@@ -34,6 +34,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params!.id;
+  console.log('got id ', id);
   const { data } = await axios.get(`${APIS_ENDPOINTS.TIMETABLE}${id}.json`);
   const timetable = decrypt(data);
 

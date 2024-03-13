@@ -26,17 +26,17 @@ LGU-TimeTable
 
 <!-- DOCS -->
 
-### Quick Start: 
+### Quick Start:
+
 ```command
   # run these commands to setup this project on your machine
   >> git clone https://github.com/Zain-ul-din/LGU-BetterTimeTable.git
   >> cd LGU-Timetable
   >> npm i yarn -g
-  >> yarn 
+  >> yarn
   >> yarn dev
+  <!--  -->
 ```
-
-
 
 ## Contributors ✨
 
@@ -47,12 +47,10 @@ LGU-TimeTable
 <!-- about -->
 
 ##
+
 <div align="center">
 <h4 font-weight="bold">This repository is maintained by <a href="https://github.com/Zain-ul-din">Zain-Ul-Din</a></h4>
 <p> Show some ❤️ by starring this awesome repository! </p>
 </div>
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------
-
-  
-
+---

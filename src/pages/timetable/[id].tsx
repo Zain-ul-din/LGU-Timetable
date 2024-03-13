@@ -26,7 +26,7 @@ import { decrypt } from '~/lib/cipher';
 export async function getStaticPaths() {
   console.log('going to fetch timetable[id]');
   const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
-  console.log('GOT', JSON.stringify(data));
+  console.log('GOT', JSON.stringify(data), ' ', decrypt<string[]>(data));
   const paths = decrypt<string[]>(data).map((path) => ({ params: { id: path } }));
   return {
     paths,

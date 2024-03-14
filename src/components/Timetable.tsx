@@ -250,7 +250,7 @@ const TimetableHeader = ({
               }}
               onAfterPrint={() => setColorMode('dark')}
             />
-            <Link
+            {/* <Link
               href={`${APIS_ENDPOINTS.SCREEN_SHOTS_PATH}/${metadataStr}.png`}
               target="_blank"
               download>
@@ -262,7 +262,7 @@ const TimetableHeader = ({
                   }}
                 />
               </Button>
-            </Link>
+            </Link> */}
           </Flex>
         </Flex>
       </Flex>

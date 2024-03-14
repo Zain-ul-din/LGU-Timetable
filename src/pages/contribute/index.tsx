@@ -4,11 +4,11 @@ import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/Fir
 import { VisuallyHidden } from '@chakra-ui/react';
 import { ContributeSocialLinks, SocialLinks } from '~/components/seo/Seo';
 import Header from '~/components/Header';
+import MainAnimator from '~/components/design/MainAnimator';
 
 export default function ContributePage() {
-
    useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.contribute);
-   
+
    return (
       <>
          <Head>
@@ -29,22 +29,24 @@ export default function ContributePage() {
             <link rel="icon" href="/favicon.ico" />
          </Head>
          {/* <Blob/> */}
-         <main>
+         <MainAnimator>
             <Header />
             <VisuallyHidden>
                <SEO />
             </VisuallyHidden>
             <Contribute />
-         </main>
+         </MainAnimator>
       </>
    );
 }
 
-const SEO = ()=> {
-   return <>
-      <article>
-         <title>Contribute on Github</title>
-         <p>Contribute to this project on github</p>
-      </article>
-   </>
-}
+const SEO = () => {
+   return (
+      <>
+         <article>
+            <title>Contribute on Github</title>
+            <p>Contribute to this project on github</p>
+         </article>
+      </>
+   );
+};

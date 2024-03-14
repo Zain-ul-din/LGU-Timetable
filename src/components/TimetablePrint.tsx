@@ -1,4 +1,12 @@
-import { Flex, Text, useColorModeValue, Badge, useColorMode, Center, Heading } from '@chakra-ui/react';
+import {
+   Flex,
+   Text,
+   useColorModeValue,
+   Badge,
+   useColorMode,
+   Center,
+   Heading
+} from '@chakra-ui/react';
 
 import { getColSpan, fillColumn } from '~/lib/util';
 
@@ -19,7 +27,11 @@ interface ITimeTableProps {
  * @param   {ITimeTableProps}
  * @returns  JSX.Element
  */
-export default function TimeTablePrint({ headTitles, data, payload }: ITimeTableProps): JSX.Element {
+export default function TimeTablePrint({
+   headTitles,
+   data,
+   payload
+}: ITimeTableProps): JSX.Element {
    return (
       <>
          <TableContainer my={2} p={2} width={'150%'} overflow={'auto'} scale={'0.9'}>

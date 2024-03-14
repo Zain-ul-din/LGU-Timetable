@@ -53,3 +53,14 @@ export const GITHUB_REPOS = [
       repo_name: 'LGU-TimetableAPI'
    }
 ];
+
+export const ROUTING = {
+   home: '/',
+   developer: '/developer',
+   contribute: '/contribute',
+   profile: '/profile',
+   timetable: '/timetable',
+   notification: '/notifications',
+   free_class_rooms: '/freeclassrooms',
+   admin: '/admin'
+};

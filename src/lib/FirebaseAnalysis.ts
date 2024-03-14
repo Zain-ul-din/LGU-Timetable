@@ -28,34 +28,30 @@ export function addLoggedInUser(user: User) {
    });
 }
 
-
 export enum FIREBASE_ANALYTICS_EVENTS {
    // pages
-   home_page = "home_page",
-   profile = "profile",
-   time_table = "time_table",
-   free_classrooms = "free_classrooms",
-   developer = "developer",
-   contribute = "contribute",
-   notifications = "notifications",
+   home_page = 'home_page',
+   profile = 'profile',
+   time_table = 'time_table',
+   free_classrooms = 'free_classrooms',
+   developer = 'developer',
+   contribute = 'contribute',
+   notifications = 'notifications',
    // click events
-   link_share_on_whatsapp = "link_share_on_whatsapp",
-   print_time_table = "print_time_table"
+   link_share_on_whatsapp = 'link_share_on_whatsapp',
+   print_time_table = 'print_time_table',
+   promotion_closed = 'promotion_closed'
 }
 
 import { logEvent } from 'firebase/analytics';
 
-export function reportFirebaseAnalytics (key: string, val: any)
-{
-   if (!firebase.firebaseAnalytics) return 
+export function reportFirebaseAnalytics(key: string, val: any) {
+   if (!firebase.firebaseAnalytics) return;
    logEvent(firebase.firebaseAnalytics, key, val);
 }
 
-export function useFirebaseAnalyticsReport (
-   eventName: FIREBASE_ANALYTICS_EVENTS
-)
-{
-   useEffect(()=> {
+export function useFirebaseAnalyticsReport(eventName: FIREBASE_ANALYTICS_EVENTS) {
+   useEffect(() => {
       reportFirebaseAnalytics(eventName.toString(), {});
-   }, [])
+   }, []);
 }

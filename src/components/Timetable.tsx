@@ -84,7 +84,9 @@ export default function Timetable({ metaData, timetableData }: IProps) {
                 <TimeTablePrint
                   headTitles={timetableHeadTitles}
                   data={timetableData.timetable}
-                  payload={`${metaData}`}
+                  payload={`${metaData} (Updated At: ${new Date(
+                    timetableData.updatedAt
+                  ).toDateString()})`}
                 />
               </div>
 

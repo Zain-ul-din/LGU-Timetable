@@ -80,10 +80,7 @@ export default function Timetable({ metaData, timetableData }: IProps) {
             <Loader>Loading...</Loader>
           ) : (
             <>
-              <div
-                ref={printTableRef}
-                className="print_timetable"
-                style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+              <div ref={printTableRef} className="print_timetable">
                 <TimeTablePrint
                   headTitles={timetableHeadTitles}
                   data={timetableData.timetable}

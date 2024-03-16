@@ -251,6 +251,7 @@ a {
 
 /* Print Module */
 @media print {
+  
   table {
     page-break-after: always !important;
   }
@@ -287,26 +288,42 @@ a {
     transform-origin: 0 0;
     color: black !important;
   }
-
+  
   * {
     /* styling */
     box-sizing: border-box !important;
-    font-size: 1rem !important;
     padding: 3px !important;
     border-color: black !important;
   }
-
-  .print_timetable {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid red;
+  
+  th, td, tr, p, span {
+    font-size: 1rem !important;
   }
+
+  @page{
+    background: black;
+    margin:0;
+    size: A4;
+    padding: 0;
+  }
+
+
+    .print_timetable {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      page-break-inside: avoid;
+      max-height: 100%;
+      overflow: hidden;
+      page-break-after: always;
+    }
 
   ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 0.1px rgba(0, 0, 0, 0) !important;

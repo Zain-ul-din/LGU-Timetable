@@ -5,7 +5,8 @@ import {
   Badge,
   useColorMode,
   Center,
-  Heading
+  Heading,
+  Td
 } from '@chakra-ui/react';
 
 import { getColSpan, fillColumn } from '~/lib/util';
@@ -34,14 +35,13 @@ export default function TimeTablePrint({
 }: ITimeTableProps): JSX.Element {
   return (
     <>
-      <TableContainer my={2} p={2} width={'150%'} overflow={'auto'} scale={'0.9'}>
-        <Center my={1}>
-          <Heading>{payload}</Heading>
+      <TableContainer p={2} width={'100%'} overflow={'auto'} scale={'0.9'}>
+        <Center my={5}>
+          <Heading fontSize={'3xl'}>{payload}</Heading>
         </Center>
         <Table
           variant={'simple'}
           size={'sm'}
-          p={1}
           color={'black !important'}
           border={'1px solid black'}
           overflow={'visible'}>
@@ -63,13 +63,19 @@ export default function TimeTablePrint({
             })}
           </Tbody>
           <Tfoot>
-            <Th
-              height={'3rem'}
-              textAlign={'center'}
-              colSpan={headTitles.length + 7}
-              color={'blackAlpha.800'}>
-              https://www.lgutimetable.online
-            </Th>
+            <Tr>
+              <Th textAlign={'center'} colSpan={headTitles.length + 7} color={'blackAlpha.800'}>
+                <a
+                  href="https://www.lgutimetable.online"
+                  style={{
+                    display: 'inline-block',
+                    margin: '1rem 0rem',
+                    color: 'blue'
+                  }}>
+                  SOURCE: https://www.lgutimetable.online
+                </a>
+              </Th>
+            </Tr>
           </Tfoot>
         </Table>
       </TableContainer>
@@ -87,13 +93,18 @@ function TimeTableHead({ titiles }: { titiles: Array<LectureTime> }): JSX.Elemen
     <>
       <Thead>
         <Tr>
-          <Th border={'1px solid black'} color={'blackAlpha.900'}>
-            TIME
+          <Th border={'1px solid black'} color={'blackAlpha.900'} textAlign={'center'}>
+            <Text>TIME</Text>
           </Th>
           {titiles.map((lectureTime: LectureTime, idx: number): JSX.Element => {
             return (
-              <Th key={idx} border={'1px solid black'} color={'blackAlpha.900'}>
-                <Flex textAlign={'center'} flexDirection={'column'}>
+              <Th
+                p={2}
+                key={idx}
+                border={'1px solid black'}
+                color={'blackAlpha.900'}
+                textAlign={'center'}>
+                <Flex textAlign={'center'} flexDirection={'column'} my={'1rem'}>
                   <Text>{lectureTime.startTime}</Text>
                   <Text>{'-'}</Text>
                   <Text>{lectureTime.endTime}</Text>
@@ -124,13 +135,13 @@ function TimeTableCell({
   return (
     <>
       <Tr>
-        <Th border={'1px solid black'} color={'blackAlpha.900'}>
-          {day}
+        <Th border={'1px solid black'} color={'blackAlpha.900'} textAlign={'center'}>
+          <Text padding={'2rem'}>{day}</Text>
         </Th>
 
         {!metaData || metaData.length == 0 ? (
           <Th colSpan={colCount} border={'1px solid black'}>
-            <Flex justifyContent={'center'} py={2} color={'blackAlpha.900'}>
+            <Flex justifyContent={'center'} py={2} color={'blackAlpha.900'} marginY={'2rem'}>
               All Slots are free
             </Flex>
           </Th>
@@ -155,11 +166,11 @@ function TimeTableCell({
               <Th
                 key={idx}
                 colSpan={colSpan}
-                py={2}
+                py={5}
                 border={'0.1px solid'}
                 borderRadius={'2xl'}
                 borderColor={'gray.900'}>
-                <Flex flexDirection={'column'} alignItems={'center'}>
+                <Flex flexDirection={'column'} alignItems={'center'} gap={3} my={2}>
                   {val.subject ? (
                     <>
                       <Text fontSize={'xs'} fontFamily={'monospace'} color={'blackAlpha.900'}>
@@ -171,11 +182,13 @@ function TimeTableCell({
                           ':' +
                           `${val.endTime.minutes}`.padEnd(2, '0')}
                       </Text>
-                      <Badge fontSize={'x-small'}>{val.subject}</Badge>
+                      <Badge fontSize={'x-small'} p={3}>
+                        {val.subject}
+                      </Badge>
                       <Text fontSize={'x-small'} color={'blackAlpha.900'}>
                         {val.roomNo}
                       </Text>
-                      <Text fontSize={'x-small'} color={'blackAlpha.900'}>
+                      <Text fontSize={'x-small'} fontWeight={'medium'} color={'blackAlpha.900'}>
                         {val.teacher}
                       </Text>
                     </>

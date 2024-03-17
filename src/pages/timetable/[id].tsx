@@ -80,7 +80,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
     toast({
       position: 'bottom',
       colorScheme: 'gray',
-      duration: 1000 * 60,
+      duration: 1000 * 10,
       render: () => (
         <PromotionToast
           closeHandler={() => {

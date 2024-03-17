@@ -1,4 +1,13 @@
-import { Box, Flex, Input, Text, useMediaQuery } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Text,
+  useMediaQuery
+} from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { SubjectObjectVal, SubjectOjectType } from '~/types/typedef';
 import CourseCard from './CourseCard';
@@ -11,6 +20,13 @@ import Loader from '../design/Loader';
 import LoadingOverlay from './LoadingOverlay';
 import usePagination from '~/hooks/usePagination';
 import Pagination from '../design/Pagination';
+import {
+  AutoComplete,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+  Item
+} from '@choc-ui/chakra-autocomplete';
 
 const PaginationConfig = {
   MAX_CARD_PER_PAGE: 10
@@ -20,6 +36,12 @@ export default function TimetableClashResolver() {
   const [loading, setLoading] = useState<boolean>(true);
   const [subjects, setSubjects] = useState<SubjectOjectType>({});
   const [filter, setFilter] = useState<string>('');
+
+  const allClasses = useMemo(() => {
+    return Array.from(new Set(Object.values(subjects).map((sub) => sub.url_id)));
+  }, [subjects]);
+
+  const [selectedClass, setSelectedClass] = useState<string>('');
 
   useEffect(() => {
     const getSubjects = async () => {
@@ -81,7 +103,11 @@ export default function TimetableClashResolver() {
   }, [subjectLoading, subjects, setSubjects]);
 
   const subjectsToEntries = useMemo(
-    () => Object.entries(subjects).filter((e) => e[0].toLowerCase().includes(filter.toLowerCase())),
+    () =>
+      Object.entries(subjects).filter(([key, val]) => {
+        const fullText = (key + ' ' + val).replaceAll('  ', ' ');
+        return fullText.toLowerCase().includes(filter.toLowerCase());
+      }),
     [subjects, filter]
   );
 
@@ -131,13 +157,26 @@ export default function TimetableClashResolver() {
           <Text fontWeight={'bold'} my={1}>
             Search Courses: {visibleSubjectsCount} found
           </Text>
-          <Input
-            ref={inputRef}
-            size={'md'}
-            onChange={(e) => setFilter(e.target.value)}
-            value={filter}
-            placeholder="Enter Course Name"
-          />
+          <Stack>
+            <Input
+              ref={inputRef}
+              size={'md'}
+              onChange={(e) => setFilter(e.target.value)}
+              value={filter}
+              placeholder="Enter Course Name"
+            />
+
+            {/* <AutoCompleteSearch
+              options={allClasses}
+              placeholder="Select Class (Optional)"
+              onSelectOption={(e) => {
+                setSelectedClass(e.item.value);
+              }}
+              title="Select Class"
+              value={selectedClass}
+              error=""
+            /> */}
+          </Stack>
         </Box>
 
         {loading && <Loader>Please wait fetching subjects data</Loader>}
@@ -201,3 +240,58 @@ export default function TimetableClashResolver() {
     </>
   );
 }
+
+const AutoCompleteSearch = ({
+  title,
+  options,
+  placeholder,
+  value,
+  onSelectOption,
+  error
+}: {
+  title: string;
+  placeholder: string;
+  options: Array<string>;
+  value: string;
+  onSelectOption:
+    | ((params: {
+        item: Item;
+        selectMethod: 'mouse' | 'keyboard' | null;
+        isNewInput?: boolean | undefined;
+      }) => boolean | void)
+    | undefined;
+  error: string | undefined;
+}) => {
+  return (
+    <>
+      <FormControl w="full">
+        <FormLabel>{title}</FormLabel>
+        <AutoComplete openOnFocus value={value} onSelectOption={onSelectOption}>
+          <AutoCompleteInput
+            fontSize={'xs'}
+            variant="filled"
+            background={'var(--card-color)'}
+            _hover={{ background: 'var(--card-color)' }}
+            placeholder={placeholder}
+          />
+          <AutoCompleteList background={'var(--bg-color)'}>
+            {options.map((opt, cid) => (
+              <AutoCompleteItem
+                key={`option-${cid}`}
+                value={opt}
+                textTransform="capitalize"
+                _hover={{ background: 'var(--card-color)' }}>
+                {opt}
+              </AutoCompleteItem>
+            ))}
+          </AutoCompleteList>
+        </AutoComplete>
+        {error && (
+          <Text color={'red.300'} fontSize={'sm'} className="roboto" my={'0.5rem'}>
+            {error}
+          </Text>
+        )}
+      </FormControl>
+    </>
+  );
+};

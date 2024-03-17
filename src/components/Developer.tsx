@@ -1,7 +1,7 @@
 import axios from 'axios';
 import styles from '~/styles/developer.module.css';
 import Button from './design/Button';
-import { useToast } from '@chakra-ui/react';
+import { Flex, HStack, Heading, Input, useMediaQuery, useToast } from '@chakra-ui/react';
 
 import { IApiSchema } from '~/lib/redis';
 import { Nunito } from 'next/font/google';
@@ -23,48 +23,53 @@ export default function Developer({ children }: { children: React.ReactNode }) {
   const user = useContext(UserCredentialsContext);
 
   return (
-    <div className={styles.developer + ' ' + nunito.className}>
-      <h1>APIS For Developers</h1>
-      <p>
-        {`Welcome to LGU timetable site! I'm  excited to provide you with APIs that allow you to access and utilize our comprehensive timetable data. To get started, simply sign up for an API key and provide a brief description of how you plan to use our APIs.
+    <>
+      <Flex maxW={'1400px'} mx={'auto'} w={'100%'} px={'1rem'} py={5}>
+        <SessionInput className={nunito.className} />
+      </Flex>
+      <div className={styles.developer + ' ' + nunito.className}>
+        <h1>APIS For Developers</h1>
+        <p>
+          {`Welcome to LGU timetable site! I'm  excited to provide you with APIs that allow you to access and utilize our comprehensive timetable data. To get started, simply sign up for an API key and provide a brief description of how you plan to use our APIs.
  you will have access to our complete university timetable data and more. Our APIs are designed to be easy to use and integrate into your own applications and websites.
     If you have any questions or issues with our APIs, please feel free to contact us at any time. We are committed to providing you with the best possible experience.`}
-      </p>
-      <motion.div
-        className={styles.api}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}>
-        <h1>API KEYS</h1>
-        <p>
-          Your secret API keys are listed below. Please note that we do not display your secret API
-          keys again after you generate them.
-          <i>Do not share your API key with others.</i> You will get <b>200</b> request per day with
-          each secret key and secret key will expire after <b>1 month</b>.
         </p>
-      </motion.div>
+        <motion.div
+          className={styles.api}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}>
+          <h1>API KEYS</h1>
+          <p>
+            Your secret API keys are listed below. Please note that we do not display your secret
+            API keys again after you generate them.
+            <i>Do not share your API key with others.</i> You will get <b>200</b> request per day
+            with each secret key and secret key will expire after <b>1 month</b>.
+          </p>
+        </motion.div>
 
-      {!user?.user && (
-        <>
-          <Center>
-            <NotLoggedIn text={'Sign in with Google to Get API keys'} />
-          </Center>
-        </>
-      )}
+        {!user?.user && (
+          <>
+            <Center>
+              <NotLoggedIn text={'Sign in with Google to Get API keys'} />
+            </Center>
+          </>
+        )}
 
-      {user?.user && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1.5 }}>
-            <DashBoardTable user={user.user as User} />
-          </motion.div>
-        </>
-      )}
+        {/* {user?.user && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 1.5 }}>
+              <DashBoardTable user={user.user as User} />
+            </motion.div>
+          </>
+        )} */}
 
-      {children}
-    </div>
+        {children}
+      </div>
+    </>
   );
 }
 
@@ -88,6 +93,8 @@ import { apiAnalysisCol } from '~/lib/firebase';
 import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 
 import { NotLoggedIn } from './Header';
+import PremiumButton from './design/PremiumButton';
+import SessionInput from './SessionInput';
 
 const DashBoardTable = ({ user }: { user: User }) => {
   const [keys, setKeys] = useState<Array<IApiResponse>>([]);

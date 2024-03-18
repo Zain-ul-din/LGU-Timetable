@@ -47,6 +47,7 @@ LGU-TimeTable
 
 ##
 
+
 <div align="center">
 <h4 font-weight="bold">This repository is maintained by <a href="https://github.com/Zain-ul-din">Zain-Ul-Din</a></h4>
 <p> Show some ❤️ by starring this awesome repository! </p>

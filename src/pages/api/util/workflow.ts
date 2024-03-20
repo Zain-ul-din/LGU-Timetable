@@ -98,7 +98,7 @@ async function triggerWorkFlow(uid: string, session_id: string,) {
 /**
  * Determines how many work flow can trigger per day
 */
-const MAX_WORK_FLOW_PER_DAY = 10;
+const MAX_WORK_FLOW_PER_DAY = 5;
 
 /**
  * Cool Down between each trigger

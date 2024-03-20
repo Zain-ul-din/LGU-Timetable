@@ -35,9 +35,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const user = usersSnapShot.docs.map((doc)=> doc.data())[0] as UserDocType
 
     const isAdmin = user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL; 
-
+    const quotaDoc = await initWorkFlowDoc()
+    
     if(!isAdmin) {
-      const { valid, message } = await canTriggerWorkFlow(user);
+      const { valid, message } = await canTriggerWorkFlow(quotaDoc as WorkFlowQuotaType,user);
       if(!valid) {
         res.status(405).send({ message })
         return;
@@ -66,12 +67,32 @@ interface WorkFlowQuotaType {
   participants: string [] 
 }
 
+async function initWorkFlowDoc() {
+  const quotaDocRef = doc(workFlowColRef, new Date().toDateString()); 
+  let quotaSnapShot = await getDoc(quotaDocRef);
+
+  if(!quotaSnapShot.exists()) {
+    await setDoc(quotaDocRef, {
+      last_updated: serverTimestamp(),
+      users: [],
+      participants: []
+    } as WorkFlowQuotaType, { merge: true });
+    return {
+      message: '',
+      valid: true
+    };
+  }
+
+  return quotaSnapShot.data()
+}
+
 async function triggerWorkFlow(uid: string, session_id: string,) {
   const quotaDocRef = doc(workFlowColRef, new Date().toDateString()); 
   const auxDoc = doc(workFlowColRef);
 
   const GITHUB_URL = 'https://api.github.com/repos/Zain-ul-din/lgu-crawler/actions/workflows/89946576/dispatches'
-
+  const hook = process.env.RE_DEPLOYMENT_HOOK || 'https://www.google.com'
+  
   await fetch(GITHUB_URL, {
     method: 'POST',
     headers: {
@@ -81,7 +102,7 @@ async function triggerWorkFlow(uid: string, session_id: string,) {
     },
     body: JSON.stringify({
       ref: "master",
-      inputs: { session_id }
+      inputs: { session_id, hook }
     })
   })
   
@@ -113,24 +134,10 @@ const PRO_COOL_DOWN_TIME = ONE_HOUR_IN_MS * 0.25;
 const MAX_REQ_PER_USER = 2;
 const MAX_REQ_PER_PRO_USER = 4;
 
-async function canTriggerWorkFlow(user: UserDocType) {
 
-  const quotaDocRef = doc(workFlowColRef, new Date().toDateString()); 
-  let quotaSnapShot = await getDoc(quotaDocRef);
+async function canTriggerWorkFlow(quota: WorkFlowQuotaType,user: UserDocType) {
 
-  if(!quotaSnapShot.exists()) {
-    await setDoc(quotaDocRef, {
-      last_updated: serverTimestamp(),
-      users: [],
-      participants: []
-    } as WorkFlowQuotaType, { merge: true });
-    return {
-      message: '',
-      valid: true
-    };
-  }
-
-  const { last_updated, users } = quotaSnapShot.data() as WorkFlowQuotaType
+  const { last_updated, users } = quota
 
   if(users.length === MAX_WORK_FLOW_PER_DAY) {
     return { 
@@ -167,4 +174,3 @@ async function canTriggerWorkFlow(user: UserDocType) {
     valid: true
   }
 }
-

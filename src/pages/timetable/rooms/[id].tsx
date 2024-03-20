@@ -39,8 +39,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return {
     props: {
       timetable: { id: timetable.uid, room: timetable.uid, ...timetable }
-    },
-    revalidate: 30
+    }
   };
 }
 

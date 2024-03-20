@@ -39,8 +39,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return {
     props: {
       timetable: { id: timetable.uid, ...timetable }
-    },
-    revalidate: 5
+    }
   };
 }
 

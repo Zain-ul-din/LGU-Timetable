@@ -25,8 +25,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   return {
     props: {
-      timetables,
-      revalidate: 60
+      timetables
     }
   };
 }

@@ -7,39 +7,6 @@
 
 <!--  paste above this line -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### How to contribute
 
 - fork this repo by clicking this [link](https://github.com/Zain-ul-din/LGU-Timetable/fork)

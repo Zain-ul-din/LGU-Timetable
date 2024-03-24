@@ -1,12 +1,13 @@
-import { Button, Center, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import router from 'next/router';
 import useTyperEffect from '~/hooks/useTyperEffect';
-import { ROUTING } from '~/lib/constant';
 
-export default function ClashResolverAd() {
+// TODO: take data from props
+
+export default function FrontPageAd() {
   const { displayText, isTypingComplete } = useTyperEffect({
-    text: 'A tool created to enable the selection of courses without any time conflicts.',
+    text: 'participate in the moderator elections by ranking the candidates, and perhaps even by nominating yourself to be a moderator.',
     speed: 40
   });
 
@@ -21,7 +22,9 @@ export default function ClashResolverAd() {
         boxShadow={'0px 0px 50px rgba(255, 255,255, 0.03)'}
         mx={'1rem'}>
         <Stack w={'full'}>
-          <Heading size={'lg'}>Timetable Clash Resolver</Heading>
+          <Heading size={'lg'} textAlign={'center'}>
+            Moderator Election - Nomination Phase
+          </Heading>
           <Text fontSize={'lg'}>
             {displayText}
             {!isTypingComplete ? <BlinkCursor /> : <></>}
@@ -33,10 +36,10 @@ export default function ClashResolverAd() {
               bgGradient: 'linear(to-l, #7928CA, #FF0080)'
             }}
             onClick={() => {
-              router.push(ROUTING.clash_resolver);
+              router.push('/election');
             }}
             fontSize={'md'}>
-            Check Out timetable Clash Resolver
+            Join Nomination Phase
           </Button>
         </Stack>
       </Flex>

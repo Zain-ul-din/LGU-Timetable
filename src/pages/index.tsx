@@ -4,7 +4,7 @@ import TableOfContent from '~/components/TableOfContent';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 import { SocialLinks } from '~/components/seo/Seo';
 import MainAnimator from '~/components/design/MainAnimator';
-import ClashResolverAd from '~/components/announcements/ClashResolverAd';
+import FrontPageAd from '~/components/Ads/FrontPageAd';
 
 export default function Home() {
   useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
@@ -30,7 +30,7 @@ export default function Home() {
       <MainAnimator>
         <div className={'roboto'}>
           <Hero renderDescription={true} />
-          <ClashResolverAd />
+          <FrontPageAd />
           <TableOfContent />
         </div>
         <div className="google-ad"></div>

@@ -13,7 +13,7 @@ type TableOfContent = {
 };
 
 import { ROUTING } from '~/lib/constant';
-import ClashResolverAd from './announcements/ClashResolverAd';
+import FrontPageAd from './Ads/FrontPageAd';
 
 const tableOfContent: TableOfContent[] = [
   {

@@ -22,9 +22,12 @@ export default function Candidates() {
 
   useEffect(() => {
     candidates.forEach((candidate) => {
+      console.log('candidate : ', candidate);
       cacheUser([users, setUsers], candidate.uid);
     });
   }, [candidates]);
+
+  console.log(users);
 
   return (
     <>

@@ -1,7 +1,7 @@
 # Moderator Election
 
 
->  Nomination Begun at: March 14, 2024
+>  Nomination Begun at: March 23, 2024
 
 >  Election Date: April 1st, 2024
 

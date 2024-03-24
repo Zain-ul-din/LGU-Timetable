@@ -16,6 +16,7 @@
     "@choc-ui/chakra-autocomplete": "^5.1.4",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@google/generative-ai": "^0.3.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",

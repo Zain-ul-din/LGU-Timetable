@@ -245,6 +245,34 @@ function userCacheHof() {
   };
 }
 
+function userCacheHofGeneric() {
+  const userCache: { [key: string]: boolean } = {};
+  return (state: UseStateProps<{ [uid: string] : UserDocType }>, uId: string) => {
+    if (uId in userCache) return;
+
+    userCache[uId] = true; // user cached
+
+    const userQuery = query(userColsRef, where('uid', '==', uId), limit(1));
+
+    getDocs(userQuery)
+      .then((docSnapShot) => {
+        state[1]((prevState) => {
+          return {
+            ...prevState,
+            [uId]: {
+                ...(docSnapShot.docs.map((d) => d.data())[0] as UserDocType),
+                id: uId
+            }
+          };
+        });
+      })
+      .catch((err) => {
+        delete userCache[uId]; // remove from cache, cuz it doesn't exist or fail to fetch
+      });
+  };
+}
+
+export const cacheUser = userCacheHofGeneric();
 export const addUserToCache = userCacheHof();
 
 export function dateToUnixTimestampInSeconds(date: Date): number {

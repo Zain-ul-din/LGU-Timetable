@@ -4,7 +4,15 @@ import { NotLoggedIn } from '../Header';
 import { firebase } from '~/lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const MustSignIn = ({ children }: { children: React.ReactNode }) => {
+const MustSignIn = ({
+  children,
+  text,
+  hideBackBtn
+}: {
+  children: React.ReactNode;
+  text?: string;
+  hideBackBtn?: boolean;
+}) => {
   const [user, loading, err] = useAuthState(firebase.firebaseAuth);
 
   if (err) {
@@ -28,11 +36,15 @@ const MustSignIn = ({ children }: { children: React.ReactNode }) => {
       flexDirection={'column'}
       marginBottom={'36'}
       gap={'1rem'}>
-      <Box>
-        <BackBtn />
-      </Box>
+      {hideBackBtn ? (
+        <></>
+      ) : (
+        <Box>
+          <BackBtn />
+        </Box>
+      )}
       <Center>
-        <NotLoggedIn text="Sign-in to view the content" isLoading={loading} />
+        <NotLoggedIn text={text || 'Sign-in to view the content'} isLoading={loading} />
       </Center>
     </Flex>
   );

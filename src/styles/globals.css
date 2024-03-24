@@ -352,12 +352,14 @@ a {
   font-family: 'Roboto', sans-serif;
   font-size: 2.5rem;
   font-weight: 600;
+  padding: 1rem 0rem;
 }
 
 .mark-down h2 {
   font-family: 'Roboto', sans-serif;
   font-size: 2rem;
   font-weight: 600;
+  padding: 1rem 0rem;
 }
 
 .mark-down h3 {

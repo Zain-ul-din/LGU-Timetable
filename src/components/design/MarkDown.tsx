@@ -45,6 +45,18 @@ const MarkDown = ({ text, className }: { text: string; className?: string }) => 
           h3({ children }) {
             return <h3 id={generateHeadingId(children.toString())}>{children}</h3>;
           },
+          li({ children }) {
+            return (
+              <li
+                style={{
+                  marginLeft: '1rem',
+                  marginTop: '0.5rem',
+                  marginBottom: '0.5rem'
+                }}>
+                {children}
+              </li>
+            );
+          },
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '');
             return !inline && match ? (

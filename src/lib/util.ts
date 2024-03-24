@@ -246,9 +246,11 @@ function userCacheHof() {
 }
 
 function userCacheHofGeneric() {
-  const userCache: { [key: string]: boolean } = {};
+  let userCache: { [key: string]: boolean } = {};
+  const clearCache = ()=> userCache = {};
+
   return (state: UseStateProps<{ [uid: string] : UserDocType }>, uId: string) => {
-    if (uId in userCache) return;
+    if (uId in userCache) return clearCache;
 
     userCache[uId] = true; // user cached
 
@@ -269,6 +271,7 @@ function userCacheHofGeneric() {
       .catch((err) => {
         delete userCache[uId]; // remove from cache, cuz it doesn't exist or fail to fetch
       });
+    return clearCache;
   };
 }
 

@@ -21,13 +21,12 @@ export default function Candidates() {
   }, []);
 
   useEffect(() => {
+    let clearCache: () => void = () => {};
     candidates.forEach((candidate) => {
-      console.log('candidate : ', candidate);
-      cacheUser([users, setUsers], candidate.uid);
+      clearCache = cacheUser([users, setUsers], candidate.uid);
     });
+    return () => clearCache();
   }, [candidates]);
-
-  console.log(users);
 
   return (
     <>

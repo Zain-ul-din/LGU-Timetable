@@ -36,9 +36,9 @@ export default function Election() {
       <Flex py={6} flexDir={'column'} gap={4}>
         <MustSignIn text="Sign-in to participate" hideBackBtn>
           <Nominate />
-          <Heading>Candidates</Heading>
-          <Candidates />
         </MustSignIn>
+        <Heading>Candidates</Heading>
+        <Candidates />
       </Flex>
     </Flex>
   );

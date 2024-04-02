@@ -76,7 +76,7 @@ export default function Candidates() {
       setVoted(true);
       const docRef = doc(electionColRef, docId);
 
-      const influence = user.email?.endsWith('@lgu.edu.pk') && !/[0-9]/.test(user.email) ? 2 : 1;
+      const influence = user.email?.endsWith('@lgu.edu.pk') && !/[0-9]/.test(user.email) ? 5 : 1;
       updateDoc(docRef, {
         votes: arrayUnion(user.uid),
         vote_count: increment(influence)

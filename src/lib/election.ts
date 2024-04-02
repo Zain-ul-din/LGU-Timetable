@@ -46,4 +46,5 @@ export interface CandidateDocType {
   created_at: FieldValue;
   updated_at: FieldValue;
   votes: Array<string>;
+  vote_count: number;
 }

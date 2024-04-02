@@ -163,7 +163,7 @@ export default function Candidates() {
                         {users[candidate.uid].displayName}
                       </Button>
                       <Text fontSize={'sm'} color={'var(--muted-text)'}>
-                        Total Votes Received: {candidate.votes.length}
+                        Total Votes Received: {candidate.vote_count}
                       </Text>
                     </Stack>
                   ) : (

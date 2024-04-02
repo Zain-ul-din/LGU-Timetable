@@ -35,7 +35,7 @@ export default function Election() {
       <MarkDown text={mdContent} />
       <Flex py={6} flexDir={'column'} gap={4}>
         <MustSignIn text="Sign-in to participate" hideBackBtn>
-          <Nominate />
+          {/* <Nominate /> */}
         </MustSignIn>
         <Heading>Candidates</Heading>
         <Candidates />

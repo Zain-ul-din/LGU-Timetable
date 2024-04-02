@@ -13,7 +13,13 @@ import {
 } from '@chakra-ui/react';
 import PremiumButton from './PremiumButton';
 import { signOut } from 'firebase/auth';
-import { apiAnalysisCol, firebase, timetableHistoryCol, userColsRef } from '~/lib/firebase';
+import {
+  apiAnalysisCol,
+  electionColRef,
+  firebase,
+  timetableHistoryCol,
+  userColsRef
+} from '~/lib/firebase';
 import Button from './Button';
 import { useEffect, useState } from 'react';
 import {
@@ -47,8 +53,9 @@ export default function UserProfile({
     updateToPro: false
   });
 
-  const [{ developerMember }, setBadges] = useState({
-    developerMember: false
+  const [{ developerMember, constituentBadge }, setBadges] = useState({
+    developerMember: false,
+    constituentBadge: false
   });
 
   useEffect(() => {
@@ -57,6 +64,12 @@ export default function UserProfile({
     getCountFromServer(query(apiAnalysisCol, where('email', '==', user.email))).then((snapShot) => {
       setBadges((prev) => ({ ...prev, developerMember: snapShot.data().count > 0 }));
     });
+
+    getCountFromServer(query(electionColRef, where('votes', 'array-contains', user.uid))).then(
+      (snapShot) => {
+        setBadges((prev) => ({ ...prev, constituentBadge: snapShot.data().count > 0 }));
+      }
+    );
   }, [user]);
 
   const setProUser = (state: boolean) => {
@@ -88,6 +101,7 @@ export default function UserProfile({
                 flexWrap={'wrap'}>
                 {user.pro && <PremiumButton size={'sm'}>👑 Pro User</PremiumButton>}
                 {developerMember && <PremiumButton size={'sm'}>👩‍💻 Developer Member</PremiumButton>}
+                {constituentBadge && <PremiumButton size={'sm'}>👍 Constituent</PremiumButton>}
               </Flex>
             )}
 

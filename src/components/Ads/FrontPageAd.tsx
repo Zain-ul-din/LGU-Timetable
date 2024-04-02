@@ -7,7 +7,7 @@ import useTyperEffect from '~/hooks/useTyperEffect';
 
 export default function FrontPageAd() {
   const { displayText, isTypingComplete } = useTyperEffect({
-    text: 'participate in the moderator elections by ranking the candidates, and perhaps even by nominating yourself to be a moderator.',
+    text: 'Earn Constituent Badge by voting candidate in moderator election phase.',
     speed: 40
   });
 
@@ -23,7 +23,7 @@ export default function FrontPageAd() {
         mx={'1rem'}>
         <Stack w={'full'}>
           <Heading size={'lg'} textAlign={'center'}>
-            Moderator Election - Nomination Phase
+            Moderator Election Phase
           </Heading>
           <Text fontSize={'lg'}>
             {displayText}
@@ -39,7 +39,7 @@ export default function FrontPageAd() {
               router.push('/election');
             }}
             fontSize={'md'}>
-            Join Nomination Phase
+            Vote Nominees
           </Button>
         </Stack>
       </Flex>

@@ -1,24 +1,64 @@
-import { Avatar, Divider, Flex, HStack, Heading, Stack, Text } from '@chakra-ui/react';
-import { onSnapshot, orderBy, query } from 'firebase/firestore';
-import { useEffect, useState } from 'react';
+import {
+  Avatar,
+  Button,
+  Divider,
+  Flex,
+  HStack,
+  Heading,
+  Stack,
+  Text,
+  useMediaQuery,
+  useToast
+} from '@chakra-ui/react';
+import {
+  arrayUnion,
+  doc,
+  increment,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc
+} from 'firebase/firestore';
+import { useCallback, useEffect, useState } from 'react';
 import { CandidateDocType } from '~/lib/election';
-import { electionColRef } from '~/lib/firebase';
+import { electionColRef, firebase } from '~/lib/firebase';
 import MarkDown from '../design/MarkDown';
 import { UserDocType } from '~/lib/firebase_doctypes';
 import { cacheUser, fromFirebaseTimeStamp } from '~/lib/util';
+import { ArrowUpIcon, UpDownIcon } from '@chakra-ui/icons';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { GoogleAuthProvider, UserCredential, signInWithPopup } from 'firebase/auth';
+import { addLoggedInUser } from '~/lib/FirebaseAnalysis';
+import Link from 'next/link';
+import { ROUTING } from '~/lib/constant';
 
 export default function Candidates() {
   const [candidates, setCandidates] = useState<CandidateDocType[]>([]);
   const [users, setUsers] = useState<{ [uid: string]: UserDocType }>({});
+  const [user, loading] = useAuthState(firebase.firebaseAuth);
+  const [voted, setVoted] = useState<boolean>(false);
+  const toast = useToast();
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(query(electionColRef, orderBy('created_at')), (snapShot) => {
-      const candidates = snapShot.docs.map((doc) => doc.data()) as CandidateDocType[];
-      setCandidates(candidates);
-    });
+    const unSubscribe = onSnapshot(
+      query(electionColRef, orderBy('vote_count', 'desc')),
+      (snapShot) => {
+        const candidates = snapShot.docs.map((doc) => doc.data()) as CandidateDocType[];
+        setCandidates(candidates);
+      }
+    );
 
     return () => unSubscribe();
   }, []);
+
+  useEffect(() => {
+    if (!user) return;
+    let _voted = false;
+    candidates.forEach((cand) => {
+      if (cand.votes.includes(user?.uid as string)) _voted = true;
+    });
+    setVoted(_voted);
+  }, [candidates, user]);
 
   useEffect(() => {
     let clearCache: () => void = () => {};
@@ -27,6 +67,53 @@ export default function Candidates() {
     });
     return () => clearCache();
   }, [candidates]);
+
+  const vote = useCallback(
+    (docId: string) => {
+      if (!user) return;
+      setVoted(true);
+      const docRef = doc(electionColRef, docId);
+      updateDoc(docRef, {
+        votes: arrayUnion(user.uid),
+        vote_count: increment(1)
+      });
+      toast({
+        title: 'Voted',
+        description: 'You Earned new Badge for voting in election phase.',
+        render: () => {
+          return (
+            <HStack
+              bg={'black'}
+              my={2}
+              p={4}
+              rounded={'md'}
+              border={'1px solid var(--border-color)'}>
+              <UpDownIcon />
+              <Text>
+                Earned new Badge for voting in election phase.
+                <Link
+                  style={{
+                    textDecoration: 'underline',
+                    color: 'var(--muted-text)',
+                    margin: '0 0.5rem'
+                  }}
+                  href={ROUTING.profile}>
+                  Check Profile
+                </Link>
+              </Text>
+            </HStack>
+          );
+        },
+        status: 'success',
+        position: 'top',
+        duration: 9000,
+        isClosable: true
+      });
+    },
+    [user, toast]
+  );
+
+  const [isUnder600] = useMediaQuery('(max-width: 600px)');
 
   return (
     <>
@@ -46,7 +133,12 @@ export default function Candidates() {
             {users[candidate.uid] && (
               <>
                 <Divider mt={4} />
-                <HStack>
+                <Flex
+                  w={'100%'}
+                  gap={4}
+                  flexWrap={'wrap'}
+                  justifyContent={'center'}
+                  alignItems={'center'}>
                   <Avatar src={users[candidate.uid].photoURL as string} />
                   <Stack spacing={-1}>
                     <Text fontSize={'xl'}>{users[candidate.uid].displayName}</Text>
@@ -54,7 +146,34 @@ export default function Candidates() {
                       Posted At: {fromFirebaseTimeStamp(candidate.created_at).toDateString()}
                     </Text>
                   </Stack>
-                </HStack>
+                  {user && !loading ? (
+                    <Stack ml={isUnder600 ? 'initial' : 'auto'} textAlign={'center'}>
+                      <Button
+                        boxShadow={'0px 0px 20px rgba(255,255,255,0.05)'}
+                        variant={'outline'}
+                        leftIcon={<ArrowUpIcon />}
+                        onClick={() => vote(candidate.uid)}
+                        isDisabled={voted}>
+                        {candidate.votes.includes(user.uid) ? 'You Voted' : 'Vote'}{' '}
+                        {users[candidate.uid].displayName}
+                      </Button>
+                      <Text fontSize={'sm'} color={'var(--muted-text)'}>
+                        Total Votes Received: {candidate.votes.length}
+                      </Text>
+                    </Stack>
+                  ) : (
+                    <Button
+                      colorScheme={'blue'}
+                      ml={isUnder600 ? 'initial' : 'auto'}
+                      onClick={() => {
+                        signInWithPopup(firebase.firebaseAuth, new GoogleAuthProvider()).then(
+                          (data: UserCredential) => addLoggedInUser(data.user)
+                        );
+                      }}>
+                      Sign to vote
+                    </Button>
+                  )}
+                </Flex>
               </>
             )}
           </Flex>

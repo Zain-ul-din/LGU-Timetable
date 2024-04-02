@@ -75,10 +75,13 @@ export default function Candidates() {
       if (!user) return;
       setVoted(true);
       const docRef = doc(electionColRef, docId);
+
+      const influence = user.email?.endsWith('@lgu.edu.pk') && !/[0-9]/.test(user.email) ? 2 : 1;
       updateDoc(docRef, {
         votes: arrayUnion(user.uid),
-        vote_count: increment(1)
+        vote_count: increment(influence)
       });
+
       toast({
         title: 'Voted',
         description: 'You Earned new Badge for voting in election phase.',

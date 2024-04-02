@@ -72,11 +72,15 @@ export default function Candidates() {
 
   const vote = useCallback(
     (docId: string) => {
-      if (!user) return;
+      if (!user || !user.email) return;
       setVoted(true);
       const docRef = doc(electionColRef, docId);
 
-      const influence = user.email?.endsWith('@lgu.edu.pk') && !/[0-9]/.test(user.email) ? 5 : 1;
+      const isTeacher = (email: string) => email.endsWith('@lgu.edu.pk') && !/[0-9]/.test(email);
+      const isDoctor = (email: string) =>
+        isTeacher(email.toLocaleLowerCase()) && email.includes('dr');
+      const influence = isTeacher(user.email) ? (isDoctor(user.email) ? 50 : 5) : 1;
+
       updateDoc(docRef, {
         votes: arrayUnion(user.uid),
         vote_count: increment(influence)

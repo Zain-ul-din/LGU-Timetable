@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Divider,
   Flex,
@@ -31,6 +32,7 @@ import { GoogleAuthProvider, UserCredential, signInWithPopup } from 'firebase/au
 import { addLoggedInUser } from '~/lib/FirebaseAnalysis';
 import Link from 'next/link';
 import { ROUTING } from '~/lib/constant';
+import AdminLayout from '../admin/layout';
 
 export default function Candidates() {
   const [candidates, setCandidates] = useState<CandidateDocType[]>([]);
@@ -174,6 +176,9 @@ export default function Candidates() {
                     </Button>
                   )}
                 </Flex>
+                <AdminLayout fallBack={<></>}>
+                  <Voters voters={candidate.votes} />
+                </AdminLayout>
               </>
             )}
           </Flex>
@@ -182,3 +187,33 @@ export default function Candidates() {
     </>
   );
 }
+
+const Voters = ({ voters }: { voters: string[] }) => {
+  const [users, setUsers] = useState<{ [uid: string]: UserDocType }>({});
+
+  useEffect(() => {
+    let clearCache: () => void = () => {};
+    voters.forEach((voter) => {
+      clearCache = cacheUser([users, setUsers], voter);
+    });
+    return () => clearCache();
+  }, [voters]);
+
+  return (
+    <>
+      <Divider />
+      <Flex flexWrap={'wrap'} gap={4} flexDir={'row'}>
+        {Object.values(users).map((user, idx) => {
+          return (
+            <Box key={idx}>
+              <HStack>
+                <Avatar src={user.photoURL as string} />
+                <Text fontSize={'sm'}>{user.displayName}</Text>
+              </HStack>
+            </Box>
+          );
+        })}
+      </Flex>
+    </>
+  );
+};

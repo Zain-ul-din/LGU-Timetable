@@ -74,6 +74,7 @@ export default function Nominate() {
       uid: user.uid,
       updated_at: serverTimestamp(),
       created_at: serverTimestamp(),
+      vote_count: 0,
       votes: []
     };
 

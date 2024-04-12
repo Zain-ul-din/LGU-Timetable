@@ -18,6 +18,9 @@ export default function Document() {
           name="google-site-verification"
           content="Xrm9_dgaRQZ06N__yc74HURKEfMXPjcD8qYWCDwbs-M"
         />
+        
+        {/* skill share */}
+        <meta name='impact-site-verification' value='cd6878a1-cc9c-4849-a6ee-aff7283576ef'>
 
         {/* ads */}
         <script

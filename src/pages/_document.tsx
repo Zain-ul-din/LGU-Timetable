@@ -20,7 +20,7 @@ export default function Document() {
         />
         
         {/* skill share */}
-        <meta name='impact-site-verification' value='cd6878a1-cc9c-4849-a6ee-aff7283576ef'>
+        <meta name='impact-site-verification' value='cd6878a1-cc9c-4849-a6ee-aff7283576ef' />
 
         {/* ads */}
         <script

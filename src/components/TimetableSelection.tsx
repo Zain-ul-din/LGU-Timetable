@@ -55,6 +55,7 @@ import Fuse from 'fuse.js';
 import ViewLinkTxt from './design/ViewLinkTxt';
 import { ROUTING } from '~/lib/constant';
 import { hashStr } from '~/lib/cipher';
+import useTimetableHistory from '~/hooks/useTimetableHistory';
 
 function Selection({ metaData }: { metaData: any }): JSX.Element {
   const [userInput, setUserInput] = useState<TimetableInput>({
@@ -62,13 +63,14 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
     semester: null,
     section: null
   });
+
   const [currTabIdx, setCurrTabIdx] = useState<number>(0);
   const [history, setHistory] = useState<Array<ITimetableHistory>>([]);
+  const [isUnder400] = useMediaQuery('(max-width: 400px)');
+  const [localHistory, setLocalHistory] = useTimetableHistory();
 
   const user = useContext(UserCredentialsContext);
   const router = useRouter();
-
-  const [isUnder400] = useMediaQuery('(max-width: 400px)');
 
   useEffect(() => {
     if (!user?.user) return;
@@ -205,12 +207,14 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
                             createdAt: serverTimestamp()
                           });
                         }
+
+                        setLocalHistory({
+                          payload: userInput,
+                          created_at: new Date().toDateString(),
+                          hash: hashStr(`${fall} ${semester} ${section}`.replaceAll('/', ''))
+                        });
+
                         const hash = hashStr(`${fall} ${semester} ${section}`.replaceAll('/', ''));
-                        console.log(
-                          `${fall} ${semester} ${section}`.replaceAll('/', ''),
-                          ' ~ ',
-                          hash
-                        );
                         router.push(`/timetable/${hash}`);
                       }}
                     />

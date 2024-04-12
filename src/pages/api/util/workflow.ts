@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const quotaDoc = await initWorkFlowDoc()
     
     if(!isAdmin) {
-      const { valid, message } = await canTriggerWorkFlow(quotaDoc as WorkFlowQuotaType,user);
+      const { valid, message } = await canTriggerWorkFlow(quotaDoc,user);
       if(!valid) {
         res.status(405).send({ message })
         return;
@@ -52,6 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       succeed: true
     })
   } catch(err) {
+    console.log(err);
     res.status(500).send({
       message: 'Something went Wrong'
     })
@@ -72,18 +73,16 @@ async function initWorkFlowDoc() {
   let quotaSnapShot = await getDoc(quotaDocRef);
 
   if(!quotaSnapShot.exists()) {
-    await setDoc(quotaDocRef, {
+    const initialData: WorkFlowQuotaType = {
       last_updated: serverTimestamp(),
       users: [],
       participants: []
-    } as WorkFlowQuotaType, { merge: true });
-    return {
-      message: '',
-      valid: true
-    };
+    }
+    await setDoc(quotaDocRef, initialData, { merge: true });
+    return initialData;
   }
 
-  return quotaSnapShot.data()
+  return quotaSnapShot.data() as WorkFlowQuotaType
 }
 
 async function triggerWorkFlow(uid: string, session_id: string,) {
@@ -136,7 +135,6 @@ const MAX_REQ_PER_PRO_USER = 4;
 
 
 async function canTriggerWorkFlow(quota: WorkFlowQuotaType,user: UserDocType) {
-
   const { last_updated, users } = quota
 
   if(users.length === MAX_WORK_FLOW_PER_DAY) {

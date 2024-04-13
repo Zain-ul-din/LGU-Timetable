@@ -1,7 +1,7 @@
 import { TimetableData, TimetableInput } from '~/types/typedef';
 import styles from '~/styles/Timetable.module.css';
 import Loader from './design/Loader';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import {
   TableContainer,
@@ -45,7 +45,16 @@ const day_sorter = {
 };
 
 interface IProps {
-  timetableData: any;
+  timetableData: {
+    id: string;
+    payload: {
+      program: string;
+      section: string;
+      semester: string;
+    };
+    updatedAt: string;
+    timetable: any;
+  };
   metaData: string;
 }
 
@@ -54,8 +63,22 @@ import Image from 'next/image';
 export default function Timetable({ metaData, timetableData }: IProps) {
   let printTableRef = useRef<any>();
 
-  const { setColorMode } = useColorMode();
   const toast = useToast();
+  const [_, setLocalHistory] = useTimetableHistory();
+
+  useEffect(() => {
+    const payload = {
+      fall: timetableData.payload.program,
+      semester: timetableData.payload.semester,
+      section: timetableData.payload.section
+    };
+
+    setLocalHistory({
+      payload,
+      created_at: new Date().toISOString(),
+      hash: hashStr(JSON.stringify(payload))
+    });
+  }, [timetableData, setLocalHistory]);
 
   return (
     <>
@@ -277,6 +300,7 @@ import TimetableChart from './charts/TimetableChart';
 import PalestineSideAd from './announcements/PalestineSideAd';
 import { useRouter } from 'next/router';
 import { hashStr } from '~/lib/cipher';
+import useTimetableHistory from '~/hooks/useTimetableHistory';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
   const { isOpen, onToggle } = useDisclosure({

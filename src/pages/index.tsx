@@ -27,7 +27,7 @@ export default function Home() {
 
         <SocialLinks />
       </Head>
-      <MainAnimator>
+      <MainAnimator isDisabled>
         <div className={'roboto'}>
           <Hero renderDescription={true} />
           <FrontPageAd />

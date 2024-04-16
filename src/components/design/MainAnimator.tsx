@@ -2,11 +2,15 @@ import { motion, MotionStyle } from 'framer-motion';
 
 export default function MainAnimator({
   children,
-  style
+  style,
+  isDisabled
 }: {
   children: React.ReactNode;
   style?: MotionStyle;
+  isDisabled?: boolean;
 }) {
+  if (isDisabled) return <>{children}</>;
+
   return (
     <motion.main
       initial={{ x: -300, opacity: 0 }}

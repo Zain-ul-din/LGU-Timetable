@@ -30,7 +30,7 @@ export default function Home() {
       <MainAnimator isDisabled>
         <div className={'roboto'}>
           <Hero renderDescription={true} />
-          <FrontPageAd />
+          {/* <FrontPageAd /> */}
           <TableOfContent />
         </div>
         <div className="google-ad"></div>

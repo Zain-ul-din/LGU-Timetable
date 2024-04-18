@@ -88,7 +88,6 @@ export default function Timetable({ metaData, timetableData }: IProps) {
         </Box>
 
         {/* support palestine */}
-        <PalestineSideAd url="/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87" />
 
         {/* timetable header */}
         <TimetableHeader
@@ -97,6 +96,10 @@ export default function Timetable({ metaData, timetableData }: IProps) {
           printTableRef={printTableRef}
           updatedAt={new Date(timetableData.updatedAt as string)}
         />
+
+        <RenderOnce uid="Palestine_Side">
+          <PalestineSideAd url="/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87" />
+        </RenderOnce>
 
         <div>
           {!timetableData ? (
@@ -301,6 +304,7 @@ import PalestineSideAd from './announcements/PalestineSideAd';
 import { useRouter } from 'next/router';
 import { hashStr } from '~/lib/cipher';
 import useTimetableHistory from '~/hooks/useTimetableHistory';
+import RenderOnce from './design/RenderOnce';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
   const { isOpen, onToggle } = useDisclosure({

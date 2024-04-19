@@ -125,12 +125,8 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
 }
 
 function TimetableRenderer({ timetable }: { timetable: any }) {
-  const [timetableData, setTimetableData] = useState<any>();
+  const [timetableData, setTimetableData] = useState<any>(timetable);
   const [ad] = useState<ReturnType<typeof getAd>>(() => getAd());
-
-  useEffect(() => {
-    setTimetableData(timetable);
-  }, []);
 
   return (
     <>

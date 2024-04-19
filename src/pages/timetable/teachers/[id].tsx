@@ -17,6 +17,7 @@ import MainAnimator from '~/components/design/MainAnimator';
 import { APIS_ENDPOINTS, ROUTING } from '~/lib/constant';
 import axios from 'axios';
 import { decrypt } from '~/lib/cipher';
+import getAd from '~/lib/ads';
 
 export async function getStaticPaths() {
   const { data } = await axios.get(APIS_ENDPOINTS.TEACHER_PATHS);
@@ -50,6 +51,7 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
   const router = useRouter();
   const toast = useToast();
+ 
 
   useEffect(() => () => toast.closeAll(), []);
 
@@ -93,18 +95,15 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
         <SocialLinks />
       </Head>
       <MainAnimator>
-        {timetable.timetable && <TimetableRenderer timetable={timetable} />}
+        {timetable.timetable && <TimetableRenderer timetable={timetable}  />}
       </MainAnimator>
     </>
   );
 }
 
 function TimetableRenderer({ timetable }: { timetable: any }) {
-  const [timetableData, setTimetableData] = useState<any>();
-
-  useEffect(() => {
-    setTimetableData(timetable);
-  }, []);
+  const [timetableData, setTimetableData] = useState<any>(timetable);
+  const [ad] = useState<ReturnType<typeof getAd>>(() => getAd());
 
   return (
     <>
@@ -119,7 +118,7 @@ function TimetableRenderer({ timetable }: { timetable: any }) {
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.1, type: 'keyframes' }}>
-          <Timetable metaData={timetable.id} timetableData={timetableData} />
+          <Timetable metaData={timetable.id} timetableData={timetableData} ad={ad} />
         </motion.div>
       )}
     </>

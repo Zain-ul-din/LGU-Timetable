@@ -44,7 +44,9 @@ export enum FIREBASE_ANALYTICS_EVENTS {
   link_share_on_whatsapp = 'link_share_on_whatsapp',
   print_time_table = 'print_time_table',
   promotion_closed = 'promotion_closed',
-  teacher_timetable = 'teacher_timetable'
+  teacher_timetable = 'teacher_timetable',
+  // affiliate
+  educative = 'educative',
 }
 
 import { logEvent } from 'firebase/analytics';

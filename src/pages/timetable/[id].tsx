@@ -22,6 +22,7 @@ import RatingFeedBack from '~/components/design/RatingFeedBack';
 import axios from 'axios';
 import { APIS_ENDPOINTS } from '~/lib/constant';
 import { decrypt } from '~/lib/cipher';
+import getAd from '~/lib/ads';
 
 export async function getStaticPaths() {
   const { data } = await axios.get(APIS_ENDPOINTS.TIMETABLE_PATHS);
@@ -125,6 +126,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
 
 function TimetableRenderer({ timetable }: { timetable: any }) {
   const [timetableData, setTimetableData] = useState<any>();
+  const [ad] = useState<ReturnType<typeof getAd>>(() => getAd());
 
   useEffect(() => {
     setTimetableData(timetable);
@@ -143,7 +145,7 @@ function TimetableRenderer({ timetable }: { timetable: any }) {
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.1, type: 'keyframes' }}>
-          <Timetable metaData={timetable.id} timetableData={timetableData} />
+          <Timetable metaData={timetable.id} timetableData={timetableData} ad={ad} />
         </motion.div>
       )}
     </>

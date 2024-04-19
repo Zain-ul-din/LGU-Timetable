@@ -56,11 +56,16 @@ interface IProps {
     timetable: any;
   };
   metaData: string;
+  ad: {
+    description: string;
+    link: string;
+    title: string;
+  };
 }
 
 import Image from 'next/image';
 
-export default function Timetable({ metaData, timetableData }: IProps) {
+export default function Timetable({ metaData, timetableData, ad }: IProps) {
   let printTableRef = useRef<any>();
 
   const toast = useToast();
@@ -97,9 +102,11 @@ export default function Timetable({ metaData, timetableData }: IProps) {
           updatedAt={new Date(timetableData.updatedAt as string)}
         />
 
-        <RenderOnce uid="Palestine_Side">
+        <Educative mx={'1rem'} link={ad.link} description={ad.description} title={ad.title} />
+
+        {/* <RenderOnce uid="Palestine_Side">
           <PalestineSideAd url="/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87" />
-        </RenderOnce>
+        </RenderOnce> */}
 
         <div>
           {!timetableData ? (
@@ -305,6 +312,7 @@ import { useRouter } from 'next/router';
 import { hashStr } from '~/lib/cipher';
 import useTimetableHistory from '~/hooks/useTimetableHistory';
 import RenderOnce from './design/RenderOnce';
+import Educative from './affiliate/Educative';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
   const { isOpen, onToggle } = useDisclosure({

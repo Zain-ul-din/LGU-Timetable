@@ -51,7 +51,6 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
   const router = useRouter();
   const toast = useToast();
- 
 
   useEffect(() => () => toast.closeAll(), []);
 
@@ -95,30 +94,29 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
         <SocialLinks />
       </Head>
       <MainAnimator>
-        {timetable.timetable && <TimetableRenderer timetable={timetable}  />}
+        {timetable.timetable && <TimetableRenderer timetable={timetable} />}
       </MainAnimator>
     </>
   );
 }
 
 function TimetableRenderer({ timetable }: { timetable: any }) {
-  const [timetableData, setTimetableData] = useState<any>(timetable);
   const [ad] = useState<ReturnType<typeof getAd>>(() => getAd());
 
   return (
     <>
-      {!timetableData && (
+      {!timetable && (
         <Center color={'green.600'}>
           <ClipLoader cssOverride={{ width: '6rem', height: '6rem' }} color="white" />
         </Center>
       )}
 
-      {timetableData && (
+      {timetable && (
         <motion.div
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.1, type: 'keyframes' }}>
-          <Timetable metaData={timetable.id} timetableData={timetableData} ad={ad} />
+          <Timetable metaData={timetable.id} timetableData={timetable} ad={ad} />
         </motion.div>
       )}
     </>

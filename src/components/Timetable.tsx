@@ -72,6 +72,8 @@ export default function Timetable({ metaData, timetableData, ad }: IProps) {
   const [_, setLocalHistory] = useTimetableHistory();
 
   useEffect(() => {
+    if (timetableData.payload === undefined) return;
+
     const payload = {
       fall: timetableData.payload.program,
       semester: timetableData.payload.semester,

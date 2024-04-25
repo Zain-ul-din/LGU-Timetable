@@ -1,15 +1,12 @@
+import Head from 'next/head';
 import Timetable from '~/components/Timetable';
 
 import { useRouter } from 'next/router';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useContext, useEffect, useState } from 'react';
 
-import { doc, getDocs, getDoc } from 'firebase/firestore';
-import { timeTableCol } from '~/lib/firebase';
-
 import { motion } from 'framer-motion';
 import { Center } from '@chakra-ui/react';
-import Head from 'next/head';
 import { SocialLinks } from '~/components/seo/Seo';
 import { GetStaticPropsContext } from 'next';
 import { TimetableDocType } from '~/types/typedef';

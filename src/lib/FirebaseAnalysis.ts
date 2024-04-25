@@ -41,6 +41,7 @@ export enum FIREBASE_ANALYTICS_EVENTS {
   notifications = 'notifications',
   clash_resolver = 'clash_resolver',
   // click events
+  updated_timetable = 'updated_timetable',
   link_share_on_whatsapp = 'link_share_on_whatsapp',
   print_time_table = 'print_time_table',
   promotion_closed = 'promotion_closed',

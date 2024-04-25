@@ -5,16 +5,20 @@ import handleGlowBlob from '~/lib/glow';
 
 import { Secular_One } from 'next/font/google';
 import { FcGoogle } from 'react-icons/fc';
-import { Button as Btn, Button } from '@chakra-ui/react';
+import { Button as Btn, Button, HStack } from '@chakra-ui/react';
 
 import { signInWithPopup, GoogleAuthProvider, UserCredential, User } from 'firebase/auth';
 import { firebase } from '~/lib/firebase';
-import { addLoggedInUser } from '~/lib/FirebaseAnalysis';
-import { useContext, useEffect, useState } from 'react';
+import {
+  FIREBASE_ANALYTICS_EVENTS,
+  addLoggedInUser,
+  reportFirebaseAnalytics
+} from '~/lib/FirebaseAnalysis';
+import { useContext } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
-
 import { Tooltip } from '@chakra-ui/react';
-import { getTimeRemaining } from '~/lib/util';
+import { useRouter } from 'next/router';
+import { ROUTING } from '~/lib/constant';
 
 const secular_One = Secular_One({ subsets: ['latin'], weight: '400' });
 
@@ -62,27 +66,42 @@ export const NotLoggedIn = ({ text, isLoading }: { text: string; isLoading?: boo
 };
 
 const LoggedIn = ({ user }: { user: User }) => {
+  const router = useRouter();
+
   return (
-    <Link href="/profile">
-      <Tooltip
-        background={'var(--bg-color)'}
-        color={'white'}
-        border={'1px solid var(--border-color)'}
-        label="profile link"
-        fontSize={'1xl'}
-        className="roboto">
-        <Image
-          src={user.photoURL as string}
-          alt={'user_avatar'}
-          width={40}
-          height={40}
-          style={{
-            borderRadius: '50%',
-            border: '1px solid var(--border-color)',
-            transform: 'translateY(1px)'
-          }}
-        />
-      </Tooltip>
-    </Link>
+    <>
+      <HStack alignItems={'center'}>
+        <Button
+          fontWeight={'normal'}
+          border={'1px solid var(--border-color)'}
+          onClick={() => {
+            reportFirebaseAnalytics(FIREBASE_ANALYTICS_EVENTS.updated_timetable, {});
+            router.push(ROUTING.developer);
+          }}>
+          Update Timetable
+        </Button>
+        <Link href="/profile">
+          <Tooltip
+            background={'var(--bg-color)'}
+            color={'white'}
+            border={'1px solid var(--border-color)'}
+            label="profile link"
+            fontSize={'1xl'}
+            className="roboto">
+            <Image
+              src={user.photoURL as string}
+              alt={'user_avatar'}
+              width={40}
+              height={40}
+              style={{
+                borderRadius: '50%',
+                border: '1px solid var(--border-color)',
+                transform: 'translateY(1px)'
+              }}
+            />
+          </Tooltip>
+        </Link>
+      </HStack>
+    </>
   );
 };

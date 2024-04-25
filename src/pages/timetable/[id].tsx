@@ -52,7 +52,6 @@ interface GetStaticPropsReturnType extends TimetableDocType {
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
   const router = useRouter();
   const toast = useToast();
-
   const user = useContext(UserCredentialsContext);
 
   useEffect(() => () => toast.closeAll(), []);

@@ -1,13 +1,14 @@
 import { User } from "firebase/auth";
+import { FieldValue } from "firebase/firestore";
 
 export interface PastPaperDocType {
   uid: string;
   photo_url: string;
   subject_name: string;
   
-  upload_at: string;
+  upload_at: FieldValue;
   deleted?: boolean;
-
+  
   // true if, marked as a spam by moderator 
   spam?: boolean;
   

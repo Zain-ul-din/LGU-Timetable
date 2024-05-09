@@ -1,6 +1,7 @@
 import { User } from "firebase/auth";
 
 export interface PastPaperDocType {
+  uid: string;
   photo_url: string;
   subject_name: string;
   
@@ -9,7 +10,7 @@ export interface PastPaperDocType {
 
   // true if, marked as a spam by moderator 
   spam?: boolean;
-
+  
   // list of people uid's those post vote 
   up_votes?: Array<string>;
   down_votes?: Array<string>;
@@ -18,4 +19,7 @@ export interface PastPaperDocType {
   
   // embedded user inside in the document to prevent joins
   uploader: Pick<User, "uid" | "displayName" | "photoURL">
+  uploader_uid: string;
+
 }
+

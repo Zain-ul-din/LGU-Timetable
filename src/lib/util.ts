@@ -386,3 +386,9 @@ export const findCoursesTimeConflicts = (coursesObj: SubjectOjectType): SubjectO
 export function clamp(num: number, min: number, max: number) {
   return num < min ? min : num > max ? max : num;
 }
+
+// converts file to blob
+export function fileToBlob(file: File): Blob {
+  const blobFile = new Blob([file], { type: file.type });
+  return blobFile;
+}

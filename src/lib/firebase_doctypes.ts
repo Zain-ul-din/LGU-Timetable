@@ -1,4 +1,3 @@
-import { User } from 'firebase/auth';
 import { FieldValue } from 'firebase/firestore';
 
 export interface UserDocType {

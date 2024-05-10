@@ -1,142 +1,99 @@
+/* eslint-disable @next/next/no-img-element */
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
   Button,
   Center,
+  Divider,
   Flex,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
+  HStack,
+  Stack,
   Text,
-  useDisclosure
+  useMediaQuery
 } from '@chakra-ui/react';
+import { BiDownArrow, BiUpArrow } from 'react-icons/bi';
 
-import { firebase } from '~/lib/firebase';
-
-import React from 'react';
-import MustSignIn from '../design/MustSigin';
-import UploadModal from './UploadModal';
-
-export default function PastPaper({
-  staticData,
-  pastPapers
-}: {
-  staticData: { [department: string]: Array<string> };
-  pastPapers: Array<PastPaperDocType>;
-}) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+export default function PastPaper() {
+  const [isUnder500] = useMediaQuery('(max-width: 500px)');
 
   return (
     <>
-      {firebase.firebaseAuth.currentUser && (
-        <UploadModal isOpen={isOpen} onClose={onClose} staticData={staticData} />
-      )}
-      <MustSignIn>
-        <Flex
-          bg={'var(--card-color)'}
-          p={'1rem'}
-          border={'1px solid var(--border-color)'}
-          rounded={'lg'}
-          flexDirection={'column'}
-          gap={'0.5rem'}>
-          <Text className="roboto" textAlign={'justify'} padding={0}>
-            {`I've created a website where you can access past papers from our university exams to help you prepare for upcoming tests. But to make this resource as useful as possible, I need your help. Please contribute any past papers you have access to so that others can benefit too. Together, we can create a valuable resource and support each other towards academic success.`}
-          </Text>
-          <Center>
-            <Button colorScheme="whatsapp" onClick={onOpen}>
-              Upload
-            </Button>
+      <Flex
+        p={3}
+        w={isUnder500 ? '100%' : 'initial'}
+        justifyContent={'center'}
+        mb={4}
+        border={'1px solid var(--border-color)'}>
+        <Stack spacing={3}>
+          <Center flexDir={'column'} gap={2}>
+            <Text fontSize={'lg'} textAlign={'center'} maxW={'250px'} noOfLines={2}>
+              Object Oriented Programming
+            </Text>
+            <img
+              src="https://firebasestorage.googleapis.com/v0/b/ecommerce-50bbb.appspot.com/o/past_paper_images%2F5191d8e0-044e-4091-a763-cd1482da0fec?alt=media&token=0769eab1-6a3f-40b4-abc4-29986e6f4e15"
+              alt="past_paper"
+              width={'250'}
+              height={'300'}
+              style={{
+                objectFit: 'cover',
+                borderRadius: '0.2rem',
+                minWidth: '250px',
+                maxWidth: '250px',
+                maxHeight: '350px',
+                minHeight: '350px'
+              }}
+              loading="lazy"
+            />
           </Center>
-        </Flex>
-        <Center>
-          <Input placeholder={'Enter Subject Name'} className={'roboto'} />
-        </Center>
 
-        <Flex justifyContent={'center'} flexWrap={'wrap'} gap={'2rem'}>
-          {pastPapers &&
-            pastPapers.map((paper, idx) => {
-              return <PastPaperRenderer key={idx} props={paper} />;
-            })}
-        </Flex>
-      </MustSignIn>
-    </>
-  );
-}
+          <Divider />
 
-import Image from 'next/image';
-import { PastPaperDocType } from '~/types/typedef';
+          <Flex alignItems={'center'} gap={2}>
+            <HStack>
+              <Avatar size={'sm'} />
+              <Stack spacing={-1}>
+                <Text noOfLines={1} maxWidth={'250px'}>
+                  Lorem ipsum
+                </Text>
+                <Text fontSize={'xs'}>Repo: 200</Text>
+              </Stack>
+            </HStack>
 
-const PastPaperRenderer = ({ props }: { props: PastPaperDocType }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <>
-      <ViewModal props={props} isOpen={isOpen} onClose={onClose} />
-      <Flex>
-        {/*eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={props.imgUrl}
-          alt={`img ${props.subjectName}`}
-          style={{
-            filter: 'brightness(130%)',
-            minHeight: 250,
-            maxHeight: 250,
-            minWidth: 200,
-            maxWidth: 200,
-            cursor: 'pointer'
-          }}
-          loading="lazy"
-          onClick={onOpen}></img>
+            <Flex ml={'auto'} gap={2}>
+              <Button variant={'outline'} colorScheme="red" size={'sm'}>
+                <BiDownArrow />
+                200
+              </Button>
+              <Button variant={'outline'} colorScheme="green" size={'sm'}>
+                <BiUpArrow />
+                100
+              </Button>
+            </Flex>
+          </Flex>
+
+          <Flex alignItems={'center'}>
+            <Text
+              fontWeight={'normal'}
+              fontSize={'xs'}
+              textAlign={'center'}
+              maxW={'250px'}
+              noOfLines={2}
+              fontStyle={'italic'}
+              color={'var(--muted-text)'}>
+              Uploaded at {new Date().toDateString()}
+            </Text>
+
+            <Flex gap={2} ml={'auto'}>
+              <Button size={'sm'}>
+                <EditIcon />
+              </Button>
+              <Button colorScheme="red" size={'sm'}>
+                <DeleteIcon />
+              </Button>
+            </Flex>
+          </Flex>
+        </Stack>
       </Flex>
     </>
   );
-};
-
-interface ModalProps {
-  props: PastPaperDocType;
-  isOpen: boolean;
-  onClose: () => void;
 }
-
-const ViewModal = ({ props, isOpen, onClose }: ModalProps) => {
-  return (
-    <>
-      <Modal
-        blockScrollOnMount={false}
-        allowPinchZoom={true}
-        isCentered
-        onClose={onClose}
-        isOpen={isOpen}
-        motionPreset="slideInBottom">
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{`${props.subjectName} | ${props.department}`}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody p={'2rem'} justifyContent={'center'}>
-            {/*eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={props.imgUrl}
-              alt={`img ${props.subjectName}`}
-              style={{
-                objectFit: 'scale-down',
-                cursor: 'pointer',
-                borderRadius: '0.5rem',
-                maxHeight: '70vh'
-              }}
-              loading="lazy"></img>
-          </ModalBody>
-          <ModalFooter textAlign={'center'} justifyContent={'center'}>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <a href={props.imgUrl} download={`${props.subjectName}_past_paper`} target="_blank">
-              <Button variant="outline">Download</Button>
-            </a>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};

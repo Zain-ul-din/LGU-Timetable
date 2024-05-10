@@ -18,14 +18,10 @@ import {
   Switch,
   useToast
 } from '@chakra-ui/react';
-import MustSignIn from '../design/MustSigin';
 
-import { firebase, pastPapersCol } from '~/lib/firebase';
-import React, { useReducer, useRef, useState } from 'react';
+import React, { useReducer, useRef, useState, useCallback } from 'react';
 
 import Image from 'next/image';
-
-import { PastPaperDocType, UserMetaData } from '~/types/typedef';
 
 import {
   AutoComplete,
@@ -57,22 +53,12 @@ const UploadModal = ({
   });
 
   const toast = useToast();
-
-  const [inputOptions, setInputOptions] = useState({
-    departments: Object.entries(staticData).map(([key, val]) => key),
-    subjects: Array.from(
-      new Set(
-        Object.entries(staticData)
-          .map(([_, val]: [any, any]) => val)
-          .reduce((acc: Array<string>, curr: Array<string>) => acc.concat(curr), [])
-      )
-    )
-  });
+  const [subjects, setSubjects] = useState(['oop', 'dsa', 'foo']);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<{ img: null | File; err: undefined | string }>({
     img: null,
-    err: InputError.image
+    err: undefined
   });
 
   const handleInputFile = () => {
@@ -87,17 +73,7 @@ const UploadModal = ({
           ...state,
           subject: {
             value: action.payload as string,
-            error: inputOptions.subjects.includes(action.payload) ? undefined : InputError.subject
-          }
-        };
-      case InputActionKind.department:
-        return {
-          ...state,
-          department: {
-            value: action.payload as string,
-            error: inputOptions.departments.includes(action.payload as string)
-              ? undefined
-              : InputError.department
+            error: subjects.includes(action.payload as string) ? undefined : InputError.subject
           }
         };
       case InputActionKind.examType:
@@ -136,8 +112,7 @@ const UploadModal = ({
     return res;
   };
 
-  const handleOutput = () => {
-    dispatch({ type: InputActionKind.department, payload: input.department.value });
+  const handleSubmit = () => {
     dispatch({ type: InputActionKind.examType, payload: input.examType.value });
     dispatch({ type: InputActionKind.subject, payload: input.subject.value });
 
@@ -146,6 +121,9 @@ const UploadModal = ({
         return val.error;
       })
       .filter((err) => err != undefined).length;
+
+    if (selectedFile.img == undefined) setSelectedFile({ img: null, err: InputError.image });
+
     console.log(errors);
     errors = selectedFile.img == null ? errors + 1 : errors;
 
@@ -168,9 +146,18 @@ const UploadModal = ({
       });
     };
 
+    // TODO: validate image
     convertImageToText().then((res) => {
+      console.log(res?.data);
       if (!res?.data.lines.length) return img_err();
       if (res?.data.lines.length < 10) return img_err();
+
+      const avgConfidence =
+        res.data.lines.reduce((acc, curr) => {
+          return acc + curr.confidence;
+        }, 0) / res.data.lines.length;
+
+      console.log(avgConfidence);
 
       // all set
       toast({
@@ -180,39 +167,6 @@ const UploadModal = ({
         position: 'top'
       });
 
-      // upload image
-      if (!selectedFile.img) return;
-
-      setLoading({ ...loading, uploading: true });
-      const storageRef = ref(firebase.firebaseStorage, `past_paper_images/${uuidv4()}`);
-      uploadBytes(storageRef, selectedFile.img).then(async (snapShot) => {
-        const url = await getDownloadURL(snapShot.ref);
-        // upload doc
-        const newDocRef = doc(pastPapersCol);
-        const data: PastPaperDocType = {
-          approvedBy: null,
-          department: input.department.value,
-          imgUrl: url,
-          downvote: [],
-          upvote: [],
-          examType: input.department.value,
-          isPublic: input.visibility.value,
-          isVerified: false,
-          ml: {},
-          subjectName: input.subject.value,
-          uploadedAt: serverTimestamp(),
-          uploadedBy: {
-            email: (firebase.firebaseAuth.currentUser as User).email,
-            photo_url: (firebase.firebaseAuth.currentUser as User).photoURL,
-            display_name: (firebase.firebaseAuth.currentUser as User).displayName
-          } as UserMetaData
-        };
-        setDoc(newDocRef, data);
-
-        /*@ts-ignore */
-        dispatch({ payload: '', type: InputActionKind.none });
-        setSelectedFile({ img: null, err: InputError.image });
-      });
       setLoading({ ...loading, uploading: false });
 
       toast({
@@ -235,7 +189,7 @@ const UploadModal = ({
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                handleOutput();
+                handleSubmit();
               }}>
               <Flex p={'1rem'}>
                 <Flex w="100%" flexDir={'column'}>
@@ -297,26 +251,12 @@ const UploadModal = ({
                       onSelectOption={(option) => {
                         dispatch({
                           type: InputActionKind.subject,
-                          payload: option.item.value
+                          payload: option.item.value || ''
                         });
                       }}
-                      options={inputOptions.subjects as Array<string>}
+                      options={subjects}
                       title={'Subject Name'}
                       placeholder={'Enter Subject Name'}
-                    />
-
-                    <AutoCompleteSearch
-                      value={input.department.value}
-                      error={input.department.error}
-                      onSelectOption={(option) => {
-                        dispatch({
-                          type: InputActionKind.department,
-                          payload: option.item.value
-                        });
-                      }}
-                      options={inputOptions.departments}
-                      title={'Department'}
-                      placeholder={'Enter Department Name'}
                     />
 
                     <AutoCompleteSearch
@@ -451,7 +391,6 @@ const SwitchForm = ({
 export default UploadModal;
 
 enum InputActionKind {
-  department = 'department',
   subject = 'subject',
   examType = 'examType',
   visibility = 'visibility'
@@ -459,7 +398,6 @@ enum InputActionKind {
 
 enum InputError {
   image = 'Paper Image Required',
-  department = 'Invalid Department Name',
   subject = 'Invalid Subject Name',
   examType = 'Invalid Option'
 }
@@ -472,15 +410,13 @@ interface InputAction {
 }
 
 interface inputStateType {
-  department: { value: string; error: undefined | string };
   subject: { value: string; error: undefined | string };
   examType: { value: string; error: undefined | string };
   visibility: { value: boolean; error: undefined | string };
 }
 
 const initialState: inputStateType = {
-  department: { value: '', error: InputError.department },
-  subject: { value: '', error: InputError.subject },
-  examType: { value: '', error: InputError.examType },
+  subject: { value: '', error: undefined },
+  examType: { value: '', error: undefined },
   visibility: { value: true, error: undefined }
 };

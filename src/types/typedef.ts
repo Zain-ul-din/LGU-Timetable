@@ -104,6 +104,11 @@ export interface TimetableDocType {
   timetable: TimetableResponseType;
   updatedAt: string;
   id?: string;
+  payload?: {
+    program: string;
+    section: string;
+    semester: string;
+  }
 }
 
 export interface UserDataDocType extends User {
@@ -140,6 +145,16 @@ export interface FreeClassRoomStateType {
   loading: boolean;
   time: Date;
   freeClassRooms: Array<string>;
+  customDate: Date | null;
+}
+
+export interface RoomActivitiesStateType {
+  loading: boolean;
+  time: Date;
+  rooms: {
+    room: string;
+    program?: string;
+  }[];
   customDate: Date | null;
 }
 

@@ -69,7 +69,7 @@ export const electionColRef = collection(firebase.firebaseStore, 'election');
 ///
 /// firebase storage
 ///
-import { getDownloadURL,  ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function uploadBlobToFirestore(

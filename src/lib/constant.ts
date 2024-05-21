@@ -90,11 +90,15 @@ export const APIS_ENDPOINTS = {
   META_DATA: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/meta_data.json',
   TEACHERS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/teachers.json',
   ROOMS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/rooms.json',
-  TEACHER_PATHS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/teacher_paths.json',
-  ROOM_PATHS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/rooms_paths.json',
-  TIMETABLE_PATHS: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/timetable_paths.json',
+  TEACHER_PATHS:
+    'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/teacher_paths.json',
+  ROOM_PATHS:
+    'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/rooms_paths.json',
+  TIMETABLE_PATHS:
+    'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/timetable_paths.json',
   TIMETABLE: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/',
-  ALL_TIMETABLES: 'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/all_timetables.json'
+  ALL_TIMETABLES:
+    'https://raw.githubusercontent.com/Zain-ul-din/lgu-crawler/master/db/all_timetables.json'
 };
 
 export const CHAT_CATEGORIES = {

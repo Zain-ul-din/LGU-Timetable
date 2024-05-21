@@ -9,7 +9,6 @@ import { SubjectOjectType, TimetableDataType, TimetableDocType } from '~/types/t
 var cache: SubjectOjectType = {};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
-
   if (req.method == 'POST') {
     try {
       const { key } = req.query;
@@ -40,14 +39,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
  */
 async function updateCache() {
   console.log('At Util Cache, Going to Cache values from firebase');
-  const { data } = await axios.get(APIS_ENDPOINTS.ALL_TIMETABLES)
-  interface APIResponseType extends TimetableDocType  
-  { uid: string } 
-  
-  const timetables = decrypt<Array<APIResponseType>>(data).map((t)=> ({
-    id: t.uid,  ...t
-  }))
-  
+  const { data } = await axios.get(APIS_ENDPOINTS.ALL_TIMETABLES);
+  interface APIResponseType extends TimetableDocType {
+    uid: string;
+  }
+
+  const timetables = decrypt<Array<APIResponseType>>(data).map((t) => ({
+    id: t.uid,
+    ...t
+  }));
+
   cache = constructSubjectOjectFromTimetables(timetables);
 }
 

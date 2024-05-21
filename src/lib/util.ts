@@ -141,7 +141,7 @@ export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
   const time = new Date(currTime);
 
   ///! TODO
-  /// retrieve tolerance value from database.
+  /// retrieve tolerance value from database. for special occasion
   const tolerance = 0; // min
   time.setMinutes(currTime.getMinutes() + tolerance);
 
@@ -158,6 +158,86 @@ export const isLectureTime = (timetableData: TimetableData, currTime: Date) => {
   return isItTrue;
 };
 
+const isNonEmptyStr = (str: string) => str != '';
+
+/**
+ * returns busy rooms atm
+ * @param timetables
+ * @param currTime
+ * @returns
+ */
+export function getBusyRooms(timetables: Array<TimetableDocType>, currTime: Date) {
+  const isSameDay = (day: string) =>
+    day.toLocaleLowerCase() == DAYS_NAME[currTime.getDay()].toLocaleLowerCase();
+  const getRoomsWhereLectureIsGoingOn = (timetableData: TimetableData[]) =>
+    timetableData.map((data) => (isLectureTime(data, currTime) ? data.roomNo : ''));
+
+  const busyRooms = timetables
+    .map((timetable) =>
+      Object.entries(timetable.timetable)
+        .map(([day, timetableData]: [string, Array<TimetableData>]) =>
+          isSameDay(day) ? getRoomsWhereLectureIsGoingOn(timetableData) : []
+        )
+        .flat(1)
+    )
+    .flat(1);
+
+  return Array.from(new Set(busyRooms)).filter(isNonEmptyStr);
+}
+
+/**
+ * return busy class room along metadata
+ * @param timetables
+ * @param currTime
+ * @returns
+ */
+export function getBusyRoomsAlongMetaData(timetables: Array<TimetableDocType>, currTime: Date) {
+  const isSameDay = (day: string) =>
+    day.toLocaleLowerCase() == DAYS_NAME[currTime.getDay()].toLocaleLowerCase();
+  const getRoomsWhereLectureIsGoingOn = (
+    timetableData: TimetableData[],
+    timetable: TimetableDocType
+  ) =>
+    timetableData
+      .map((data) =>
+        isLectureTime(data, currTime)
+          ? { room: data.roomNo, program: timetable.payload?.program as string }
+          : null
+      )
+      .filter((entry): entry is { room: string; program: string } => entry !== null);
+  
+  const busyRooms = timetables
+    .map((timetable) =>
+      Object.entries(timetable.timetable)
+        .map(([day, timetableData]: [string, Array<TimetableData>]) =>
+          isSameDay(day) ? getRoomsWhereLectureIsGoingOn(timetableData, timetable) : []
+        )
+        .flat(1)
+    )
+    .flat(1);
+
+  return busyRooms.filter((ele, idx, self)=> idx === self.findIndex(t => t.room === ele.room));
+}
+
+/**
+ * returns free rooms from busyRooms
+ * @param timetables
+ * @param busyRooms
+ */
+export function getFreeRooms(timetables: Array<TimetableDocType>, busyRooms: string[]) {
+  const freeRooms = timetables
+    .map((timetable) =>
+      Object.entries(timetable.timetable)
+        .map(([day, timetableData]: [string, Array<TimetableData>]) =>
+          timetableData.map((data) => (!busyRooms.includes(data.roomNo) ? data.roomNo : ''))
+        )
+        .flat(1)
+    )
+    .flat(1);
+
+  return Array.from(new Set(freeRooms)).filter(isNonEmptyStr);
+}
+
 /**
  * Calculates free classrooms
  * @param timetables Array<TimetableDocType>
@@ -168,37 +248,33 @@ export function calculateFreeClassrooms(
   timetables: Array<TimetableDocType>,
   currTime: Date
 ): Array<string> {
-  const busyRooms = Array.from(
-    new Set(
-      timetables
-        .map((timetable) =>
-          Object.entries(timetable.timetable)
-            .map(([day, timetableData]: [string, Array<TimetableData>]) =>
-              day.toLocaleLowerCase() == DAYS_NAME[currTime.getDay()].toLocaleLowerCase()
-                ? timetableData.map((data) => (isLectureTime(data, currTime) ? data.roomNo : ''))
-                : []
-            )
-            .reduce((prev, curr) => prev.concat(curr), [])
-        )
-        .reduce((prev, curr) => prev.concat(curr), [])
-    )
-  ).filter((room) => room != '');
+  return getFreeRooms(timetables, getBusyRooms(timetables, currTime));
+}
 
-  const freeRooms = Array.from(
-    new Set(
-      timetables
-        .map((timetable) =>
-          Object.entries(timetable.timetable)
-            .map(([day, timetableData]: [string, Array<TimetableData>]) =>
-              timetableData.map((data) => (!busyRooms.includes(data.roomNo) ? data.roomNo : ''))
-            )
-            .reduce((prev, curr) => prev.concat(curr), [])
-        )
-        .reduce((prev, curr) => prev.concat(curr), [])
-    )
-  ).filter((room) => room != '');
+/**
+ * returns all departments
+ * @param timetables 
+ * @returns 
+ */
+export function getDepartments (
+  timetables: Array<TimetableDocType>,
+) {
+  return Array.from(new Set(timetables.map(timetable=> timetable.payload?.program as string)));
+}
 
-  return freeRooms;
+/**
+ * calculates Room Activities
+ * @param timetables
+ * @param currTime
+ * @returns
+ */
+export function calculateTimeActivities(timetables: Array<TimetableDocType>, currTime: Date) {
+  const busyRoomsMetadata = getBusyRoomsAlongMetaData(timetables, currTime);
+  const freeRooms = getFreeRooms(timetables, getBusyRooms(timetables, currTime)).map(room => ({
+    room: room, program: undefined
+  }));
+
+  return [...busyRoomsMetadata, ...freeRooms];
 }
 
 export function fromFirebaseTimeStamp(time: any): Date {
@@ -247,9 +323,9 @@ function userCacheHof() {
 
 function userCacheHofGeneric() {
   let userCache: { [key: string]: boolean } = {};
-  const clearCache = ()=> userCache = {};
+  const clearCache = () => (userCache = {});
 
-  return (state: UseStateProps<{ [uid: string] : UserDocType }>, uId: string) => {
+  return (state: UseStateProps<{ [uid: string]: UserDocType }>, uId: string) => {
     if (uId in userCache) return clearCache;
 
     userCache[uId] = true; // user cached
@@ -262,8 +338,8 @@ function userCacheHofGeneric() {
           return {
             ...prevState,
             [uId]: {
-                ...(docSnapShot.docs.map((d) => d.data())[0] as UserDocType),
-                id: uId
+              ...(docSnapShot.docs.map((d) => d.data())[0] as UserDocType),
+              id: uId
             }
           };
         });

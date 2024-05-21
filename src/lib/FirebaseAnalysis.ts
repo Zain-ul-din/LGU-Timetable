@@ -46,8 +46,9 @@ export enum FIREBASE_ANALYTICS_EVENTS {
   print_time_table = 'print_time_table',
   promotion_closed = 'promotion_closed',
   teacher_timetable = 'teacher_timetable',
+  room_activities = 'room_activities',
   // affiliate
-  educative = 'educative',
+  educative = 'educative'
 }
 
 import { logEvent } from 'firebase/analytics';
@@ -60,5 +61,5 @@ export function reportFirebaseAnalytics(key: string, val: any) {
 export function useFirebaseAnalyticsReport(eventName: FIREBASE_ANALYTICS_EVENTS) {
   useEffect(() => {
     reportFirebaseAnalytics(eventName.toString(), {});
-  }, []);
+  }, [eventName]);
 }

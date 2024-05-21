@@ -7,17 +7,20 @@ export const AVAILABLE_ADS = [
   {
     title: 'Educative',
     link: 'https://click.linksynergy.com/fs-bin/click?id=oQaDKQaTta0&offerid=1095549.8&bids=1095549.8&type=3&subid=0',
-    description: 'Level up your tech skills and stay ahead of the curve with Educative learning paths'
+    description:
+      'Level up your tech skills and stay ahead of the curve with Educative learning paths'
   },
   {
     title: 'Educative',
     link: 'https://click.linksynergy.com/fs-bin/click?id=oQaDKQaTta0&offerid=1095549.7&bids=1095549.7&type=3&subid=0',
-    description: 'Learn in-demand tech skills and accelerate your career with curated learning paths'
+    description:
+      'Learn in-demand tech skills and accelerate your career with curated learning paths'
   },
   {
     title: 'Educative',
     link: 'https://click.linksynergy.com/fs-bin/click?id=oQaDKQaTta0&offerid=1095549.6&bids=1095549.6&type=3&subid=0',
-    description: 'Curated programming Paths for seamless learning. Accelerate your programming skills on Educative.'
+    description:
+      'Curated programming Paths for seamless learning. Accelerate your programming skills on Educative.'
   },
   {
     title: 'Educative',
@@ -39,7 +42,7 @@ export const AVAILABLE_ADS = [
     link: 'https://click.linksynergy.com/fs-bin/click?id=oQaDKQaTta0&offerid=1095549.3&bids=1095549.3&type=3&subid=0',
     description: 'Learn in-demand programming languages interactively on Educative'
   }
-]
+];
 
 export default function getAd() {
   return AVAILABLE_ADS[Math.floor(Math.random() * AVAILABLE_ADS.length)];

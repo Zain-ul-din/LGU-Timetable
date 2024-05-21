@@ -1,4 +1,4 @@
-import { FieldValue } from "firebase/firestore";
+import { FieldValue } from 'firebase/firestore';
 
 export const ELECTION_INPUT_VALIDATION_PROMPT = `
 We are in the process of conducting a moderator election on our platform it's a university timetable. One of the tasks involves validating the submissions 
@@ -35,9 +35,9 @@ User Input for Validation:
 `;
 
 export interface ElectionPromptGeminiRes {
-  "isValid": boolean
-  "message"?: string,
-  "markDown": string
+  isValid: boolean;
+  message?: string;
+  markDown: string;
 }
 
 export interface CandidateDocType {

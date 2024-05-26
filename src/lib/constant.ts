@@ -79,7 +79,8 @@ export const ROUTING = {
   admin: '/admin',
   teachers: '/timetable/teachers',
   rooms: '/timetable/rooms',
-  clash_resolver: '/util/timetable_clashresolver'
+  clash_resolver: '/util/timetable_clashresolver',
+  room_activities: '/room-activities'
 };
 
 export const APIS_ENDPOINTS = {

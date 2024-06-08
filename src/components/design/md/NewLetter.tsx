@@ -10,8 +10,9 @@ import {
   Heading,
   Input
 } from '@chakra-ui/react';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { useState } from 'react';
+import { useUserCredentials } from '~/hooks/hooks';
 import { newsLetterColRef } from '~/lib/firebase';
 
 export default function NewsLetter({ uid }: { uid: string }) {
@@ -19,6 +20,8 @@ export default function NewsLetter({ uid }: { uid: string }) {
   const [isValid, setIsValid] = useState<boolean>(true);
   const [response, setResponse] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [user] = useUserCredentials();
 
   const validateEmail = (value: string) => {
     // Regular expression for email validation
@@ -35,7 +38,12 @@ export default function NewsLetter({ uid }: { uid: string }) {
       await setDoc(
         doc(newsLetterColRef, `${email}_${uid}`),
         {
-          email
+          email,
+          createdBy: user ? user.uid : '',
+          userMail: user ? user.email : '',
+          userName: user ? user.displayName : '',
+          photoURL: user ? user.photoURL : '',
+          created_at: serverTimestamp()
         },
         {
           merge: true

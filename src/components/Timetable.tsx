@@ -104,7 +104,11 @@ export default function Timetable({ metaData, timetableData, ad }: IProps) {
           updatedAt={new Date(timetableData.updatedAt as string)}
         />
 
-        <Educative mx={'1rem'} link={ad.link} description={ad.description} title={ad.title} />
+        {!false ? (
+          <FreeForAdvertisement link="/discussions?active_route=View&discussion_id=FLbqhsFKlwny9VxInN8b" />
+        ) : (
+          <Educative mx={'1rem'} link={ad.link} description={ad.description} title={ad.title} />
+        )}
 
         {/* <RenderOnce uid="Palestine_Side">
           <PalestineSideAd url="/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87" />
@@ -315,6 +319,7 @@ import { hashStr } from '~/lib/cipher';
 import useTimetableHistory from '~/hooks/useTimetableHistory';
 import RenderOnce from './design/RenderOnce';
 import Educative from './affiliate/Educative';
+import FreeForAdvertisement from './affiliate/FreeForAdvertisement';
 
 const Card = ({ day, data, idx }: { idx: number; day: string; data: Array<any> }) => {
   const { isOpen, onToggle } = useDisclosure({

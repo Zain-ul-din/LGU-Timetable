@@ -65,6 +65,7 @@ export const discussionsCommentsColRef = collection(firebase.firebaseStore, 'dis
 export const workFlowColRef = collection(firebase.firebaseStore, 'workflow');
 export const discussionSubColName = 'participants';
 export const electionColRef = collection(firebase.firebaseStore, 'election');
+export const newsLetterColRef = collection(firebase.firebaseStore, 'news_letter');
 
 ///
 /// firebase storage

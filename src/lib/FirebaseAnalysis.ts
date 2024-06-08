@@ -48,7 +48,8 @@ export enum FIREBASE_ANALYTICS_EVENTS {
   teacher_timetable = 'teacher_timetable',
   room_activities = 'room_activities',
   // affiliate
-  educative = 'educative'
+  educative = 'educative',
+  freeForAdvertisement = 'free_for_advertisement',
 }
 
 import { logEvent } from 'firebase/analytics';

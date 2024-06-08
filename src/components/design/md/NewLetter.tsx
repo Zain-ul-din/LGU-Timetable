@@ -43,7 +43,8 @@ export default function NewsLetter({ uid }: { uid: string }) {
           userMail: user ? user.email : '',
           userName: user ? user.displayName : '',
           photoURL: user ? user.photoURL : '',
-          created_at: serverTimestamp()
+          created_at: serverTimestamp(),
+          category: uid
         },
         {
           merge: true

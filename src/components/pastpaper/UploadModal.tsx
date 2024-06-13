@@ -37,6 +37,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { User } from 'firebase/auth';
+import useAllSubjects from '~/hooks/useAllSubjects';
 
 const UploadModal = ({
   isOpen,
@@ -53,7 +54,7 @@ const UploadModal = ({
   });
 
   const toast = useToast();
-  const [subjects, setSubjects] = useState(['oop', 'dsa', 'foo']);
+  const subjects = useAllSubjects();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<{ img: null | File; err: undefined | string }>({

@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import { ColorModeScript } from '@chakra-ui/react';
 import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
 import { FavIcons } from '~/components/seo/Seo';
 
 import { themeConfig } from '~/styles/Style';
@@ -9,7 +9,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <script src='/scripts/redirect.js' async />
+        <script src='/scripts/redirect.js'/>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <FavIcons />
@@ -40,7 +40,7 @@ export default function Document() {
           storageKey="jj92k02j"
           type="localStorage"
         />
-        <Main />
+        {/* <Main /> */}
         <NextScript />
       </body>
     </Html>

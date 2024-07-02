@@ -16,7 +16,13 @@ import {
   Text,
   VisuallyHidden,
   Switch,
-  useToast
+  useToast,
+  HStack,
+  useMediaQuery,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  Stack
 } from '@chakra-ui/react';
 
 import React, { useReducer, useRef, useState, useCallback } from 'react';
@@ -38,6 +44,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import { User } from 'firebase/auth';
 import useAllSubjects from '~/hooks/useAllSubjects';
+import { FaCamera, FaImages } from 'react-icons/fa';
+import Webcam from 'react-webcam';
+import { dataURLtoFile } from '~/lib/util';
+import { useUserCredentials } from '~/hooks/hooks';
+import upload from '~/lib/pastpaper/upload';
 
 const UploadModal = ({
   isOpen,
@@ -53,10 +64,16 @@ const UploadModal = ({
     uploading: false
   });
 
+  const [user] = useUserCredentials();
+
+  const [isWebcamOpen, setIsWebcamOpen] = useState(false);
+
   const toast = useToast();
   const subjects = useAllSubjects();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const webcamRef = useRef<Webcam>(null);
+
   const [selectedFile, setSelectedFile] = useState<{ img: null | File; err: undefined | string }>({
     img: null,
     err: undefined
@@ -65,6 +82,16 @@ const UploadModal = ({
   const handleInputFile = () => {
     if (!inputRef.current) return;
     inputRef.current.click();
+  };
+
+  const captureImage = () => {
+    if (webcamRef.current == undefined) return;
+    const imageSrc = webcamRef.current.getScreenshot();
+    if (imageSrc) {
+      const file = dataURLtoFile(imageSrc, 'captured_image.jpg');
+      setSelectedFile({ err: undefined, img: file });
+      setIsWebcamOpen(false);
+    }
   };
 
   const inputReducer = (state: inputStateType, action: InputAction) => {
@@ -125,7 +152,6 @@ const UploadModal = ({
 
     if (selectedFile.img == undefined) setSelectedFile({ img: null, err: InputError.image });
 
-    console.log(errors);
     errors = selectedFile.img == null ? errors + 1 : errors;
 
     if (errors != 0) {
@@ -148,8 +174,7 @@ const UploadModal = ({
     };
 
     // TODO: validate image
-    convertImageToText().then((res) => {
-      console.log(res?.data);
+    convertImageToText().then(async (res) => {
       if (!res?.data.lines.length) return img_err();
       if (res?.data.lines.length < 10) return img_err();
 
@@ -157,8 +182,6 @@ const UploadModal = ({
         res.data.lines.reduce((acc, curr) => {
           return acc + curr.confidence;
         }, 0) / res.data.lines.length;
-
-      console.log(avgConfidence);
 
       // all set
       toast({
@@ -176,8 +199,51 @@ const UploadModal = ({
         duration: 1000,
         position: 'top'
       });
+
+      // lets rest everything
+      setLoading((prev) => ({
+        ...prev,
+        uploading: true
+      }));
+
+      await upload({
+        file: selectedFile.img,
+        confidence: avgConfidence,
+        currUser: user!,
+        visibility: input.visibility.value,
+        examType: input.examType.value,
+        subject_name: input.subject.value
+      });
+
+      // reset everything
+
+      setSelectedFile({
+        err: '',
+        img: null
+      });
+
+      dispatch({
+        type: '',
+        payload: ''
+      } as any);
+
+      setLoading({
+        uploading: false,
+        validatingImage: false
+      });
+
+      toast({
+        status: 'success',
+        description: `Your past paper has been uploaded ✔`,
+        duration: 1000,
+        position: 'top'
+      });
+
+      onClose();
     });
   };
+
+  const [isSmScreen] = useMediaQuery('(max-width: 500px)');
 
   return (
     <>
@@ -192,7 +258,7 @@ const UploadModal = ({
                 e.preventDefault();
                 handleSubmit();
               }}>
-              <Flex p={'1rem'}>
+              <Flex p={isSmScreen ? '0rem' : '1rem'}>
                 <Flex w="100%" flexDir={'column'}>
                   <VisuallyHidden>
                     <Input
@@ -200,6 +266,7 @@ const UploadModal = ({
                       ref={inputRef}
                       accept="image/*"
                       onChange={handleFileInputChange}
+                      capture
                     />
                   </VisuallyHidden>
                   <Center my={'1rem'}>
@@ -228,18 +295,66 @@ const UploadModal = ({
                       </Flex>
                     )}
                   </Center>
-                  <Box
-                    bg={'var(--card-color)'}
-                    py={'4rem'}
-                    w={'100%'}
-                    border={'3px dashed var(--border-color)'}
-                    textAlign={'center'}
-                    rounded={'lg'}
-                    cursor={'pointer'}
-                    onClick={handleInputFile}
-                    style={{ display: selectedFile.img ? 'none' : 'initial' }}>
-                    <Text fontSize={'xl'}>CLICK TO UPLOAD IMAGE</Text>
-                  </Box>
+                  {!selectedFile.img && (
+                    <HStack>
+                      <Box
+                        bg={'var(--card-color)'}
+                        py={'4rem'}
+                        w={'100%'}
+                        border={'3px dashed var(--border-color)'}
+                        textAlign={'center'}
+                        rounded={'lg'}
+                        cursor={'pointer'}
+                        onClick={handleInputFile}
+                        style={{ display: selectedFile.img ? 'none' : 'initial' }}>
+                        <Center flexDir={'column'} gap={3}>
+                          <FaImages fontSize={'32'} />
+                          <Text fontSize={isSmScreen ? 'sm' : 'xl'}>CLICK TO UPLOAD IMAGE</Text>
+                        </Center>
+                      </Box>
+                      <Text fontWeight={'bold'}>OR</Text>
+                      <Box
+                        bg={'var(--card-color)'}
+                        py={'4rem'}
+                        w={'100%'}
+                        border={'3px dashed var(--border-color)'}
+                        textAlign={'center'}
+                        rounded={'lg'}
+                        cursor={'pointer'}
+                        onClick={() => {
+                          setIsWebcamOpen(true);
+                        }}
+                        style={{ display: selectedFile.img ? 'none' : 'initial' }}>
+                        <Center flexDir={'column'} gap={3}>
+                          <FaCamera fontSize={'32'} />
+                          <Text fontSize={isSmScreen ? 'sm' : 'xl'}>UPLOAD IMAGE FROM CAMERA</Text>
+                        </Center>
+                      </Box>
+                    </HStack>
+                  )}
+
+                  <Modal
+                    isOpen={isWebcamOpen}
+                    onClose={() => {
+                      setIsWebcamOpen(false);
+                    }}
+                    size={'xl'}
+                    isCentered>
+                    <ModalOverlay />
+                    <ModalContent margin={4}>
+                      <Stack my={'1rem'}>
+                        <Webcam
+                          audio={false}
+                          ref={webcamRef}
+                          screenshotFormat="image/jpeg"
+                          style={{ width: '100%' }}
+                        />
+                        <Button colorScheme="teal" onClick={captureImage}>
+                          Capture
+                        </Button>
+                      </Stack>
+                    </ModalContent>
+                  </Modal>
 
                   <Center my={'1rem'} color={'red.300'}>
                     {selectedFile.err}
@@ -289,7 +404,7 @@ const UploadModal = ({
                 </Flex>
               </Flex>
 
-              {loading.validatingImage && <Loader>Please Wait Validating Image</Loader>}
+              {loading.validatingImage && <Loader>Please Wait Validating Image Using AI</Loader>}
               {loading.uploading && <Loader>Uploading Image to Cloud</Loader>}
               <Center pt={'0.4rem'} mb={'3rem'}>
                 <Button

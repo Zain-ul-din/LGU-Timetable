@@ -49,6 +49,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-to-print": "^2.14.12",
     "react-use-scroll-position": "^2.0.0",
+    "react-webcam": "^7.2.0",
     "redis-om": "^0.3.6",
     "rehype-raw": "^6.1.1",
     "tesseract.js": "^4.0.5",

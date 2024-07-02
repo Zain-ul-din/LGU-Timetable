@@ -8,12 +8,20 @@ interface UploadProps {
   file: File | null;
   currUser: UserDocType;
   subject_name: string;
+  confidence: number;
+  examType: string;
+  visibility: boolean;
 }
 
-export default async function upload({ file, subject_name, currUser }: UploadProps) {
+export default async function upload({
+  file,
+  subject_name,
+  currUser,
+  confidence,
+  examType,
+  visibility
+}: UploadProps) {
   if (!file) return;
-
-  // todo: validate file input via gemini OR may be try some free otpion
 
   try {
     const photo_url = await uploadBlobToFirestore(fileToBlob(file));
@@ -22,7 +30,9 @@ export default async function upload({ file, subject_name, currUser }: UploadPro
     const docData: PastPaperDocType = {
       photo_url,
       uid: docRef.id,
+      exam_type: examType,
       subject_name,
+      visibility,
       upload_at: serverTimestamp(),
       uploader: {
         displayName: currUser.displayName,
@@ -30,7 +40,11 @@ export default async function upload({ file, subject_name, currUser }: UploadPro
         uid: currUser.uid
       },
       votes_count: 0,
-      uploader_uid: currUser.uid
+      uploader_uid: currUser.uid,
+      confidence,
+      isLocked: false,
+      deleted: false,
+      spam: false
     };
 
     await setDoc(docRef, docData);

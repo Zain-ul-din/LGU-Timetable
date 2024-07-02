@@ -1,29 +1,14 @@
-import {
-  Button,
-  Center,
-  Flex,
-  HStack,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useDisclosure
-} from '@chakra-ui/react';
+import { Button, Flex, HStack, Input, useDisclosure } from '@chakra-ui/react';
 
-import { firebase } from '~/lib/firebase';
-
-import React from 'react';
-import MustSignIn from '../design/MustSigin';
+import React, { useEffect } from 'react';
 import UploadModal from './UploadModal';
 import PastPaper from './PastPaper';
+import { usePastPaperPagination } from '~/lib/pastpaper';
+import { deletePastPaper, pastPaperDownVote, pastPaperUpVote } from '~/lib/pastpaper/crud';
 
 export default function PastPapers() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [pastPapers, { validate }] = usePastPaperPagination();
 
   return (
     <>
@@ -48,8 +33,24 @@ export default function PastPapers() {
         </HStack>
         {/* past papers */}
         <Flex gap={2} flexWrap={'wrap'} rounded={'sm'} p={2} justifyContent={'center'} m={3}>
-          {new Array(10).fill('').map((_, idx) => {
-            return <PastPaper key={idx} />;
+          {pastPapers.map((model, idx) => {
+            return (
+              <PastPaper
+                key={idx}
+                model={model}
+                onDelete={() => {
+                  deletePastPaper(model.uid);
+                }}
+                onDownVote={async () => {
+                  pastPaperDownVote(model.uid, '');
+                  validate(model.uid);
+                }}
+                onUpVote={async () => {
+                  pastPaperUpVote(model.uid, '');
+                  validate(model.uid);
+                }}
+              />
+            );
           })}
         </Flex>
 
@@ -65,50 +66,3 @@ export default function PastPapers() {
     </>
   );
 }
-
-// interface ModalProps {
-//   props: PastPaperDocType;
-//   isOpen: boolean;
-//   onClose: () => void;
-// }
-
-// const ViewModal = ({ props, isOpen, onClose }: ModalProps) => {
-//   return (
-//     <>
-//       <Modal
-//         blockScrollOnMount={false}
-//         allowPinchZoom={true}
-//         isCentered
-//         onClose={onClose}
-//         isOpen={isOpen}
-//         motionPreset="slideInBottom">
-//         <ModalOverlay />
-//         <ModalContent>
-//           <ModalHeader>{`${props.subjectName} | ${props.department}`}</ModalHeader>
-//           <ModalCloseButton />
-//           <ModalBody p={'2rem'} justifyContent={'center'}>
-//             {/*eslint-disable-next-line @next/next/no-img-element */}
-//             <img
-//               src={props.imgUrl}
-//               alt={`img ${props.subjectName}`}
-//               style={{
-//                 objectFit: 'scale-down',
-//                 cursor: 'pointer',
-//                 borderRadius: '0.5rem',
-//                 maxHeight: '70vh'
-//               }}
-//               loading="lazy"></img>
-//           </ModalBody>
-//           <ModalFooter textAlign={'center'} justifyContent={'center'}>
-//             <Button colorScheme="blue" mr={3} onClick={onClose}>
-//               Close
-//             </Button>
-//             <a href={props.imgUrl} download={`${props.subjectName}_past_paper`} target="_blank">
-//               <Button variant="outline">Download</Button>
-//             </a>
-//           </ModalFooter>
-//         </ModalContent>
-//       </Modal>
-//     </>
-//   );
-// };

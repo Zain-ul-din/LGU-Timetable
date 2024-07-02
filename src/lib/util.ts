@@ -205,7 +205,7 @@ export function getBusyRoomsAlongMetaData(timetables: Array<TimetableDocType>, c
           : null
       )
       .filter((entry): entry is { room: string; program: string } => entry !== null);
-  
+
   const busyRooms = timetables
     .map((timetable) =>
       Object.entries(timetable.timetable)
@@ -216,7 +216,7 @@ export function getBusyRoomsAlongMetaData(timetables: Array<TimetableDocType>, c
     )
     .flat(1);
 
-  return busyRooms.filter((ele, idx, self)=> idx === self.findIndex(t => t.room === ele.room));
+  return busyRooms.filter((ele, idx, self) => idx === self.findIndex((t) => t.room === ele.room));
 }
 
 /**
@@ -253,13 +253,11 @@ export function calculateFreeClassrooms(
 
 /**
  * returns all departments
- * @param timetables 
- * @returns 
+ * @param timetables
+ * @returns
  */
-export function getDepartments (
-  timetables: Array<TimetableDocType>,
-) {
-  return Array.from(new Set(timetables.map(timetable=> timetable.payload?.program as string)));
+export function getDepartments(timetables: Array<TimetableDocType>) {
+  return Array.from(new Set(timetables.map((timetable) => timetable.payload?.program as string)));
 }
 
 /**
@@ -270,14 +268,17 @@ export function getDepartments (
  */
 export function calculateTimeActivities(timetables: Array<TimetableDocType>, currTime: Date) {
   const busyRoomsMetadata = getBusyRoomsAlongMetaData(timetables, currTime);
-  const freeRooms = getFreeRooms(timetables, getBusyRooms(timetables, currTime)).map(room => ({
-    room: room, program: undefined
+  const freeRooms = getFreeRooms(timetables, getBusyRooms(timetables, currTime)).map((room) => ({
+    room: room,
+    program: undefined
   }));
 
   return [...busyRoomsMetadata, ...freeRooms];
 }
 
 export function fromFirebaseTimeStamp(time: any): Date {
+  if (!time || time.seconds === undefined || time.nanoseconds === undefined) return new Date();
+
   const fireBaseTime = new Date(time.seconds * 1000 + time.nanoseconds / 1000000);
   return fireBaseTime;
 }
@@ -468,3 +469,15 @@ export function fileToBlob(file: File): Blob {
   const blobFile = new Blob([file], { type: file.type });
   return blobFile;
 }
+
+export const dataURLtoFile = (dataurl: string, filename: string): File => {
+  const arr = dataurl.split(',');
+  const mime = (arr[0] || '').match(/:(.*?);/)?.at(1);
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+};

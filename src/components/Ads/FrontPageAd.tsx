@@ -23,9 +23,6 @@ export default function FrontPageAd() {
             _hover={{
               bgGradient: 'linear(to-l, #7928CA, #FF0080)'
             }}
-            onClick={() => {
-              router.push('/election');
-            }}
             fontSize={'md'}>
             📃 Browse Past Papers
           </Button>

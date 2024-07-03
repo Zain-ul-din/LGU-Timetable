@@ -2,7 +2,7 @@ import { UserDocType } from '../firebase_doctypes';
 import { pastPapersCol, uploadBlobToFirestore } from '../firebase';
 import { fileToBlob } from '../util';
 import { PastPaperDocType } from './types';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 
 interface UploadProps {
   file: File | null;
@@ -13,7 +13,41 @@ interface UploadProps {
   visibility: boolean;
 }
 
-export default async function upload({
+interface UpdateProps {
+  file: File | null;
+  subject_name: string;
+  examType: string;
+  visibility: boolean;
+  uid: string;
+  confidence?: number;
+}
+
+export async function updatePastPaper({
+  file,
+  subject_name,
+  examType,
+  visibility,
+  uid,
+  confidence
+}: UpdateProps) {
+  let photoUrl = undefined;
+  if (file) {
+    photoUrl = await uploadBlobToFirestore(fileToBlob(file));
+  }
+  const docRef = doc(pastPapersCol, uid);
+
+  const docData: Partial<PastPaperDocType> = {
+    subject_name,
+    visibility,
+    exam_type: examType,
+    upload_at: serverTimestamp(),
+    ...(photoUrl === undefined ? {} : { photo_url: photoUrl, confidence })
+  };
+
+  await updateDoc(docRef, docData);
+}
+
+export default async function uploadPastPaper({
   file,
   subject_name,
   currUser,

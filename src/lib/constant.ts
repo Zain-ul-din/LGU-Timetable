@@ -80,7 +80,8 @@ export const ROUTING = {
   teachers: '/timetable/teachers',
   rooms: '/timetable/rooms',
   clash_resolver: '/util/timetable_clashresolver',
-  room_activities: '/room-activities'
+  room_activities: '/room-activities',
+  past_papers: '/pastpaper'
 };
 
 export const APIS_ENDPOINTS = {

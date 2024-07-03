@@ -38,6 +38,7 @@ export const usePastPaperPagination = (): [
   PastPaperDocType[],
   {
     fetchMore: () => void;
+    loading: boolean;
     validate: (uid: string) => void;
   }
 ] => {
@@ -45,13 +46,16 @@ export const usePastPaperPagination = (): [
   const [user] = useAuthState(firebase.firebaseAuth);
   const [userUploads, setUserUploads] = useState<PastPaperDocType[]>([]);
   const [lastDocRef, setLastDocRef] = useState<unknown>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const initialFeedSnapShot = await fetchFeed(undefined);
       const initialFeed = initialFeedSnapShot.docs.map((doc) => doc.data() as PastPaperDocType);
       setPastPapers(initialFeed);
       setLastDocRef(initialFeedSnapShot.docs.at(-1));
+      setLoading(false);
     };
 
     fetchData();
@@ -105,6 +109,7 @@ export const usePastPaperPagination = (): [
   return [
     pastPapersAfterFilter,
     {
+      loading,
       fetchMore,
       validate
     }

@@ -1,7 +1,9 @@
-import { Button, Flex, Heading, Stack, Text } from '@chakra-ui/react';
+import { Button, Center, Flex, Heading, Stack, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import router from 'next/router';
 import useTyperEffect from '~/hooks/useTyperEffect';
+import { ROUTING } from '../../lib/constant';
 
 // TODO: take data from props
 
@@ -10,6 +12,27 @@ export default function FrontPageAd() {
     text: 'Earn Constituent Badge by voting candidate in moderator election phase.',
     speed: 40
   });
+
+  return (
+    <>
+      <Center mb={3}>
+        <Link href={ROUTING.past_papers}>
+          <Button
+            size={'sm'}
+            bgGradient={'linear(to-l, #7928CA, #FF0080)'}
+            _hover={{
+              bgGradient: 'linear(to-l, #7928CA, #FF0080)'
+            }}
+            onClick={() => {
+              router.push('/election');
+            }}
+            fontSize={'md'}>
+            📃 Browse Past Papers
+          </Button>
+        </Link>
+      </Center>
+    </>
+  );
 
   return (
     <Flex mx={'auto'} maxWidth={'950px'} my={4}>

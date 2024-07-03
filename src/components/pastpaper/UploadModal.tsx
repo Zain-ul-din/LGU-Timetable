@@ -25,7 +25,7 @@ import {
   Stack
 } from '@chakra-ui/react';
 
-import React, { useReducer, useRef, useState, useCallback } from 'react';
+import React, { useReducer, useRef, useState, useCallback, useEffect } from 'react';
 
 import Image from 'next/image';
 
@@ -39,25 +39,22 @@ import {
 
 import Tesseract from 'tesseract.js';
 import Loader from '../design/Loader';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { v4 as uuidv4 } from 'uuid';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { User } from 'firebase/auth';
 import useAllSubjects from '~/hooks/useAllSubjects';
 import { FaCamera, FaImages } from 'react-icons/fa';
 import Webcam from 'react-webcam';
 import { dataURLtoFile } from '~/lib/util';
 import { useUserCredentials } from '~/hooks/hooks';
-import upload from '~/lib/pastpaper/upload';
+import upload, { updatePastPaper } from '~/lib/pastpaper/upload';
+import { PastPaperDocType } from '~/lib/pastpaper/types';
 
 const UploadModal = ({
   isOpen,
   onClose,
-  staticData
+  defaultData
 }: {
   isOpen: boolean;
   onClose: () => void;
-  staticData: { [department: string]: Array<string> };
+  defaultData: PastPaperDocType | null;
 }) => {
   const [loading, setLoading] = useState({
     validatingImage: false,
@@ -78,6 +75,28 @@ const UploadModal = ({
     img: null,
     err: undefined
   });
+
+  useEffect(() => {
+    if (!defaultData) {
+      dispatch({ type: '', payload: '' } as any);
+      return;
+    }
+
+    dispatch({
+      type: InputActionKind.subject,
+      payload: defaultData.subject_name
+    });
+
+    dispatch({
+      type: InputActionKind.examType,
+      payload: defaultData.exam_type
+    });
+
+    dispatch({
+      type: InputActionKind.visibility,
+      payload: defaultData.visibility
+    });
+  }, [defaultData]);
 
   const handleInputFile = () => {
     if (!inputRef.current) return;
@@ -140,7 +159,7 @@ const UploadModal = ({
     return res;
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     dispatch({ type: InputActionKind.examType, payload: input.examType.value });
     dispatch({ type: InputActionKind.subject, payload: input.subject.value });
 
@@ -149,6 +168,30 @@ const UploadModal = ({
         return val.error;
       })
       .filter((err) => err != undefined).length;
+
+    // if updating
+    if (defaultData && errors == 0 && selectedFile.img == undefined) {
+      setLoading({
+        uploading: true,
+        validatingImage: false
+      });
+
+      await updatePastPaper({
+        file: null,
+        visibility: input.visibility.value,
+        examType: input.examType.value,
+        subject_name: input.subject.value,
+        uid: defaultData.uid
+      });
+
+      setLoading({
+        uploading: false,
+        validatingImage: false
+      });
+
+      onClose();
+      return;
+    }
 
     if (selectedFile.img == undefined) setSelectedFile({ img: null, err: InputError.image });
 
@@ -206,14 +249,26 @@ const UploadModal = ({
         uploading: true
       }));
 
-      await upload({
-        file: selectedFile.img,
-        confidence: avgConfidence,
-        currUser: user!,
-        visibility: input.visibility.value,
-        examType: input.examType.value,
-        subject_name: input.subject.value
-      });
+      if (defaultData) {
+        await updatePastPaper({
+          file: selectedFile.img,
+          visibility: input.visibility.value,
+          examType: input.examType.value,
+          subject_name: input.subject.value,
+          uid: defaultData.uid,
+          confidence: avgConfidence
+        });
+      } else {
+        // update
+        await upload({
+          file: selectedFile.img,
+          confidence: avgConfidence,
+          currUser: user!,
+          visibility: input.visibility.value,
+          examType: input.examType.value,
+          subject_name: input.subject.value
+        });
+      }
 
       // reset everything
 
@@ -251,7 +306,9 @@ const UploadModal = ({
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>{`Past Papers Upload Form`}</DrawerHeader>
+          <DrawerHeader>
+            {defaultData ? `Past Papers Edit Form` : `Past Papers Upload Form`}
+          </DrawerHeader>
           <DrawerBody>
             <form
               onSubmit={(e) => {
@@ -295,6 +352,7 @@ const UploadModal = ({
                       </Flex>
                     )}
                   </Center>
+                  {defaultData && <></>}
                   {!selectedFile.img && (
                     <HStack>
                       <Box
@@ -373,6 +431,7 @@ const UploadModal = ({
                       options={subjects}
                       title={'Subject Name'}
                       placeholder={'Enter Subject Name'}
+                      helperText={defaultData ? defaultData.subject_name : ''}
                     />
 
                     <AutoCompleteSearch
@@ -386,6 +445,7 @@ const UploadModal = ({
                       }}
                       options={ExamTypeArr}
                       title={'Exam Type'}
+                      helperText={defaultData ? defaultData.exam_type : ''}
                       placeholder={'Enter Exam Type Name'}
                     />
 
@@ -407,12 +467,21 @@ const UploadModal = ({
               {loading.validatingImage && <Loader>Please Wait Validating Image Using AI</Loader>}
               {loading.uploading && <Loader>Uploading Image to Cloud</Loader>}
               <Center pt={'0.4rem'} mb={'3rem'}>
-                <Button
-                  colorScheme="whatsapp"
-                  type="submit"
-                  isLoading={loading.validatingImage || loading.uploading}>
-                  Submit
-                </Button>
+                {defaultData ? (
+                  <Button
+                    colorScheme="purple"
+                    type="submit"
+                    isLoading={loading.validatingImage || loading.uploading}>
+                    Update
+                  </Button>
+                ) : (
+                  <Button
+                    colorScheme="whatsapp"
+                    type="submit"
+                    isLoading={loading.validatingImage || loading.uploading}>
+                    Submit
+                  </Button>
+                )}
               </Center>
             </form>
           </DrawerBody>
@@ -428,7 +497,8 @@ const AutoCompleteSearch = ({
   placeholder,
   value,
   onSelectOption,
-  error
+  error,
+  helperText
 }: {
   title: string;
   placeholder: string;
@@ -442,6 +512,7 @@ const AutoCompleteSearch = ({
       }) => boolean | void)
     | undefined;
   error: string | undefined;
+  helperText: string;
 }) => {
   return (
     <>
@@ -453,6 +524,7 @@ const AutoCompleteSearch = ({
             background={'var(--card-color)'}
             _hover={{ background: 'var(--card-color)' }}
             placeholder={placeholder}
+            // value={value}
           />
           <AutoCompleteList background={'var(--bg-color)'}>
             {options.map((opt, cid) => (
@@ -466,6 +538,7 @@ const AutoCompleteSearch = ({
             ))}
           </AutoCompleteList>
         </AutoComplete>
+        {helperText && <FormHelperText>Prev: {helperText}</FormHelperText>}
         {error && (
           <Text color={'red.300'} fontSize={'sm'} className="roboto" my={'0.5rem'}>
             {error}

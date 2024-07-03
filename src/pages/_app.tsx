@@ -23,6 +23,7 @@ import { ROUTING } from '~/lib/constant';
 import { useReferrer } from '~/hooks/useReferrer';
 import PalestineSupportBanner from '~/components/announcements/PalestineSupportBanner';
 import NewFeature from '~/components/design/NewFeature';
+import PastPaperToast from '~/components/pastpaper/PastPapersToast';
 
 // import NewFeature from '~/components/design/NewFeature';
 // import UpComingEvent from '~/components/design/UpCommingEvent';
@@ -57,6 +58,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <OneTap />
 
           <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
+          <PastPaperToast />
 
           {/* {!excludeHeadPages.includes(router.pathname) && (
             <NewFeature

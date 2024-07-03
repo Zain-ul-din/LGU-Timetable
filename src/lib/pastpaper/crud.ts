@@ -26,3 +26,10 @@ export const pastPaperDownVote = async (uid: string, doerId: string) => {
     votes_count: increment(-1) as any
   } as Partial<PastPaperDocType>);
 };
+
+export const pastPaperMarkAsSpam = async (uid: string, spam: boolean) => {
+  const docRef = doc(pastPapersCol, uid);
+  return updateDoc(docRef, {
+    spam
+  } as Partial<PastPaperDocType>);
+};

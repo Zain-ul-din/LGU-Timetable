@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import MainAnimator from '~/components/design/MainAnimator';
 import PastPapers from '~/components/pastpaper/pastpapers';
+import { SocialLinks } from '~/components/seo/Seo';
 import AllSubjectsProvider from '~/hooks/AllSubjectsProvider';
 import { decrypt } from '~/lib/cipher';
 import { APIS_ENDPOINTS } from '~/lib/constant';
@@ -38,6 +39,21 @@ export default function PastPaperPage({ subjects }: GetStaticPropsReturnType) {
     <>
       <Head>
         <title>Past Papers</title>
+
+        <meta
+          name="description"
+          content="A non-official blazingly 🔥 fast website to access the LGU past papers"
+        />
+
+        <meta
+          name="keywords"
+          content={`LGU timetable, lgu time table, lgu, lgu past papers, past papers`}
+        />
+
+        <SocialLinks />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainAnimator>
         <AllSubjectsProvider value={subjects}>

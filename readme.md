@@ -17,6 +17,102 @@ LGU-TimeTable V2
     <a href = 'https://github.com/IIvexII/LGU-TimetableAPI'>LGU-TimetableAPI</a>
 </h5>
 
+## ✨ Features
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Description</th>
+      <th>Available in this project</th>
+      <th>Available in official</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <a href="https://github.com/Zain-ul-din/lgu-crawler">Crawler </a>
+      </td>
+      <td align="center">
+        A Blazingly fast crawler that scraps all data from the LGU timetable
+        website.
+      </td>
+       <td align="center">✔</td>
+      <td align="center">🚫</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://lgutimetable.vercel.app/timetable">
+          Student Timetable
+        </a>
+      </td>
+      <td align="center">Allows students to access their class timetable.</td>
+      <td align="center">✔</td>
+      <td align="center">✔</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://lgutimetable.vercel.app/timetable/teachers">
+          Teacher Timetable
+        </a>
+      </td>
+      <td align="center">Allows teachers to view their timetable.</td>
+       <td align="center">✔</td>
+      <td align="center">✔</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://lgutimetable.vercel.app/freeclassrooms">
+          Free Classrooms
+        </a>
+      </td>
+      <td align="center">
+        A tool to locate available classrooms at the current time or any
+        specified time.
+      </td>
+       <td align="center">✔</td>
+      <td align="center">❌</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://lgutimetable.vercel.app/room-activities">
+          Room Activities
+        </a>
+      </td>
+      <td align="center">
+        A tool to monitor which department's lectures are taking place in each
+        room.
+      </td>
+       <td align="center">✔</td>
+      <td align="center">❌</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://lgutimetable.vercel.app/util/timetable_clashresolver">
+          Clash Resolver
+        </a>
+      </td>
+      <td align="center">
+        Timetable Clash Resolution Tool, designed to help students effortlessly
+        create a conflict-free course schedule.
+      </td>
+      <td align="center">✔</td>
+      <td align="center">❌</td>
+    </tr>
+    <tr>
+      <td>
+        <a href="https://lgutimetable.vercel.app/discussions">Discussion </a>
+      </td>
+      <td align="center">
+        Allows admin to create discussions and users to participate in it.
+      </td>
+      <td align="center">✔</td>
+      <td align="center">❌</td>
+    </tr>
+  </tbody>
+</table>
+
+
 <!-- TECH STACK -->
 
 <p align="center" p = "100px">

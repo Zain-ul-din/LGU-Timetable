@@ -1,4 +1,4 @@
-# [New Site Link](https://www.lgutimetable.online/)
+# [New Site Link]([https://www.lgutimetable.online/](https://lgutimetable.vercel.app/))
 
 # Not Documented Yet, Looking for a contributor 🦄.
 

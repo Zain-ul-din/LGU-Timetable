@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-    siteUrl: process.env.SITE_URL || 'https://www.lgutimetable.live',
+    siteUrl: process.env.SITE_URL || 'https://www.lgutimetable.online',
     generateRobotsTxt: true, 
 }
 

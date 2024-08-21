@@ -1,7 +1,7 @@
 import requests
 
 api_key = "add_your_api_key"
-base_url = "https://www.lgutimetable.live"
+base_url = "https://www.lgutimetable.online"
 
 end_points = {
     "metadata": f"{base_url}/api/public/metadata?apikey={api_key}",

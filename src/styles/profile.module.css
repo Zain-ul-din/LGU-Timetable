@@ -1,84 +1,84 @@
 .profile {
-   display: flex;
-   max-width: 1200px;
-   margin: 0 auto;
-   flex-direction: column;
-   background-color: var(--card-color);
-   border: 1px solid var(--border-color);
-   border-radius: 0.5rem;
-   padding-bottom: 5rem;
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-direction: column;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding-bottom: 5rem;
 }
 
 .profile > h1 {
-   font-size: 3rem;
-   font-weight: 900;
-   padding: 1rem;
+  font-size: 3rem;
+  font-weight: 900;
+  padding: 1rem;
 }
 
 @media (max-width: 1199px) {
-   .profile {
-      margin: 0.5rem;
-   }
+  .profile {
+    margin: 0.5rem;
+  }
 }
 
 .credentials {
-   display: flex;
-   gap: 2rem;
+  display: flex;
+  gap: 2rem;
 }
 
 .credentials > img {
-   margin: 1rem;
-   margin-left: 1.5rem;
-   border-radius: 0.5rem;
-   border: 1px solid var(--border-color);
+  margin: 1rem;
+  margin-left: 1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
 }
 
 .credentials > div {
-   padding-top: 1.2rem;
+  padding-top: 1.2rem;
 }
 
 .credentials > div > h1 {
-   font-size: 2.3rem;
+  font-size: 2.3rem;
 }
 
 .credentials > div > p {
-   color: white;
-   font-size: 1rem;
-   font-family: monospace;
+  color: white;
+  font-size: 1rem;
+  font-family: monospace;
 }
 
 .credentials > div > button {
-   margin-top: 0.5rem;
-   padding: 0.3rem;
-   font-size: 1.2rem;
-   text-align: center;
+  margin-top: 0.5rem;
+  padding: 0.3rem;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 @media (max-width: 600px) {
-   .profile > h1 {
-      font-size: 2rem;
-   }
+  .profile > h1 {
+    font-size: 2rem;
+  }
 
-   .credentials {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 0.5rem;
-   }
+  .credentials {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
 
-   .credentials > img {
-      margin-bottom: 0;
-   }
+  .credentials > img {
+    margin-bottom: 0;
+  }
 
-   .credentials > div {
-      padding-top: 0.5rem;
-   }
+  .credentials > div {
+    padding-top: 0.5rem;
+  }
 
-   .credentials > div > button {
-      margin: 0.8rem auto;
-   }
+  .credentials > div > button {
+    margin: 0.8rem auto;
+  }
 
-   .credentials > div > h1 {
-      text-align: center;
-   }
+  .credentials > div > h1 {
+    text-align: center;
+  }
 }

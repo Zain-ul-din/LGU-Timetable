@@ -1,120 +1,120 @@
 .content {
-   display: flex;
-   flex-wrap: wrap;
-   max-width: calc(100% - 20px);
-   justify-content: center;
-   margin: 0 auto;
-   gap: 8px;
-   max-width: 1200px;
-   padding-top: 0rem;
-   margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: calc(100% - 20px);
+  justify-content: center;
+  margin: 0 auto;
+  gap: 8px;
+  max-width: 1200px;
+  padding-top: 0rem;
+  margin-bottom: 2rem;
 }
 
 .card {
-   background-color: var(--card-color);
-   border: 1px solid var(--border-color);
-   border-radius: 10px;
-   cursor: pointer;
-   height: 260px;
-   position: relative;
-   width: 300px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   flex-direction: column;
+  background-color: var(--card-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  height: 260px;
+  position: relative;
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .card:hover {
-   transition: all 200ms linear;
-   /* border: 1px solid rgba(255, 255, 255, 0.4); */
+  transition: all 200ms linear;
+  /* border: 1px solid rgba(255, 255, 255, 0.4); */
 }
 
 .card:hover::before {
-   opacity: 1;
+  opacity: 1;
 }
 
 .card::before,
 .card::after {
-   border-radius: inherit;
-   content: '';
-   height: 100%;
-   left: 0px;
-   opacity: 0;
-   position: absolute;
-   top: 0px;
-   transition: opacity 500ms;
-   width: 100%;
+  border-radius: inherit;
+  content: '';
+  height: 100%;
+  left: 0px;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  transition: opacity 500ms;
+  width: 100%;
 }
 
 .card::before {
-   background: radial-gradient(
-      800px circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.06),
-      transparent 40%
-   );
-   z-index: 3;
+  background: radial-gradient(
+    800px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.06),
+    transparent 40%
+  );
+  z-index: 3;
 }
 
 .card::after {
-   background: radial-gradient(
-      600px circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.4),
-      transparent 40%
-   );
-   z-index: 1;
+  background: radial-gradient(
+    600px circle at var(--mouse-x) var(--mouse-y),
+    rgba(255, 255, 255, 0.4),
+    transparent 40%
+  );
+  z-index: 1;
 }
 
 /* card styling */
 
 .card > h1 {
-   font-size: 1.5rem;
-   opacity: 80%;
-   font-weight: lighter;
+  font-size: 1.5rem;
+  opacity: 80%;
+  font-weight: lighter;
 }
 
 .card > svg {
-   background: transparent;
-   color: white;
-   width: 10rem;
-   height: 10rem;
-   padding: 0.5rem;
-   padding-bottom: 2rem;
-   fill: rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: white;
+  width: 10rem;
+  height: 10rem;
+  padding: 0.5rem;
+  padding-bottom: 2rem;
+  fill: rgba(255, 255, 255, 0.2);
 }
 
 .card > span {
-   position: absolute;
-   top: 0;
-   right: 0;
-   border-radius: 2px;
-   padding: 1px;
-   border-top-right-radius: 8px;
-   background-color: orange;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 2px;
+  padding: 1px;
+  border-top-right-radius: 8px;
+  background-color: orange;
 }
 
 @media (max-width: 600px) {
-   .card {
-      opacity: 0.1;
-   }
+  .card {
+    opacity: 0.1;
+  }
 
-   .card::before,
-   .card::after {
-      opacity: 0.2;
-   }
+  .card::before,
+  .card::after {
+    opacity: 0.2;
+  }
 
-   .content {
-      max-width: 100%;
-      justify-content: content;
-      gap: 1rem;
-   }
+  .content {
+    max-width: 100%;
+    justify-content: content;
+    gap: 1rem;
+  }
 
-   .content > a {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-   }
+  .content > a {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 
-   .card {
-      width: 90%;
-   }
+  .card {
+    width: 90%;
+  }
 }

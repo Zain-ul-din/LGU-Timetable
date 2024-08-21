@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.lgutimetable.online
+
+# Sitemaps
+Sitemap: https://www.lgutimetable.online/sitemap.xml

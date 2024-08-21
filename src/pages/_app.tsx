@@ -2,48 +2,87 @@ import '~/styles/globals.css';
 import type { AppProps } from 'next/app';
 
 import { useState } from 'react';
-
-import type { TimetableInput } from '~/types/typedef';
-import { TimeTableInputContext } from '~/hooks/TimetableInputContext';
+import { useRouter } from 'next/router';
 
 import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 import NextNProgress from 'nextjs-progressbar';
 import DarkTheme from '~/components/design/DarkTheme';
+import BgGlow from '~/components/BgGlow';
+import { AppStyleProvider, appTheme } from '~/styles/Style';
 
-// credentials
 import OneTap from '~/components/OneTap';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { useUserCredentials } from '~/hooks/hooks';
-import { AppStyleProvider, appTheme } from '~/styles/Style';
-import { useRouter } from 'next/router';
 
-const footerPages = ['/', '/contribute', '/developer', '/notifications', '/freeclassrooms'];
+import ChatAppStateProvider, {
+  AppState as ChatAppState,
+  defaultState as defaultChatAppState
+} from '~/components/chat_room/hooks/AppStateProvider';
+import { ROUTING } from '~/lib/constant';
+import { useReferrer } from '~/hooks/useReferrer';
+import PalestineSupportBanner from '~/components/announcements/PalestineSupportBanner';
+import NewFeature from '~/components/design/NewFeature';
+import PastPaperToast from '~/components/pastpaper/PastPapersToast';
+
+// import NewFeature from '~/components/design/NewFeature';
+// import UpComingEvent from '~/components/design/UpCommingEvent';
+
+const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
+const excludeHeadPages = ['/contribute'];
 
 export default function App({ Component, pageProps }: AppProps) {
-   const [timeTableInput, setTimeTableInput] = useState<TimetableInput>({
-      fall: null,
-      semester: null,
-      section: null
-   });
+  const [user, setUser] = useUserCredentials();
+  const router = useRouter();
 
-   const [user, setUser] = useUserCredentials();
-   const router = useRouter();
+  /*
+   * chat app state for caching
+   */
+  const [chatAppState, setChatAppState] = useState<ChatAppState>(defaultChatAppState);
 
-   return (
-      <>
-         <TimeTableInputContext.Provider value={{ timeTableInput, setTimeTableInput }}>
-            <UserCredentialsContext.Provider value={{ user, setUser }}>
-               <NextNProgress color="var(--loader-color)" />
-               <AppStyleProvider theme={appTheme}>
-                  <DarkTheme />
-                  <OneTap />
-                  {router.pathname != '/contribute' && <Header />}
-                  <Component {...pageProps} />
-                  {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
-               </AppStyleProvider>
-            </UserCredentialsContext.Provider>
-         </TimeTableInputContext.Provider>
-      </>
-   );
+  /*
+   * helps new users to redirect directly to timetable section for better UX
+   */
+  // disabled due to google crawler is complaining about redirect pages
+  // useReferrer({
+  //     redirectTo: 'timetable'
+  // })
+
+  return (
+    <>
+      <UserCredentialsContext.Provider value={{ user, setUser }}>
+        {/* <BgGlow /> */}
+        <NextNProgress color="var(--loader-color)" />
+        <AppStyleProvider theme={appTheme}>
+          <DarkTheme />
+          <OneTap />
+
+          <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
+          <PastPaperToast />
+
+          {/* {!excludeHeadPages.includes(router.pathname) && (
+            <NewFeature
+              name="Timetable Clash Resolver"
+              description={`
+                            Welcome to our Timetable Clash Resolution Tool, created for students like you who are dealing with course scheduling challenges at university. We know it can be tough to create a schedule without conflicts. Don't worry! Our easy-to-use tool helps you design your perfect timetable without any overlapping classes.
+                        `}
+              link={ROUTING.clash_resolver}
+              timeOut={1000}
+            />
+          )} */}
+
+          {/*<Center>
+                        <UpComingEvent/>
+                    </Center>*/}
+
+          {!excludeHeadPages.includes(router.pathname) && <Header />}
+          <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
+            <Component {...pageProps} />
+          </ChatAppStateProvider.Provider>
+          {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
+          {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
+        </AppStyleProvider>
+      </UserCredentialsContext.Provider>
+    </>
+  );
 }

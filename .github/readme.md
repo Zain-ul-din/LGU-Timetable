@@ -4,6 +4,13 @@ _It's time to move on to new things_
 
 Previous Source code can be [accessed here](https://github.com/Zain-ul-din/LGU-Timetable/tree/last-commit)
 
+**Sibling Projects Under MIT License:**
+
+- [https://github.com/Zain-ul-din/lgu-crawler](https://github.com/Zain-ul-din/lgu-crawler)
+- [https://github.com/IIvexII/LGU-TimetableAPI](https://github.com/IIvexII/LGU-TimetableAPI)
+
+LGU Crawler 
+
 The source code will remain available under the `GNU General Public License`, but no further updates will be provided.
 
 ```

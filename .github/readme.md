@@ -1,5 +1,3 @@
-### Github Workflows
+# This website has been sold 💸
 
-- prettier
-- vercel auto deploy
-
+Previous Source code can be [accessed here](https://github.com/Zain-ul-din/LGU-Timetable/tree/last-commit)

@@ -78,7 +78,7 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
   return (
     <>
       <Head>
-        <title>LGU Timetable</title>
+        <title>{timetable.id} Timetable</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <meta

@@ -24,10 +24,10 @@ export default function Document() {
         <meta name="impact-site-verification" content="cd6878a1-cc9c-4849-a6ee-aff7283576ef" />
 
         {/* ads */}
-        <script
+        {/* <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9921497734267177"
-          crossOrigin="anonymous"></script>
+          crossOrigin="anonymous"></script> */ }
 
         <link
           href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&family=Roboto:wght@300&display=swap"

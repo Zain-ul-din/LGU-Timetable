@@ -8,7 +8,7 @@ import Header from '~/components/Header';
 import Footer from '~/components/Footer';
 import NextNProgress from 'nextjs-progressbar';
 import DarkTheme from '~/components/design/DarkTheme';
-import BgGlow from '~/components/BgGlow';
+// import BgGlow from '~/components/BgGlow';
 import { AppStyleProvider, appTheme } from '~/styles/Style';
 
 import OneTap from '~/components/OneTap';
@@ -24,11 +24,12 @@ import { useReferrer } from '~/hooks/useReferrer';
 import PalestineSupportBanner from '~/components/announcements/PalestineSupportBanner';
 import NewFeature from '~/components/design/NewFeature';
 import PastPaperToast from '~/components/pastpaper/PastPapersToast';
+import React from 'react';
 
 // import NewFeature from '~/components/design/NewFeature';
 // import UpComingEvent from '~/components/design/UpCommingEvent';
-import { Flex, Text } from '@chakra-ui/react';
-import Link from 'next/link';
+// import { Flex, Text } from '@chakra-ui/react';
+// import Link from 'next/link';
 
 const footerPages = ['/', '/contribute', '/developer', '/freeclassrooms'];
 const excludeHeadPages = ['/contribute'];
@@ -59,7 +60,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <DarkTheme />
           <OneTap />
 
-          <Flex justify={'center'} bg={'blue.300'} alignItems={'center'} py={4}>
+          {/* <Flex justify={'center'} bg={'blue.300'} alignItems={'center'} py={4}>
             <Text fontSize={'xl'}>
               To know current status of this project check
               <Link
@@ -69,7 +70,8 @@ export default function App({ Component, pageProps }: AppProps) {
                 this link
               </Link>
             </Text>
-          </Flex>
+          </Flex> */}
+
           <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
           <PastPaperToast />
 

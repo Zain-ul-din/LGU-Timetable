@@ -1,9 +1,10 @@
 /**
  * Generates heading id
  * @example "Documents & Reports" ==> "documents--reports"
- * @param children
+ * @param children string
  * @returns string
  */
+
 export function generateHeadingId(children?: string) {
   if (typeof children !== 'string') return '';
 

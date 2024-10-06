@@ -70,6 +70,8 @@ export const newsLetterColRef = collection(firebase.firebaseStore, 'news_letter'
 ///
 /// firebase storage
 ///
+
+
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 

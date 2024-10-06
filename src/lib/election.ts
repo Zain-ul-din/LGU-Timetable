@@ -10,7 +10,7 @@ proper markdown format when necessary.
 Expected Output Format:
 
 {
-  "isValid": true, // or false
+  "isValid": true, // or can be false 
   "message": "Your helpful message here that can help user to improve if anything is missing.",
   "markDown": "Formatted markdown content here."
 }

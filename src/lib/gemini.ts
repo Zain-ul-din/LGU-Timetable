@@ -5,5 +5,5 @@ export default async function askGemini(prompt: string) {
   const model = client.getGenerativeModel({ model: 'gemini-pro' });
   const result = await model.generateContent(prompt);
   const res = result.response.text();
-  return res;
+  return res; //response text
 }

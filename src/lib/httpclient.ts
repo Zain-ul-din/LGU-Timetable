@@ -9,6 +9,7 @@ export class HttpClient<T = any> {
   /**
    * Initial backoff time in milliseconds after an error.
    */
+  
   private static DEFAULT_BACKOFF_INITIAL_DELAY_MS: number = 1000;
   private static DEFAULT_BACKOFF_FACTOR: number = 1.5;
 

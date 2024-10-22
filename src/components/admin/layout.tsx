@@ -27,7 +27,7 @@ export default function AdminLayout({
 
   return (
     <>
-      {firebase.firebaseAuth.currentUser.email != process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
+      {process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(firebase.firebaseAuth.currentUser.email || "") ? (
         <>{fallBack || <UnAuthenticated />}</>
       ) : (
         <>{children}</>

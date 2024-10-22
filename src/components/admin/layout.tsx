@@ -14,6 +14,7 @@ export default function AdminLayout({
   fallBack?: ReactNode;
 }) {
   if (!firebase.firebaseAuth.currentUser) {
+   
     return (
       <>
         {fallBack || (
@@ -23,11 +24,11 @@ export default function AdminLayout({
         )}
       </>
     );
-  }
-
+  }      
+  console.log("hello:",process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(firebase.firebaseAuth.currentUser.email || ""))
   return (
     <>
-      {process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(firebase.firebaseAuth.currentUser.email || "") ? (
+      {!process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(firebase.firebaseAuth.currentUser.email || "") ? (
         <>{fallBack || <UnAuthenticated />}</>
       ) : (
         <>{children}</>

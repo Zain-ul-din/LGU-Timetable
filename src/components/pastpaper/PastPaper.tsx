@@ -49,7 +49,7 @@ export default function PastPaper({
   useEffect(() => {
     if (!user) return setEdit(false);
     const isAuthorizedUser = user.uid === model.uploader_uid;
-    const isAdmin = user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    const isAdmin = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(user?.email || "") || false;
     // check if can edit post any more
     const upVotesCount = (model.up_votes || []).length;
     const downVotesCount = (model.down_votes || []).length;

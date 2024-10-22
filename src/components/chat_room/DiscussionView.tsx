@@ -185,10 +185,11 @@ export default function DiscussionView() {
 
               <Flex ml={'auto'}>
                 <DiscussionCrudControls
-                  haveAccess={
-                    discussion.authorId == user?.user?.uid ||
-                    user?.user?.email == process.env.NEXT_PUBLIC_ADMIN_EMAIL
-                  }
+                 haveAccess={
+                  discussion.authorId == user?.user?.uid ||
+                  process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(user?.user?.email || "") ||
+                  false
+                }
                   discussion={discussion}
                   editState={[edit, setEdit]}
                 />
@@ -300,7 +301,7 @@ export default function DiscussionView() {
                   key={idx}
                   is_author={
                     user?.user?.uid == comment.user_id ||
-                    user?.user?.email == process.env.NEXT_PUBLIC_ADMIN_EMAIL
+                    process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(user?.user?.email || "") || false
                   }
                 />
               );

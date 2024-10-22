@@ -45,7 +45,8 @@ export const DAYS_NAME = [
   'Saturday'
 ];
 
-export const admin_mail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+export const admin_mail = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",") || [];
+
 
 export const LINKS = {
   API_QA_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable/discussions/new?category=q-a',

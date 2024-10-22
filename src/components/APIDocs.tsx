@@ -44,7 +44,12 @@ export default function APIDocs({ staticDocs }: { staticDocs: Array<IApiDoc> }) 
       </Center>
 
       {loading && <Loader>Loading Docs...</Loader>}
-      {user?.user && <>{user.user.email == admin_mail && <AdminUploads docs={docs} />}</>}
+      {user?.user && (
+  <>
+    {admin_mail.includes(user.user.email || '') && <AdminUploads docs={docs} />}
+  </>
+)}
+
 
       {docs.map((doc, key) => {
         return (

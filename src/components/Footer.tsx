@@ -166,10 +166,32 @@ const githubApiResponseSample = {
   repos_url: 'https://api.github.com/users/Zain-ul-din/repos',
   events_url: 'https://api.github.com/users/Zain-ul-din/events{/privacy}',
   received_events_url: 'https://api.github.com/users/Zain-ul-din/received_events',
-  type: 'User',
+  type: 'User', 
   site_admin: false,
   contributions: 14
 };
+
+// const ahadNawazContributor = {
+//   login: 'ahadnawaz585',
+//   "id": 132939571,
+//   "node_id": "U_kgDOB-x_Mw",
+//   "avatar_url": "https://avatars.githubusercontent.com/u/132939571?v=4",
+//   "gravatar_id": "",
+//   "url": "https://api.github.com/users/ahadnawaz585",
+//   "html_url": "https://github.com/ahadnawaz585",
+//   "followers_url": "https://api.github.com/users/ahadnawaz585/followers",
+//   "following_url": "https://api.github.com/users/ahadnawaz585/following{/other_user}",
+//   "gists_url": "https://api.github.com/users/ahadnawaz585/gists{/gist_id}",
+//   "starred_url": "https://api.github.com/users/ahadnawaz585/starred{/owner}{/repo}",
+//   "subscriptions_url": "https://api.github.com/users/ahadnawaz585/subscriptions",
+//   "organizations_url": "https://api.github.com/users/ahadnawaz585/orgs",
+//   "repos_url": "https://api.github.com/users/ahadnawaz585/repos",
+//   "events_url": "https://api.github.com/users/ahadnawaz585/events{/privacy}",
+//   "received_events_url": "https://api.github.com/users/ahadnawaz585/received_events",
+//   type: 'User',
+//   site_admin: false,
+//   contributions: 3  // Adjust contributions count if needed
+// };  
 
 type GithubApiResponse = typeof githubApiResponseSample;
 

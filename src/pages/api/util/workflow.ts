@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (usersSnapShot.docs.length === 0) throw new Error('Invalid User');
     const user = usersSnapShot.docs.map((doc) => doc.data())[0] as UserDocType;
 
-    const isAdmin = user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
+    const isAdmin = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.split(",").includes(user?.email || "");
     const quotaDoc = await initWorkFlowDoc();
 
     if (!isAdmin) {

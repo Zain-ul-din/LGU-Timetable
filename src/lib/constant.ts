@@ -52,7 +52,7 @@ export const LINKS = {
   SHARE_IDEAS_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable/discussions/new?category=ideas',
   BUG_REPORT_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable/issues/new',
   GIT_HUB_REPO_LINK: 'https://github.com/Zain-ul-din/LGU-Timetable',
-  BACK_END_REPO_LINK: 'https://github.com/IIvexII/LGU-TimetableAPI',
+  BACK_END_REPO_LINK: 'https://github.com/Zain-ul-din/lgu-crawler',
   QA_REDIRECT_LINK:
     'https://github.com/login?return_to=https%3A%2F%2Fgithub.com%2FZain-ul-din%2FLGU-Timetable%2Fdiscussions%2Fnew%3Fcategory%3Dq-a'
 };

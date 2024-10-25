@@ -14,7 +14,7 @@ import {
   addLoggedInUser,
   reportFirebaseAnalytics
 } from '~/lib/FirebaseAnalysis';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserCredentialsContext } from '~/hooks/UserCredentialsContext';
 import { Tooltip } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
@@ -25,6 +25,11 @@ const secular_One = Secular_One({ subsets: ['latin'], weight: '400' });
 export default function Header() {
   const user = useContext(UserCredentialsContext);
 
+  useEffect(() => {
+    if(!user.user) return;
+    addLoggedInUser(user.user as User);
+  }, [user])
+  
   return (
     <div
       className={styles.header_wrapper + ' ' + 'glow glow_sm' + ' roboto'}
@@ -51,9 +56,10 @@ export const NotLoggedIn = ({ text, isLoading }: { text: string; isLoading?: boo
     <Btn
       colorScheme="linkedin"
       onClick={(e) => {
-        signInWithPopup(firebase.firebaseAuth, new GoogleAuthProvider()).then(
-          (data: UserCredential) => addLoggedInUser(data.user)
-        );
+        signInWithPopup(firebase.firebaseAuth, new GoogleAuthProvider());
+        // .then(
+         // (data: UserCredential) => 
+        // );
       }}
       fontWeight={'bold'}
       isLoading={isLoading}>

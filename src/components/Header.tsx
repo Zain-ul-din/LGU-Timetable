@@ -26,7 +26,7 @@ export default function Header() {
   const user = useContext(UserCredentialsContext);
 
   useEffect(() => {
-    if(!user.user) return;
+    if(!user || !user.user) return;
     addLoggedInUser(user.user as User);
   }, [user])
   

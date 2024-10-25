@@ -18,7 +18,6 @@ export const getStaticProps = (async (context) => {
 }>;
 
 export default function Page({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log(posts);
   return (
     <Flex maxWidth={'1200px'} mx={'auto'} w={'full'} p={2} justify={'center'} flexDir={'column'}>
       <Stack mt={6}>

@@ -1,5 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 interface Post {
   content: {
@@ -26,15 +28,24 @@ export const getStaticPaths = (async () => {
 export const getStaticProps = (async (context: GetStaticPropsContext) => {
   const id = context.params!.id;
   const res = await fetch(`https://sneakword.online/wp-json/wp/v2/posts/${id}`);
-  const post = (await res.json()) as Post;
+  const post = (await res.json()) as Post | undefined;
   return {
-    props: { post: post }
+    props: { post: post },
+    revalidate: 60 * 60 * 12
   };
 }) satisfies GetStaticProps<{
-  post: Post;
+  post: Post | undefined;
 }>;
 
 export default function BlogDetailPage({ post }: { post: Post }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!post) router.push('/blogs');
+  }, [post, router]);
+
+  if (!post) return <></>;
+
   return (
     <Flex maxWidth={'1250px'} mx={'auto'} w={'full'} p={2}>
       <div

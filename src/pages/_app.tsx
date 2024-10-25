@@ -95,7 +95,9 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </ChatAppStateProvider.Provider>
           {footerPages.includes(router.pathname) && <Footer fixedBottom={false} />}
-          {router.pathname.includes('/timetable/') && <Footer fixedBottom={false} />}
+          {(router.pathname.includes('/timetable/') || router.pathname.includes('/blogs')) && (
+            <Footer fixedBottom={false} />
+          )}
         </AppStyleProvider>
       </UserCredentialsContext.Provider>
     </>

@@ -81,7 +81,8 @@ export const ROUTING = {
   rooms: '/timetable/rooms',
   clash_resolver: '/util/timetable_clashresolver',
   room_activities: '/room-activities',
-  past_papers: '/pastpaper'
+  past_papers: '/pastpaper',
+  blogs: '/blogs'
 };
 
 export const APIS_ENDPOINTS = {

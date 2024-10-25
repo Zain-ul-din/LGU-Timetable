@@ -130,6 +130,7 @@ const FooterLinks = () => {
       <Flex
         gap={isUnder600 ? '1.5rem' : '4rem'}
         columnGap={'1rem'}
+        rowGap={'1rem'}
         maxWidth={'1200px'}
         margin={'0.5rem auto'}
         justifyContent={'center'}

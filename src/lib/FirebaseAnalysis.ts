@@ -25,7 +25,11 @@ export function addLoggedInUser(user: User) {
   };
 
   getDoc(userDoc).then((doc) => {
-    if (doc.exists()) return;
+    try {
+      if (doc.exists()) return;
+    } catch(err) {
+      console.log(err)
+    }
     setDoc(userDoc, userData, { merge: true });
   });
 }

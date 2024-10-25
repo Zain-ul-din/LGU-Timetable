@@ -73,7 +73,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </Flex> */}
 
           <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
-          <PastPaperToast />
+          {/* <PastPaperToast /> */}
 
           {/* {!excludeHeadPages.includes(router.pathname) && (
             <NewFeature

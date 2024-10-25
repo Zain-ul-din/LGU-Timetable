@@ -1,5 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -47,14 +48,20 @@ export default function BlogDetailPage({ post }: { post: Post }) {
   if (!post) return <></>;
 
   return (
-    <Flex maxWidth={'1250px'} mx={'auto'} w={'full'} p={2}>
-      <div
-        className="mark-down"
-        dangerouslySetInnerHTML={{
-          __html: `
+    <>
+      <Head>
+        <title>{post.title.rendered}</title>
+        <meta name="description" content={`${post.content.rendered.slice(0, 100)}`} />
+      </Head>
+      <Flex maxWidth={'1250px'} mx={'auto'} w={'full'} p={2}>
+        <div
+          className="mark-down"
+          dangerouslySetInnerHTML={{
+            __html: `
           <h1>${post.title.rendered}</h1>
           ${post.content.rendered}`
-        }}></div>
-    </Flex>
+          }}></div>
+      </Flex>
+    </>
   );
 }

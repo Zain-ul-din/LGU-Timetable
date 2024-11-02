@@ -71,8 +71,9 @@ export default function App({ Component, pageProps }: AppProps) {
               </Link>
             </Text>
           </Flex> */}
-
-          <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />
+          {window.location.host !== 'lgutimetable.vercel.app' && 
+          <PalestineSupportBanner hideMessage={!footerPages.includes(router.pathname)} />}
+          
           {/* <PastPaperToast /> */}
 
           {/* {!excludeHeadPages.includes(router.pathname) && (

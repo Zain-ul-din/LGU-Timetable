@@ -4,7 +4,7 @@ import { firebase, userColsRef } from './firebase';
 import { useEffect } from 'react';
 import { UserDocType } from './firebase_doctypes';
 
-export function addLoggedInUser(user: User) {
+export async function addLoggedInUser(user: User) {
   if (!user) return;
 
   const userDoc = doc(userColsRef, user.email as string);
@@ -23,11 +23,13 @@ export function addLoggedInUser(user: User) {
     isPublic: true,
     repo: 0
   };
-
-  getDoc(userDoc).then((doc) => {
-    if (doc.exists()) return;
+  
+  try {
+    const docSnapShot = await getDoc(userDoc);
+    if(!docSnapShot.exists()) setDoc(userDoc, userData, { merge: true });
+  } catch(_) {
     setDoc(userDoc, userData, { merge: true });
-  });
+  }
 }
 
 export enum FIREBASE_ANALYTICS_EVENTS {

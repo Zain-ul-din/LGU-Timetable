@@ -53,18 +53,27 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
           <Container
             as={Stack}
             maxW={'6xl'}
-            py={2}
+            padding={0}
+            py={4}
+            px={0.1}
             direction={{ base: 'column', md: 'row' }}
             spacing={4}
             justify={{ base: 'center', md: 'space-between' }}
             align={{ base: 'center', md: 'center' }}>
-            <Flex flexDirection={'row'}>
-              <Text>© OPEN SOURCE MADE WITH </Text>
-              <Box color={'red'} pt={'5px'} px={'3px'}>
-                {' '}
-                <BsSuitHeartFill />
-              </Box>
-            </Flex>
+            <Link href={'https://www.orbisdev.co/'}>
+              <Flex
+                color={'orange.400'}
+                fontWeight={'medium'}
+                flexDirection={'row'}
+                align={'center'}
+                fontSize={'md'}
+                gap={1}>
+                {/* <Text>© OPEN SOURCE MADE WITH </Text> */}
+                <Text>Backed By - OrbisDev</Text>
+                <ExternalLinkIcon />
+                <Box> {/* <BsSuitHeartFill /> */}</Box>
+              </Flex>
+            </Link>
 
             <Stack direction={'row'} spacing={4}>
               <SocialButton label={'GitHub Front-End'} href={LINKS.GIT_HUB_REPO_LINK}>
@@ -121,6 +130,7 @@ const FooterLinks = () => {
       <Flex
         gap={isUnder600 ? '1.5rem' : '4rem'}
         columnGap={'1rem'}
+        rowGap={'1rem'}
         maxWidth={'1200px'}
         margin={'0.5rem auto'}
         justifyContent={'center'}
@@ -174,6 +184,7 @@ const githubApiResponseSample = {
 type GithubApiResponse = typeof githubApiResponseSample;
 
 import Link from 'next/link';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 const GithubContributors = ({ urls }: { urls: string[] }) => {
   const [contributors, setContributors] = useState<Array<GithubApiResponse>>([]);

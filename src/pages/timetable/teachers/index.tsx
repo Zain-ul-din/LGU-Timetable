@@ -35,7 +35,7 @@ export default function Timetable({ teachers }: { teachers: Array<string> }) {
   return (
     <>
       <Head>
-        <title>LGU Timetable Selection</title>
+        <title>LGU Teachers Timetable</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <meta

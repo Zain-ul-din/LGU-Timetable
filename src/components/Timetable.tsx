@@ -28,11 +28,10 @@ import {
   AccordionIcon
 } from '@chakra-ui/react';
 
-import { FaFileImage } from 'react-icons/fa';
 import TimeTablePrint from './TimetablePrint';
 import ReactToPrint from 'react-to-print';
 
-import { APIS_ENDPOINTS, ROUTING, timetableHeadTitles } from '~/lib/constant';
+import { ROUTING, timetableHeadTitles } from '~/lib/constant';
 
 const day_sorter = {
   monday: 1,
@@ -104,77 +103,73 @@ export default function Timetable({ metaData, timetableData, ad }: IProps) {
           updatedAt={new Date(timetableData.updatedAt as string)}
         />
 
-        {!false ? (
+        {/* {!false ? (
           <FreeForAdvertisement link="/discussions?active_route=View&discussion_id=FLbqhsFKlwny9VxInN8b" />
         ) : (
           <Educative mx={'1rem'} link={ad.link} description={ad.description} title={ad.title} />
-        )}
+        )} */}
 
         {/* <RenderOnce uid="Palestine_Side">
           <PalestineSideAd url="/discussions?active_route=View&discussion_id=mIPtC9zPO8GaH7Pltx87" />
         </RenderOnce> */}
 
         <div>
-          {!timetableData ? (
-            <Loader>Loading...</Loader>
-          ) : (
-            <>
-              <div ref={printTableRef} className="print_timetable">
-                <TimeTablePrint
-                  headTitles={timetableHeadTitles}
-                  data={timetableData.timetable}
-                  payload={`${metaData} (Updated At: ${new Date(
-                    timetableData.updatedAt
-                  ).toDateString()})`}
-                />
-              </div>
+          <>
+            <div ref={printTableRef} className="print_timetable">
+              <TimeTablePrint
+                headTitles={timetableHeadTitles}
+                data={timetableData.timetable}
+                payload={`${metaData} (Updated At: ${new Date(
+                  timetableData.updatedAt
+                ).toDateString()})`}
+              />
+            </div>
 
-              {/* chart render */}
-              <Accordion mx={2} my={4} mb={8}>
-                <AccordionItem>
-                  <AccordionButton>
-                    <Box mr={2}>Show Chart</Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                  <AccordionPanel>
-                    <TimetableChart
-                      timetable={Object.entries(timetableData.timetable).sort(([lhs], [rhs]) => {
-                        let day1 = lhs.toLowerCase();
-                        let day2 = rhs.toLowerCase();
-                        return day_sorter[day1 as keyof object] - day_sorter[day2 as keyof object];
-                      })}
-                    />
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
+            {/* chart render */}
+            <Accordion mx={2} my={4} mb={8}>
+              <AccordionItem>
+                <AccordionButton>
+                  <Box mr={2}>Show Chart</Box>
+                  <AccordionIcon />
+                </AccordionButton>
+                <AccordionPanel>
+                  <TimetableChart
+                    timetable={Object.entries(timetableData.timetable).sort(([lhs], [rhs]) => {
+                      let day1 = lhs.toLowerCase();
+                      let day2 = rhs.toLowerCase();
+                      return day_sorter[day1 as keyof object] - day_sorter[day2 as keyof object];
+                    })}
+                  />
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
 
-              {Object.entries(timetableData.timetable)
-                .sort(([lhs], [rhs]) => {
-                  let day1 = lhs.toLowerCase();
-                  let day2 = rhs.toLowerCase();
-                  return day_sorter[day1 as keyof object] - day_sorter[day2 as keyof object];
-                })
-                .map(([day, data], idx) => {
-                  return (
-                    <React.Fragment key={idx}>
-                      {(data as Array<TimetableData>).length > 0 && (
-                        <Card
-                          data={(data as Array<TimetableData>).sort((lhs, rhs) => {
-                            return (
-                              lhs.startTime.hours * 60 +
-                              lhs.startTime.minutes -
-                              (rhs.startTime.hours * 60 + rhs.startTime.minutes)
-                            );
-                          })}
-                          day={day}
-                          idx={idx}
-                        />
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-            </>
-          )}
+            {Object.entries(timetableData.timetable)
+              .sort(([lhs], [rhs]) => {
+                let day1 = lhs.toLowerCase();
+                let day2 = rhs.toLowerCase();
+                return day_sorter[day1 as keyof object] - day_sorter[day2 as keyof object];
+              })
+              .map(([day, data], idx) => {
+                return (
+                  <React.Fragment key={idx}>
+                    {(data as Array<TimetableData>).length > 0 && (
+                      <Card
+                        data={(data as Array<TimetableData>).sort((lhs, rhs) => {
+                          return (
+                            lhs.startTime.hours * 60 +
+                            lhs.startTime.minutes -
+                            (rhs.startTime.hours * 60 + rhs.startTime.minutes)
+                          );
+                        })}
+                        day={day}
+                        idx={idx}
+                      />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+          </>
         </div>
       </div>
     </>

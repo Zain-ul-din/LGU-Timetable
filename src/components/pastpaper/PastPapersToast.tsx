@@ -15,7 +15,8 @@ export default function PastPaperToast() {
   const toastId = 'past-paper-toast';
 
   useEffect(() => {
-    if (router.pathname === ROUTING.past_papers || !show) return;
+    if (router.pathname === ROUTING.past_papers || router.pathname.includes('/blogs') || !show)
+      return;
     setShow(false);
 
     toast({

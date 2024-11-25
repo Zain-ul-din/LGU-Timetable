@@ -11,8 +11,9 @@ type Posts = {
 }[];
 
 export const getStaticProps = (async (context) => {
-  const res = await fetch('https://sneakword.online/wp-json/wp/v2/posts?_fields=title,id');
-  const posts = (await res.json()) as Posts;
+  // const res = await fetch('https://sneakword.online/wp-json/wp/v2/posts?_fields=title,id');
+  // const posts = (await res.json()) as Posts;
+  const posts = [] as Posts;
   return { props: { posts }, revalidate: 60 * 60 * 12 };
 }) satisfies GetStaticProps<{
   posts: Posts;

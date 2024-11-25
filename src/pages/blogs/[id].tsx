@@ -14,9 +14,10 @@ interface Post {
 }
 
 export const getStaticPaths = (async () => {
-  const res = await fetch('https://sneakword.online/wp-json/wp/v2/posts?_fields=id');
-  const posts = await res.json();
-  const paths = posts.map((post: any) => ({
+  // const res = await fetch('https://sneakword.online/wp-json/wp/v2/posts?_fields=id');
+  // const posts = await res.json();
+
+  const paths = [].map((post: any) => ({
     params: { id: post.id + '' }
   }));
 
@@ -28,10 +29,10 @@ export const getStaticPaths = (async () => {
 
 export const getStaticProps = (async (context: GetStaticPropsContext) => {
   const id = context.params!.id;
-  const res = await fetch(`https://sneakword.online/wp-json/wp/v2/posts/${id}`);
-  const post = (await res.json()) as Post | undefined;
+  // const res = await fetch(`https://sneakword.online/wp-json/wp/v2/posts/${id}`);
+  // const post = (await res.json()) as Post | undefined;
   return {
-    props: { post: post },
+    props: { post: undefined },
     revalidate: 60 * 60 * 12
   };
 }) satisfies GetStaticProps<{

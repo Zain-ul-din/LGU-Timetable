@@ -34,7 +34,7 @@ export default function Page({ posts }: InferGetStaticPropsType<typeof getStatic
           <Text as="h1" fontSize="3xl" fontWeight="bold">
             Blogs
           </Text>
-          <Text fontSize="lg" color="gray.600">
+          <Text fontSize="lg">
             Explore our collection of blogs that cover a wide range of educational topics, designed
             to inform and inspire you.
           </Text>

@@ -43,37 +43,57 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
         bg={'var(--card-color)'}
         borderTop={'1px solid var(--border-color)'}
         color={'white'}
+        position={'relative'}
         width={'100%'}>
+        <Flex
+          position={'absolute'}
+          bottom={0}
+          left={'50%'}
+          width={'200px'}
+          height={'200px'}
+          filter={'blur(200px)'}
+          rounded={'50%'}
+          transform={'translateX(-50%)'}
+          bg={'rgba(255,255,255,0.1)'}>
+          {' '}
+        </Flex>
         <Box
           borderTopWidth={1}
           borderStyle={'solid'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           flexBasis={'100%'}
+          maxWidth={'900px'}
+          mx={'auto'}
           width={'100%'}>
           <Container
             as={Stack}
             maxW={'6xl'}
             padding={0}
             py={4}
+            pt={8}
             px={0.1}
             direction={{ base: 'column', md: 'row' }}
             spacing={4}
             justify={{ base: 'center', md: 'space-between' }}
             align={{ base: 'center', md: 'center' }}>
-            <Link href={'https://www.orbisdev.co/'}>
-              <Flex
-                color={'orange.400'}
-                fontWeight={'medium'}
-                flexDirection={'row'}
-                align={'center'}
-                fontSize={'md'}
-                gap={1}>
-                {/* <Text>© OPEN SOURCE MADE WITH </Text> */}
-                <Text>Backed By - OrbisDev</Text>
-                <ExternalLinkIcon />
-                <Box> {/* <BsSuitHeartFill /> */}</Box>
-              </Flex>
-            </Link>
+            {/* <Link href={'https://www.orbisdev.co/'}> */}
+            <Flex
+              // color={'orange.400'}
+              fontWeight={'medium'}
+              color={'orange.300'}
+              flexDirection={'row'}
+              align={'center'}
+              fontSize={'md'}
+              gap={1}>
+              <Text>© OPEN SOURCE MADE WITH </Text>
+              {/* <Text>Backed By - OrbisDev</Text> */}
+              {/* <ExternalLinkIcon /> */}
+              <Box>
+                {' '}
+                <BsSuitHeartFill />
+              </Box>
+            </Flex>
+            {/* </Link> */}
 
             <Stack direction={'row'} spacing={4}>
               <SocialButton label={'GitHub Front-End'} href={LINKS.GIT_HUB_REPO_LINK}>
@@ -92,12 +112,13 @@ export default function Footer({ fixedBottom }: { fixedBottom: boolean }): JSX.E
             </Stack>
           </Container>
           <FooterLinks />
-          <Center my={6}>
-            <Heading fontWeight={'thin'} className="roboto" fontSize={'2xl'}>
+          <Center mb={8} mt={8}>
+            <Heading fontWeight={'light'} className="roboto" fontSize={'2xl'}>
               Github Contributors
             </Heading>
           </Center>
           <Flex
+            pb={6}
             background={'inherit'}
             gap={isUnder600 ? '0.5rem' : '1.5rem'}
             flexDirection={'row'}
@@ -132,9 +153,10 @@ const FooterLinks = () => {
         columnGap={'1rem'}
         rowGap={'1rem'}
         maxWidth={'1200px'}
-        margin={'0.5rem auto'}
+        margin={'1rem auto'}
         justifyContent={'center'}
         paddingX={'0.5rem'}
+        paddingY={'.5rem'}
         flexWrap={'wrap'}>
         {Object.entries(ROUTING).map(([val, link], idx) => {
           return (
@@ -144,7 +166,7 @@ const FooterLinks = () => {
                 fontSize={'sm'}
                 fontWeight={'hairline'}
                 className="roboto"
-                color={'blue.300'}
+                color={'whiteAlpha.900'}
                 _hover={{ textDecoration: 'underline' }}>
                 {val.toUpperCase()}
               </Text>

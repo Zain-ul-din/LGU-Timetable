@@ -90,7 +90,9 @@ export default function App({ Component, pageProps }: AppProps) {
                         <UpComingEvent/>
                     </Center>*/}
 
-          {!excludeHeadPages.includes(router.pathname) && <Header />}
+          {!excludeHeadPages.includes(router.pathname) && (
+            <Header clampWidth={router.pathname === '/'} />
+          )}
           <ChatAppStateProvider.Provider value={[chatAppState, setChatAppState]}>
             <Component {...pageProps} />
           </ChatAppStateProvider.Provider>

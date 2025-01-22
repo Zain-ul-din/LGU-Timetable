@@ -23,11 +23,11 @@ export async function addLoggedInUser(user: User) {
     isPublic: true,
     repo: 0
   };
-  
+
   try {
     const docSnapShot = await getDoc(userDoc);
-    if(!docSnapShot.exists()) setDoc(userDoc, userData, { merge: true });
-  } catch(_) {
+    if (!docSnapShot.exists()) setDoc(userDoc, userData, { merge: true });
+  } catch (_) {
     setDoc(userDoc, userData, { merge: true });
   }
 }
@@ -52,6 +52,7 @@ export enum FIREBASE_ANALYTICS_EVENTS {
   // affiliate
   educative = 'educative',
   freeForAdvertisement = 'free_for_advertisement',
+  celebrated_3000_users = 'celebrated_3000_users'
 }
 
 import { logEvent } from 'firebase/analytics';

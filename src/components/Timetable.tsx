@@ -103,8 +103,8 @@ export default function Timetable({ metaData, timetableData, ad }: IProps) {
           updatedAt={new Date(timetableData.updatedAt as string)}
         />
 
+        <FreeForAdvertisement link="https://tally.so/r/3EvyBq" />
         {/* {!false ? (
-          <FreeForAdvertisement link="/discussions?active_route=View&discussion_id=FLbqhsFKlwny9VxInN8b" />
         ) : (
           <Educative mx={'1rem'} link={ad.link} description={ad.description} title={ad.title} />
         )} */}

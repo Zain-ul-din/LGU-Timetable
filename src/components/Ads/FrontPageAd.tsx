@@ -15,17 +15,17 @@ export default function FrontPageAd() {
 
   return (
     <>
-      <Center mb={3}>
+      <Center mb={6}>
         <Link href={ROUTING.past_papers}>
-          <Button
+          {/* <Button
             size={'sm'}
             bgGradient={'linear(to-l, #7928CA, #FF0080)'}
             _hover={{
               bgGradient: 'linear(to-l, #7928CA, #FF0080)'
             }}
-            fontSize={'md'}>
-            📃 Browse Past Papers
-          </Button>
+            fontSize={'md'}> */}
+          <Button border={'1px solid var(--border-color)'}>📃 Browse Past Papers</Button>
+          {/* </Button> */}
         </Link>
       </Center>
     </>

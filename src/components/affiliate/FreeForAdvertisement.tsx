@@ -10,6 +10,8 @@ export default function FreeForAdvertisement({ link }: FreeToAdvertiseProps) {
   return (
     <Link
       href={link}
+      target="_black"
+      referrerPolicy="no-referrer"
       onClick={() => {
         reportFirebaseAnalytics(FIREBASE_ANALYTICS_EVENTS.freeForAdvertisement, {});
       }}>
@@ -24,10 +26,10 @@ export default function FreeForAdvertisement({ link }: FreeToAdvertiseProps) {
           position={'relative'}
           overflow={'hidden'}
           color={'black'}>
-          <Stack spacing={0.2}>
+          <Stack spacing={2}>
             <Heading fontSize={'2xl'}>Your Advertisement Here!</Heading>
             <Text color={'gray.800'} fontWeight={'bold'} fontSize={'sm'}>
-              Get noticed for free! Click to place your ad.
+              Get noticed for free with 3000+ signed in users! Click to place your ad.
             </Text>
           </Stack>
         </Flex>

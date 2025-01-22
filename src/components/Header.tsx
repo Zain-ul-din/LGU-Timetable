@@ -73,7 +73,7 @@ export default function Header({ clampWidth }: { clampWidth?: boolean }) {
           <Confetti
             width={windowSize.x}
             height={windowSize.y}
-            tweenDuration={20000}
+            tweenDuration={10000}
             recycle={false}
             numberOfPieces={1000}
             run={celebrated}

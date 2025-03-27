@@ -54,7 +54,7 @@ export default function PalestineSupportBanner(props: PalestineSupportBannerProp
             style={{
               fontSize: isUnder600 ? '0.7rem' : '1rem'
             }}>
-              Save Lives in Gaza Today
+              Save Lives in Gaza Today X 
             <span
               style={{
                 textDecoration: 'underline',

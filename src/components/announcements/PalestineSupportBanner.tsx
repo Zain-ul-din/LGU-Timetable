@@ -9,15 +9,15 @@ interface PalestineSupportBannerProps {
   hideMessage?: boolean;
 }
 
-// const quranicVerses = [
-//   'For those who give in charity, men and women, and loan to Allah a beautiful loan, it shall be increased manifold (to their credit), and they shall have (besides) a liberal reward.',
-//   'The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.',
-//   'You will never attain righteousness until you spend in charity from that what you love.'
-// ];
+const quranicVerses = [
+   'For those who give in charity, men and women, and loan to Allah a beautiful loan, it shall be increased manifold (to their credit), and they shall have (besides) a liberal reward.',
+   'The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.',
+   'You will never attain righteousness until you spend in charity from that what you love.'
+];
 
 export default function PalestineSupportBanner(props: PalestineSupportBannerProps) {
   const [isUnder600] = useMediaQuery('(max-width: 600px)');
-  // const [verseIndex] = useState(() => (Math.random() * quranicVerses.length) | 0);
+  const [verseIndex] = useState(() => (Math.random() * quranicVerses.length) | 0);
 
   return (
     <motion.div
@@ -54,7 +54,7 @@ export default function PalestineSupportBanner(props: PalestineSupportBannerProp
             style={{
               fontSize: isUnder600 ? '0.7rem' : '1rem'
             }}>
-            Lets Rebuild Gaza X
+              Save Lives in Gaza Today
             <span
               style={{
                 textDecoration: 'underline',
@@ -66,7 +66,7 @@ export default function PalestineSupportBanner(props: PalestineSupportBannerProp
             </span>
           </h1>
         </div>
-        {/* {!props.hideMessage && (
+        {!props.hideMessage && (
           <div
             style={{
               fontSize: isUnder600 ? '0.8rem' : '0.85rem',
@@ -76,7 +76,7 @@ export default function PalestineSupportBanner(props: PalestineSupportBannerProp
             }}>
             {'"' + quranicVerses[verseIndex] + '"'} -- {'Al-Qur’an'}
           </div>
-        )} */}
+        )} 
       </a>
     </motion.div>
   );

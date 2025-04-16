@@ -103,7 +103,9 @@ export default function Timetable({ metaData, timetableData, ad }: IProps) {
           updatedAt={new Date(timetableData.updatedAt as string)}
         />
 
-        <FreeForAdvertisement link="https://tally.so/r/3EvyBq" />
+        
+        <FreeForAdvertisement link="https://linklift.vercel.app/analytics?redirect_to=https%3A%2F%2Ftally.so%2Fr%2F3EvyBq&report_to=67ff781310e5e75d116fc4d1&event_name=default" />
+       
         {/* {!false ? (
         ) : (
           <Educative mx={'1rem'} link={ad.link} description={ad.description} title={ad.title} />

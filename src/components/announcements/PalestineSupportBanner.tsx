@@ -10,9 +10,9 @@ interface PalestineSupportBannerProps {
 }
 
 const quranicVerses = [
-   'For those who give in charity, men and women, and loan to Allah a beautiful loan, it shall be increased manifold (to their credit), and they shall have (besides) a liberal reward.',
-   'The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.',
-   'You will never attain righteousness until you spend in charity from that what you love.'
+  'For those who give in charity, men and women, and loan to Allah a beautiful loan, it shall be increased manifold (to their credit), and they shall have (besides) a liberal reward.',
+  'The example of those who spend their wealth in the way of Allah is like a seed [of grain] which grows seven spikes; in each spike is a hundred grains. And Allah multiplies [His reward] for whom He wills. And Allah is all-Encompassing and Knowing.',
+  'You will never attain righteousness until you spend in charity from that what you love.'
 ];
 
 export default function PalestineSupportBanner(props: PalestineSupportBannerProps) {
@@ -49,12 +49,13 @@ export default function PalestineSupportBanner(props: PalestineSupportBannerProp
             style={{
               borderRadius: '10%'
             }}
+            alt="palestine flag"
           />
           <h1
             style={{
               fontSize: isUnder600 ? '0.7rem' : '1rem'
             }}>
-              Save Lives in Gaza Today X 
+            Save Lives in Gaza Today X
             <span
               style={{
                 textDecoration: 'underline',
@@ -76,7 +77,7 @@ export default function PalestineSupportBanner(props: PalestineSupportBannerProp
             }}>
             {'"' + quranicVerses[verseIndex] + '"'} -- {'Al-Qur’an'}
           </div>
-        )} 
+        )}
       </a>
     </motion.div>
   );

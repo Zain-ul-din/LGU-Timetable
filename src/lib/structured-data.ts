@@ -69,16 +69,38 @@ export function getBreadcrumbJsonLd(
 
   const merged = [...breadcrumbsMap[pathname], ...additionalBreadCrumbCBs.map((cb) => cb(baseUrl))];
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: merged.map((item, i) => ({
-      '@type': 'ListItem',
-      position: i + 1,
-      name: item.name,
-      item: item.url
-    }))
-  };
-
-  return JSON.stringify(jsonLd);
+  switch (pathname) {
+    case '/':
+      return JSON.stringify([
+        {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          itemListElement: merged.map((item, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: item.name,
+            item: item.url
+          }))
+        },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Person',
+          name: 'Zain ul din',
+          jobTitle: 'Software Developer',
+          url: 'https://github.com/Zain-ul-din',
+          sameAs: ['https://github.com/Zain-ul-din/LGU-Timetable']
+        }
+      ]);
+    default:
+      return JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: merged.map((item, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: item.name,
+          item: item.url
+        }))
+      });
+  }
 }

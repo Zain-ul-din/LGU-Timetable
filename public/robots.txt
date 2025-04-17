@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.lgutimetable.online
+Host: https://lgutimetable.vercel.app
 
 # Sitemaps
-Sitemap: https://www.lgutimetable.online/sitemap.xml
+Sitemap: https://lgutimetable.vercel.app/sitemap.xml

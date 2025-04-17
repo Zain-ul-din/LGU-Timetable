@@ -25,6 +25,8 @@ export default function Home() {
           content="LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms"
         />
 
+        <link rel="amphtml" href="/index.amp.html" />
+
         <SocialLinks />
       </Head>
       <MainAnimator isDisabled>

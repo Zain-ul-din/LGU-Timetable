@@ -14,7 +14,8 @@ export const SocialLinks = () => {
     <>
       {/* facebook */}
       <meta property="og:site_name" content="LGU Time-Table V2" />
-      <meta property="og:url" content="https://www.lgutimetable.online/" />
+      <meta property="og:url" content="https://lgutimetable.vercel.app/" />
+
       <meta property="og:type" content="website" />
       <meta property="og:title" content="LGU Time-Table V2" />
       <meta
@@ -29,8 +30,8 @@ export const SocialLinks = () => {
 
       {/* twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta property="twitter:domain" content="lgutimetable.online" />
-      <meta property="twitter:url" content="https://www.lgutimetable.online/" />
+      <meta property="twitter:domain" content="lgutimetable.vercel.app" />
+      <meta property="twitter:url" content="https://lgutimetable.vercel.app/" />
       <meta name="twitter:title" content="LGU Time-Table V2" />
       <meta
         name="twitter:description"
@@ -49,7 +50,7 @@ export const ContributeSocialLinks = () => {
     <>
       {/* facebook */}
       <meta property="og:site_name" content="LGU Time-Table V2" />
-      <meta property="og:url" content="https://www.lgutimetable.online/" />
+      <meta property="og:url" content="https://lgutimetable.vercel.app/" />
       <meta property="og:type" content="website" />
       <meta property="og:title" content="LGU Time-Table V2" />
       <meta
@@ -61,8 +62,8 @@ export const ContributeSocialLinks = () => {
 
       {/* twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta property="twitter:domain" content="lgutimetable.online" />
-      <meta property="twitter:url" content="https://www.lgutimetable.online/" />
+      <meta property="twitter:domain" content="lgutimetable.vercel.app" />
+      <meta property="twitter:url" content="https://lgutimetable.vercel.app/" />
       <meta name="twitter:title" content="LGU Time-Table V2" />
       <meta
         name="twitter:description"

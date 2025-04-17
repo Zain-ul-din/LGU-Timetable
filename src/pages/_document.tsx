@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import { ColorModeScript } from '@chakra-ui/react';
+import { useAmp } from 'next/amp';
 import { Html, Head, Main, NextScript } from 'next/document';
 import { FavIcons } from '~/components/seo/Seo';
 
 import { themeConfig } from '~/styles/Style';
 
 export default function Document() {
+  const isAmp = useAmp();
+
   return (
     <Html lang="en">
       <Head>
@@ -27,7 +30,7 @@ export default function Document() {
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9921497734267177"
-          crossOrigin="anonymous"></script> 
+          crossOrigin="anonymous"></script>
 
         <link
           href="https://fonts.googleapis.com/css2?family=Oxygen:wght@300&family=Roboto:wght@300&display=swap"

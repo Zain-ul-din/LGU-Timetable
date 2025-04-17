@@ -126,8 +126,8 @@ LGU-TimeTable V2
 ### Quick Start: 
 ```command
   # run these commands to setup this project on your machine
-  >> git clone https://github.com/Zain-ul-din/LGU-BetterTimeTable.git
-  >> cd LGU-BetterTimeTable
+  >> git clone <this_repo>
+  >> cd <newly_created_folder>
   >> npm i yarn -g
   >> yarn 
   >> yarn dev

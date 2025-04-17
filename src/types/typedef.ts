@@ -108,7 +108,7 @@ export interface TimetableDocType {
     program: string;
     section: string;
     semester: string;
-  }
+  };
 }
 
 export interface UserDataDocType extends User {
@@ -159,6 +159,7 @@ export interface RoomActivitiesStateType {
 }
 
 import { Dispatch } from 'react';
+import { ROUTING } from '~/lib/constant';
 
 export type UseStateProps<T> = [T, Dispatch<SetStateAction<T>>];
 
@@ -187,3 +188,19 @@ export type SubjectObjectVal = {
 export type SubjectOjectType = {
   [key: string]: SubjectObjectVal;
 };
+
+export type StructuredDataSupportedPath =
+  | '/'
+  | '/developer'
+  | '/contribute'
+  | '/profile'
+  | '/timetable'
+  | '/discussions'
+  | '/freeclassrooms'
+  | '/admin'
+  | '/timetable/teachers'
+  | '/timetable/rooms'
+  | '/util/timetable_clashresolver'
+  | '/room-activities'
+  | '/pastpaper'
+  | '/blogs';

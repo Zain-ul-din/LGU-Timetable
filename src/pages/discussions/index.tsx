@@ -23,6 +23,8 @@ export default function Index() {
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+
+        <StructuredData path="/discussions" />
       </Head>
       <MainAnimator style={{ height: 'auto', padding: '0.2rem' }}>
         {/* <PreviewWrapper> */}
@@ -37,5 +39,6 @@ export default function Index() {
 
 import ChatRoom from '~/components/chat_room/ChatRoom';
 import AdminLayout from '~/components/admin/layout';
+import StructuredData from '~/components/StructuredData';
 
 const Content = () => <ChatRoom />;

@@ -17,6 +17,7 @@ import TeacherTimetableSelection from '~/components/TeachersTimetableSelection';
 import axios from 'axios';
 import { APIS_ENDPOINTS } from '~/lib/constant';
 import { decrypt } from '~/lib/cipher';
+import StructuredData from '~/components/StructuredData';
 
 export const getStaticProps = async (context: any) => {
   const { data } = await axios.get(APIS_ENDPOINTS.TEACHERS);
@@ -47,6 +48,8 @@ export default function Timetable({ teachers }: { teachers: Array<string> }) {
           name="keywords"
           content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
         />
+
+        <StructuredData path="/timetable" />
 
         <SocialLinks />
       </Head>

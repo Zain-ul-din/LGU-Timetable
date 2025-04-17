@@ -18,6 +18,7 @@ import { APIS_ENDPOINTS, ROUTING } from '~/lib/constant';
 import axios from 'axios';
 import { decrypt } from '~/lib/cipher';
 import getAd from '~/lib/ads';
+import StructuredData from '~/components/StructuredData';
 
 export async function getStaticPaths() {
   const { data } = await axios.get(APIS_ENDPOINTS.TEACHER_PATHS);
@@ -39,13 +40,14 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const timetable = decrypt(data);
   return {
     props: {
-      timetable: { id: timetable.uid, ...timetable }
+      timetable: { id: timetable.uid, paramId: id, ...timetable }
     }
   };
 }
 
 interface GetStaticPropsReturnType extends TimetableDocType {
   id: string;
+  paramId: string;
 }
 
 export default function TimetablePage({ timetable }: { timetable: GetStaticPropsReturnType }) {
@@ -89,6 +91,16 @@ export default function TimetablePage({ timetable }: { timetable: GetStaticProps
         <meta
           name="keywords"
           content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
+        />
+
+        <StructuredData
+          path="/timetable"
+          additionalBreadCrumbCBs={[
+            (baseUrl) => ({
+              name: `${timetable.id}`,
+              url: `${baseUrl}/timetable/${timetable.paramId}`
+            })
+          ]}
         />
 
         <SocialLinks />

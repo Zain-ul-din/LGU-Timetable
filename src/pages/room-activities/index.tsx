@@ -16,6 +16,7 @@ import MainAnimator from '~/components/design/MainAnimator';
 import { APIS_ENDPOINTS } from '~/lib/constant';
 import { decrypt } from '~/lib/cipher';
 import RoomActivities from '~/components/RoomActivities';
+import StructuredData from '~/components/StructuredData';
 
 /**
  * @param context
@@ -97,6 +98,8 @@ export default function RoomActivitiesPage({
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+
+        <StructuredData path="/room-activities" />
       </Head>
       <MainAnimator>
         {!state.loading && (

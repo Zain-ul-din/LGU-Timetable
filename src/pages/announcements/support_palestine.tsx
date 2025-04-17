@@ -4,6 +4,7 @@ import TableOfContent from '~/components/TableOfContent';
 import SupportPalestine from '~/components/announcements/SupportPalestine';
 import MainAnimator from '~/components/design/MainAnimator';
 import { SocialLinks } from '~/components/seo/Seo';
+import StructuredData from '~/components/StructuredData';
 
 export default function Page() {
   return (

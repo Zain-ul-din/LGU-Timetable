@@ -18,6 +18,7 @@ import { useEffect, useState } from 'react';
 import MainAnimator from '~/components/design/MainAnimator';
 import { APIS_ENDPOINTS } from '~/lib/constant';
 import { decrypt } from '~/lib/cipher';
+import StructuredData from '~/components/StructuredData';
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const { data } = await axios.get(APIS_ENDPOINTS.ALL_TIMETABLES);
@@ -90,6 +91,8 @@ export default function FreeClassRoomsPage({
         />
 
         <SocialLinks />
+
+        <StructuredData path="/freeclassrooms" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

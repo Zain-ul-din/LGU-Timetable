@@ -5,6 +5,7 @@ import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/Fir
 import { SocialLinks } from '~/components/seo/Seo';
 import MainAnimator from '~/components/design/MainAnimator';
 import FrontPageAd from '~/components/Ads/FrontPageAd';
+import StructuredData from '~/components/StructuredData';
 
 export default function Home() {
   useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
@@ -24,9 +25,8 @@ export default function Home() {
           name="keywords"
           content="LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms"
         />
-
+        <StructuredData path="/" />
         <link rel="amphtml" href="/index.amp.html" />
-
         <SocialLinks />
       </Head>
       <MainAnimator isDisabled>

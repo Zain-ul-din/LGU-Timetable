@@ -5,6 +5,7 @@ import { VisuallyHidden } from '@chakra-ui/react';
 import { ContributeSocialLinks, SocialLinks } from '~/components/seo/Seo';
 import Header from '~/components/Header';
 import MainAnimator from '~/components/design/MainAnimator';
+import StructuredData from '~/components/StructuredData';
 
 export default function ContributePage() {
   useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.contribute);
@@ -27,6 +28,8 @@ export default function ContributePage() {
         <ContributeSocialLinks />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+
+        <StructuredData path="/contribute" />
       </Head>
       {/* <Blob/> */}
       <MainAnimator>

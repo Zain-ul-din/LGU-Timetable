@@ -4,6 +4,7 @@ import Head from 'next/head';
 import MainAnimator from '~/components/design/MainAnimator';
 import PastPapers from '~/components/pastpaper/pastpapers';
 import { SocialLinks } from '~/components/seo/Seo';
+import StructuredData from '~/components/StructuredData';
 import AllSubjectsProvider from '~/hooks/AllSubjectsProvider';
 import { decrypt } from '~/lib/cipher';
 import { APIS_ENDPOINTS } from '~/lib/constant';
@@ -38,7 +39,7 @@ export default function PastPaperPage({ subjects }: GetStaticPropsReturnType) {
   return (
     <>
       <Head>
-        <title>Past Papers</title>
+        <title>LGU Past Papers</title>
 
         <meta
           name="description"
@@ -51,6 +52,8 @@ export default function PastPaperPage({ subjects }: GetStaticPropsReturnType) {
         />
 
         <SocialLinks />
+
+        <StructuredData path="/pastpaper" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

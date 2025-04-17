@@ -2,6 +2,7 @@ import Head from 'next/head';
 import TimetableClashResolver from '~/components/clash_resolver/TimetableClashResolver';
 import MustSignIn from '~/components/design/MustSigin';
 import { SocialLinks } from '~/components/seo/Seo';
+import StructuredData from '~/components/StructuredData';
 import { FIREBASE_ANALYTICS_EVENTS, useFirebaseAnalyticsReport } from '~/lib/FirebaseAnalysis';
 
 export default function Page() {
@@ -21,6 +22,8 @@ export default function Page() {
           content={`LGU timetable, lgu time table, lgu, lgu class time table, non official lgu time table, fast lgu timetable, new lgu timetable, lgu new timetable, lgu better timetable, lgu timetable live, lgu free classes, lahore garrison university timetable, lahore garrison university new timetable, lahore garrison university fast timetable, lgu api, lgu developer apis, free classrooms`}
         />
         <SocialLinks />
+
+        <StructuredData path="/util/timetable_clashresolver" />
       </Head>
       <MustSignIn>
         <TimetableClashResolver />

@@ -8,6 +8,7 @@ import { getDocs } from 'firebase/firestore';
 import { IApiDoc } from '~/types/typedef';
 import MainAnimator from '~/components/design/MainAnimator';
 import ArticleAd from '~/components/Ads/ArticleAd';
+import StructuredData from '~/components/StructuredData';
 
 export const getStaticProps = async (context: any) => {
   const docs = await getDocs(docsCol);
@@ -45,6 +46,8 @@ export default function DeveloperDashboard({ docs }: { docs: Array<IApiDoc> }) {
         />
 
         <SocialLinks />
+
+        <StructuredData path="/developer" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

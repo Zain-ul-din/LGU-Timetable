@@ -2,6 +2,7 @@ import { Flex, List, ListItem, Stack, Text } from '@chakra-ui/react';
 import type { InferGetStaticPropsType, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import StructuredData from '~/components/StructuredData';
 
 type Posts = {
   id: string;
@@ -28,6 +29,8 @@ export default function Page({ posts }: InferGetStaticPropsType<typeof getStatic
           name="description"
           content="Discover leading educational blogs that provide insights and knowledge on various topics."
         />
+
+        <StructuredData path="/blogs" />
       </Head>
       <Flex maxWidth={'1200px'} mx={'auto'} w={'full'} p={2} justify={'center'} flexDir={'column'}>
         <Stack mt={6}>

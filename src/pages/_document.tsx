@@ -1,14 +1,11 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import { ColorModeScript } from '@chakra-ui/react';
-import { useAmp } from 'next/amp';
 import { Html, Head, Main, NextScript } from 'next/document';
 import { FavIcons } from '~/components/seo/Seo';
 
 import { themeConfig } from '~/styles/Style';
 
 export default function Document() {
-  const isAmp = useAmp();
-
   return (
     <Html lang="en">
       <Head>

@@ -122,7 +122,7 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
           </Text>
 
           <TabStyle.Tabs index={currTabIdx} onChange={setCurrTabIdx}>
-            <TabStyle.TabList>
+            <TabStyle.TabList autoFocus={true}>
               <TabStyle.Tab>Semester</TabStyle.Tab>
               <TabStyle.Tab isDisabled={userInput.fall == null}>Program</TabStyle.Tab>
               <TabStyle.Tab isDisabled={userInput.semester == null}>Section</TabStyle.Tab>
@@ -133,6 +133,7 @@ function Selection({ metaData }: { metaData: any }): JSX.Element {
               <TabStyle.TabPanel textAlign={'center'}>
                 <DropDown
                   defautlSelectedItem={'choose semester'}
+                  useInitialFocus={true}
                   menuItems={Object.keys(metaData)}
                   onClick={(
                     selectedItem: string,

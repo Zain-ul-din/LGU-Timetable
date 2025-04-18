@@ -70,18 +70,18 @@ export const GITHUB_REPOS = [
 
 export const ROUTING = {
   home: '/',
+  timetable: '/timetable',
+  teachers: '/timetable/teachers',
+  rooms: '/timetable/rooms',
+  free_class_rooms: '/freeclassrooms',
+  room_activities: '/room-activities',
+  clash_resolver: '/util/timetable_clashresolver',
+  past_papers: '/pastpaper',
   developer: '/developer',
   contribute: '/contribute',
   profile: '/profile',
-  timetable: '/timetable',
   discussions: '/discussions',
-  free_class_rooms: '/freeclassrooms',
   admin: '/admin',
-  teachers: '/timetable/teachers',
-  rooms: '/timetable/rooms',
-  clash_resolver: '/util/timetable_clashresolver',
-  room_activities: '/room-activities',
-  past_papers: '/pastpaper',
   blogs: '/blogs'
 };
 

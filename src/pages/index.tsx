@@ -6,6 +6,7 @@ import { SocialLinks } from '~/components/seo/Seo';
 import MainAnimator from '~/components/design/MainAnimator';
 import FrontPageAd from '~/components/Ads/FrontPageAd';
 import StructuredData from '~/components/StructuredData';
+import A11Y from '~/components/A11Y';
 
 export default function Home() {
   useFirebaseAnalyticsReport(FIREBASE_ANALYTICS_EVENTS.home_page);
@@ -30,6 +31,7 @@ export default function Home() {
         <SocialLinks />
       </Head>
       <MainAnimator isDisabled>
+        <A11Y />
         <div className={'roboto'}>
           <Hero renderDescription={true} />
           <FrontPageAd />

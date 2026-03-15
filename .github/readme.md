@@ -147,6 +147,8 @@ LGU-TimeTable V2
 <p> Show some ❤️ by starring this awesome repository! </p>
 </div>
 
+Featured on [**FIND IO**](https://www.findio.pk/projects/lgu-timetable)
+
 <!-- license -->
 ## License
 
